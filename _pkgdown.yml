@@ -1,0 +1,66 @@
+url: https://larmarange.github.io/ggstats/
+template:
+  bootstrap: 5
+  bslib:
+    base_font: {google: {family: "Source Sans Pro", wght: [400, 600], ital: [0, 1]}}
+    code_font: {google: "Source Code Pro"}
+    primary: "#14497f"
+    font_scale: 1.2
+
+development:
+  mode: auto
+
+deploy:
+  install_metadata: true
+
+authors:
+  Joseph Larmarange:
+    href: "http://joseph.larmarange.net/"
+
+reference:
+- title: Plotting model coefficients
+  contents:
+  - ggcoef_model
+
+- title: Plotting Likert-type items
+  contents:
+  - gglikert
+
+- title: Cascade plots
+  contents:
+  - ggcascade
+
+- title: Additional statistics for `ggplot2`
+  contents:
+  - starts_with("stat_")
+
+- title: Additional geometries for `ggplot2`
+  contents:
+  - geom_connector
+  - geom_stripped_rows
+
+- title: Convenient geometries / layers
+  contents:
+  - geom_prop_bar
+  - geom_diverging
+
+- title: Additional positions for `ggplot2`
+  contents:
+  - starts_with("position_")
+
+- title: Additional scales for `ggplot2`
+  contents:
+  - starts_with("scale_")
+
+- title: Utilities
+  contents:
+  - ggsurvey
+  - symmetric_limits
+  - signif_stars
+  - augment_chisq_add_phi
+  - label_number_abs
+  - weighted.median
+  - weighted.sum
+  - round_any
+  - hex_bw
+  - pal_extender
