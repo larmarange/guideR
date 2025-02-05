@@ -1,0 +1,20 @@
+#' Install / Update R package dependencies in a project
+#'
+#' This function uses [renv::dependencies()] to identify R package dependencies
+#' in a project and then calls [pak::pkg_install()] to install / update these
+#' packages.
+#'
+#' @param ask Whether to ask for confirmation when installing a different
+#' version of a package that is already installed. Installations that only add
+#' new packages never require confirmation.
+#' @export
+#' @examples
+#' \dontrun{
+#' install_dependencies()
+#' }
+install_dependencies <- function(ask = TRUE) {
+  renv::dependencies() |>
+    purrr::pluck("Package") |>
+    unique() |>
+    pak::pkg_install(upgrade = TRUE, ask = ask)
+}
