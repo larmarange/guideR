@@ -2,3 +2,7 @@
 
 S3method(proportion,data.frame)
 export(proportion)
+export(titanic)
+importFrom(dplyr,as_tibble)
+importFrom(lifecycle,deprecated)
+importFrom(tidyr,uncount)

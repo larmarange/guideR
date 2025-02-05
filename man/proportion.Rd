@@ -58,7 +58,6 @@ and compute relative proportions. Proportions are computed separately by
 group (see examples).
 }
 \examples{
-titanic <- Titanic |> dplyr::as_tibble() |> tidyr::uncount(n)
 
 # univariable table
 titanic |> proportion(Class)

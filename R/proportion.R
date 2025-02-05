@@ -31,7 +31,6 @@ proportion <- function(.data, ..., .by = NULL) {
 #' estimate confidence intervals (see [stats::prop.test()]).
 #' @return A tibble with one row per group.
 #' @examples
-#' titanic <- Titanic |> dplyr::as_tibble() |> tidyr::uncount(n)
 #'
 #' # univariable table
 #' titanic |> proportion(Class)
