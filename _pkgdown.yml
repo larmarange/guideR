@@ -1,4 +1,4 @@
-url: https://larmarange.github.io/ggstats/
+url: https://larmarange.github.io/guideR/
 template:
   bootstrap: 5
   bslib:
@@ -18,49 +18,6 @@ authors:
     href: "http://joseph.larmarange.net/"
 
 reference:
-- title: Plotting model coefficients
+- title: Descriptive statistics
   contents:
-  - ggcoef_model
-
-- title: Plotting Likert-type items
-  contents:
-  - gglikert
-
-- title: Cascade plots
-  contents:
-  - ggcascade
-
-- title: Additional statistics for `ggplot2`
-  contents:
-  - starts_with("stat_")
-
-- title: Additional geometries for `ggplot2`
-  contents:
-  - geom_connector
-  - geom_stripped_rows
-
-- title: Convenient geometries / layers
-  contents:
-  - geom_prop_bar
-  - geom_diverging
-
-- title: Additional positions for `ggplot2`
-  contents:
-  - starts_with("position_")
-
-- title: Additional scales for `ggplot2`
-  contents:
-  - starts_with("scale_")
-
-- title: Utilities
-  contents:
-  - ggsurvey
-  - symmetric_limits
-  - signif_stars
-  - augment_chisq_add_phi
-  - label_number_abs
-  - weighted.median
-  - weighted.sum
-  - round_any
-  - hex_bw
-  - pal_extender
+  - proportion
