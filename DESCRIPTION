@@ -1,16 +1,29 @@
 Package: guideR
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Miscellaneous Statistical Functions Used in 'guide-R'
 Version: 0.1.0
 Authors@R: c(
     person(
-      "Jane", "Doe",
-      email = "jane@example.com",
-      role = c("aut", "cre")
+      "Joseph", "Larmarange", ,
+      "joseph@larmarange.net",
+      role = c("aut", "cre"),
+      comment = c(ORCID = "0000-0001-7097-700X")
     )
   )
-Description: More about what it does (maybe more than one line).
-    Continuation lines should be indented.
-License: What license is it under?
+Description: Miscellaneaous statistical functions introduced and used in the
+    manual "guide-R : Guide pour l’analyse de données d’enquêtes avec R"
+    available at <https://larmarange.github.io/guide-R/>.
+License: GPL (>= 3)
+URL: https://larmarange.github.io/guideR/, https://github.com/larmarange/guideR
+BugReports: https://github.com/larmarange/guideR/issues
+Depends:
+    R (>= 4.2)
+Imports: 
+    cli,
+    dplyr,
+    labelled,
+    srvyr,
+    tidyr
 Encoding: UTF-8
-LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
