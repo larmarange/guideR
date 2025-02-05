@@ -1,3 +1,17 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+.github
+^\.github$
 ^README\.Rmd$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+tests/testthat/_snaps
+tests/testthat/Rplots.pdf
+.lintr
+^cran-comments\.md$
+^CRAN-SUBMISSION$
+^revdep$
+^LICENSE\.md$
+^doc$
+^Meta$
