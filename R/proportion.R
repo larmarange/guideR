@@ -62,9 +62,11 @@ proportion.data.frame <- function(.data,
                                   .correct = TRUE) {
   res <-
     .data |>
-    dplyr::group_by(dplyr::pick(
-      dplyr::all_of(dplyr::group_vars(.data)),
-      {{ .by }})
+    dplyr::group_by(
+      dplyr::pick(
+        dplyr::all_of(dplyr::group_vars(.data)),
+        {{ .by }}
+      )
     ) |>
     dplyr::count(..., wt = {{ .weight }}, .drop = .drop, name = "n") |>
     dplyr::mutate(
@@ -74,7 +76,7 @@ proportion.data.frame <- function(.data,
   if (.sort)
     res <-
       res |>
-      dplyr::arrange(dplyr::desc(prop))
+      dplyr::arrange(dplyr::desc(.data$prop))
   if (.conf.int) {
     res <-
       res |>

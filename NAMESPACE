@@ -2,3 +2,4 @@
 
 S3method(proportion,data.frame)
 export(proportion)
+importFrom(lifecycle,deprecated)
