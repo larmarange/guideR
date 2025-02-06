@@ -26,6 +26,7 @@ Imports:
     pak,
     purrr,
     renv,
+    rlang,
     srvyr,
     tidyr
 Encoding: UTF-8
