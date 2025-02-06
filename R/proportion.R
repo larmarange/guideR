@@ -61,12 +61,7 @@ proportion.data.frame <- function(.data,
                                   .correct = TRUE) {
   res <-
     .data |>
-    dplyr::group_by(
-      dplyr::pick(
-        dplyr::all_of(dplyr::group_vars(.data)),
-        {{ .by }}
-      )
-    ) |>
+    dplyr::group_by(dplyr::pick({{ .by }}), .add = TRUE) |>
     dplyr::count(..., wt = {{ .weight }}, .drop = .drop, name = "n") |>
     dplyr::mutate(
       N = sum(.data$n),

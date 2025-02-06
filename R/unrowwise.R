@@ -13,5 +13,5 @@
 #' @export
 unrowwise <- function(data) {
   data |>
-    dplyr::group_by(dplyr::pick(dplyr::all_of(dplyr::group_vars(data))))
+    dplyr::group_by(.add = TRUE)
 }
