@@ -15,17 +15,5 @@ deploy:
 
 authors:
   Joseph Larmarange:
-    href: "http://joseph.larmarange.net/"
+    href: "https://joseph.larmarange.net/"
 
-reference:
-- title: Descriptive statistics
-  contents:
-  - proportion
-
-- title: Packages management
-  contents:
-  - install_dependencies
-
-- title: Datasets
-  contents:
-  - titanic
