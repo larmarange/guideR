@@ -8,7 +8,7 @@
 proportion(.data, ..., .by = NULL)
 
 \method{proportion}{data.frame}(
-  .data,
+  data,
   ...,
   .by = NULL,
   .weight = NULL,
@@ -21,15 +21,15 @@ proportion(.data, ..., .by = NULL)
 )
 }
 \arguments{
-\item{.data}{A data frame, data frame extension (e.g. a tibble),
-or a survey design object.}
-
 \item{...}{<\code{\link[rlang:args_data_masking]{data-masking}}> Variable(s) for those
 computing proportions.}
 
 \item{.by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> Optional additional
 variables to group by (in addition to those eventually previously declared
 using \code{\link[dplyr:group_by]{dplyr::group_by()}}).}
+
+\item{data}{A data frame, data frame extension (e.g. a tibble),
+or a survey design object.}
 
 \item{.weight}{<\code{\link[rlang:args_data_masking]{data-masking}}> Frequency
 weights. Can be \code{NULL} or a variable.}

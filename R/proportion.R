@@ -4,7 +4,7 @@
 #' and compute relative proportions. Proportions are computed separately by
 #' group (see examples).
 #'
-#' @param .data A data frame, data frame extension (e.g. a tibble),
+#' @param data A data frame, data frame extension (e.g. a tibble),
 #' or a survey design object.
 #' @param ... <[`data-masking`][rlang::args_data_masking]> Variable(s) for those
 #' computing proportions.
@@ -49,7 +49,7 @@ proportion <- function(.data, ..., .by = NULL) {
 #' titanic |> proportion(Class, Sex, Survived)
 #' titanic |> proportion(Sex, Survived, .by = Class)
 #' titanic |> proportion(Survived, .by = c(Class, Sex))
-proportion.data.frame <- function(.data,
+proportion.data.frame <- function(data,
                                   ...,
                                   .by = NULL,
                                   .weight = NULL,
@@ -60,7 +60,7 @@ proportion.data.frame <- function(.data,
                                   .conf.level = .95,
                                   .correct = TRUE) {
   res <-
-    .data |>
+    data |>
     dplyr::group_by(dplyr::pick({{ .by }}), .add = TRUE) |>
     dplyr::count(..., wt = {{ .weight }}, .drop = .drop, name = "n") |>
     dplyr::mutate(
@@ -88,7 +88,7 @@ proportion.data.frame <- function(.data,
   }
 
   res |>
-    labelled::copy_labels_from(.data)
+    labelled::copy_labels_from(data)
 }
 
 .ci_prop <- function(n, N,
