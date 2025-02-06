@@ -16,16 +16,16 @@ knitr::opts_chunk$set(
 # guideR
 
 <!-- badges: start -->
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![R-CMD-check](https://github.com/larmarange/guideR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/larmarange/guideR/actions/workflows/R-CMD-check.yaml)
-[![Codecov test coverage](https://codecov.io/gh/larmarange/guideR/graph/badge.svg)](https://app.codecov.io/gh/larmarange/gguideR)
-[![CRAN status](https://www.r-pkg.org/badges/version/guideR)](https://CRAN.R-project.org/package=guideR)
+
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental) [![R-CMD-check](https://github.com/larmarange/guideR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/larmarange/guideR/actions/workflows/R-CMD-check.yaml) [![Codecov test coverage](https://codecov.io/gh/larmarange/guideR/graph/badge.svg)](https://app.codecov.io/gh/larmarange/gguideR) [![CRAN status](https://www.r-pkg.org/badges/version/guideR)](https://CRAN.R-project.org/package=guideR)
+
 <!-- badges: end -->
 
 `guideR` package is a companion for the manual *guide-R : Guide pour l’analyse de données d’enquêtes avec R* available at <https://larmarange.github.io/guide-R/>.
 
-`guideR` implements miscellaneous functions introduced in *guide-R* to
-facilitate statistical analysis.
+`guideR` implements miscellaneous functions introduced in *guide-R* to facilitate statistical analysis.
+
+![](https://larmarange.github.io/guide-R/ressources/cover-hd.png)
 
 ## Installation & Documentation
 
@@ -46,7 +46,7 @@ pak::pak("larmarange/guideR")
 
 Documentation of development version: <https://larmarange.github.io/guideR/dev/>
 
-## Compute proportions 
+## Compute proportions
 
 ```{r}
 titanic <- Titanic |> dplyr::as_tibble() |> tidyr::uncount(n)
@@ -57,4 +57,3 @@ titanic |> proportion(Class, .conf.int = TRUE)
 
 titanic |> proportion(Survived, .by = Class)
 ```
-

@@ -12,6 +12,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 coverage](https://codecov.io/gh/larmarange/guideR/graph/badge.svg)](https://app.codecov.io/gh/larmarange/gguideR)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/guideR)](https://CRAN.R-project.org/package=guideR)
+
 <!-- badges: end -->
 
 `guideR` package is a companion for the manual *guide-R : Guide pour
@@ -20,6 +21,8 @@ l’analyse de données d’enquêtes avec R* available at
 
 `guideR` implements miscellaneous functions introduced in *guide-R* to
 facilitate statistical analysis.
+
+![](https://larmarange.github.io/guide-R/ressources/cover-hd.png)
 
 ## Installation & Documentation
 
@@ -50,7 +53,6 @@ library(guideR)
 
 titanic |> proportion(Class, .conf.int = TRUE)
 #> # A tibble: 4 × 6
-#> # Rowwise: 
 #>   Class     n     N  prop prop_low prop_high
 #>   <chr> <int> <int> <dbl>    <dbl>     <dbl>
 #> 1 1st     325  2201  14.8     13.3      16.3
