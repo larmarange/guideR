@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 
 `guideR` implements miscellaneous functions introduced in *guide-R* to facilitate statistical analysis.
 
-![](https://larmarange.github.io/guide-R/ressources/cover-hd.png)
+![](https://larmarange.github.io/guide-R/ressources/cover-hd.png){width="450"}
 
 ## Installation & Documentation
 

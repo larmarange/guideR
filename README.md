@@ -22,7 +22,8 @@ l’analyse de données d’enquêtes avec R* available at
 `guideR` implements miscellaneous functions introduced in *guide-R* to
 facilitate statistical analysis.
 
-![](https://larmarange.github.io/guide-R/ressources/cover-hd.png)
+<img src="https://larmarange.github.io/guide-R/ressources/cover-hd.png"
+width="450" />
 
 ## Installation & Documentation
 
