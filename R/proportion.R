@@ -101,5 +101,3 @@ proportion.data.frame <- function(.data,
     prop_high = t$conf.int[[2]] * scale
   )
 }
-
-
