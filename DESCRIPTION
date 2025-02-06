@@ -18,7 +18,8 @@ URL: https://larmarange.github.io/guideR/, https://github.com/larmarange/guideR
 BugReports: https://github.com/larmarange/guideR/issues
 Depends:
     R (>= 4.2)
-Imports: 
+Imports:
+    cli,
     dplyr,
     labelled,
     lifecycle,
