@@ -28,8 +28,20 @@
 #' d |> long_to_periods(id = patient, start = begin)
 #' @export
 long_to_periods <- function(data, id, start, stop = NULL, by = NULL) {
-  startv <- data |> dplyr::select({{ start }}) |> colnames()
-  stopv <- data |> dplyr::select({{ stop }}) |> colnames()
+  startv <-
+    tidyselect::eval_select(
+      rlang::enquo(start),
+      data = data,
+      allow_rename = FALSE
+    ) |>
+    names()
+  stopv <-
+    tidyselect::eval_select(
+      rlang::enquo(stop),
+      data = data,
+      allow_rename = FALSE
+    ) |>
+    names()
   if (length(startv) != 1)
     cli::cli_abort("{.arg start} should select only one column.")
   if (length(stopv) > 1)
