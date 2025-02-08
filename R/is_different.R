@@ -16,11 +16,12 @@
 #' @param x,y Vectors to be compared.
 #' @export
 #' @examples
-#' TRUE != NA
-#' is_different(TRUE, NA)
-#'
-#' NA == NA
-#' is_equal(NA, NA)
+#' v <- c("a", "b", NA)
+#' is_different(v, "a")
+#' is_different(v, NA)
+#' is_equal(v, "a")
+#' is_equal(v, NA)
+
 is_different <- function(x, y) {
   (x != y & !is.na(x) & !is.na(y)) | xor(is.na(x), is.na(y))
 }
