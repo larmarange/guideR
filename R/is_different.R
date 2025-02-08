@@ -50,7 +50,7 @@ cumdifferent <- function(x) {
 num_cycle <- function(x) {
   if (!is.logical(x))
     stop("'x' should be logical.")
-  res <- cumsum(x & is_different(x, lag(x)))
+  res <- cumsum(x & is_different(x, dplyr::lag(x)))
   res[!x] <- NA
   res
 }
