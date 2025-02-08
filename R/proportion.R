@@ -22,7 +22,7 @@
 #' @param .options Additional arguments passed to [stats::prop.test()]
 #' or [srvyr::survey_prop()].
 #' @export
-proportion <- function(.data,
+proportion <- function(data,
                        ...,
                        .by = NULL,
                        .weight = NULL,
@@ -114,10 +114,6 @@ proportion.data.frame <- function(data,
 
 #' @export
 #' @rdname proportion
-#' @param .prop_method Type of proportion method to use
-#' (see [survey::svyciprop()]).
-#' @param .df A numeric value indicating the degrees of freedom. The default
-#' (`NULL`) uses [survey::degf()] (see [survey::svyciprop()]).
 #' @examples
 #' ## SURVEY DATA
 #'
@@ -144,6 +140,7 @@ proportion.survey.design <- function(data,
                                      .weight = NULL,
                                      .scale = 100,
                                      .sort = FALSE,
+                                     .drop = FALSE,
                                      .conf.int = FALSE,
                                      .conf.level = .95,
                                      .options = NULL) {
@@ -180,6 +177,10 @@ proportion.survey.design <- function(data,
     res <-
       res |>
       dplyr::arrange(dplyr::desc(.data$prop))
+  if (.drop)
+    res <-
+      res |>
+      dplyr::filter(.data$n > 0)
   res
 }
 

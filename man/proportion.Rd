@@ -7,7 +7,7 @@
 \title{Compute proportions}
 \usage{
 proportion(
-  .data,
+  data,
   ...,
   .by = NULL,
   .weight = NULL,
@@ -39,12 +39,16 @@ proportion(
   .weight = NULL,
   .scale = 100,
   .sort = FALSE,
+  .drop = FALSE,
   .conf.int = FALSE,
   .conf.level = 0.95,
   .options = NULL
 )
 }
 \arguments{
+\item{data}{A data frame, data frame extension (e.g. a tibble),
+or a survey design object.}
+
 \item{...}{<\code{\link[rlang:args_data_masking]{data-masking}}> Variable(s) for those
 computing proportions.}
 
@@ -68,15 +72,6 @@ proportions unchanged.}
 
 \item{.options}{Additional arguments passed to \code{\link[stats:prop.test]{stats::prop.test()}}
 or \code{\link[srvyr:survey_mean]{srvyr::survey_prop()}}.}
-
-\item{data}{A data frame, data frame extension (e.g. a tibble),
-or a survey design object.}
-
-\item{.prop_method}{Type of proportion method to use
-(see \code{\link[survey:svyciprop]{survey::svyciprop()}}).}
-
-\item{.df}{A numeric value indicating the degrees of freedom. The default
-(\code{NULL}) uses \code{\link[survey:svychisq]{survey::degf()}} (see \code{\link[survey:svyciprop]{survey::svyciprop()}}).}
 }
 \value{
 A tibble with one row per group.
