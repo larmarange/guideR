@@ -33,11 +33,11 @@ respect a certain condition (see examples).
 \code{(x != y & !is.na(x) & !is.na(y)) | xor(is.na(x), is.na(y))}.
 }
 \examples{
-TRUE != NA
-is_different(TRUE, NA)
-
-NA == NA
-is_equal(NA, NA)
+v <- c("a", "b", NA)
+is_different(v, "a")
+is_different(v, NA)
+is_equal(v, "a")
+is_equal(v, NA)
 d <- dplyr::tibble(group = c("a", "a", "b", "b", "a", "b", "c", "a"))
 d |>
   dplyr::mutate(

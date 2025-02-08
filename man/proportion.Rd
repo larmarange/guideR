@@ -96,6 +96,8 @@ titanic |> # equivalent syntax
 titanic |> proportion(Class, Sex, Survived)
 titanic |> proportion(Sex, Survived, .by = Class)
 titanic |> proportion(Survived, .by = c(Class, Sex))
+## SURVEY DATA
+
 d <- srvyr::as_survey(titanic)
 
 # univariable table
