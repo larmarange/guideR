@@ -3,6 +3,7 @@
 \name{proportion}
 \alias{proportion}
 \alias{proportion.data.frame}
+\alias{proportion.survey.design}
 \title{Compute proportions}
 \usage{
 proportion(.data, ..., .by = NULL)
@@ -18,6 +19,19 @@ proportion(.data, ..., .by = NULL)
   .conf.int = FALSE,
   .conf.level = 0.95,
   .correct = TRUE
+)
+
+\method{proportion}{survey.design}(
+  data,
+  ...,
+  .by = NULL,
+  .weight = NULL,
+  .scale = 100,
+  .sort = FALSE,
+  .conf.int = FALSE,
+  .conf.level = 0.95,
+  .prop_method = "logit",
+  .df = NULL
 )
 }
 \arguments{
@@ -48,6 +62,12 @@ proportions unchanged.}
 
 \item{.correct}{Whether Yates' continuity correction should be applied to
 estimate confidence intervals (see \code{\link[stats:prop.test]{stats::prop.test()}}).}
+
+\item{.prop_method}{Type of proportion method to use
+(see \code{\link[survey:svyciprop]{survey::svyciprop()}}).}
+
+\item{.df}{A numeric value indicating the degrees of freedom. The default
+(\code{NULL}) uses \code{\link[survey:svychisq]{survey::degf()}} (see \code{\link[survey:svyciprop]{survey::svyciprop()}}).}
 }
 \value{
 A tibble with one row per group.
@@ -76,4 +96,21 @@ titanic |> # equivalent syntax
 titanic |> proportion(Class, Sex, Survived)
 titanic |> proportion(Sex, Survived, .by = Class)
 titanic |> proportion(Survived, .by = c(Class, Sex))
+d <- srvyr::as_survey(titanic)
+
+# univariable table
+d |> proportion(Class)
+d |> proportion(Class, .sort = TRUE)
+d |> proportion(Class, .conf.int = TRUE)
+d |> proportion(Class, .conf.int = TRUE, .scale = 1)
+
+# bivariable table
+d |> proportion(Class, Survived) # proportions of the total
+d |> proportion(Survived, .by = Class) # row proportions
+d |> dplyr::group_by(Class) |> proportion(Survived)
+
+# combining 3 variables or more
+d |> proportion(Class, Sex, Survived)
+d |> proportion(Sex, Survived, .by = Class)
+d |> proportion(Survived, .by = c(Class, Sex))
 }

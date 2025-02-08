@@ -101,3 +101,88 @@ proportion.data.frame <- function(data,
     prop_high = t$conf.int[[2]] * scale
   )
 }
+
+#' @export
+#' @rdname proportion
+#' @param .prop_method Type of proportion method to use
+#' (see [survey::svyciprop()]).
+#' @param .df A numeric value indicating the degrees of freedom. The default
+#' (`NULL`) uses [survey::degf()] (see [survey::svyciprop()]).
+#' @examples
+#' ## SURVEY DATA
+#'
+#' d <- srvyr::as_survey(titanic)
+#'
+#' # univariable table
+#' d |> proportion(Class)
+#' d |> proportion(Class, .sort = TRUE)
+#' d |> proportion(Class, .conf.int = TRUE)
+#' d |> proportion(Class, .conf.int = TRUE, .scale = 1)
+#'
+#' # bivariable table
+#' d |> proportion(Class, Survived) # proportions of the total
+#' d |> proportion(Survived, .by = Class) # row proportions
+#' d |> dplyr::group_by(Class) |> proportion(Survived)
+#'
+#' # combining 3 variables or more
+#' d |> proportion(Class, Sex, Survived)
+#' d |> proportion(Sex, Survived, .by = Class)
+#' d |> proportion(Survived, .by = c(Class, Sex))
+proportion.survey.design <- function(data,
+                                     ...,
+                                     .by = NULL,
+                                     .weight = NULL,
+                                     .scale = 100,
+                                     .sort = FALSE,
+                                     .conf.int = FALSE,
+                                     .conf.level = .95,
+                                     .prop_method = "logit",
+                                     .df = NULL) {
+  res <-
+    data |>
+    dplyr::group_by(dplyr::pick({{ .by }}), .add = TRUE) |>
+    .add_interact(...) |>
+    dplyr::summarise(
+      n = srvyr::survey_total(vartype = NULL),
+      prop = srvyr::survey_prop(
+        proportion = TRUE,
+        vartype = if (.conf.int) "ci" else NULL,
+        level = .conf.level,
+        prop_method = .prop_method,
+        df = .df
+      ) * .scale
+    ) |>
+    dplyr::group_by(
+      dplyr::pick(
+        dplyr::all_of(dplyr::group_vars(data)),
+        {{ .by }}
+      )
+    ) |>
+    dplyr::mutate(
+      N = sum(.data$n)
+    ) |>
+    dplyr::relocate(.data$N, .after = .data$n)
+  if (.conf.int)
+    res <-
+      res |>
+      dplyr::rename(prop_high = .data$prop_upp)
+  if (.sort)
+    res <-
+      res |>
+      dplyr::arrange(dplyr::desc(.data$prop))
+  res
+}
+
+.add_interact <- function(data, ...) {
+  v <-
+    tidyselect::eval_select(
+      rlang::expr(c(...)),
+      data = data$variables,
+      allow_rename = FALSE
+    ) |>
+    names()
+  if (length(v) == 0) return(data)
+  i <- paste0("srvyr::interact(", paste(v, collapse = ", "), ")")
+  data |>
+    dplyr::group_by(!! rlang::parse_expr(i), .add = TRUE)
+}
