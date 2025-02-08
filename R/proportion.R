@@ -11,24 +11,32 @@
 #' @param .by <[`tidy-select`][dplyr::dplyr_tidy_select ]> Optional additional
 #' variables to group by (in addition to those eventually previously declared
 #' using [dplyr::group_by()]).
-#' @export
-proportion <- function(.data, ..., .by = NULL) {
-  UseMethod("proportion")
-}
-
-#' @export
-#' @rdname proportion
 #' @param .weight <[`data-masking`][rlang::args_data_masking]> Frequency
 #' weights. Can be `NULL` or a variable.
 #' @param .scale A scaling factor applied to proportion. Use `1` for keeping
 #' proportions unchanged.
 #' @param .sort If `TRUE`, will show the highest proportions at the top.
 #' @param .drop If `TRUE`, will remove empty groups from the output.
-#' @param .conf.int If `TRUE`, will estimate confidence intervals with
-#' [stats::prop.test()].
+#' @param .conf.int If `TRUE`, will estimate confidence intervals.
 #' @param .conf.level Confidence level for the returned confidence intervals.
-#' @param .correct Whether Yates' continuity correction should be applied to
-#' estimate confidence intervals (see [stats::prop.test()]).
+#' @param .options Additional arguments passed to [stats::prop.test()]
+#' or [srvyr::survey_prop()].
+#' @export
+proportion <- function(.data,
+                       ...,
+                       .by = NULL,
+                       .weight = NULL,
+                       .scale = 100,
+                       .sort = FALSE,
+                       .drop = FALSE,
+                       .conf.int = FALSE,
+                       .conf.level = .95,
+                       .options = NULL) {
+  UseMethod("proportion")
+}
+
+#' @export
+#' @rdname proportion
 #' @return A tibble with one row per group.
 #' @examples
 #'
@@ -58,7 +66,7 @@ proportion.data.frame <- function(data,
                                   .drop = FALSE,
                                   .conf.int = FALSE,
                                   .conf.level = .95,
-                                  .correct = TRUE) {
+                                  .options = list(correct = TRUE)) {
   res <-
     data |>
     dplyr::group_by(dplyr::pick({{ .by }}), .add = TRUE) |>
@@ -80,7 +88,7 @@ proportion.data.frame <- function(data,
           .data$n,
           .data$N,
           conf.level = .conf.level,
-          correct = .correct,
+          options = .options,
           scale = .scale
         )
       ) |>
@@ -93,9 +101,11 @@ proportion.data.frame <- function(data,
 
 .ci_prop <- function(n, N,
                      conf.level = .95,
-                     correct = TRUE,
+                     options = list(correct = TRUE),
                      scale = 1) {
-  t <- stats::prop.test(n, N, conf.level = conf.level, correct = correct)
+  t <- rlang::inject(
+    stats::prop.test(n, N, conf.level = conf.level, !!!options)
+  )
   dplyr::tibble(
     prop_low = t$conf.int[[1]] * scale,
     prop_high = t$conf.int[[2]] * scale
@@ -136,20 +146,20 @@ proportion.survey.design <- function(data,
                                      .sort = FALSE,
                                      .conf.int = FALSE,
                                      .conf.level = .95,
-                                     .prop_method = "logit",
-                                     .df = NULL) {
+                                     .options = NULL) {
   res <-
     data |>
     dplyr::group_by(dplyr::pick({{ .by }}), .add = TRUE) |>
     .add_interact(...) |>
     dplyr::summarise(
       n = srvyr::survey_total(vartype = NULL),
-      prop = srvyr::survey_prop(
-        proportion = TRUE,
-        vartype = if (.conf.int) "ci" else NULL,
-        level = .conf.level,
-        prop_method = .prop_method,
-        df = .df
+      prop = rlang::inject(
+        srvyr::survey_prop(
+          proportion = TRUE,
+          vartype = if (.conf.int) "ci" else NULL,
+          level = .conf.level,
+          !!! .options
+        )
       ) * .scale
     ) |>
     dplyr::group_by(

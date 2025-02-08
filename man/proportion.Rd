@@ -6,7 +6,18 @@
 \alias{proportion.survey.design}
 \title{Compute proportions}
 \usage{
-proportion(.data, ..., .by = NULL)
+proportion(
+  .data,
+  ...,
+  .by = NULL,
+  .weight = NULL,
+  .scale = 100,
+  .sort = FALSE,
+  .drop = FALSE,
+  .conf.int = FALSE,
+  .conf.level = 0.95,
+  .options = NULL
+)
 
 \method{proportion}{data.frame}(
   data,
@@ -18,7 +29,7 @@ proportion(.data, ..., .by = NULL)
   .drop = FALSE,
   .conf.int = FALSE,
   .conf.level = 0.95,
-  .correct = TRUE
+  .options = list(correct = TRUE)
 )
 
 \method{proportion}{survey.design}(
@@ -30,8 +41,7 @@ proportion(.data, ..., .by = NULL)
   .sort = FALSE,
   .conf.int = FALSE,
   .conf.level = 0.95,
-  .prop_method = "logit",
-  .df = NULL
+  .options = NULL
 )
 }
 \arguments{
@@ -41,9 +51,6 @@ computing proportions.}
 \item{.by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> Optional additional
 variables to group by (in addition to those eventually previously declared
 using \code{\link[dplyr:group_by]{dplyr::group_by()}}).}
-
-\item{data}{A data frame, data frame extension (e.g. a tibble),
-or a survey design object.}
 
 \item{.weight}{<\code{\link[rlang:args_data_masking]{data-masking}}> Frequency
 weights. Can be \code{NULL} or a variable.}
@@ -55,13 +62,15 @@ proportions unchanged.}
 
 \item{.drop}{If \code{TRUE}, will remove empty groups from the output.}
 
-\item{.conf.int}{If \code{TRUE}, will estimate confidence intervals with
-\code{\link[stats:prop.test]{stats::prop.test()}}.}
+\item{.conf.int}{If \code{TRUE}, will estimate confidence intervals.}
 
 \item{.conf.level}{Confidence level for the returned confidence intervals.}
 
-\item{.correct}{Whether Yates' continuity correction should be applied to
-estimate confidence intervals (see \code{\link[stats:prop.test]{stats::prop.test()}}).}
+\item{.options}{Additional arguments passed to \code{\link[stats:prop.test]{stats::prop.test()}}
+or \code{\link[srvyr:survey_mean]{srvyr::survey_prop()}}.}
+
+\item{data}{A data frame, data frame extension (e.g. a tibble),
+or a survey design object.}
 
 \item{.prop_method}{Type of proportion method to use
 (see \code{\link[survey:svyciprop]{survey::svyciprop()}}).}
