@@ -27,7 +27,6 @@ proportion(data, ..., .by = NULL)
   .by = NULL,
   .scale = 100,
   .sort = FALSE,
-  .drop = FALSE,
   .conf.int = FALSE,
   .conf.level = 0.95,
   .options = NULL

@@ -62,7 +62,7 @@ proportion.data.frame <- function(data,
                                   .options = list(correct = TRUE)) {
   res <-
     data |>
-    dplyr::group_by(dplyr::pick({{ .by }}), .add = TRUE) |>
+    dplyr::group_by(dplyr::pick({{ .by }}), .add = TRUE, .drop = FALSE) |>
     dplyr::count(..., wt = {{ .weight }}, .drop = .drop, name = "n") |>
     dplyr::mutate(
       N = sum(.data$n),
@@ -132,7 +132,6 @@ proportion.survey.design <- function(data,
                                      .by = NULL,
                                      .scale = 100,
                                      .sort = FALSE,
-                                     .drop = FALSE,
                                      .conf.int = FALSE,
                                      .conf.level = .95,
                                      .options = NULL) {
@@ -169,10 +168,6 @@ proportion.survey.design <- function(data,
     res <-
       res |>
       dplyr::arrange(dplyr::desc(.data$prop))
-  if (.drop)
-    res <-
-      res |>
-      dplyr::filter(.data$n > 0)
   res
 }
 
