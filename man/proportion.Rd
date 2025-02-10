@@ -6,18 +6,7 @@
 \alias{proportion.survey.design}
 \title{Compute proportions}
 \usage{
-proportion(
-  data,
-  ...,
-  .by = NULL,
-  .weight = NULL,
-  .scale = 100,
-  .sort = FALSE,
-  .drop = FALSE,
-  .conf.int = FALSE,
-  .conf.level = 0.95,
-  .options = NULL
-)
+proportion(data, ..., .by = NULL)
 
 \method{proportion}{data.frame}(
   data,
@@ -36,7 +25,6 @@ proportion(
   data,
   ...,
   .by = NULL,
-  .weight = NULL,
   .scale = 100,
   .sort = FALSE,
   .drop = FALSE,

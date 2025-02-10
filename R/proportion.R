@@ -24,14 +24,7 @@
 #' @export
 proportion <- function(data,
                        ...,
-                       .by = NULL,
-                       .weight = NULL,
-                       .scale = 100,
-                       .sort = FALSE,
-                       .drop = FALSE,
-                       .conf.int = FALSE,
-                       .conf.level = .95,
-                       .options = NULL) {
+                       .by = NULL) {
   UseMethod("proportion")
 }
 
@@ -137,7 +130,6 @@ proportion.data.frame <- function(data,
 proportion.survey.design <- function(data,
                                      ...,
                                      .by = NULL,
-                                     .weight = NULL,
                                      .scale = 100,
                                      .sort = FALSE,
                                      .drop = FALSE,
