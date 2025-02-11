@@ -16,7 +16,7 @@ computed if not provided}
 
 \item{prefix, suffix}{Symbols to display before and after value}
 
-\item{...}{additional paramaters passed to \code{\link[base:formatc]{base::formatC()}},
+\item{...}{additional parameters passed to \code{\link[base:formatc]{base::formatC()}},
 as \code{big.mark} or \code{decimal.mark}}
 }
 \description{

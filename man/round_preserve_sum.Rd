@@ -23,8 +23,8 @@ This solution applies the following algorithm
 \itemize{
 \item Round down to the specified number of decimal places
 \item Order numbers by their remainder values
-\item Increment the specified decimal place of values with ‘k’ largest
-remainders, where ‘k’ is the number of values that must be incremented to
+\item Increment the specified decimal place of values with \emph{k} largest
+remainders, where \emph{k} is the number of values that must be incremented to
 preserve their rounded sum
 }
 }

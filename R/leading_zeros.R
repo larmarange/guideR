@@ -5,7 +5,7 @@
 #' computed if not provided
 #' @param digits number of digits after decimal point
 #' @param prefix,suffix Symbols to display before and after value
-#' @param ... additional paramaters passed to [base::formatC()],
+#' @param ... additional parameters passed to [base::formatC()],
 #' as \code{big.mark} or \code{decimal.mark}
 #' @export
 #' @seealso [base::formatC()], [base::sprintf()]

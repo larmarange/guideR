@@ -21,7 +21,7 @@ will be derived from the dataset, considering that each row ends at the
 beginning of the next one.}
 
 \item{by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
-co-variables to consider (optionnal)}
+co-variables to consider (optional)}
 }
 \description{
 Transform a data frame from long format to period format

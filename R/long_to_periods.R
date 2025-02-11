@@ -10,7 +10,7 @@
 #' will be derived from the dataset, considering that each row ends at the
 #' beginning of the next one.
 #' @param by <[`tidy-select`][dplyr::dplyr_tidy_select ]>
-#' co-variables to consider (optionnal)
+#' co-variables to consider (optional)
 #' @examples
 #' d <- dplyr::tibble(
 #'   patient = c(1, 2, 3, 3, 4, 4, 4),

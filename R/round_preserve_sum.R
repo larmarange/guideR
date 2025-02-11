@@ -6,8 +6,8 @@
 #' This solution applies the following algorithm
 #' - Round down to the specified number of decimal places
 #' - Order numbers by their remainder values
-#' - Increment the specified decimal place of values with ‘k’ largest
-#'   remainders, where ‘k’ is the number of values that must be incremented to
+#' - Increment the specified decimal place of values with *k* largest
+#'   remainders, where *k* is the number of values that must be incremented to
 #'   preserve their rounded sum
 #' @param x vector to sum
 #' @param digits number of decimals for rounding
