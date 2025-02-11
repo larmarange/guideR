@@ -122,7 +122,8 @@ proportion.data.frame <- function(data,
 #' @export
 #' @rdname proportion
 #' @examples
-#' ## SURVEY DATA
+#'
+#' ## SURVEY DATA ------------------------------------------------------
 #'
 #' ds <- srvyr::as_survey(titanic)
 #'
