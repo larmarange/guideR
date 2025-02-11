@@ -11,6 +11,8 @@
 #' @param .by <[`tidy-select`][dplyr::dplyr_tidy_select ]> Optional additional
 #' variables to group by (in addition to those eventually previously declared
 #' using [dplyr::group_by()]).
+#' @param .na.rm Should `NA` values be removed
+#' (from variables declared in `...`)?
 #' @param .weight <[`data-masking`][rlang::args_data_masking]> Frequency
 #' weights. Can be `NULL` or a variable.
 #' @param .scale A scaling factor applied to proportion. Use `1` for keeping
@@ -50,9 +52,16 @@ proportion <- function(data,
 #' titanic |> proportion(Class, Sex, Survived)
 #' titanic |> proportion(Sex, Survived, .by = Class)
 #' titanic |> proportion(Survived, .by = c(Class, Sex))
+#'
+#' # missing values
+#' dna <- titanic
+#' dna$Survived[c(1:20, 500:530)] <- NA
+#' dna |> proportion(Survived)
+#' dna |> proportion(Survived, .na.rm = TRUE)
 proportion.data.frame <- function(data,
                                   ...,
                                   .by = NULL,
+                                  .na.rm = FALSE,
                                   .weight = NULL,
                                   .scale = 100,
                                   .sort = FALSE,
@@ -60,6 +69,11 @@ proportion.data.frame <- function(data,
                                   .conf.int = FALSE,
                                   .conf.level = .95,
                                   .options = list(correct = TRUE)) {
+  if (.na.rm)
+    data <-
+      data |>
+      tidyr::drop_na(...)
+
   res <-
     data |>
     dplyr::group_by(dplyr::pick({{ .by }}), .add = TRUE, .drop = FALSE) |>
@@ -110,31 +124,49 @@ proportion.data.frame <- function(data,
 #' @examples
 #' ## SURVEY DATA
 #'
-#' d <- srvyr::as_survey(titanic)
+#' ds <- srvyr::as_survey(titanic)
 #'
 #' # univariable table
-#' d |> proportion(Class)
-#' d |> proportion(Class, .sort = TRUE)
-#' d |> proportion(Class, .conf.int = TRUE)
-#' d |> proportion(Class, .conf.int = TRUE, .scale = 1)
+#' ds |> proportion(Class)
+#' ds |> proportion(Class, .sort = TRUE)
+#' ds |> proportion(Class, .conf.int = TRUE)
+#' ds |> proportion(Class, .conf.int = TRUE, .scale = 1)
 #'
 #' # bivariable table
-#' d |> proportion(Class, Survived) # proportions of the total
-#' d |> proportion(Survived, .by = Class) # row proportions
-#' d |> dplyr::group_by(Class) |> proportion(Survived)
+#' ds |> proportion(Class, Survived) # proportions of the total
+#' ds |> proportion(Survived, .by = Class) # row proportions
+#' ds |> dplyr::group_by(Class) |> proportion(Survived)
 #'
 #' # combining 3 variables or more
-#' d |> proportion(Class, Sex, Survived)
-#' d |> proportion(Sex, Survived, .by = Class)
-#' d |> proportion(Survived, .by = c(Class, Sex))
+#' ds |> proportion(Class, Sex, Survived)
+#' ds |> proportion(Sex, Survived, .by = Class)
+#' ds |> proportion(Survived, .by = c(Class, Sex))
+#'
+#' # missing values
+#' dsna <- srvyr::as_survey(dna)
+#' dsna |> proportion(Survived)
+#' dsna |> proportion(Survived, .na.rm = TRUE)
 proportion.survey.design <- function(data,
                                      ...,
                                      .by = NULL,
+                                     .na.rm = FALSE,
                                      .scale = 100,
                                      .sort = FALSE,
                                      .conf.int = FALSE,
                                      .conf.level = .95,
                                      .options = NULL) {
+  if (.na.rm) {
+    v <-
+      tidyselect::eval_select(
+        rlang::expr(c(...)),
+        data = data$variables,
+        allow_rename = FALSE
+      ) |>
+      names()
+    data <-
+      data |>
+      tidyr::drop_na(dplyr::all_of(v))
+  }
   res <-
     data |>
     dplyr::group_by(dplyr::pick({{ .by }}), .add = TRUE) |>

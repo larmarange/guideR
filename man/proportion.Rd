@@ -12,6 +12,7 @@ proportion(data, ..., .by = NULL)
   data,
   ...,
   .by = NULL,
+  .na.rm = FALSE,
   .weight = NULL,
   .scale = 100,
   .sort = FALSE,
@@ -25,6 +26,7 @@ proportion(data, ..., .by = NULL)
   data,
   ...,
   .by = NULL,
+  .na.rm = FALSE,
   .scale = 100,
   .sort = FALSE,
   .conf.int = FALSE,
@@ -42,6 +44,9 @@ computing proportions.}
 \item{.by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> Optional additional
 variables to group by (in addition to those eventually previously declared
 using \code{\link[dplyr:group_by]{dplyr::group_by()}}).}
+
+\item{.na.rm}{Should \code{NA} values be removed
+(from variables declared in \code{...})?}
 
 \item{.weight}{<\code{\link[rlang:args_data_masking]{data-masking}}> Frequency
 weights. Can be \code{NULL} or a variable.}
@@ -87,23 +92,34 @@ titanic |> # equivalent syntax
 titanic |> proportion(Class, Sex, Survived)
 titanic |> proportion(Sex, Survived, .by = Class)
 titanic |> proportion(Survived, .by = c(Class, Sex))
+
+# missing values
+dna <- titanic
+dna$Survived[c(1:20, 500:530)] <- NA
+dna |> proportion(Survived)
+dna |> proportion(Survived, .na.rm = TRUE)
 ## SURVEY DATA
 
-d <- srvyr::as_survey(titanic)
+ds <- srvyr::as_survey(titanic)
 
 # univariable table
-d |> proportion(Class)
-d |> proportion(Class, .sort = TRUE)
-d |> proportion(Class, .conf.int = TRUE)
-d |> proportion(Class, .conf.int = TRUE, .scale = 1)
+ds |> proportion(Class)
+ds |> proportion(Class, .sort = TRUE)
+ds |> proportion(Class, .conf.int = TRUE)
+ds |> proportion(Class, .conf.int = TRUE, .scale = 1)
 
 # bivariable table
-d |> proportion(Class, Survived) # proportions of the total
-d |> proportion(Survived, .by = Class) # row proportions
-d |> dplyr::group_by(Class) |> proportion(Survived)
+ds |> proportion(Class, Survived) # proportions of the total
+ds |> proportion(Survived, .by = Class) # row proportions
+ds |> dplyr::group_by(Class) |> proportion(Survived)
 
 # combining 3 variables or more
-d |> proportion(Class, Sex, Survived)
-d |> proportion(Sex, Survived, .by = Class)
-d |> proportion(Survived, .by = c(Class, Sex))
+ds |> proportion(Class, Sex, Survived)
+ds |> proportion(Sex, Survived, .by = Class)
+ds |> proportion(Survived, .by = c(Class, Sex))
+
+# missing values
+dsna <- srvyr::as_survey(dna)
+dsna |> proportion(Survived)
+dsna |> proportion(Survived, .na.rm = TRUE)
 }
