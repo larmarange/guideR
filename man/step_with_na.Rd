@@ -60,6 +60,7 @@ mod <- glm(as.factor(Survived) ~ ., data = d, family = binomial())
 mod2 <- step_with_na(mod)
 mod2
 
+\dontrun{
 ## WITH SURVEY ---------------------------------------
 
 ds <- d |>
@@ -72,4 +73,5 @@ mods <- survey::svyglm(
 )
 mod2s <- step_with_na(mods, design = ds)
 mod2s
+}
 }

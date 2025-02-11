@@ -93,6 +93,7 @@ step_with_na.default <- function(model,
 #' @export
 #' @examples
 #'
+#' \dontrun{
 #' ## WITH SURVEY ---------------------------------------
 #'
 #' ds <- d |>
@@ -105,6 +106,7 @@ step_with_na.default <- function(model,
 #' )
 #' mod2s <- step_with_na(mods, design = ds)
 #' mod2s
+#' }
 step_with_na.svyglm <- function(model, ..., design) {
   # list of variables
   rlang::check_installed("broom.helpers")
