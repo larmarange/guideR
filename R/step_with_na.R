@@ -2,7 +2,7 @@
 #'
 #' When your data contains missing values, concerned observations are removed
 #' from a model. However, then at a later stage, you try to apply a descending
-#' stepwise approach to reduce your model by minimisation of AIC, you may
+#' stepwise approach to reduce your model by minimization of AIC, you may
 #' encounter an error because the number of rows has changed.
 #'
 #' `step_with_na()` applies the following strategy:
