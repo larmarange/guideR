@@ -109,6 +109,7 @@ may try to pass <code>full_data</code> to the function.</p>
 <span class="r-in"><span><span class="va">mod2</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'mod2' not found</span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="co">## WITH SURVEY ---------------------------------------</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">ds</span> <span class="op">&lt;-</span> <span class="va">d</span> <span class="op">|&gt;</span></span></span>
@@ -120,9 +121,8 @@ may try to pass <code>full_data</code> to the function.</p>
 <span class="r-in"><span>  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">quasibinomial</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">mod2s</span> <span class="op">&lt;-</span> <span class="fu">step_with_na</span><span class="op">(</span><span class="va">mods</span>, design <span class="op">=</span> <span class="va">ds</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in svyglm(formula = Survived ~ Class + Group + Sex, design = design_no_na,     family = quasibinomial()):</span> could not find function "svyglm"</span>
 <span class="r-in"><span><span class="va">mod2s</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'mod2s' not found</span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
