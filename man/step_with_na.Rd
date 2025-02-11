@@ -4,7 +4,7 @@
 \alias{step_with_na}
 \alias{step_with_na.default}
 \alias{step_with_na.svyglm}
-\title{Setp with NA}
+\title{Apply \code{step()}, taking into account missing values}
 \usage{
 step_with_na(model, ...)
 
@@ -22,5 +22,50 @@ step_with_na(model, ...)
 \item{design}{Survey design previously passed to \code{\link[survey:svyglm]{survey::svyglm()}}.}
 }
 \description{
-Setp with NA
+When your data contains missing values, concerned observations are removed
+from a model. However, then at a later stage, you try to apply a descending
+stepwise approach to reduce your model by minimisation of AIC, you may
+encounter an error because the number of rows has changed.
+}
+\details{
+\code{step_with_na()} applies the following strategy:
+\itemize{
+\item recomputes the models using only complete cases;
+\item applies \code{\link[stats:step]{stats::step()}};
+\item recomputes the reduced model using the full original dataset.
+}
+
+\code{step_with_na()} has been tested with \code{\link[stats:lm]{stats::lm()}}, \code{\link[stats:glm]{stats::glm()}},
+\code{\link[nnet:multinom]{nnet::multinom()}} and \code{\link[survey:svyglm]{survey::svyglm()}}. It may be working with other
+types of models, but with no warranty.
+
+In some cases, it may be necessary to provide the full dataset initially
+used to estimate the model.
+}
+\examples{
+d <- titanic |>
+  dplyr::mutate(
+    Group = sample(
+      c("a", "b", NA),
+      dplyr::n(),
+      replace = TRUE
+    )
+  )
+mod <- glm(as.factor(Survived) ~ ., data = d, family = binomial())
+# step(mod) should produce an error
+mod2 <- step_with_na(mod)
+mod2
+
+## WITH SURVEY ---------------------------------------
+
+ds <- d |>
+  dplyr::mutate(Survived = as.factor(Survived)) |>
+  srvyr::as_survey()
+mods <- survey::svyglm(
+  Survived ~ Class + Group + Sex,
+  design = ds,
+  family = quasibinomial()
+)
+mod2s <- step_with_na(mods, design = ds)
+mod2s
 }

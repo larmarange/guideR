@@ -1,4 +1,21 @@
-#' Setp with NA
+#' Apply `step()`, taking into account missing values
+#'
+#' When your data contains missing values, concerned observations are removed
+#' from a model. However, then at a later stage, you try to apply a descending
+#' stepwise approach to reduce your model by minimisation of AIC, you may
+#' encounter an error because the number of rows has changed.
+#'
+#' `step_with_na()` applies the following strategy:
+#' - recomputes the models using only complete cases;
+#' - applies [stats::step()];
+#' - recomputes the reduced model using the full original dataset.
+#'
+#' `step_with_na()` has been tested with [stats::lm()], [stats::glm()],
+#' [nnet::multinom()] and [survey::svyglm()]. It may be working with other
+#' types of models, but with no warranty.
+#'
+#' In some cases, it may be necessary to provide the full dataset initially
+#' used to estimate the model.
 #'
 #' @param model A model object.
 #' @param ... Additional parameters passed to [stats::step()].
@@ -11,6 +28,19 @@ step_with_na <- function(model,
 #' @rdname step_with_na
 #' @param full_data Full data frame used for the model, including missing data.
 #' @export
+#' @examples
+#' d <- titanic |>
+#'   dplyr::mutate(
+#'     Group = sample(
+#'       c("a", "b", NA),
+#'       dplyr::n(),
+#'       replace = TRUE
+#'     )
+#'   )
+#' mod <- glm(as.factor(Survived) ~ ., data = d, family = binomial())
+#' # step(mod) should produce an error
+#' mod2 <- step_with_na(mod)
+#' mod2
 step_with_na.default <- function(model,
                                  ...,
                                  full_data = eval(model$call$data)) {
@@ -57,6 +87,20 @@ step_with_na.default <- function(model,
 #' @rdname step_with_na
 #' @param design Survey design previously passed to [survey::svyglm()].
 #' @export
+#' @examples
+#'
+#' ## WITH SURVEY ---------------------------------------
+#'
+#' ds <- d |>
+#'   dplyr::mutate(Survived = as.factor(Survived)) |>
+#'   srvyr::as_survey()
+#' mods <- survey::svyglm(
+#'   Survived ~ Class + Group + Sex,
+#'   design = ds,
+#'   family = quasibinomial()
+#' )
+#' mod2s <- step_with_na(mods, design = ds)
+#' mod2s
 step_with_na.svyglm <- function(model, ..., design) {
   rlang::check_installed("broom.helpers")
   # list of variables
@@ -68,7 +112,7 @@ step_with_na.svyglm <- function(model, ..., design) {
   design_no_na <- design |>
     srvyr::drop_na(dplyr::any_of(variables))
   # refit the model without NAs
-  model_no_na <- stats::update(model, data = design_no_na)
+  model_no_na <- stats::update(model, design = design_no_na)
   # apply step()
   model_simplified <- stats::step(model_no_na, ...)
   # recompute simplified model using full data
