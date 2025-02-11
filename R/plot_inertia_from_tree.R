@@ -14,17 +14,17 @@ plot_inertia_from_tree <- function(tree, k_max = 15) {
   d <- get_inertia_from_tree(tree, k_max)
   p_inertia <-
     ggplot2::ggplot(d) +
-    ggplot2::aes(x = k, y = inertia) +
+    ggplot2::aes(x = .data[["k"]], y = .data[["inertia"]]) +
     ggplot2::geom_step(na.rm = TRUE) +
     ggplot2::ylab("Inertia")
   p_absolute <-
     ggplot2::ggplot(d) +
-    ggplot2::aes(x = k, y = absolute_loss) +
+    ggplot2::aes(x = .data[["k"]], y = .data[["absolute_loss"]]) +
     ggplot2::geom_bar(stat = "identity", fill = "#4477AA", na.rm = TRUE) +
     ggplot2::ylab("Absolute loss")
   p_relative <-
     ggplot2::ggplot(d) +
-    ggplot2::aes(x = k, y = relative_loss) +
+    ggplot2::aes(x = .data[["k"]], y = .data[["relative_loss"]]) +
     ggplot2::geom_line(color = "#AA3377", na.rm = TRUE) +
     ggplot2::geom_point(size = 3, color = "#AA3377", na.rm = TRUE) +
     ggplot2::scale_y_continuous(label = scales::percent) +

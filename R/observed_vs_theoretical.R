@@ -30,7 +30,7 @@ observed_vs_theoretical <- function(model) {
   )
   if (is.numeric(observed) && any(observed != as.integer(observed))) {
     ggplot2::ggplot(df) +
-      ggplot2::aes(x = values, fill = status) +
+      ggplot2::aes(x = .data[["values"]], fill = .data[["status"]]) +
       ggplot2::geom_density(
         alpha = .5,
         position = "identity"
@@ -39,7 +39,7 @@ observed_vs_theoretical <- function(model) {
       ggplot2::labs(fill = NULL)
   } else {
     ggplot2::ggplot(df) +
-      ggplot2::aes(x = values, fill = status) +
+      ggplot2::aes(x = .data[["values"]], fill = .data[["status"]]) +
       ggplot2::geom_bar(
         alpha = .5,
         position = "identity"
