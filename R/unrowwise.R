@@ -4,6 +4,7 @@
 #' any other grouping declared with [dplyr::group_by()].
 #' @param data A data frame, data frame extension (e.g. a tibble), or a
 #' lazy data frame.
+#' @return A tibble.
 #' @examples
 #' titanic |> dplyr::rowwise()
 #' titanic |> dplyr::rowwise() |> unrowwise()

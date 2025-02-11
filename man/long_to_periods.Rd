@@ -7,21 +7,24 @@
 long_to_periods(data, id, start, stop = NULL, by = NULL)
 }
 \arguments{
-\item{data}{a data.frame}
+\item{data}{A data frame, or a data frame extension (e.g. a tibble).}
 
 \item{id}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
-column containing individual ids}
+Column containing individual ids}
 
 \item{start}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
-time variable indicating the beginning of each row}
+Time variable indicating the beginning of each row}
 
 \item{stop}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
-optional time variable indicating the end of each row. If not provided, it
+Optional time variable indicating the end of each row. If not provided, it
 will be derived from the dataset, considering that each row ends at the
 beginning of the next one.}
 
 \item{by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
-co-variables to consider (optional)}
+Co-variables to consider (optional)}
+}
+\value{
+A tibble.
 }
 \description{
 Transform a data frame from long format to period format

@@ -10,9 +10,12 @@
 round_preserve_sum(x, digits = 0)
 }
 \arguments{
-\item{x}{vector to sum}
+\item{x}{Numerical vector to sum.}
 
-\item{digits}{number of decimals for rounding}
+\item{digits}{Number of decimals for rounding.}
+}
+\value{
+A numerical vector of same length as \code{x}.
 }
 \description{
 Sometimes, the sum of rounded numbers (e.g., using \code{\link[base:Round]{base::round()}}) is not

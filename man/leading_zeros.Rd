@@ -19,6 +19,9 @@ computed if not provided}
 \item{...}{additional parameters passed to \code{\link[base:formatc]{base::formatC()}},
 as \code{big.mark} or \code{decimal.mark}}
 }
+\value{
+A character vector of the same length as \code{x}.
+}
 \description{
 Add leading zeros
 }

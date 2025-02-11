@@ -8,6 +8,8 @@
 #' version of a package that is already installed. Installations that only add
 #' new packages never require confirmation.
 #' @export
+#' @return (Invisibly) A data frame with information about the installed
+#' package(s).
 #' @examples
 #' \dontrun{
 #' install_dependencies()

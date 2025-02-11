@@ -22,6 +22,7 @@
 #'
 #' @param model A model object.
 #' @param ... Additional parameters passed to [stats::step()].
+#' @return The stepwise-selected model.
 #' @export
 step_with_na <- function(model,
                          ...) {

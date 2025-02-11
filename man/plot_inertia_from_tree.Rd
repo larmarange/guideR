@@ -17,7 +17,7 @@ an \link[FactoMineR:HCPC]{FactoMineR::HCPC} object or an object that can be conv
 \item{k_max}{Maximum number of clusters to return / plot.}
 }
 \value{
-A \code{ggplot2} plot or a \code{tibble}.
+A \code{ggplot2} plot or a tibble.
 }
 \description{
 Plot inertia, absolute loss and relative loss from a classification tree

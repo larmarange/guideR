@@ -66,6 +66,8 @@ proportions unchanged.}
 or \code{\link[srvyr:survey_mean]{srvyr::survey_prop()}}.}
 }
 \value{
+A tibble.
+
 A tibble with one row per group.
 }
 \description{

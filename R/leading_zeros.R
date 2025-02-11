@@ -8,6 +8,7 @@
 #' @param ... additional parameters passed to [base::formatC()],
 #' as \code{big.mark} or \code{decimal.mark}
 #' @export
+#' @return A character vector of the same length as `x`.
 #' @seealso [base::formatC()], [base::sprintf()]
 #' @examples
 #' v <- c(2, 103.24, 1042.147, 12.4566, NA)

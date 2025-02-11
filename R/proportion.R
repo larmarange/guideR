@@ -23,6 +23,7 @@
 #' @param .conf.level Confidence level for the returned confidence intervals.
 #' @param .options Additional arguments passed to [stats::prop.test()]
 #' or [srvyr::survey_prop()].
+#' @return A tibble.
 #' @export
 proportion <- function(data,
                        ...,

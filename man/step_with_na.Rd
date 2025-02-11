@@ -21,6 +21,9 @@ step_with_na(model, ...)
 
 \item{design}{Survey design previously passed to \code{\link[survey:svyglm]{survey::svyglm()}}.}
 }
+\value{
+The stepwise-selected model.
+}
 \description{
 When your data contains missing values, concerned observations are removed
 from a model. However, then at a later stage, you try to apply a descending

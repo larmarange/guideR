@@ -18,6 +18,9 @@ num_cycle(x)
 \arguments{
 \item{x, y}{Vectors to be compared.}
 }
+\value{
+A vector of the same length as \code{x}.
+}
 \description{
 \code{is_different()} and \code{is_equal()} performs comparison tests, considering
 \code{NA} values as legitimate values (see examples).

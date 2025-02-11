@@ -10,6 +10,9 @@ unrowwise(data)
 \item{data}{A data frame, data frame extension (e.g. a tibble), or a
 lazy data frame.}
 }
+\value{
+A tibble.
+}
 \description{
 Remove row-wise grouping created with \code{\link[dplyr:rowwise]{dplyr::rowwise()}} while preserving
 any other grouping declared with \code{\link[dplyr:group_by]{dplyr::group_by()}}.

@@ -1,16 +1,17 @@
 #' Transform a data frame from long format to period format
 #'
-#' @param data a data.frame
+#' @param data A data frame, or a data frame extension (e.g. a tibble).
 #' @param id <[`tidy-select`][dplyr::dplyr_tidy_select ]>
-#' column containing individual ids
+#' Column containing individual ids
 #' @param start <[`tidy-select`][dplyr::dplyr_tidy_select ]>
-#' time variable indicating the beginning of each row
+#' Time variable indicating the beginning of each row
 #' @param stop <[`tidy-select`][dplyr::dplyr_tidy_select ]>
-#' optional time variable indicating the end of each row. If not provided, it
+#' Optional time variable indicating the end of each row. If not provided, it
 #' will be derived from the dataset, considering that each row ends at the
 #' beginning of the next one.
 #' @param by <[`tidy-select`][dplyr::dplyr_tidy_select ]>
-#' co-variables to consider (optional)
+#' Co-variables to consider (optional)
+#' @return A tibble.
 #' @examples
 #' d <- dplyr::tibble(
 #'   patient = c(1, 2, 3, 3, 4, 4, 4),

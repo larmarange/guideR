@@ -11,6 +11,10 @@ install_dependencies(ask = TRUE)
 version of a package that is already installed. Installations that only add
 new packages never require confirmation.}
 }
+\value{
+(Invisibly) A data frame with information about the installed
+package(s).
+}
 \description{
 This function uses \code{\link[renv:dependencies]{renv::dependencies()}} to identify R package dependencies
 in a project and then calls \code{\link[pak:pkg_install]{pak::pkg_install()}} to install / update these

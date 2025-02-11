@@ -5,7 +5,7 @@
 #' [stats::hclust] object with [stats::as.hclust()].
 #' @param k_max Maximum number of clusters to return / plot.
 #' @export
-#' @return A `ggplot2` plot or a `tibble`.
+#' @return A `ggplot2` plot or a tibble.
 #' @examples
 #' hc <- hclust(dist(USArrests))
 #' get_inertia_from_tree(hc)
