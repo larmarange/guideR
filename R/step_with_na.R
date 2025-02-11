@@ -120,6 +120,11 @@ step_with_na.svyglm <- function(model, ..., design) {
     srvyr::drop_na(dplyr::any_of(variables))
 
   # refit the model without NAs
+  rlang::check_installed("survey")
+  if (!"survey" %in% .packages()) {
+    cli::cli_alert_info("Package {.pkg survey} has been loaded.")
+    library(survey)
+  }
   model_no_na <- stats::update(model, design = design_no_na)
 
   # apply step()
