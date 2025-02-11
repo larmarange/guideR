@@ -29,6 +29,7 @@ Imports:
     purrr,
     renv,
     rlang,
+    scales,
     srvyr,
     tidyr,
     tidyselect
