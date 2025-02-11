@@ -124,6 +124,7 @@ proportion.data.frame <- function(data,
 #' @rdname proportion
 #' @examples
 #'
+#' \dontrun{
 #' ## SURVEY DATA ------------------------------------------------------
 #'
 #' ds <- srvyr::as_survey(titanic)
@@ -148,6 +149,7 @@ proportion.data.frame <- function(data,
 #' dsna <- srvyr::as_survey(dna)
 #' dsna |> proportion(Survived)
 #' dsna |> proportion(Survived, .na.rm = TRUE)
+#' }
 proportion.survey.design <- function(data,
                                      ...,
                                      .by = NULL,
