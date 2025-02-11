@@ -41,8 +41,12 @@ types of models, but with no warranty.
 
 In some cases, it may be necessary to provide the full dataset initially
 used to estimate the model.
+
+\code{step_with_na()} may not work inside other functions. In that case, you
+may try to pass \code{full_data} to the function.
 }
 \examples{
+set.seed(42)
 d <- titanic |>
   dplyr::mutate(
     Group = sample(

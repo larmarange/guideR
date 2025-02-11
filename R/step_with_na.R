@@ -17,6 +17,9 @@
 #' In some cases, it may be necessary to provide the full dataset initially
 #' used to estimate the model.
 #'
+#' `step_with_na()` may not work inside other functions. In that case, you
+#' may try to pass `full_data` to the function.
+#'
 #' @param model A model object.
 #' @param ... Additional parameters passed to [stats::step()].
 #' @export
@@ -29,6 +32,7 @@ step_with_na <- function(model,
 #' @param full_data Full data frame used for the model, including missing data.
 #' @export
 #' @examples
+#' set.seed(42)
 #' d <- titanic |>
 #'   dplyr::mutate(
 #'     Group = sample(
@@ -102,19 +106,27 @@ step_with_na.default <- function(model,
 #' mod2s <- step_with_na(mods, design = ds)
 #' mod2s
 step_with_na.svyglm <- function(model, ..., design) {
-  rlang::check_installed("broom.helpers")
   # list of variables
+  rlang::check_installed("broom.helpers")
   variables <- broom.helpers::model_list_variables(
     model,
     only_variable = TRUE
   )
+
   # design with no na
   design_no_na <- design |>
     srvyr::drop_na(dplyr::any_of(variables))
+
   # refit the model without NAs
   model_no_na <- stats::update(model, design = design_no_na)
+
   # apply step()
   model_simplified <- stats::step(model_no_na, ...)
+
   # recompute simplified model using full data
-  stats::update(model, formula = stats::terms(model_simplified))
+  stats::update(
+    model,
+    formula = stats::terms(model_simplified),
+    design = design
+  )
 }
