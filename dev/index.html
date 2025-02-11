@@ -54,7 +54,6 @@
 </h1></div>
 <!-- badges: start -->
 
-<!-- badges: end -->
 <p><code>guideR</code> package is a companion for the manual <em>guide-R : Guide pour l’analyse de données d’enquêtes avec R</em> available at <a href="https://larmarange.github.io/guide-R/" class="external-link uri">https://larmarange.github.io/guide-R/</a>.</p>
 <p><code>guideR</code> implements miscellaneous functions introduced in <em>guide-R</em> to facilitate statistical analysis.</p>
 <p><img src="https://larmarange.github.io/guide-R/ressources/cover-hd.png" width="450"></p>
@@ -70,37 +69,6 @@
 <code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"larmarange/guideR"</span><span class="op">)</span></span></code></pre></div>
 <p>Documentation of development version: <a href="https://larmarange.github.io/guideR/dev/" class="uri">https://larmarange.github.io/guideR/dev/</a></p>
-</div>
-<div class="section level2">
-<h2 id="compute-proportions">Compute proportions<a class="anchor" aria-label="anchor" href="#compute-proportions"></a>
-</h2>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">titanic</span> <span class="op">&lt;-</span> <span class="va">Titanic</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/uncount.html" class="external-link">uncount</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
-<span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://larmarange.github.io/guideR/">guideR</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">titanic</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/proportion.html">proportion</a></span><span class="op">(</span><span class="va">Class</span>, .conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 4 × 6</span></span>
-<span><span class="co">#&gt;   Class     n     N  prop prop_low prop_high</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 1st     325  2201  14.8     13.3      16.3</span></span>
-<span><span class="co">#&gt; 2 2nd     285  2201  12.9     11.6      14.4</span></span>
-<span><span class="co">#&gt; 3 3rd     706  2201  32.1     30.1      34.1</span></span>
-<span><span class="co">#&gt; 4 Crew    885  2201  40.2     38.2      42.3</span></span>
-<span></span>
-<span><span class="va">titanic</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/proportion.html">proportion</a></span><span class="op">(</span><span class="va">Survived</span>, .by <span class="op">=</span> <span class="va">Class</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 8 × 5</span></span>
-<span><span class="co">#&gt; # Groups:   Class [4]</span></span>
-<span><span class="co">#&gt;   Class Survived     n     N  prop</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt;    &lt;int&gt; &lt;int&gt; &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 1st   No         122   325  37.5</span></span>
-<span><span class="co">#&gt; 2 1st   Yes        203   325  62.5</span></span>
-<span><span class="co">#&gt; 3 2nd   No         167   285  58.6</span></span>
-<span><span class="co">#&gt; 4 2nd   Yes        118   285  41.4</span></span>
-<span><span class="co">#&gt; 5 3rd   No         528   706  74.8</span></span>
-<span><span class="co">#&gt; 6 3rd   Yes        178   706  25.2</span></span>
-<span><span class="co">#&gt; 7 Crew  No         673   885  76.0</span></span>
-<span><span class="co">#&gt; 8 Crew  Yes        212   885  24.0</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -140,8 +108,7 @@
 <ul class="list-unstyled">
 <li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
 <li><a href="https://github.com/larmarange/guideR/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/larmarange/guideR/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://app.codecov.io/gh/larmarange/gguideR" class="external-link"><img src="https://codecov.io/gh/larmarange/guideR/graph/badge.svg" alt="Codecov test coverage"></a></li>
-<li><a href="https://CRAN.R-project.org/package=guideR" class="external-link"><img src="https://www.r-pkg.org/badges/version/guideR" alt="CRAN status"></a></li>
+<li><a href="https://app.codecov.io/gh/larmarange/guideR" class="external-link"><img src="https://codecov.io/gh/larmarange/guideR/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
 
