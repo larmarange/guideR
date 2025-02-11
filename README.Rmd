@@ -17,8 +17,8 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental) [![R-CMD-check](https://github.com/larmarange/guideR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/larmarange/guideR/actions/workflows/R-CMD-check.yaml) [![Codecov test coverage](https://codecov.io/gh/larmarange/guideR/graph/badge.svg)](https://app.codecov.io/gh/larmarange/gguideR) [![CRAN status](https://www.r-pkg.org/badges/version/guideR)](https://CRAN.R-project.org/package=guideR)
-
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental) [![R-CMD-check](https://github.com/larmarange/guideR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/larmarange/guideR/actions/workflows/R-CMD-check.yaml) [![Codecov test coverage](https://codecov.io/gh/larmarange/guideR/graph/badge.svg)](https://app.codecov.io/gh/larmarange/guideR) 
+[![CRAN status](https://www.r-pkg.org/badges/version/guideR)]
 <!-- badges: end -->
 
 `guideR` package is a companion for the manual *guide-R : Guide pour l’analyse de données d’enquêtes avec R* available at <https://larmarange.github.io/guide-R/>.
@@ -45,15 +45,3 @@ pak::pak("larmarange/guideR")
 ```
 
 Documentation of development version: <https://larmarange.github.io/guideR/dev/>
-
-## Compute proportions
-
-```{r}
-titanic <- Titanic |> dplyr::as_tibble() |> tidyr::uncount(n)
-
-library(guideR)
-
-titanic |> proportion(Class, .conf.int = TRUE)
-
-titanic |> proportion(Survived, .by = Class)
-```
