@@ -98,6 +98,7 @@ step_with_na.default <- function(model,
 #' \donttest{
 #' ## WITH SURVEY ---------------------------------------
 #'
+#' library(survey)
 #' ds <- d |>
 #'   dplyr::mutate(Survived = as.factor(Survived)) |>
 #'   srvyr::as_survey()

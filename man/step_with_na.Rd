@@ -66,6 +66,7 @@ mod2
 \donttest{
 ## WITH SURVEY ---------------------------------------
 
+library(survey)
 ds <- d |>
   dplyr::mutate(Survived = as.factor(Survived)) |>
   srvyr::as_survey()
