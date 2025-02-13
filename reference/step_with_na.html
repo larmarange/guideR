@@ -116,6 +116,15 @@ may try to pass <code>full_data</code> to the function.</p>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co">## WITH SURVEY ---------------------------------------</span></span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://r-survey.r-forge.r-project.org/survey/" class="external-link">survey</a></span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: grid</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: Matrix</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: survival</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘survey’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:graphics’:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     dotchart</span>
 <span class="r-in"><span><span class="va">ds</span> <span class="op">&lt;-</span> <span class="va">d</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Survived <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">Survived</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">srvyr</span><span class="fu">::</span><span class="fu"><a href="http://gdfe.co/srvyr/reference/as_survey.html" class="external-link">as_survey</a></span><span class="op">(</span><span class="op">)</span></span></span>
@@ -125,10 +134,37 @@ may try to pass <code>full_data</code> to the function.</p>
 <span class="r-in"><span>  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">quasibinomial</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">mod2s</span> <span class="op">&lt;-</span> <span class="fu">step_with_na</span><span class="op">(</span><span class="va">mods</span>, design <span class="op">=</span> <span class="va">ds</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Package <span style="color: #0000BB;">survey</span> has been loaded.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in svyglm(formula = Survived ~ Class + Group + Sex, design = design_no_na,     family = quasibinomial()):</span> could not find function "svyglm"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Start:  AIC=1471.56</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Survived ~ Class + Group + Sex</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         Df Deviance    AIC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Group  1   1462.6 1469.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;none&gt;       1462.2 1471.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Class  3   1527.9 1530.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Sex    1   1712.6 1716.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Step:  AIC=1469.94</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Survived ~ Class + Sex</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         Df Deviance    AIC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;none&gt;       1462.6 1469.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Class  3   1528.4 1528.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Sex    1   1713.1 1714.8</span>
 <span class="r-in"><span><span class="va">mod2s</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'mod2s' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Independent Sampling design (with replacement)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Called via srvyr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sampling variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - ids: `1` </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:  svyglm(formula = Survived ~ Class + Sex, design = design, family = quasibinomial())</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)     Class2nd     Class3rd    ClassCrew      SexMale  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      2.0682      -0.9526      -1.6582      -0.8808      -2.4213  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Degrees of Freedom: 2200 Total (i.e. Null);  2196 Residual</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Null Deviance:	    2769 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual Deviance: 2229 	AIC: NA</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
