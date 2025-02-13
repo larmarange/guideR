@@ -6,7 +6,7 @@
 \alias{guideR-package}
 \title{guideR: Miscellaneous Statistical Functions Used in 'guide-R'}
 \description{
-Miscellaneous statistical functions introduced and used in the manual "guide-R : Guide pour l’analyse de données d’enquêtes avec R" available at \url{https://larmarange.github.io/guide-R/}.
+Companion package for the manual 'guide-R : Guide pour l’analyse de données d’enquêtes avec R' available at \url{https://larmarange.github.io/guide-R/}. 'guideR' implements miscellaneous functions introduced in 'guide-R' to facilitate statistical analysis and manipulation of survey data.
 }
 \seealso{
 Useful links:

@@ -32,3 +32,4 @@ mod <- glm(
 )
 mod |> observed_vs_theoretical()
 }
+\keyword{models}

@@ -10,7 +10,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![R-CMD-check](https://github.com/larmarange/guideR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/larmarange/guideR/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/larmarange/guideR/graph/badge.svg)](https://app.codecov.io/gh/larmarange/guideR)
-\[![CRAN status](https://www.r-pkg.org/badges/version/guideR)\]
+![CRAN status](https://www.r-pkg.org/badges/version/guideR)
 <!-- badges: end -->
 
 `guideR` package is a companion for the manual *guide-R : Guide pour
@@ -18,7 +18,7 @@ l’analyse de données d’enquêtes avec R* available at
 <https://larmarange.github.io/guide-R/>.
 
 `guideR` implements miscellaneous functions introduced in *guide-R* to
-facilitate statistical analysis.
+facilitate statistical analysis and manipulation of survey data.
 
 <img src="https://larmarange.github.io/guide-R/ressources/cover-hd.png"
 width="450" />

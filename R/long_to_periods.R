@@ -12,6 +12,7 @@
 #' @param by <[`tidy-select`][dplyr::dplyr_tidy_select ]>
 #' Co-variables to consider (optional)
 #' @return A tibble.
+#' @keywords manip
 #' @examples
 #' d <- dplyr::tibble(
 #'   patient = c(1, 2, 3, 3, 4, 4, 4),

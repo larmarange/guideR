@@ -24,6 +24,7 @@
 #' @param .options Additional arguments passed to [stats::prop.test()]
 #' or [srvyr::survey_prop()].
 #' @return A tibble.
+#' @keywords univar
 #' @export
 proportion <- function(data,
                        ...,
@@ -124,7 +125,7 @@ proportion.data.frame <- function(data,
 #' @rdname proportion
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
 #' ## SURVEY DATA ------------------------------------------------------
 #'
 #' ds <- srvyr::as_survey(titanic)

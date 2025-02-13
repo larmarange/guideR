@@ -48,3 +48,4 @@ d |>
     sub_a = num_cycle(group == "a")
   )
 }
+\keyword{logic}

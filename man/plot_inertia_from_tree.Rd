@@ -27,3 +27,4 @@ hc <- hclust(dist(USArrests))
 get_inertia_from_tree(hc)
 plot_inertia_from_tree(hc)
 }
+\keyword{tree}

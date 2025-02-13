@@ -5,5 +5,6 @@
 #' @seealso [datasets::Titanic]
 #' @importFrom tidyr uncount
 #' @importFrom dplyr as_tibble
+#' @keywords datasets
 #' @export
 titanic <- datasets::Titanic |> dplyr::as_tibble() |> tidyr::uncount(n)

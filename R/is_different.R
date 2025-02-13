@@ -15,6 +15,7 @@
 #'
 #' @param x,y Vectors to be compared.
 #' @export
+#' @keywords logic
 #' @return A vector of the same length as `x`.
 #' @examples
 #' v <- c("a", "b", NA)

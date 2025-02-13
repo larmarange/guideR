@@ -17,3 +17,32 @@ authors:
   Joseph Larmarange:
     href: "https://joseph.larmarange.net/"
 
+reference:
+
+- title: "Data manipulation"
+  contents:
+  - has_keyword("manip")
+
+- title: "Descriptive statistics"
+  contents:
+  - has_keyword("univar")
+
+- title: "Models"
+  contents:
+  - has_keyword("models")
+
+- title: "Classification tree"
+  contents:
+  - has_keyword("tree")
+
+- title: "Logical operators"
+  contents:
+  - has_keyword("logic")
+
+- title: "Utilities"
+  contents:
+  - has_keyword("utilities")
+
+- title: "Datasets"
+  contents:
+  - has_keyword("datasets")

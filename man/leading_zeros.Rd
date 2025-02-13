@@ -35,3 +35,4 @@ leading_zeros(c(0, 6, 12, 18), prefix = "M")
 \seealso{
 \code{\link[base:formatc]{base::formatC()}}, \code{\link[base:sprintf]{base::sprintf()}}
 }
+\keyword{utilities}

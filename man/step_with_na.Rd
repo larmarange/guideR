@@ -63,7 +63,7 @@ mod <- glm(as.factor(Survived) ~ ., data = d, family = binomial())
 mod2 <- step_with_na(mod)
 mod2
 
-\dontrun{
+\donttest{
 ## WITH SURVEY ---------------------------------------
 
 ds <- d |>
@@ -78,3 +78,4 @@ mod2s <- step_with_na(mods, design = ds)
 mod2s
 }
 }
+\keyword{models}

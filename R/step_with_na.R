@@ -23,6 +23,7 @@
 #' @param model A model object.
 #' @param ... Additional parameters passed to [stats::step()].
 #' @return The stepwise-selected model.
+#' @keywords models
 #' @export
 step_with_na <- function(model,
                          ...) {
@@ -94,7 +95,7 @@ step_with_na.default <- function(model,
 #' @export
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
 #' ## WITH SURVEY ---------------------------------------
 #'
 #' ds <- d |>

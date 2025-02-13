@@ -101,7 +101,7 @@ dna$Survived[c(1:20, 500:530)] <- NA
 dna |> proportion(Survived)
 dna |> proportion(Survived, .na.rm = TRUE)
 
-\dontrun{
+\donttest{
 ## SURVEY DATA ------------------------------------------------------
 
 ds <- srvyr::as_survey(titanic)
@@ -128,3 +128,4 @@ dsna |> proportion(Survived)
 dsna |> proportion(Survived, .na.rm = TRUE)
 }
 }
+\keyword{univar}

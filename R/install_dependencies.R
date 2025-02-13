@@ -1,4 +1,4 @@
-#' Install / Update R package dependencies in a project
+#' Install / Update project dependencies
 #'
 #' This function uses [renv::dependencies()] to identify R package dependencies
 #' in a project and then calls [pak::pkg_install()] to install / update these
@@ -10,6 +10,7 @@
 #' @export
 #' @return (Invisibly) A data frame with information about the installed
 #' package(s).
+#' @keywords utilities
 #' @examples
 #' \dontrun{
 #' install_dependencies()

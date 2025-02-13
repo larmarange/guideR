@@ -5,6 +5,7 @@
 #' with other types of models, but without any warranty.
 #' @return A `ggplot2` plot.
 #' @export
+#' @keywords models
 #' @examples
 #' # a linear model
 #' mod <- lm(Sepal.Length ~ Sepal.Width + Species, data = iris)

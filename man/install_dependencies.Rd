@@ -2,7 +2,7 @@
 % Please edit documentation in R/install_dependencies.R
 \name{install_dependencies}
 \alias{install_dependencies}
-\title{Install / Update R package dependencies in a project}
+\title{Install / Update project dependencies}
 \usage{
 install_dependencies(ask = TRUE)
 }
@@ -25,3 +25,4 @@ packages.
 install_dependencies()
 }
 }
+\keyword{utilities}

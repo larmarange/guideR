@@ -24,3 +24,4 @@ titanic |> dplyr::rowwise() |> unrowwise()
 titanic |> dplyr::group_by(Sex, Class) |> dplyr::rowwise()
 titanic |> dplyr::group_by(Sex, Class) |> dplyr::rowwise() |> unrowwise()
 }
+\keyword{manip}

@@ -6,6 +6,7 @@
 #' @param k_max Maximum number of clusters to return / plot.
 #' @export
 #' @return A `ggplot2` plot or a tibble.
+#' @keywords tree
 #' @examples
 #' hc <- hclust(dist(USArrests))
 #' get_inertia_from_tree(hc)

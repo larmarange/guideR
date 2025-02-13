@@ -10,6 +10,7 @@
 #' @export
 #' @return A character vector of the same length as `x`.
 #' @seealso [base::formatC()], [base::sprintf()]
+#' @keywords utilities
 #' @examples
 #' v <- c(2, 103.24, 1042.147, 12.4566, NA)
 #' leading_zeros(v)
