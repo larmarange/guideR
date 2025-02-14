@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">guideR</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.0.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.1.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,7 +32,110 @@
     </div>
 
     <div class="section level2">
-      <h2 id="all-functions">All functions<a class="anchor" aria-label="anchor" href="#all-functions"></a></h2>
+      <h2 id="data-manipulation">Data manipulation<a class="anchor" aria-label="anchor" href="#data-manipulation"></a></h2>
+
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="long_to_periods.html">long_to_periods()</a></code>
+
+        </dt>
+        <dd>Transform a data frame from long format to period format</dd>
+      </dl><dl><dt>
+
+          <code><a href="unrowwise.html">unrowwise()</a></code>
+
+        </dt>
+        <dd>Remove row-wise grouping</dd>
+      </dl></div><div class="section level2">
+      <h2 id="descriptive-statistics">Descriptive statistics<a class="anchor" aria-label="anchor" href="#descriptive-statistics"></a></h2>
+
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="proportion.html">proportion()</a></code>
+
+        </dt>
+        <dd>Compute proportions</dd>
+      </dl><dl><dt>
+
+          <code><a href="round_preserve_sum.html">round_preserve_sum()</a></code>
+
+        </dt>
+        <dd>Round values while preserve their rounded sum in R</dd>
+      </dl></div><div class="section level2">
+      <h2 id="models">Models<a class="anchor" aria-label="anchor" href="#models"></a></h2>
+
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="observed_vs_theoretical.html">observed_vs_theoretical()</a></code>
+
+        </dt>
+        <dd>Plot observed vs predicted distribution of a fitted model</dd>
+      </dl><dl><dt>
+
+          <code><a href="step_with_na.html">step_with_na()</a></code>
+
+        </dt>
+        <dd>Apply <code><a href="https://rdrr.io/r/stats/step.html" class="external-link">step()</a></code>, taking into account missing values</dd>
+      </dl></div><div class="section level2">
+      <h2 id="classification-tree">Classification tree<a class="anchor" aria-label="anchor" href="#classification-tree"></a></h2>
+
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="plot_inertia_from_tree.html">plot_inertia_from_tree()</a></code> <code><a href="plot_inertia_from_tree.html">get_inertia_from_tree()</a></code>
+
+        </dt>
+        <dd>Plot inertia, absolute loss and relative loss from a classification tree</dd>
+      </dl></div><div class="section level2">
+      <h2 id="logical-operators">Logical operators<a class="anchor" aria-label="anchor" href="#logical-operators"></a></h2>
+
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="is_different.html">is_different()</a></code> <code><a href="is_different.html">is_equal()</a></code> <code><a href="is_different.html">cumdifferent()</a></code> <code><a href="is_different.html">num_cycle()</a></code>
+
+        </dt>
+        <dd>Comparison tests considering <code>NA</code> as values to be compared</dd>
+      </dl></div><div class="section level2">
+      <h2 id="utilities">Utilities<a class="anchor" aria-label="anchor" href="#utilities"></a></h2>
 
 
 
@@ -47,69 +150,33 @@
           <code><a href="install_dependencies.html">install_dependencies()</a></code>
 
         </dt>
-        <dd>Install / Update R package dependencies in a project</dd>
-      </dl><dl><dt>
-
-          <code><a href="is_different.html">is_different()</a></code> <code><a href="is_different.html">is_equal()</a></code> <code><a href="is_different.html">cumdifferent()</a></code> <code><a href="is_different.html">num_cycle()</a></code>
-
-        </dt>
-        <dd>Comparison tests considering <code>NA</code> as values to be compared</dd>
+        <dd>Install / Update project dependencies</dd>
       </dl><dl><dt>
 
           <code><a href="leading_zeros.html">leading_zeros()</a></code>
 
         </dt>
         <dd>Add leading zeros</dd>
-      </dl><dl><dt>
+      </dl></div><div class="section level2">
+      <h2 id="datasets">Datasets<a class="anchor" aria-label="anchor" href="#datasets"></a></h2>
 
-          <code><a href="long_to_periods.html">long_to_periods()</a></code>
 
-        </dt>
-        <dd>Transform a data frame from long format to period format</dd>
-      </dl><dl><dt>
 
-          <code><a href="observed_vs_theoretical.html">observed_vs_theoretical()</a></code>
 
-        </dt>
-        <dd>Plot observed vs predicted distribution of a fitted model</dd>
-      </dl><dl><dt>
+    </div><div class="section level2">
 
-          <code><a href="plot_inertia_from_tree.html">plot_inertia_from_tree()</a></code> <code><a href="plot_inertia_from_tree.html">get_inertia_from_tree()</a></code>
 
-        </dt>
-        <dd>Plot inertia, absolute loss and relative loss from a classification tree</dd>
-      </dl><dl><dt>
 
-          <code><a href="proportion.html">proportion()</a></code>
 
-        </dt>
-        <dd>Compute proportions</dd>
-      </dl><dl><dt>
-
-          <code><a href="round_preserve_sum.html">round_preserve_sum()</a></code>
-
-        </dt>
-        <dd>Round values while preserve their rounded sum in R</dd>
-      </dl><dl><dt>
-
-          <code><a href="step_with_na.html">step_with_na()</a></code>
-
-        </dt>
-        <dd>Apply <code><a href="https://rdrr.io/r/stats/step.html" class="external-link">step()</a></code>, taking into account missing values</dd>
-      </dl><dl><dt>
+      <dl><dt>
 
           <code><a href="titanic.html">titanic</a></code>
 
         </dt>
         <dd>Titanic data set in long format</dd>
-      </dl><dl><dt>
-
-          <code><a href="unrowwise.html">unrowwise()</a></code>
-
-        </dt>
-        <dd>Remove row-wise grouping</dd>
       </dl></div>
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
