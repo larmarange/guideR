@@ -226,14 +226,14 @@ proportion.survey.design <- function(data,
 #' @rdname proportion
 #' @export
 proportion.default <- function(data,
-                              ...,
-                              .na.rm = FALSE,
-                              .scale = 100,
-                              .sort = FALSE,
-                              .drop = FALSE,
-                              .conf.int = FALSE,
-                              .conf.level = .95,
-                              .options = list(correct = TRUE)) {
+                               ...,
+                               .na.rm = FALSE,
+                               .scale = 100,
+                               .sort = FALSE,
+                               .drop = FALSE,
+                               .conf.int = FALSE,
+                               .conf.level = .95,
+                               .options = list(correct = TRUE)) {
   if (!is.atomic(data))
     cli::cli_abort("Objects of class `{class(data)}` are not covered.")
   data <- dplyr::tibble(value = data)
