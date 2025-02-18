@@ -39,8 +39,8 @@ encounter an error because the number of rows has changed.
 }
 
 \code{step_with_na()} has been tested with \code{\link[stats:lm]{stats::lm()}}, \code{\link[stats:glm]{stats::glm()}},
-\code{\link[nnet:multinom]{nnet::multinom()}} and \code{\link[survey:svyglm]{survey::svyglm()}}. It may be working with other
-types of models, but with no warranty.
+\code{\link[nnet:multinom]{nnet::multinom()}}, \code{\link[survey:svyglm]{survey::svyglm()}} and \code{\link[survival:coxph]{survival::coxph()}}.
+It may be working with other types of models, but with no warranty.
 
 In some cases, it may be necessary to provide the full dataset initially
 used to estimate the model.

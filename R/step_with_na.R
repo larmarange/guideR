@@ -11,8 +11,8 @@
 #' - recomputes the reduced model using the full original dataset.
 #'
 #' `step_with_na()` has been tested with [stats::lm()], [stats::glm()],
-#' [nnet::multinom()] and [survey::svyglm()]. It may be working with other
-#' types of models, but with no warranty.
+#' [nnet::multinom()], [survey::svyglm()] and [survival::coxph()].
+#' It may be working with other types of models, but with no warranty.
 #'
 #' In some cases, it may be necessary to provide the full dataset initially
 #' used to estimate the model.
