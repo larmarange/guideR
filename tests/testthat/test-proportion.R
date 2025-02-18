@@ -67,3 +67,13 @@ test_that("proportion() works with survey designs", {
     2
   )
 })
+
+test_that("proportion() works with atomic vectors", {
+  expect_no_error(
+    res <- titanic$Survived |> proportion()
+  )
+  expect_equal(
+    res$n,
+    titanic |> proportion(Survived) |> dplyr::pull("n")
+  )
+})

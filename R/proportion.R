@@ -4,7 +4,7 @@
 #' and compute relative proportions. Proportions are computed separately by
 #' group (see examples).
 #'
-#' @param data A data frame, data frame extension (e.g. a tibble),
+#' @param data A vector, a data frame, data frame extension (e.g. a tibble),
 #' or a survey design object.
 #' @param ... <[`data-masking`][rlang::args_data_masking]> Variable(s) for those
 #' computing proportions.
@@ -27,8 +27,7 @@
 #' @keywords univar
 #' @export
 proportion <- function(data,
-                       ...,
-                       .by = NULL) {
+                       ...) {
   UseMethod("proportion")
 }
 
@@ -36,6 +35,8 @@ proportion <- function(data,
 #' @rdname proportion
 #' @return A tibble with one row per group.
 #' @examples
+#' # using a vector
+#' titanic$Class |> proportion()
 #'
 #' # univariable table
 #' titanic |> proportion(Class)
@@ -220,4 +221,31 @@ proportion.survey.design <- function(data,
   i <- paste0("srvyr::interact(", paste(v, collapse = ", "), ")")
   data |>
     dplyr::group_by(!! rlang::parse_expr(i), .add = TRUE)
+}
+
+#' @rdname proportion
+#' @export
+proportion.default <- function(data,
+                               ...,
+                               .na.rm = FALSE,
+                               .scale = 100,
+                               .sort = FALSE,
+                               .drop = FALSE,
+                               .conf.int = FALSE,
+                               .conf.level = .95,
+                               .options = list(correct = TRUE)) {
+  if (!is.atomic(data))
+    cli::cli_abort("Objects of class `{class(data)}` are not covered.")
+  data <- dplyr::tibble(value = data)
+  data |>
+    proportion(
+      .data$value,
+      .na.rm = .na.rm,
+      .scale = .scale,
+      .sort = .sort,
+      .drop = .drop,
+      .conf.int = .conf.int,
+      .conf.level = .conf.level,
+      .options = .options
+    )
 }

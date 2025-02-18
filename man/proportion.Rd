@@ -4,9 +4,10 @@
 \alias{proportion}
 \alias{proportion.data.frame}
 \alias{proportion.survey.design}
+\alias{proportion.default}
 \title{Compute proportions}
 \usage{
-proportion(data, ..., .by = NULL)
+proportion(data, ...)
 
 \method{proportion}{data.frame}(
   data,
@@ -33,9 +34,21 @@ proportion(data, ..., .by = NULL)
   .conf.level = 0.95,
   .options = NULL
 )
+
+\method{proportion}{default}(
+  data,
+  ...,
+  .na.rm = FALSE,
+  .scale = 100,
+  .sort = FALSE,
+  .drop = FALSE,
+  .conf.int = FALSE,
+  .conf.level = 0.95,
+  .options = list(correct = TRUE)
+)
 }
 \arguments{
-\item{data}{A data frame, data frame extension (e.g. a tibble),
+\item{data}{A vector, a data frame, data frame extension (e.g. a tibble),
 or a survey design object.}
 
 \item{...}{<\code{\link[rlang:args_data_masking]{data-masking}}> Variable(s) for those
@@ -76,6 +89,8 @@ and compute relative proportions. Proportions are computed separately by
 group (see examples).
 }
 \examples{
+# using a vector
+titanic$Class |> proportion()
 
 # univariable table
 titanic |> proportion(Class)
