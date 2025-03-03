@@ -53,12 +53,14 @@ periods_to_long <- function(data,
   data <- data |>
     dplyr::rowwise() |>
     dplyr::mutate(
-      .time = list(seq(
-        from = .data[[startv]],
-        to = .data[[stopv]],
-        by = time_step
+      .time = list(
+        seq(
+          from = .data[[startv]],
+          to = .data[[stopv]],
+          by = time_step
+        )
       )
-      )) |>
+    ) |>
     tidyr::unnest(cols = dplyr::all_of(".time")) |>
     dplyr::relocate(dplyr::all_of(".time"), .before = dplyr::all_of(startv))
   v <- ".time"
@@ -67,6 +69,6 @@ periods_to_long <- function(data,
     dplyr::rename(dplyr::all_of(v))
   if (!keep)
     data <- data |>
-    dplyr::select(-dplyr::all_of(c(startv, stopv)))
+      dplyr::select(-dplyr::all_of(c(startv, stopv)))
   data
 }
