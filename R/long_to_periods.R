@@ -13,6 +13,7 @@
 #' Co-variables to consider (optional)
 #' @return A tibble.
 #' @keywords manip
+#' @seealso [periods_to_long()]
 #' @examples
 #' d <- dplyr::tibble(
 #'   patient = c(1, 2, 3, 3, 4, 4, 4),

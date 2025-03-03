@@ -45,4 +45,7 @@ d |> long_to_periods(id = patient, start = begin, stop = end, by = covar)
 # However, it considers that observation ends at the last start time.
 d |> long_to_periods(id = patient, start = begin)
 }
+\seealso{
+\code{\link[=periods_to_long]{periods_to_long()}}
+}
 \keyword{manip}
