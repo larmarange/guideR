@@ -103,7 +103,7 @@ plot.compare_proportions <- function(x,
     ggplot2::geom_bar(stat = "identity", fill = fill) +
     ggplot2::geom_errorbar(width = .1) +
     ggplot2::facet_grid(
-      cols = vars(.data$variable_label),
+      cols = ggplot2::vars(.data$variable_label),
       scales = "free_x",
       space = "free_x",
       labeller = ggplot2::label_wrap_gen(width = label_wrap, multi_line = TRUE)
