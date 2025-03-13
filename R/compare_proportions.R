@@ -30,7 +30,10 @@ compare_proportions <- function(data, condition, by, conf.level = 0.95) {
           .scale = 1,
           .conf.level = conf.level
         ) |>
-        dplyr::mutate(variable = .x)
+        dplyr::mutate(
+          variable = .x,
+          level = .data$level |> forcats::fct_inorder()
+        )
     ) |>
     dplyr::bind_rows() |>
     dplyr::filter(.data$.condition) |>
