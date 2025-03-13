@@ -65,7 +65,7 @@ compare_proportions <- function(data, condition, by, conf.level = 0.95) {
     test <- survey::svychisq # nolint
   } else {
     vl <- labelled::var_label(
-      data[, vars],
+      data[, vars, drop = FALSE],
       null_action = "fill",
       unlist = TRUE
     )
@@ -128,7 +128,8 @@ plot.compare_proportions <- function(x,
     ggplot2::scale_y_continuous(labels = scales::percent) +
     ggplot2::theme_light() +
     ggplot2::theme(
-      panel.grid.major.x = ggplot2::element_blank()
+      panel.grid.major.x = ggplot2::element_blank(),
+      axis.ticks.x = ggplot2::element_blank()
     )
 
   if (add_p) {
