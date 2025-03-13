@@ -45,7 +45,7 @@ compare_proportions <- function(data, condition, by, conf.level = 0.95) {
       null_action = "fill",
       unlist = TRUE
     )
-    test <- survey::svychisq
+    test <- survey::svychisq # nolint
   } else {
     vl <- labelled::var_label(
       data[, vars],
@@ -93,11 +93,16 @@ plot.compare_proportions <- function(x,
                                      ...) {
   plot <- x |>
     ggplot2::ggplot() +
-    ggplot2::aes(x = level, y = prop, ymin = prop_low, ymax = prop_high) +
+    ggplot2::aes(
+      x = .data$level,
+      y = .data$prop,
+      ymin = .data$prop_low,
+      ymax = .data$prop_high
+    ) +
     ggplot2::geom_bar(stat = "identity", fill = fill) +
     ggplot2::geom_errorbar(width = .1) +
     ggplot2::facet_grid(
-      cols = vars(variable_label),
+      cols = vars(.data$variable_label),
       scales = "free_x",
       space = "free_x",
       labeller = ggplot2::label_wrap_gen(width = label_wrap, multi_line = TRUE)
@@ -115,7 +120,7 @@ plot.compare_proportions <- function(x,
       dplyr::mutate(y = max(.data$prop, na.rm = TRUE)) |>
       dplyr::group_by(.data$variable_label, .data$y, .data$p) |>
       dplyr::summarise(
-        level = dplyr::last(level),
+        level = dplyr::last(.data$level),
         .groups = "drop"
       ) |>
       dplyr::mutate(label = scales::label_pvalue(add_p = TRUE)(.data$p))
@@ -123,7 +128,12 @@ plot.compare_proportions <- function(x,
     plot <- plot +
       ggplot2::geom_text(
         data = pvalues,
-        mapping = ggplot2::aes(y = y, label = label, ymin = NULL, ymax = NULL),
+        mapping = ggplot2::aes(
+          y = .data$y,
+          label = .data$label,
+          ymin = NULL,
+          ymax = NULL
+        ),
         nudge_y = .05,
         nudge_x = 0.5,
         hjust = 1
