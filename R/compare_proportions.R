@@ -7,6 +7,7 @@
 #' group by (comparison is done separately for each variable).
 #' @param conf.level Confidence level for the confidence intervals.
 #' @export
+#' @keywords univar
 #' @examples
 #' titanic |>
 #'   compare_proportions(Survived == "Yes", by = c(Class, Sex))

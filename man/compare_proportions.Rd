@@ -41,3 +41,4 @@ titanic |>
   compare_proportions(Survived == "Yes", by = c(Class, Sex)) |>
   plot()
 }
+\keyword{univar}
