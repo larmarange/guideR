@@ -23,6 +23,7 @@ Depends:
 Imports:
     cli,
     dplyr,
+    forcats,
     ggplot2,
     labelled,
     lifecycle,
