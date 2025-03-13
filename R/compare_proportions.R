@@ -87,6 +87,7 @@ compare_proportions <- function(data, condition, by, conf.level = 0.95) {
 #' @param fill Fill colour, passed to [ggplot2::geom_bar()].
 #' @param label_wrap Maximum number of characters before wrapping the strip
 #' (variable names).
+#' @param add_p Add p-value (Chi² test) in the top-left corner.
 #' @param ... Not used.
 #' @export
 plot.compare_proportions <- function(x,
