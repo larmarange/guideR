@@ -35,7 +35,8 @@ compare_proportions <- function(data, condition, by, conf.level = 0.95) {
   vars <- data |> dplyr::select({{ by }}) |> colnames()
   if (length(vars) == 0)
     cli::cli_abort("No variable selected by {.arg by}.")
-  data <- data |> dplyr::mutate(.condition = {{ condition }})
+  data <- data |>
+    dplyr::mutate(.condition = factor({{ condition }}, c(FALSE, TRUE)))
   d <- vars |>
     purrr::map(
       ~ data |>
@@ -53,7 +54,7 @@ compare_proportions <- function(data, condition, by, conf.level = 0.95) {
         )
     ) |>
     dplyr::bind_rows() |>
-    dplyr::filter(.data$.condition) |>
+    dplyr::filter(.data$.condition == "TRUE") |>
     dplyr::select(-.data$.condition)
 
   if (inherits(data, "survey.design")) {
