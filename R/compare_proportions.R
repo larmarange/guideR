@@ -1,5 +1,10 @@
 #' Compare a proportion by sub-groups and plot them
 #'
+#' `r lifecycle::badge("experimental")`
+#' See [proportion()] for more details on the way proportions and confidence
+#' intervals. For data frame, Chi² p-values are computed with
+#' [stats::chisq.test()]. For survey datasets, [survey::svychisq()] is used
+#' instead.
 #'
 #' @param data A data frame, data frame extension (e.g. a tibble),
 #' or a survey design object.
@@ -16,7 +21,16 @@
 #'
 #' titanic |>
 #'   compare_proportions(Survived == "Yes", by = c(Class, Sex)) |>
-#'   plot()
+#'   plot(fill = "lightblue")
+#'
+#' titanic |>
+#'   compare_proportions(Survived == "Yes", by = -Survived) |>
+#'   plot(
+#'     mapping = ggplot2::aes(fill = variable),
+#'     colour = "black",
+#'     show.legend = FALSE,
+#'     add_p = FALSE
+#'  )
 compare_proportions <- function(data, condition, by, conf.level = 0.95) {
   vars <- data |> dplyr::select({{ by }}) |> colnames()
   if (length(vars) == 0)
@@ -84,14 +98,12 @@ compare_proportions <- function(data, condition, by, conf.level = 0.95) {
 
 #' @rdname compare_proportions
 #' @param x A tibble returned by `compare_proportions()`.
-#' @param fill Fill colour, passed to [ggplot2::geom_bar()].
 #' @param label_wrap Maximum number of characters before wrapping the strip
 #' (variable names).
 #' @param add_p Add p-value (Chi² test) in the top-left corner.
-#' @param ... Not used.
+#' @param ... Passed to [ggplot2::geom_bar()]..
 #' @export
 plot.compare_proportions <- function(x,
-                                     fill = "lightblue",
                                      label_wrap = 50,
                                      add_p = TRUE,
                                      ...) {
@@ -103,7 +115,7 @@ plot.compare_proportions <- function(x,
       ymin = .data$prop_low,
       ymax = .data$prop_high
     ) +
-    ggplot2::geom_bar(stat = "identity", fill = fill) +
+    ggplot2::geom_bar(stat = "identity", ...) +
     ggplot2::geom_errorbar(width = .1) +
     ggplot2::facet_grid(
       cols = ggplot2::vars(.data$variable_label),

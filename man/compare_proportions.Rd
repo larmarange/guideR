@@ -7,7 +7,7 @@
 \usage{
 compare_proportions(data, condition, by, conf.level = 0.95)
 
-\method{plot}{compare_proportions}(x, fill = "lightblue", label_wrap = 50, add_p = TRUE, ...)
+\method{plot}{compare_proportions}(x, label_wrap = 50, add_p = TRUE, ...)
 }
 \arguments{
 \item{data}{A data frame, data frame extension (e.g. a tibble),
@@ -23,15 +23,19 @@ group by (comparison is done separately for each variable).}
 
 \item{x}{A tibble returned by \code{compare_proportions()}.}
 
-\item{fill}{Fill colour, passed to \code{\link[ggplot2:geom_bar]{ggplot2::geom_bar()}}.}
-
 \item{label_wrap}{Maximum number of characters before wrapping the strip
 (variable names).}
 
-\item{...}{Not used.}
+\item{add_p}{Add p-value (Chi² test) in the top-left corner.}
+
+\item{...}{Passed to \code{\link[ggplot2:geom_bar]{ggplot2::geom_bar()}}..}
 }
 \description{
-Compare a proportion by sub-groups and plot them
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+See \code{\link[=proportion]{proportion()}} for more details on the way proportions and confidence
+intervals. For data frame, Chi² p-values are computed with
+\code{\link[stats:chisq.test]{stats::chisq.test()}}. For survey datasets, \code{\link[survey:svychisq]{survey::svychisq()}} is used
+instead.
 }
 \examples{
 titanic |>
@@ -39,6 +43,15 @@ titanic |>
 
 titanic |>
   compare_proportions(Survived == "Yes", by = c(Class, Sex)) |>
-  plot()
+  plot(fill = "lightblue")
+
+titanic |>
+  compare_proportions(Survived == "Yes", by = -Survived) |>
+  plot(
+    mapping = ggplot2::aes(fill = variable),
+    colour = "black",
+    show.legend = FALSE,
+    add_p = FALSE
+ )
 }
 \keyword{univar}
