@@ -7,7 +7,7 @@
 \usage{
 compare_proportions(data, condition, by, conf.level = 0.95)
 
-\method{plot}{compare_proportions}(x, label_wrap = 50, add_p = TRUE, ...)
+\method{plot}{compare_proportions}(x, label_wrap = 50, add_p = TRUE, p_size = NULL, ...)
 }
 \arguments{
 \item{data}{A data frame, data frame extension (e.g. a tibble),
@@ -27,6 +27,8 @@ group by (comparison is done separately for each variable).}
 (variable names).}
 
 \item{add_p}{Add p-value (Chi² test) in the top-left corner.}
+
+\item{p_size}{Text size for p-values.}
 
 \item{...}{Passed to \code{\link[ggplot2:geom_bar]{ggplot2::geom_bar()}}..}
 }

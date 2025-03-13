@@ -103,11 +103,13 @@ compare_proportions <- function(data, condition, by, conf.level = 0.95) {
 #' @param label_wrap Maximum number of characters before wrapping the strip
 #' (variable names).
 #' @param add_p Add p-value (Chi² test) in the top-left corner.
+#' @param p_size Text size for p-values.
 #' @param ... Passed to [ggplot2::geom_bar()]..
 #' @export
 plot.compare_proportions <- function(x,
                                      label_wrap = 50,
                                      add_p = TRUE,
+                                     p_size = 3.5,
                                      ...) {
   plot <- x |>
     ggplot2::ggplot() +
@@ -136,7 +138,7 @@ plot.compare_proportions <- function(x,
   if (add_p) {
     pvalues <- x |>
       dplyr::ungroup() |>
-      dplyr::mutate(y = max(.data$prop, na.rm = TRUE)) |>
+      dplyr::mutate(y = max(.data$prop_high, na.rm = TRUE)) |>
       dplyr::group_by(.data$variable_label, .data$y, .data$p) |>
       dplyr::summarise(
         level = dplyr::last(.data$level),
@@ -153,9 +155,11 @@ plot.compare_proportions <- function(x,
           ymin = NULL,
           ymax = NULL
         ),
-        nudge_y = .05,
+        nudge_y = .01,
         nudge_x = 0.5,
-        hjust = 1
+        hjust = 1,
+        vjust = 0,
+        size = p_size
       )
   }
 
