@@ -54,7 +54,7 @@ instead.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">compare_proportions</span><span class="op">(</span><span class="va">data</span>, <span class="va">condition</span>, <span class="va">by</span>, conf.level <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'compare_proportions'</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, label_wrap <span class="op">=</span> <span class="fl">50</span>, add_p <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, label_wrap <span class="op">=</span> <span class="fl">50</span>, add_p <span class="op">=</span> <span class="cn">TRUE</span>, p_size <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -91,6 +91,10 @@ group by (comparison is done separately for each variable).</p></dd>
 
 <dt id="arg-add-p">add_p<a class="anchor" aria-label="anchor" href="#arg-add-p"></a></dt>
 <dd><p>Add p-value (Chi² test) in the top-left corner.</p></dd>
+
+
+<dt id="arg-p-size">p_size<a class="anchor" aria-label="anchor" href="#arg-p-size"></a></dt>
+<dd><p>Text size for p-values.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
