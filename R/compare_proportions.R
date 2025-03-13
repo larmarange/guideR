@@ -2,7 +2,7 @@
 #'
 #' `r lifecycle::badge("experimental")`
 #' See [proportion()] for more details on the way proportions and confidence
-#' intervals. For data frame, Chi² p-values are computed with
+#' intervals are computed. For data frame, Chi² p-values are computed with
 #' [stats::chisq.test()]. For survey datasets, [survey::svychisq()] is used
 #' instead.
 #'
@@ -91,7 +91,8 @@ compare_proportions <- function(data, condition, by, conf.level = 0.95) {
   d <-
     d |>
     dplyr::left_join(pvalues, by = "variable") |>
-    dplyr::relocate(dplyr::all_of(c("variable", "variable_label")))
+    dplyr::relocate(dplyr::all_of(c("variable", "variable_label"))) |>
+    dplyr::ungroup()
   class(d) <- c("compare_proportions", class(d))
   d
 }

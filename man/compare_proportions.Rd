@@ -33,7 +33,7 @@ group by (comparison is done separately for each variable).}
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 See \code{\link[=proportion]{proportion()}} for more details on the way proportions and confidence
-intervals. For data frame, Chi² p-values are computed with
+intervals are computed. For data frame, Chi² p-values are computed with
 \code{\link[stats:chisq.test]{stats::chisq.test()}}. For survey datasets, \code{\link[survey:svychisq]{survey::svychisq()}} is used
 instead.
 }
