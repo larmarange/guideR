@@ -23,6 +23,7 @@ Depends:
 Imports:
     cli,
     dplyr,
+    forcats,
     ggplot2,
     labelled,
     lifecycle,
@@ -33,6 +34,7 @@ Imports:
     rlang,
     scales,
     srvyr,
+    stats,
     tidyr,
     tidyselect
 Encoding: UTF-8
