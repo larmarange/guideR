@@ -80,7 +80,7 @@ compare_proportions <- function(data, condition, by, conf.level = 0.95) {
       ~ paste("~ .condition +", .x) |>
         as.formula() |>
         test(data) |>
-        purrr:::pluck("p.value")
+        purrr::pluck("p.value")
     )
   pvalues <- unlist(pvalues)
   pvalues <- dplyr::tibble(
