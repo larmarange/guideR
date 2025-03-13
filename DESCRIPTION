@@ -33,6 +33,7 @@ Imports:
     rlang,
     scales,
     srvyr,
+    stats,
     tidyr,
     tidyselect
 Encoding: UTF-8

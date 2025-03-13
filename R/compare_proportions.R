@@ -1,4 +1,6 @@
 #' Compare a proportion by sub-groups and plot them
+#'
+#'
 #' @param data A data frame, data frame extension (e.g. a tibble),
 #' or a survey design object.
 #' @param condition <[`data-masking`][rlang::args_data_masking]> A condition
@@ -54,7 +56,7 @@ compare_proportions <- function(data, condition, by, conf.level = 0.95) {
       unlist = TRUE
     )
     test <- function(formula, data) {
-      xtabs(formula, data) |> chisq.test()
+      stats::xtabs(formula, data) |> stats::chisq.test()
     }
   }
   d$variable_label <- vl[d$variable] |> forcats::fct_inorder()
