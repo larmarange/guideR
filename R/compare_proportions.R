@@ -36,7 +36,8 @@ compare_proportions <- function(data, condition, by, conf.level = 0.95) {
   if (length(vars) == 0)
     cli::cli_abort("No variable selected by {.arg by}.")
   data <- data |>
-    dplyr::mutate(.condition = factor({{ condition }}, c(FALSE, TRUE)))
+    dplyr::mutate(.condition = factor({{ condition }}, c(FALSE, TRUE))) |>
+    dplyr::filter(!is.na(.data$.condition))
   d <- vars |>
     purrr::map(
       ~ data |>
