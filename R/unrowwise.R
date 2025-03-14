@@ -2,8 +2,7 @@
 #'
 #' Remove row-wise grouping created with [dplyr::rowwise()] while preserving
 #' any other grouping declared with [dplyr::group_by()].
-#' @param data A data frame, data frame extension (e.g. a tibble), or a
-#' lazy data frame.
+#' @param data A tibble.
 #' @return A tibble.
 #' @examples
 #' titanic |> dplyr::rowwise()
