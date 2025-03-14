@@ -1,4 +1,4 @@
-#' Compare a proportion by sub-groups and plot them
+#' Plot proportions by sub-groups
 #'
 #' `r lifecycle::badge("experimental")`
 #' See [proportion()] for more details on the way proportions and confidence
@@ -13,25 +13,39 @@
 #' @param by <[`tidy-select`][dplyr::dplyr_tidy_select ]> List of variables to
 #' group by (comparison is done separately for each variable).
 #' @param conf.level Confidence level for the confidence intervals.
+#' @param label_wrap Maximum number of characters before wrapping the strip
+#' (variable names).
+#' @param add_p Add p-value (Chi² test) in the top-left corner.
+#' @param p_size Text size for p-values.
+#' @param ... Passed to [ggplot2::geom_bar()].
+#' @param return_data Return data used for ploting instead of the plot?
 #' @export
 #' @keywords univar
 #' @examples
 #' titanic |>
-#'   compare_proportions(Survived == "Yes", by = c(Class, Sex))
+#'   plot_proportions(Survived == "Yes", by = c(Class, Sex), return_data = TRUE)
 #'
 #' titanic |>
-#'   compare_proportions(Survived == "Yes", by = c(Class, Sex)) |>
-#'   plot(fill = "lightblue")
+#'   plot_proportions(Survived == "Yes", by = c(Class, Sex), fill = "lightblue")
 #'
 #' titanic |>
-#'   compare_proportions(Survived == "Yes", by = -Survived) |>
-#'   plot(
+#'   plot_proportions(
+#'     Survived == "Yes",
+#'     by = -Survived,
 #'     mapping = ggplot2::aes(fill = variable),
 #'     colour = "black",
 #'     show.legend = FALSE,
 #'     add_p = FALSE
 #'  )
-compare_proportions <- function(data, condition, by, conf.level = 0.95) {
+plot_proportions <- function(data,
+                             condition,
+                             by,
+                             conf.level = 0.95,
+                             label_wrap = 50,
+                             add_p = TRUE,
+                             p_size = 3.5,
+                             ...,
+                             return_data = FALSE) {
   vars <- data |> dplyr::select({{ by }}) |> colnames()
   if (length(vars) == 0)
     cli::cli_abort("No variable selected by {.arg by}.")
@@ -95,24 +109,10 @@ compare_proportions <- function(data, condition, by, conf.level = 0.95) {
     dplyr::left_join(pvalues, by = "variable") |>
     dplyr::relocate(dplyr::all_of(c("variable", "variable_label"))) |>
     dplyr::ungroup()
-  class(d) <- c("compare_proportions", class(d))
-  d
-}
 
-#' @rdname compare_proportions
-#' @param x A tibble returned by `compare_proportions()`.
-#' @param label_wrap Maximum number of characters before wrapping the strip
-#' (variable names).
-#' @param add_p Add p-value (Chi² test) in the top-left corner.
-#' @param p_size Text size for p-values.
-#' @param ... Passed to [ggplot2::geom_bar()]..
-#' @export
-plot.compare_proportions <- function(x,
-                                     label_wrap = 50,
-                                     add_p = TRUE,
-                                     p_size = 3.5,
-                                     ...) {
-  plot <- x |>
+  if (return_data) return(d)
+
+  plot <- d |>
     ggplot2::ggplot() +
     ggplot2::aes(
       x = .data$level,
@@ -137,7 +137,7 @@ plot.compare_proportions <- function(x,
     )
 
   if (add_p) {
-    pvalues <- x |>
+    pvalues <- d |>
       dplyr::ungroup() |>
       dplyr::mutate(y = max(.data$prop_high, na.rm = TRUE)) |>
       dplyr::group_by(.data$variable_label, .data$y, .data$p) |>
