@@ -35,6 +35,7 @@ Imports:
     scales,
     srvyr,
     stats,
+    stringr,
     tidyr,
     tidyselect
 Encoding: UTF-8

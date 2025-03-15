@@ -7,8 +7,7 @@
 unrowwise(data)
 }
 \arguments{
-\item{data}{A data frame, data frame extension (e.g. a tibble), or a
-lazy data frame.}
+\item{data}{A tibble.}
 }
 \value{
 A tibble.
