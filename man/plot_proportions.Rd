@@ -7,12 +7,28 @@
 plot_proportions(
   data,
   condition,
-  by,
-  conf.level = 0.95,
-  label_wrap = 50,
-  add_p = TRUE,
-  p_size = 3.5,
+  by = NULL,
+  geom = "bar",
   ...,
+  show_overall = TRUE,
+  overall_label = "Overall",
+  show_ci = TRUE,
+  conf_level = 0.95,
+  ci_colour = "black",
+  show_pvalues = TRUE,
+  pvalues_test = c("fisher", "chisq"),
+  pvalues_labeller = scales::label_pvalue(add_p = TRUE),
+  pvalues_size = 3.5,
+  show_labels = TRUE,
+  labels_labeller = scales::label_percent(1),
+  labels_size = 3.5,
+  labels_colour = "black",
+  show_overall_line = FALSE,
+  overall_line_type = "dashed",
+  overall_line_colour = "black",
+  overall_line_width = 0.5,
+  facet_labeller = ggplot2::label_wrap_gen(width = 50, multi_line = TRUE),
+  flip = FALSE,
   return_data = FALSE
 )
 }
@@ -26,32 +42,110 @@ defining a proportion (see examples).}
 \item{by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> List of variables to
 group by (comparison is done separately for each variable).}
 
-\item{conf.level}{Confidence level for the confidence intervals.}
+\item{geom}{Geometry to use for plotting proportions (\code{"bar"} by default).}
 
-\item{label_wrap}{Maximum number of characters before wrapping the strip
-(variable names).}
+\item{...}{Additional arguments passed to the geom defined by \code{geom}.}
 
-\item{add_p}{Add p-value (Chi² test) in the top-left corner.}
+\item{show_overall}{Display "Overall" column?}
 
-\item{p_size}{Text size for p-values.}
+\item{overall_label}{Label for the overall column.}
 
-\item{...}{Passed to \code{\link[ggplot2:geom_bar]{ggplot2::geom_bar()}}.}
+\item{show_ci}{Display confidence intervals?}
 
-\item{return_data}{Return data used for ploting instead of the plot?}
+\item{conf_level}{Confidence level for the confidence intervals.}
+
+\item{ci_colour}{Colour of the error bars representing confidence intervals.}
+
+\item{show_pvalues}{Display p-values in the top-left corner?}
+
+\item{pvalues_test}{Test to compute p-values for data frames: \code{"fisher"} for
+\code{\link[stats:fisher.test]{stats::fisher.test()}} (with \code{simulate.p.value = TRUE}) or \code{"chisq"} for
+\code{\link[stats:chisq.test]{stats::chisq.test()}}. Has no effect on survey objects for those
+\code{\link[survey:svychisq]{survey::svychisq()}} is used.}
+
+\item{pvalues_labeller}{Labeller function for p-values.}
+
+\item{pvalues_size}{Text size for p-values.}
+
+\item{show_labels}{Display proportion labels?}
+
+\item{labels_labeller}{Labeller function for proportion labels.}
+
+\item{labels_size}{Size of proportion labels.}
+
+\item{labels_colour}{Colour of proportion labels.}
+
+\item{show_overall_line}{Add an overall line?}
+
+\item{overall_line_type}{Line type of the overall line.}
+
+\item{overall_line_colour}{Colour of the overall line.}
+
+\item{overall_line_width}{Line width of the overall line.}
+
+\item{facet_labeller}{Labeller function for strip labels.}
+
+\item{flip}{Flip x and y axis?}
+
+\item{return_data}{Return data used instead of the plot?}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 See \code{\link[=proportion]{proportion()}} for more details on the way proportions and confidence
-intervals are computed. For data frame, Chi² p-values are computed with
-\code{\link[stats:chisq.test]{stats::chisq.test()}}. For survey datasets, \code{\link[survey:svychisq]{survey::svychisq()}} is used
-instead.
+intervals are computed.
 }
 \examples{
 titanic |>
-  plot_proportions(Survived == "Yes", by = c(Class, Sex), return_data = TRUE)
+  plot_proportions(
+    Survived == "Yes",
+    overall_label = "All",
+    labels_colour = "white"
+  )
 
 titanic |>
-  plot_proportions(Survived == "Yes", by = c(Class, Sex), fill = "lightblue")
+  plot_proportions(
+    Survived == "Yes",
+    by = c(Class, Sex),
+    fill = "lightblue"
+  )
+
+\donttest{
+titanic |>
+  plot_proportions(
+    Survived == "Yes",
+    by = c(Class, Sex),
+    fill = "lightblue",
+    flip = TRUE
+  )
+
+titanic |>
+  plot_proportions(
+    Survived == "Yes",
+    by = c(Class, Sex),
+    geom = "point",
+    colour = "red",
+    size = 3,
+    show_labels = FALSE
+  )
+
+titanic |>
+  plot_proportions(
+    Survived == "Yes",
+    by = c(Class, Sex),
+    geom = "area",
+    fill = "lightgreen",
+    show_overall = FALSE
+  )
+
+titanic |>
+  plot_proportions(
+    Survived == "Yes",
+    by = c(Class, Sex),
+    geom = "line",
+    colour = "purple",
+    ci_colour = "darkblue",
+    show_overall = FALSE
+  )
 
 titanic |>
   plot_proportions(
@@ -60,7 +154,20 @@ titanic |>
     mapping = ggplot2::aes(fill = variable),
     colour = "black",
     show.legend = FALSE,
-    add_p = FALSE
+    show_overall_line = TRUE,
+    show_pvalues = FALSE
  )
+
+# works with survey object
+titanic |>
+  srvyr::as_survey() |>
+  plot_proportions(
+    Survived == "Yes",
+    by = c(Class, Sex),
+    fill = "darksalmon",
+    colour = "black",
+    show_overall_line = TRUE
+ )
+}
 }
 \keyword{univar}

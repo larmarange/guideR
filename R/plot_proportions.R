@@ -2,9 +2,7 @@
 #'
 #' `r lifecycle::badge("experimental")`
 #' See [proportion()] for more details on the way proportions and confidence
-#' intervals are computed. For data frame, Chi² p-values are computed with
-#' [stats::chisq.test()]. For survey datasets, [survey::svychisq()] is used
-#' instead.
+#' intervals are computed.
 #'
 #' @param data A data frame, data frame extension (e.g. a tibble),
 #' or a survey design object.
@@ -12,21 +10,85 @@
 #' defining a proportion (see examples).
 #' @param by <[`tidy-select`][dplyr::dplyr_tidy_select ]> List of variables to
 #' group by (comparison is done separately for each variable).
-#' @param conf.level Confidence level for the confidence intervals.
-#' @param label_wrap Maximum number of characters before wrapping the strip
-#' (variable names).
-#' @param add_p Add p-value (Chi² test) in the top-left corner.
-#' @param p_size Text size for p-values.
-#' @param ... Passed to [ggplot2::geom_bar()].
-#' @param return_data Return data used for ploting instead of the plot?
+#' @param geom Geometry to use for plotting proportions (`"bar"` by default).
+#' @param ... Additional arguments passed to the geom defined by `geom`.
+#' @param show_overall Display "Overall" column?
+#' @param overall_label Label for the overall column.
+#' @param show_ci Display confidence intervals?
+#' @param conf_level Confidence level for the confidence intervals.
+#' @param ci_colour Colour of the error bars representing confidence intervals.
+#' @param show_pvalues Display p-values in the top-left corner?
+#' @param pvalues_test Test to compute p-values for data frames: `"fisher"` for
+#' [stats::fisher.test()] (with `simulate.p.value = TRUE`) or `"chisq"` for
+#' [stats::chisq.test()]. Has no effect on survey objects for those
+#' [survey::svychisq()] is used.
+#' @param pvalues_labeller Labeller function for p-values.
+#' @param pvalues_size Text size for p-values.
+#' @param show_labels Display proportion labels?
+#' @param labels_labeller Labeller function for proportion labels.
+#' @param labels_size Size of proportion labels.
+#' @param labels_colour Colour of proportion labels.
+#' @param show_overall_line Add an overall line?
+#' @param overall_line_type Line type of the overall line.
+#' @param overall_line_colour Colour of the overall line.
+#' @param overall_line_width Line width of the overall line.
+#' @param facet_labeller Labeller function for strip labels.
+#' @param flip Flip x and y axis?
+#' @param return_data Return data used instead of the plot?
 #' @export
 #' @keywords univar
 #' @examples
 #' titanic |>
-#'   plot_proportions(Survived == "Yes", by = c(Class, Sex), return_data = TRUE)
+#'   plot_proportions(
+#'     Survived == "Yes",
+#'     overall_label = "All",
+#'     labels_colour = "white"
+#'   )
 #'
 #' titanic |>
-#'   plot_proportions(Survived == "Yes", by = c(Class, Sex), fill = "lightblue")
+#'   plot_proportions(
+#'     Survived == "Yes",
+#'     by = c(Class, Sex),
+#'     fill = "lightblue"
+#'   )
+#'
+#' \donttest{
+#' titanic |>
+#'   plot_proportions(
+#'     Survived == "Yes",
+#'     by = c(Class, Sex),
+#'     fill = "lightblue",
+#'     flip = TRUE
+#'   )
+#'
+#' titanic |>
+#'   plot_proportions(
+#'     Survived == "Yes",
+#'     by = c(Class, Sex),
+#'     geom = "point",
+#'     colour = "red",
+#'     size = 3,
+#'     show_labels = FALSE
+#'   )
+#'
+#' titanic |>
+#'   plot_proportions(
+#'     Survived == "Yes",
+#'     by = c(Class, Sex),
+#'     geom = "area",
+#'     fill = "lightgreen",
+#'     show_overall = FALSE
+#'   )
+#'
+#' titanic |>
+#'   plot_proportions(
+#'     Survived == "Yes",
+#'     by = c(Class, Sex),
+#'     geom = "line",
+#'     colour = "purple",
+#'     ci_colour = "darkblue",
+#'     show_overall = FALSE
+#'   )
 #'
 #' titanic |>
 #'   plot_proportions(
@@ -35,23 +97,64 @@
 #'     mapping = ggplot2::aes(fill = variable),
 #'     colour = "black",
 #'     show.legend = FALSE,
-#'     add_p = FALSE
+#'     show_overall_line = TRUE,
+#'     show_pvalues = FALSE
 #'  )
-plot_proportions <- function(data,
-                             condition,
-                             by,
-                             conf.level = 0.95,
-                             label_wrap = 50,
-                             add_p = TRUE,
-                             p_size = 3.5,
-                             ...,
-                             return_data = FALSE) {
+#'
+#' # works with survey object
+#' titanic |>
+#'   srvyr::as_survey() |>
+#'   plot_proportions(
+#'     Survived == "Yes",
+#'     by = c(Class, Sex),
+#'     fill = "darksalmon",
+#'     colour = "black",
+#'     show_overall_line = TRUE
+#'  )
+#' }
+plot_proportions <- function(
+  data,
+  condition,
+  by = NULL,
+  geom = "bar",
+  ...,
+  show_overall = TRUE,
+  overall_label = "Overall",
+  show_ci = TRUE,
+  conf_level = 0.95,
+  ci_colour = "black",
+  show_pvalues = TRUE,
+  pvalues_test = c("fisher", "chisq"),
+  pvalues_labeller = scales::label_pvalue(add_p = TRUE),
+  pvalues_size = 3.5,
+  show_labels = TRUE,
+  labels_labeller = scales::label_percent(1),
+  labels_size = 3.5,
+  labels_colour = "black",
+  show_overall_line = FALSE,
+  overall_line_type = "dashed",
+  overall_line_colour = "black",
+  overall_line_width = .5,
+  facet_labeller = ggplot2::label_wrap_gen(width = 50, multi_line = TRUE),
+  flip = FALSE,
+  return_data = FALSE
+) {
+  # variable identification
   vars <- data |> dplyr::select({{ by }}) |> colnames()
-  if (length(vars) == 0)
-    cli::cli_abort("No variable selected by {.arg by}.")
+  if (show_overall || length(vars) == 0) {
+    data <- data |> dplyr::mutate(.overall = overall_label)
+    if (inherits(data, "survey.design")) {
+      labelled::var_label(data$variables$.overall) <- overall_label
+    } else {
+      labelled::var_label(data$.overall) <- overall_label
+    }
+    vars <- c(".overall", vars)
+  }
   data <- data |>
     dplyr::mutate(.condition = factor({{ condition }}, c(FALSE, TRUE))) |>
     dplyr::filter(!is.na(.data$.condition))
+
+  # proportion computation
   d <- vars |>
     purrr::map(
       ~ data |>
@@ -59,95 +162,145 @@ plot_proportions <- function(data,
         proportion(
           .data$.condition,
           .by = dplyr::all_of("level"),
-          .conf.int = TRUE,
+          .conf.int = show_ci,
           .scale = 1,
-          .conf.level = conf.level
+          .conf.level = conf_level
         ) |>
         dplyr::mutate(
-          variable = .x,
-          level = .data$level |> forcats::fct_inorder()
+          variable = .x
         )
     ) |>
     dplyr::bind_rows() |>
+    dplyr::ungroup() |>
     dplyr::filter(.data$.condition == "TRUE") |>
+    dplyr::mutate(
+      num_level = paste(dplyr::row_number(), .data$level, sep = "_"),
+      num_level = forcats::fct_inorder(.data$num_level),
+      variable = forcats::fct_inorder(.data$variable)
+    ) |>
     dplyr::select(-.data$.condition)
+  if (flip) d$num_level <- d$num_level |> forcats::fct_rev()
 
+  # variable labels
   if (inherits(data, "survey.design")) {
     vl <- labelled::var_label(
       data$variables[, vars],
       null_action = "fill",
       unlist = TRUE
     )
-    test <- survey::svychisq # nolint
   } else {
     vl <- labelled::var_label(
       data[, vars, drop = FALSE],
       null_action = "fill",
       unlist = TRUE
     )
-    test <- function(formula, data) {
-      stats::xtabs(formula, data) |> stats::chisq.test()
-    }
   }
   d$variable_label <- vl[d$variable] |> forcats::fct_inorder()
-
-  pvalues <- vars |>
-    purrr::map(
-      ~ paste("~ .condition +", .x) |>
-        as.formula() |>
-        test(data) |>
-        purrr::pluck("p.value")
-    )
-  pvalues <- unlist(pvalues)
-  pvalues <- dplyr::tibble(
-    variable = vars,
-    p = pvalues
-  )
-
   d <-
     d |>
-    dplyr::left_join(pvalues, by = "variable") |>
-    dplyr::relocate(dplyr::all_of(c("variable", "variable_label"))) |>
-    dplyr::ungroup()
+    dplyr::relocate(dplyr::all_of(c("variable", "variable_label")))
 
-  if (return_data) return(d)
+  # proportion labels
+  d$prop_label <- labels_labeller(d$prop)
+  d$y_label <- 0
 
+  # selecting only variables with at least 2 levels
+  v2 <-
+    d |>
+    dplyr::count(.data$variable, name = "n") |>
+    dplyr::filter(.data$n >= 2) |>
+    dplyr::pull("variable") |>
+    as.character()
+
+  # computing p-values
+  pvalues <- NULL
+  if (show_pvalues && length(v2) > 0) {
+    if (inherits(data, "survey.design")) {
+      test_fun <- survey::svychisq # nolint
+    } else {
+      pvalues_test <- match.arg(pvalues_test)
+      if (pvalues_test == "fisher") {
+        test_fun <- function(formula, data) {
+          stats::xtabs(formula, data) |>
+            stats::fisher.test(simulate.p.value = TRUE)
+        }
+      } else {
+        test_fun <- function(formula, data) {
+          stats::xtabs(formula, data) |> stats::chisq.test()
+        }
+      }
+    }
+
+    pvalues <- v2 |>
+      purrr::map(
+        ~ paste("~ .condition +", .x) |>
+          as.formula() |>
+          test_fun(data) |>
+          purrr::pluck("p.value")
+      )
+    pvalues <- unlist(pvalues)
+    pvalues <- dplyr::tibble(
+      variable = v2,
+      p = pvalues
+    )
+  }
+
+  if (return_data) {
+    if (!is.null(pvalues))
+      d <-
+        d |>
+        dplyr::left_join(pvalues, by = "variable")
+    return(d)
+  }
+
+  # main plot
   plot <- d |>
     ggplot2::ggplot() +
     ggplot2::aes(
-      x = .data$level,
+      x = .data$num_level,
       y = .data$prop,
-      ymin = .data$prop_low,
-      ymax = .data$prop_high
-    ) +
-    ggplot2::geom_bar(stat = "identity", ...) +
-    ggplot2::geom_errorbar(width = .1) +
-    ggplot2::facet_grid(
-      cols = ggplot2::vars(.data$variable_label),
-      scales = "free_x",
-      space = "free_x",
-      labeller = ggplot2::label_wrap_gen(width = label_wrap, multi_line = TRUE)
-    ) +
-    ggplot2::labs(x = NULL, y = NULL) +
-    ggplot2::scale_y_continuous(labels = scales::percent) +
-    ggplot2::theme_light() +
-    ggplot2::theme(
-      panel.grid.major.x = ggplot2::element_blank(),
-      axis.ticks.x = ggplot2::element_blank()
+      group = 1
     )
+  if (geom != "point") # if point, should be drawn after ci
+    plot <-
+      plot +
+      ggplot2::stat_identity(geom = geom, ...)
 
-  if (add_p) {
-    pvalues <- d |>
-      dplyr::ungroup() |>
-      dplyr::mutate(y = max(.data$prop_high, na.rm = TRUE)) |>
-      dplyr::group_by(.data$variable_label, .data$y, .data$p) |>
-      dplyr::summarise(
-        level = dplyr::last(.data$level),
-        .groups = "drop"
-      ) |>
-      dplyr::mutate(label = scales::label_pvalue(add_p = TRUE)(.data$p))
+  # plotting confidence intervals
+  if (show_ci) {
+    plot <-
+      plot +
+      ggplot2::geom_errorbar(
+        mapping = ggplot2::aes(
+          ymin = .data$prop_low,
+          ymax = .data$prop_high
+        ),
+        width = .1,
+        colour = ci_colour
+      )
+  }
 
-    plot <- plot +
+  if (geom == "point")
+    plot <-
+      plot +
+      ggplot2::stat_identity(geom = geom, ...)
+
+  # plotting p-values
+  if (show_pvalues && !is.null(pvalues)) {
+    pvalues <-
+      pvalues |>
+      dplyr::left_join(
+        d |>
+          dplyr::arrange(.data$num_level) |>
+          dplyr::group_by(.data$variable, .data$variable_label) |>
+          dplyr::summarise(num_level = dplyr::last(.data$num_level)),
+        by = "variable"
+      )
+    pvalues$y <- ifelse(show_ci, max(d$prop_high), max(d$prop))
+    pvalues$label <- pvalues_labeller(pvalues$p)
+
+    plot <-
+      plot +
       ggplot2::geom_text(
         data = pvalues,
         mapping = ggplot2::aes(
@@ -158,9 +311,91 @@ plot_proportions <- function(data,
         ),
         nudge_y = .01,
         nudge_x = 0.5,
+        vjust = ifelse(flip, 1, 0),
         hjust = 1,
-        vjust = 0,
-        size = p_size
+        size = pvalues_size
+      )
+  }
+
+  # plotting proportion labels
+  if (show_labels) {
+    plot <-
+      plot +
+      ggplot2::geom_text(
+        mapping = ggplot2::aes(
+          label = .data$prop_label,
+          y = .data$y_label
+        ),
+        size = labels_size,
+        colour = labels_colour,
+        vjust = ifelse(flip, .5, 0),
+        hjust = ifelse(flip, 0, 0.5),
+        nudge_y = .01
+      )
+  }
+
+  # overall line
+  if (show_overall_line) {
+    yintercept <-
+      data |>
+      proportion(.data$.condition, .scale = 1) |>
+      dplyr::filter(.data$.condition == "TRUE") |>
+      dplyr::pull("prop")
+    plot <-
+      plot +
+      ggplot2::geom_hline(
+        yintercept = yintercept,
+        colour = overall_line_colour,
+        linetype = overall_line_type,
+        linewidth = overall_line_width
+      )
+  }
+
+  # facet and theme
+  plot <-
+    plot +
+    ggplot2::labs(x = NULL, y = NULL) +
+    ggplot2::scale_y_continuous(labels = scales::percent) +
+    ggplot2::scale_x_discrete(
+      labels = \(x) {
+        stringr::str_remove(x, "^[0-9]*_")
+      }
+    ) +
+    ggplot2::theme_light()
+
+  if (flip) {
+    plot <-
+      plot +
+      ggplot2::coord_flip() +
+      ggplot2::facet_grid(
+        rows = ggplot2::vars(.data$variable_label),
+        scales = "free_y",
+        space = "free_y",
+        labeller = facet_labeller,
+        switch = "y"
+      ) +
+      ggplot2::theme(
+        panel.grid.major.y = ggplot2::element_blank(),
+        axis.ticks.y = ggplot2::element_blank(),
+        strip.placement = "outside",
+        strip.text.y.left = ggplot2::element_text(
+          face = "bold", angle = 0, colour = "black",
+          hjust = 0, vjust = 1
+        ),
+        strip.background = ggplot2::element_blank()
+      )
+  } else {
+    plot <-
+      plot +
+      ggplot2::facet_grid(
+        cols = ggplot2::vars(.data$variable_label),
+        scales = "free_x",
+        space = "free_x",
+        labeller = facet_labeller
+      ) +
+      ggplot2::theme(
+        panel.grid.major.x = ggplot2::element_blank(),
+        axis.ticks.x = ggplot2::element_blank()
       )
   }
 
