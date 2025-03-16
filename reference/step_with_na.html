@@ -13,7 +13,7 @@ encounter an error because the number of rows has changed."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">guideR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,8 +87,8 @@ encounter an error because the number of rows has changed.</p>
 <li><p>applies <code><a href="https://rdrr.io/r/stats/step.html" class="external-link">stats::step()</a></code>;</p></li>
 <li><p>recomputes the reduced model using the full original dataset.</p></li>
 </ul><p><code>step_with_na()</code> has been tested with <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">stats::lm()</a></code>, <code><a href="https://rdrr.io/r/stats/glm.html" class="external-link">stats::glm()</a></code>,
-<code><a href="https://rdrr.io/pkg/nnet/man/multinom.html" class="external-link">nnet::multinom()</a></code> and <code><a href="https://rdrr.io/pkg/survey/man/svyglm.html" class="external-link">survey::svyglm()</a></code>. It may be working with other
-types of models, but with no warranty.</p>
+<code><a href="https://rdrr.io/pkg/nnet/man/multinom.html" class="external-link">nnet::multinom()</a></code>, <code><a href="https://rdrr.io/pkg/survey/man/svyglm.html" class="external-link">survey::svyglm()</a></code> and <code><a href="https://rdrr.io/pkg/survival/man/coxph.html" class="external-link">survival::coxph()</a></code>.
+It may be working with other types of models, but with no warranty.</p>
 <p>In some cases, it may be necessary to provide the full dataset initially
 used to estimate the model.</p>
 <p><code>step_with_na()</code> may not work inside other functions. In that case, you
