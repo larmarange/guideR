@@ -16,7 +16,7 @@
 #' @param overall_label Label for the overall column.
 #' @param show_ci Display confidence intervals?
 #' @param conf_level Confidence level for the confidence intervals.
-#' @param ci_colour Colour of the error bars representing confidence intervals.
+#' @param ci_color Color of the error bars representing confidence intervals.
 #' @param show_pvalues Display p-values in the top-left corner?
 #' @param pvalues_test Test to compute p-values for data frames: `"fisher"` for
 #' [stats::fisher.test()] (with `simulate.p.value = TRUE`) or `"chisq"` for
@@ -27,10 +27,10 @@
 #' @param show_labels Display proportion labels?
 #' @param labels_labeller Labeller function for proportion labels.
 #' @param labels_size Size of proportion labels.
-#' @param labels_colour Colour of proportion labels.
+#' @param labels_color Color of proportion labels.
 #' @param show_overall_line Add an overall line?
 #' @param overall_line_type Line type of the overall line.
-#' @param overall_line_colour Colour of the overall line.
+#' @param overall_line_color Color of the overall line.
 #' @param overall_line_width Line width of the overall line.
 #' @param facet_labeller Labeller function for strip labels.
 #' @param flip Flip x and y axis?
@@ -42,7 +42,7 @@
 #'   plot_proportions(
 #'     Survived == "Yes",
 #'     overall_label = "All",
-#'     labels_colour = "white"
+#'     labels_color = "white"
 #'   )
 #'
 #' titanic |>
@@ -66,7 +66,7 @@
 #'     Survived == "Yes",
 #'     by = c(Class, Sex),
 #'     geom = "point",
-#'     colour = "red",
+#'     color = "red",
 #'     size = 3,
 #'     show_labels = FALSE
 #'   )
@@ -85,8 +85,8 @@
 #'     Survived == "Yes",
 #'     by = c(Class, Sex),
 #'     geom = "line",
-#'     colour = "purple",
-#'     ci_colour = "darkblue",
+#'     color = "purple",
+#'     ci_color = "darkblue",
 #'     show_overall = FALSE
 #'   )
 #'
@@ -95,7 +95,7 @@
 #'     Survived == "Yes",
 #'     by = -Survived,
 #'     mapping = ggplot2::aes(fill = variable),
-#'     colour = "black",
+#'     color = "black",
 #'     show.legend = FALSE,
 #'     show_overall_line = TRUE,
 #'     show_pvalues = FALSE
@@ -108,7 +108,7 @@
 #'     Survived == "Yes",
 #'     by = c(Class, Sex),
 #'     fill = "darksalmon",
-#'     colour = "black",
+#'     color = "black",
 #'     show_overall_line = TRUE
 #'  )
 #' }
@@ -122,7 +122,7 @@ plot_proportions <- function(
   overall_label = "Overall",
   show_ci = TRUE,
   conf_level = 0.95,
-  ci_colour = "black",
+  ci_color = "black",
   show_pvalues = TRUE,
   pvalues_test = c("fisher", "chisq"),
   pvalues_labeller = scales::label_pvalue(add_p = TRUE),
@@ -130,10 +130,10 @@ plot_proportions <- function(
   show_labels = TRUE,
   labels_labeller = scales::label_percent(1),
   labels_size = 3.5,
-  labels_colour = "black",
+  labels_color = "black",
   show_overall_line = FALSE,
   overall_line_type = "dashed",
-  overall_line_colour = "black",
+  overall_line_color = "black",
   overall_line_width = .5,
   facet_labeller = ggplot2::label_wrap_gen(width = 50, multi_line = TRUE),
   flip = FALSE,
@@ -276,7 +276,7 @@ plot_proportions <- function(
           ymax = .data$prop_high
         ),
         width = .1,
-        colour = ci_colour
+        color = ci_color
       )
   }
 
@@ -327,7 +327,7 @@ plot_proportions <- function(
           y = .data$y_label
         ),
         size = labels_size,
-        colour = labels_colour,
+        color = labels_color,
         vjust = ifelse(flip, .5, 0),
         hjust = ifelse(flip, 0, 0.5),
         nudge_y = .01
@@ -345,7 +345,7 @@ plot_proportions <- function(
       plot +
       ggplot2::geom_hline(
         yintercept = yintercept,
-        colour = overall_line_colour,
+        color = overall_line_color,
         linetype = overall_line_type,
         linewidth = overall_line_width
       )
@@ -379,7 +379,7 @@ plot_proportions <- function(
         axis.ticks.y = ggplot2::element_blank(),
         strip.placement = "outside",
         strip.text.y.left = ggplot2::element_text(
-          face = "bold", angle = 0, colour = "black",
+          face = "bold", angle = 0, color = "black",
           hjust = 0, vjust = 1
         ),
         strip.background = ggplot2::element_blank()

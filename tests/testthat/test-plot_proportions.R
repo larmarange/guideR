@@ -4,7 +4,7 @@ test_that("plot_proportions() does not produce an error", {
       plot_proportions(
         Survived == "Yes",
         overall_label = "All",
-        labels_colour = "white"
+        labels_color = "white"
       )
   )
   expect_no_error(
@@ -31,7 +31,7 @@ test_that("plot_proportions() does not produce an error", {
         Survived == "Yes",
         by = c(Class, Sex),
         geom = "point",
-        colour = "red",
+        color = "red",
         size = 3,
         show_labels = FALSE
       )
@@ -43,7 +43,7 @@ test_that("plot_proportions() does not produce an error", {
         Survived == "Yes",
         by = c(Class, Sex),
         fill = "darksalmon",
-        colour = "black",
+        color = "black",
         show_overall_line = TRUE
       )
   )

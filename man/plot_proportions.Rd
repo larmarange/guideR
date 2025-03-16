@@ -14,7 +14,7 @@ plot_proportions(
   overall_label = "Overall",
   show_ci = TRUE,
   conf_level = 0.95,
-  ci_colour = "black",
+  ci_color = "black",
   show_pvalues = TRUE,
   pvalues_test = c("fisher", "chisq"),
   pvalues_labeller = scales::label_pvalue(add_p = TRUE),
@@ -22,10 +22,10 @@ plot_proportions(
   show_labels = TRUE,
   labels_labeller = scales::label_percent(1),
   labels_size = 3.5,
-  labels_colour = "black",
+  labels_color = "black",
   show_overall_line = FALSE,
   overall_line_type = "dashed",
-  overall_line_colour = "black",
+  overall_line_color = "black",
   overall_line_width = 0.5,
   facet_labeller = ggplot2::label_wrap_gen(width = 50, multi_line = TRUE),
   flip = FALSE,
@@ -54,7 +54,7 @@ group by (comparison is done separately for each variable).}
 
 \item{conf_level}{Confidence level for the confidence intervals.}
 
-\item{ci_colour}{Colour of the error bars representing confidence intervals.}
+\item{ci_color}{Color of the error bars representing confidence intervals.}
 
 \item{show_pvalues}{Display p-values in the top-left corner?}
 
@@ -73,13 +73,13 @@ group by (comparison is done separately for each variable).}
 
 \item{labels_size}{Size of proportion labels.}
 
-\item{labels_colour}{Colour of proportion labels.}
+\item{labels_color}{Color of proportion labels.}
 
 \item{show_overall_line}{Add an overall line?}
 
 \item{overall_line_type}{Line type of the overall line.}
 
-\item{overall_line_colour}{Colour of the overall line.}
+\item{overall_line_color}{Color of the overall line.}
 
 \item{overall_line_width}{Line width of the overall line.}
 
@@ -99,7 +99,7 @@ titanic |>
   plot_proportions(
     Survived == "Yes",
     overall_label = "All",
-    labels_colour = "white"
+    labels_color = "white"
   )
 
 titanic |>
@@ -123,7 +123,7 @@ titanic |>
     Survived == "Yes",
     by = c(Class, Sex),
     geom = "point",
-    colour = "red",
+    color = "red",
     size = 3,
     show_labels = FALSE
   )
@@ -142,8 +142,8 @@ titanic |>
     Survived == "Yes",
     by = c(Class, Sex),
     geom = "line",
-    colour = "purple",
-    ci_colour = "darkblue",
+    color = "purple",
+    ci_color = "darkblue",
     show_overall = FALSE
   )
 
@@ -152,7 +152,7 @@ titanic |>
     Survived == "Yes",
     by = -Survived,
     mapping = ggplot2::aes(fill = variable),
-    colour = "black",
+    color = "black",
     show.legend = FALSE,
     show_overall_line = TRUE,
     show_pvalues = FALSE
@@ -165,7 +165,7 @@ titanic |>
     Survived == "Yes",
     by = c(Class, Sex),
     fill = "darksalmon",
-    colour = "black",
+    color = "black",
     show_overall_line = TRUE
  )
 }
