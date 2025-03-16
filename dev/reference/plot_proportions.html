@@ -55,7 +55,7 @@ intervals are computed.</p>
 <span>  overall_label <span class="op">=</span> <span class="st">"Overall"</span>,</span>
 <span>  show_ci <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  conf_level <span class="op">=</span> <span class="fl">0.95</span>,</span>
-<span>  ci_colour <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>  ci_color <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>  show_pvalues <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  pvalues_test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fisher"</span>, <span class="st">"chisq"</span><span class="op">)</span>,</span>
 <span>  pvalues_labeller <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_pvalue.html" class="external-link">label_pvalue</a></span><span class="op">(</span>add_p <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
@@ -63,10 +63,10 @@ intervals are computed.</p>
 <span>  show_labels <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  labels_labeller <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_percent.html" class="external-link">label_percent</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>,</span>
 <span>  labels_size <span class="op">=</span> <span class="fl">3.5</span>,</span>
-<span>  labels_colour <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>  labels_color <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>  show_overall_line <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  overall_line_type <span class="op">=</span> <span class="st">"dashed"</span>,</span>
-<span>  overall_line_colour <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>  overall_line_color <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>  overall_line_width <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  facet_labeller <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labellers.html" class="external-link">label_wrap_gen</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">50</span>, multi_line <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>  flip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -117,8 +117,8 @@ group by (comparison is done separately for each variable).</p></dd>
 <dd><p>Confidence level for the confidence intervals.</p></dd>
 
 
-<dt id="arg-ci-colour">ci_colour<a class="anchor" aria-label="anchor" href="#arg-ci-colour"></a></dt>
-<dd><p>Colour of the error bars representing confidence intervals.</p></dd>
+<dt id="arg-ci-color">ci_color<a class="anchor" aria-label="anchor" href="#arg-ci-color"></a></dt>
+<dd><p>Color of the error bars representing confidence intervals.</p></dd>
 
 
 <dt id="arg-show-pvalues">show_pvalues<a class="anchor" aria-label="anchor" href="#arg-show-pvalues"></a></dt>
@@ -152,8 +152,8 @@ group by (comparison is done separately for each variable).</p></dd>
 <dd><p>Size of proportion labels.</p></dd>
 
 
-<dt id="arg-labels-colour">labels_colour<a class="anchor" aria-label="anchor" href="#arg-labels-colour"></a></dt>
-<dd><p>Colour of proportion labels.</p></dd>
+<dt id="arg-labels-color">labels_color<a class="anchor" aria-label="anchor" href="#arg-labels-color"></a></dt>
+<dd><p>Color of proportion labels.</p></dd>
 
 
 <dt id="arg-show-overall-line">show_overall_line<a class="anchor" aria-label="anchor" href="#arg-show-overall-line"></a></dt>
@@ -164,8 +164,8 @@ group by (comparison is done separately for each variable).</p></dd>
 <dd><p>Line type of the overall line.</p></dd>
 
 
-<dt id="arg-overall-line-colour">overall_line_colour<a class="anchor" aria-label="anchor" href="#arg-overall-line-colour"></a></dt>
-<dd><p>Colour of the overall line.</p></dd>
+<dt id="arg-overall-line-color">overall_line_color<a class="anchor" aria-label="anchor" href="#arg-overall-line-color"></a></dt>
+<dd><p>Color of the overall line.</p></dd>
 
 
 <dt id="arg-overall-line-width">overall_line_width<a class="anchor" aria-label="anchor" href="#arg-overall-line-width"></a></dt>
@@ -191,7 +191,7 @@ group by (comparison is done separately for each variable).</p></dd>
 <span class="r-in"><span>  <span class="fu">plot_proportions</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="va">Survived</span> <span class="op">==</span> <span class="st">"Yes"</span>,</span></span>
 <span class="r-in"><span>    overall_label <span class="op">=</span> <span class="st">"All"</span>,</span></span>
-<span class="r-in"><span>    labels_colour <span class="op">=</span> <span class="st">"white"</span></span></span>
+<span class="r-in"><span>    labels_color <span class="op">=</span> <span class="st">"white"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot_proportions-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
@@ -218,7 +218,7 @@ group by (comparison is done separately for each variable).</p></dd>
 <span class="r-in"><span>    <span class="va">Survived</span> <span class="op">==</span> <span class="st">"Yes"</span>,</span></span>
 <span class="r-in"><span>    by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Class</span>, <span class="va">Sex</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    geom <span class="op">=</span> <span class="st">"point"</span>,</span></span>
-<span class="r-in"><span>    colour <span class="op">=</span> <span class="st">"red"</span>,</span></span>
+<span class="r-in"><span>    color <span class="op">=</span> <span class="st">"red"</span>,</span></span>
 <span class="r-in"><span>    size <span class="op">=</span> <span class="fl">3</span>,</span></span>
 <span class="r-in"><span>    show_labels <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
@@ -239,8 +239,8 @@ group by (comparison is done separately for each variable).</p></dd>
 <span class="r-in"><span>    <span class="va">Survived</span> <span class="op">==</span> <span class="st">"Yes"</span>,</span></span>
 <span class="r-in"><span>    by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Class</span>, <span class="va">Sex</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    geom <span class="op">=</span> <span class="st">"line"</span>,</span></span>
-<span class="r-in"><span>    colour <span class="op">=</span> <span class="st">"purple"</span>,</span></span>
-<span class="r-in"><span>    ci_colour <span class="op">=</span> <span class="st">"darkblue"</span>,</span></span>
+<span class="r-in"><span>    color <span class="op">=</span> <span class="st">"purple"</span>,</span></span>
+<span class="r-in"><span>    ci_color <span class="op">=</span> <span class="st">"darkblue"</span>,</span></span>
 <span class="r-in"><span>    show_overall <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot_proportions-6.png" alt="" width="700" height="433"></span>
@@ -250,7 +250,7 @@ group by (comparison is done separately for each variable).</p></dd>
 <span class="r-in"><span>    <span class="va">Survived</span> <span class="op">==</span> <span class="st">"Yes"</span>,</span></span>
 <span class="r-in"><span>    by <span class="op">=</span> <span class="op">-</span><span class="va">Survived</span>,</span></span>
 <span class="r-in"><span>    mapping <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">variable</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    colour <span class="op">=</span> <span class="st">"black"</span>,</span></span>
+<span class="r-in"><span>    color <span class="op">=</span> <span class="st">"black"</span>,</span></span>
 <span class="r-in"><span>    show.legend <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
 <span class="r-in"><span>    show_overall_line <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>    show_pvalues <span class="op">=</span> <span class="cn">FALSE</span></span></span>
@@ -264,7 +264,7 @@ group by (comparison is done separately for each variable).</p></dd>
 <span class="r-in"><span>    <span class="va">Survived</span> <span class="op">==</span> <span class="st">"Yes"</span>,</span></span>
 <span class="r-in"><span>    by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Class</span>, <span class="va">Sex</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    fill <span class="op">=</span> <span class="st">"darksalmon"</span>,</span></span>
-<span class="r-in"><span>    colour <span class="op">=</span> <span class="st">"black"</span>,</span></span>
+<span class="r-in"><span>    color <span class="op">=</span> <span class="st">"black"</span>,</span></span>
 <span class="r-in"><span>    show_overall_line <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span> <span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot_proportions-8.png" alt="" width="700" height="433"></span>
