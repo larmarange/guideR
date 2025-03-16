@@ -1,4 +1,4 @@
-# guideR (development version)
+# guideR 0.2.0
 
 * `proportion()` could be applied to atomic vectors (#4)
 * new function `periods_to_long()` (#7)
