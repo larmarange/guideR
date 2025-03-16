@@ -113,6 +113,8 @@ proportion.data.frame <- function(data,
                      conf.level = .95,
                      options = list(correct = TRUE),
                      scale = 1) {
+  if (N == 0)
+    return(dplyr::tibble(prop_low = NA_real_, prop_high = NA_real_))
   t <- rlang::inject(
     stats::prop.test(n, N, conf.level = conf.level, !!!options)
   )

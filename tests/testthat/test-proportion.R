@@ -29,6 +29,13 @@ test_that("proportion() works with data frames", {
     dna |> proportion(Survived, .na.rm = TRUE) |> nrow(),
     2
   )
+
+  # rows with N = 0
+  d <- titanic
+  d$Sex <- factor(d$Sex, c("Male", "Female", "Other"))
+  expect_no_error(
+    d |> proportion(Survived, .by = Sex, .conf.int = TRUE)
+  )
 })
 
 test_that("proportion() works with survey designs", {
