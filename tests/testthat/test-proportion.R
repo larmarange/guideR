@@ -30,6 +30,15 @@ test_that("proportion() works with data frames", {
     2
   )
 
+  expect_equal(
+    dna |> proportion(Sex, .by = Survived) |> nrow(),
+    5
+  )
+  expect_equal(
+    dna |> proportion(Sex, .by = Survived, .drop_na_by = TRUE) |> nrow(),
+    4
+  )
+
   # rows with N = 0
   d <- titanic
   d$Sex <- factor(d$Sex, c("Male", "Female", "Other"))
@@ -72,6 +81,15 @@ test_that("proportion() works with survey designs", {
   expect_equal(
     dsna |> proportion(Survived, .na.rm = TRUE) |> nrow(),
     2
+  )
+
+  expect_equal(
+    dsna |> proportion(Sex, .by = Survived) |> nrow(),
+    5
+  )
+  expect_equal(
+    dsna |> proportion(Sex, .by = Survived, .drop_na_by = TRUE) |> nrow(),
+    4
   )
 })
 

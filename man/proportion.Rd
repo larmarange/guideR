@@ -18,6 +18,7 @@ proportion(data, ...)
   .scale = 100,
   .sort = FALSE,
   .drop = FALSE,
+  .drop_na_by = FALSE,
   .conf.int = FALSE,
   .conf.level = 0.95,
   .options = list(correct = TRUE)
@@ -30,6 +31,7 @@ proportion(data, ...)
   .na.rm = FALSE,
   .scale = 100,
   .sort = FALSE,
+  .drop_na_by = FALSE,
   .conf.int = FALSE,
   .conf.level = 0.95,
   .options = NULL
@@ -70,6 +72,9 @@ proportions unchanged.}
 \item{.sort}{If \code{TRUE}, will show the highest proportions at the top.}
 
 \item{.drop}{If \code{TRUE}, will remove empty groups from the output.}
+
+\item{.drop_na_by}{If \code{TRUE}, will remove any \code{NA} values observed in the
+\code{.by} variables (or variables defined with \code{\link[dplyr:group_by]{dplyr::group_by()}}).}
 
 \item{.conf.int}{If \code{TRUE}, will estimate confidence intervals.}
 

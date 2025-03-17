@@ -1,5 +1,9 @@
 # guideR (development version)
 
+**New features**
+
+* new argument `.drop_by_na` for `proportion()` (#12)
+
 **Bug fixes**
 
 * fix in `proportion()` when `.conf.int = TRUE` and some rows have no
