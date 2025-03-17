@@ -8,6 +8,7 @@ plot_proportions(
   data,
   condition,
   by = NULL,
+  drop_na_by = FALSE,
   geom = "bar",
   ...,
   show_overall = TRUE,
@@ -41,6 +42,8 @@ defining a proportion (see examples).}
 
 \item{by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> List of variables to
 group by (comparison is done separately for each variable).}
+
+\item{drop_na_by}{Remove \code{NA} values in \code{by} variables?}
 
 \item{geom}{Geometry to use for plotting proportions (\code{"bar"} by default).}
 

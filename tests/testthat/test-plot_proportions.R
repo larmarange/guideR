@@ -47,4 +47,12 @@ test_that("plot_proportions() does not produce an error", {
         show_overall_line = TRUE
       )
   )
+  d <- titanic
+  d$Sex[1:50] <- NA
+  expect_no_error(
+    d |> plot_proportions(Survived == "Yes", by = Sex)
+  )
+  expect_no_error(
+    d |> plot_proportions(Survived == "Yes", by = Sex, drop_na_by = TRUE)
+  )
 })

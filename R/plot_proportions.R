@@ -10,6 +10,7 @@
 #' defining a proportion (see examples).
 #' @param by <[`tidy-select`][dplyr::dplyr_tidy_select ]> List of variables to
 #' group by (comparison is done separately for each variable).
+#' @param drop_na_by Remove `NA` values in `by` variables?
 #' @param geom Geometry to use for plotting proportions (`"bar"` by default).
 #' @param ... Additional arguments passed to the geom defined by `geom`.
 #' @param show_overall Display "Overall" column?
@@ -116,6 +117,7 @@ plot_proportions <- function(
   data,
   condition,
   by = NULL,
+  drop_na_by = FALSE,
   geom = "bar",
   ...,
   show_overall = TRUE,
@@ -164,7 +166,8 @@ plot_proportions <- function(
           .by = dplyr::all_of("level"),
           .conf.int = show_ci,
           .scale = 1,
-          .conf.level = conf_level
+          .conf.level = conf_level,
+          .drop_na_by = drop_na_by
         ) |>
         dplyr::mutate(
           variable = .x
@@ -221,12 +224,13 @@ plot_proportions <- function(
       pvalues_test <- match.arg(pvalues_test)
       if (pvalues_test == "fisher") {
         test_fun <- function(formula, data) {
-          stats::xtabs(formula, data) |>
+          stats::xtabs(formula, data, addNA = !drop_na_by) |>
             stats::fisher.test(simulate.p.value = TRUE)
         }
       } else {
         test_fun <- function(formula, data) {
-          stats::xtabs(formula, data) |> stats::chisq.test()
+          stats::xtabs(formula, data, addNA = !drop_na_by) |>
+            stats::chisq.test()
         }
       }
     }
