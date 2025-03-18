@@ -425,7 +425,9 @@ plot_proportions <- function(
   if (is.numeric(x) && length(unique(x)) > 4 && convert_continuous) {
     cut_quartiles(x)
   } else if (is.numeric(x)) {
-    factor(x)
+    res <- factor(x)
+    labelled::var_label(res) <- labelled::var_label(x)
+    res
   } else {
     x
   }
