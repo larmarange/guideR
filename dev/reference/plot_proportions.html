@@ -268,6 +268,19 @@ or more) be converted to quartiles (using <code><a href="cut_quartiles.html">cut
 <span class="r-in"><span> <span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot_proportions-7.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># works with continuous by variables</span></span></span>
+<span class="r-in"><span><span class="va">iris</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">labelled</span><span class="fu">::</span><span class="fu"><a href="https://larmarange.github.io/labelled/reference/var_label.html" class="external-link">set_variable_labels</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    Sepal.Length <span class="op">=</span> <span class="st">"Length of the sepal"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">plot_proportions</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="va">Species</span> <span class="op">==</span> <span class="st">"versicolor"</span>,</span></span>
+<span class="r-in"><span>    by <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"leng"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    fill <span class="op">=</span> <span class="st">"plum"</span>,</span></span>
+<span class="r-in"><span>    colour <span class="op">=</span> <span class="st">"plum4"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plot_proportions-8.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># works with survey object</span></span></span>
 <span class="r-in"><span><span class="va">titanic</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">srvyr</span><span class="fu">::</span><span class="fu"><a href="http://gdfe.co/srvyr/reference/as_survey.html" class="external-link">as_survey</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
@@ -278,7 +291,7 @@ or more) be converted to quartiles (using <code><a href="cut_quartiles.html">cut
 <span class="r-in"><span>    color <span class="op">=</span> <span class="st">"black"</span>,</span></span>
 <span class="r-in"><span>    show_overall_line <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span> <span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot_proportions-8.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot_proportions-9.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
