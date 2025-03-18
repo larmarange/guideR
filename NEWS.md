@@ -2,6 +2,7 @@
 
 **New features**
 
+* new function `cut_quartiles()` (#13)
 * new argument `.drop_by_na` for `proportion()` (#12)
 * new argument `drop_by_na` for `plot_proportions()` (#16)
 
