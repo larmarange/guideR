@@ -17,6 +17,10 @@ cut_quartiles(x, include.lowest = TRUE, ...)
 }
 \description{
 Convenient function to quickly cut a numeric vector into quartiles, i.e. by
-applying \code{cut(x, breaks = fivenum(x))}.
+applying \code{cut(x, breaks = fivenum(x))}. Variable label is preserved by
+\code{cut_quartiles()}.
+}
+\examples{
+mtcars$mpg |> cut_quartiles() |> summary()
 }
 \keyword{manip}
