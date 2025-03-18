@@ -165,6 +165,18 @@ titanic |>
     show_pvalues = FALSE
  )
 
+# works with continuous by variables
+iris |>
+  labelled::set_variable_labels(
+    Sepal.Length = "Length of the sepal"
+  ) |>
+  plot_proportions(
+    Species == "versicolor",
+    by = dplyr::contains("leng"),
+    fill = "plum",
+    colour = "plum4"
+  )
+
 # works with survey object
 titanic |>
   srvyr::as_survey() |>
