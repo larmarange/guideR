@@ -19,6 +19,8 @@
 #' proportions unchanged.
 #' @param .sort If `TRUE`, will show the highest proportions at the top.
 #' @param .drop If `TRUE`, will remove empty groups from the output.
+#' @param .drop_na_by If `TRUE`, will remove any `NA` values observed in the
+#' `.by` variables (or variables defined with [dplyr::group_by()]).
 #' @param .conf.int If `TRUE`, will estimate confidence intervals.
 #' @param .conf.level Confidence level for the returned confidence intervals.
 #' @param .options Additional arguments passed to [stats::prop.test()]
@@ -69,6 +71,7 @@ proportion.data.frame <- function(data,
                                   .scale = 100,
                                   .sort = FALSE,
                                   .drop = FALSE,
+                                  .drop_na_by = FALSE,
                                   .conf.int = FALSE,
                                   .conf.level = .95,
                                   .options = list(correct = TRUE)) {
@@ -85,6 +88,11 @@ proportion.data.frame <- function(data,
       N = sum(.data$n),
       prop = proportions(.data$n) * .scale
     )
+
+  if (.drop_na_by)
+    res <-
+      res |>
+      tidyr::drop_na(dplyr::all_of(dplyr::group_vars(res)))
   if (.sort)
     res <-
       res |>
@@ -160,6 +168,7 @@ proportion.survey.design <- function(data,
                                      .na.rm = FALSE,
                                      .scale = 100,
                                      .sort = FALSE,
+                                     .drop_na_by = FALSE,
                                      .conf.int = FALSE,
                                      .conf.level = .95,
                                      .options = NULL) {
@@ -204,6 +213,10 @@ proportion.survey.design <- function(data,
     res <-
       res |>
       dplyr::rename(prop_high = .data$prop_upp)
+  if (.drop_na_by)
+    res <-
+      res |>
+      tidyr::drop_na(dplyr::all_of(dplyr::group_vars(res)))
   if (.sort)
     res <-
       res |>

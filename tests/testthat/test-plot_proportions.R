@@ -21,7 +21,8 @@ test_that("plot_proportions() does not produce an error", {
         Survived == "Yes",
         by = c(Class, Sex),
         fill = "lightblue",
-        flip = TRUE
+        flip = TRUE,
+        pvalues_test = "chisq"
       )
   )
   skip_on_cran()
@@ -46,5 +47,18 @@ test_that("plot_proportions() does not produce an error", {
         color = "black",
         show_overall_line = TRUE
       )
+  )
+  d <- titanic
+  d$Sex[1:50] <- NA
+  expect_no_error(
+    d |> plot_proportions(Survived == "Yes", by = Sex)
+  )
+  expect_no_error(
+    d |> plot_proportions(Survived == "Yes", by = Sex, drop_na_by = TRUE)
+  )
+
+  expect_no_error(
+    iris |>
+      plot_proportions(Species == "versicolor", by = dplyr::contains("leng"))
   )
 })

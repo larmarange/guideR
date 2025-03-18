@@ -10,6 +10,9 @@
 #' defining a proportion (see examples).
 #' @param by <[`tidy-select`][dplyr::dplyr_tidy_select ]> List of variables to
 #' group by (comparison is done separately for each variable).
+#' @param drop_na_by Remove `NA` values in `by` variables?
+#' @param convert_continuous Should continuous variables (with 5 unique values
+#' or more) be converted to quartiles (using `cut_quartiles()`)?
 #' @param geom Geometry to use for plotting proportions (`"bar"` by default).
 #' @param ... Additional arguments passed to the geom defined by `geom`.
 #' @param show_overall Display "Overall" column?
@@ -116,6 +119,8 @@ plot_proportions <- function(
   data,
   condition,
   by = NULL,
+  drop_na_by = FALSE,
+  convert_continuous = TRUE,
   geom = "bar",
   ...,
   show_overall = TRUE,
@@ -141,6 +146,7 @@ plot_proportions <- function(
 ) {
   # variable identification
   vars <- data |> dplyr::select({{ by }}) |> colnames()
+
   if (show_overall || length(vars) == 0) {
     data <- data |> dplyr::mutate(.overall = overall_label)
     if (inherits(data, "survey.design")) {
@@ -154,6 +160,17 @@ plot_proportions <- function(
     dplyr::mutate(.condition = factor({{ condition }}, c(FALSE, TRUE))) |>
     dplyr::filter(!is.na(.data$.condition))
 
+  # conversion of numeric variable
+  data <-
+    data |>
+    dplyr::mutate(
+      dplyr::across(
+        dplyr::all_of(vars),
+        .convert_continuous,
+        convert_continuous
+      )
+    )
+
   # proportion computation
   d <- vars |>
     purrr::map(
@@ -164,7 +181,8 @@ plot_proportions <- function(
           .by = dplyr::all_of("level"),
           .conf.int = show_ci,
           .scale = 1,
-          .conf.level = conf_level
+          .conf.level = conf_level,
+          .drop_na_by = drop_na_by
         ) |>
         dplyr::mutate(
           variable = .x
@@ -221,12 +239,13 @@ plot_proportions <- function(
       pvalues_test <- match.arg(pvalues_test)
       if (pvalues_test == "fisher") {
         test_fun <- function(formula, data) {
-          stats::xtabs(formula, data) |>
+          stats::xtabs(formula, data, addNA = !drop_na_by) |>
             stats::fisher.test(simulate.p.value = TRUE)
         }
       } else {
         test_fun <- function(formula, data) {
-          stats::xtabs(formula, data) |> stats::chisq.test()
+          stats::xtabs(formula, data, addNA = !drop_na_by) |>
+            stats::chisq.test()
         }
       }
     }
@@ -400,4 +419,16 @@ plot_proportions <- function(
   }
 
   plot
+}
+
+.convert_continuous <- function(x, convert_continuous) {
+  if (is.numeric(x) && length(unique(x)) > 4 && convert_continuous) {
+    cut_quartiles(x)
+  } else if (is.numeric(x)) {
+    res <- factor(x)
+    labelled::var_label(res) <- labelled::var_label(x)
+    res
+  } else {
+    x
+  }
 }

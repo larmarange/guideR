@@ -1,5 +1,12 @@
 # guideR (development version)
 
+**New features**
+
+* new function `cut_quartiles()` (#13)
+* new argument `.drop_by_na` for `proportion()` (#12)
+* new argument `drop_by_na` for `plot_proportions()` (#16)
+* new argument `convert_continuous` for `plot_proportions()` (#14)
+
 **Bug fixes**
 
 * fix in `proportion()` when `.conf.int = TRUE` and some rows have no
