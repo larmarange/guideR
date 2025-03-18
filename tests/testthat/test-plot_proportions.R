@@ -21,7 +21,8 @@ test_that("plot_proportions() does not produce an error", {
         Survived == "Yes",
         by = c(Class, Sex),
         fill = "lightblue",
-        flip = TRUE
+        flip = TRUE,
+        pvalues_test = "chisq"
       )
   )
   skip_on_cran()
