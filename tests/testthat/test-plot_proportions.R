@@ -55,4 +55,9 @@ test_that("plot_proportions() does not produce an error", {
   expect_no_error(
     d |> plot_proportions(Survived == "Yes", by = Sex, drop_na_by = TRUE)
   )
+
+  expect_no_error(
+    iris |>
+      plot_proportions(Species == "versicolor", by = dplyr::contains("leng"))
+  )
 })

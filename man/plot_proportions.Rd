@@ -9,6 +9,7 @@ plot_proportions(
   condition,
   by = NULL,
   drop_na_by = FALSE,
+  convert_continuous = TRUE,
   geom = "bar",
   ...,
   show_overall = TRUE,
@@ -44,6 +45,9 @@ defining a proportion (see examples).}
 group by (comparison is done separately for each variable).}
 
 \item{drop_na_by}{Remove \code{NA} values in \code{by} variables?}
+
+\item{convert_continuous}{Should continuous variables (with 5 unique values
+or more) be converted to quartiles (using \code{cut_quartiles()})?}
 
 \item{geom}{Geometry to use for plotting proportions (\code{"bar"} by default).}
 
