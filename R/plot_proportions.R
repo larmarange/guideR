@@ -124,7 +124,8 @@
 #'     by = c(Class, Sex),
 #'     fill = "darksalmon",
 #'     color = "black",
-#'     show_overall_line = TRUE
+#'     show_overall_line = TRUE,
+#'     labels_labeller = scales::label_percent(.1)
 #'  )
 #' }
 plot_proportions <- function(
