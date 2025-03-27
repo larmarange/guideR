@@ -87,7 +87,8 @@ or a survey design object.</p></dd>
 
 <dt id="arg-condition">condition<a class="anchor" aria-label="anchor" href="#arg-condition"></a></dt>
 <dd><p>&lt;<code><a href="https://rlang.r-lib.org/reference/args_data_masking.html" class="external-link">data-masking</a></code>&gt; A condition
-defining a proportion (see examples).</p></dd>
+defining a proportion, or a <code><a href="https://dplyr.tidyverse.org/reference/reexports.html" class="external-link">dplyr::tibble()</a></code> defining several proportions
+(see examples).</p></dd>
 
 
 <dt id="arg-by">by<a class="anchor" aria-label="anchor" href="#arg-by"></a></dt>
@@ -215,6 +216,7 @@ or more) be converted to quartiles (using <code><a href="cut_quartiles.html">cut
 <span class="r-plt img"><img src="plot_proportions-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">titanic</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">plot_proportions</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="va">Survived</span> <span class="op">==</span> <span class="st">"Yes"</span>,</span></span>
@@ -268,6 +270,30 @@ or more) be converted to quartiles (using <code><a href="cut_quartiles.html">cut
 <span class="r-in"><span> <span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot_proportions-7.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># defining several proportions</span></span></span>
+<span class="r-in"><span><span class="va">iris</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">plot_proportions</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      <span class="st">"Long sepal"</span> <span class="op">=</span> <span class="va">Sepal.Length</span> <span class="op">&gt;</span> <span class="fl">6</span>,</span></span>
+<span class="r-in"><span>      <span class="st">"Short petal"</span> <span class="op">=</span> <span class="va">Petal.Width</span> <span class="op">&lt;</span> <span class="fl">1</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span>,</span></span>
+<span class="r-in"><span>    by <span class="op">=</span> <span class="va">Species</span>,</span></span>
+<span class="r-in"><span>    fill <span class="op">=</span> <span class="st">"palegreen"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plot_proportions-8.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">iris</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">plot_proportions</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      <span class="st">"Long sepal"</span> <span class="op">=</span> <span class="va">Sepal.Length</span> <span class="op">&gt;</span> <span class="fl">6</span>,</span></span>
+<span class="r-in"><span>      <span class="st">"Short petal"</span> <span class="op">=</span> <span class="va">Petal.Width</span> <span class="op">&lt;</span> <span class="fl">1</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span>,</span></span>
+<span class="r-in"><span>    by <span class="op">=</span> <span class="va">Species</span>,</span></span>
+<span class="r-in"><span>    fill <span class="op">=</span> <span class="st">"palegreen"</span>,</span></span>
+<span class="r-in"><span>    flip <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plot_proportions-9.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># works with continuous by variables</span></span></span>
 <span class="r-in"><span><span class="va">iris</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">labelled</span><span class="fu">::</span><span class="fu"><a href="https://larmarange.github.io/labelled/reference/var_label.html" class="external-link">set_variable_labels</a></span><span class="op">(</span></span></span>
@@ -279,7 +305,7 @@ or more) be converted to quartiles (using <code><a href="cut_quartiles.html">cut
 <span class="r-in"><span>    fill <span class="op">=</span> <span class="st">"plum"</span>,</span></span>
 <span class="r-in"><span>    colour <span class="op">=</span> <span class="st">"plum4"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot_proportions-8.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot_proportions-10.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># works with survey object</span></span></span>
 <span class="r-in"><span><span class="va">titanic</span> <span class="op">|&gt;</span></span></span>
@@ -292,7 +318,7 @@ or more) be converted to quartiles (using <code><a href="cut_quartiles.html">cut
 <span class="r-in"><span>    show_overall_line <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>    labels_labeller <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_percent.html" class="external-link">label_percent</a></span><span class="op">(</span><span class="fl">.1</span><span class="op">)</span></span></span>
 <span class="r-in"><span> <span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot_proportions-9.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot_proportions-11.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
