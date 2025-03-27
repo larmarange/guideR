@@ -215,7 +215,9 @@ plot_proportions <- function(
     dplyr::mutate(
       dplyr::across(
         dplyr::all_of(condition_vars),
-        \(x) {factor(x, levels = c(FALSE, TRUE))}
+        \(x) {
+          factor(x, levels = c(FALSE, TRUE))
+        }
       )
     )
 
@@ -462,7 +464,7 @@ plot_proportions <- function(
       }
     ) +
     ggplot2::theme_light() +
-    ggplot2::theme(strip.background = element_rect(fill = "grey50"))
+    ggplot2::theme(strip.background = ggplot2::element_rect(fill = "grey50"))
 
   if (length(condition_vars) > 1) {
     cond_facet <- ggplot2::vars(.data$condition)
