@@ -39,7 +39,8 @@ plot_proportions(
 or a survey design object.}
 
 \item{condition}{<\code{\link[rlang:args_data_masking]{data-masking}}> A condition
-defining a proportion (see examples).}
+defining a proportion, or a \code{\link[dplyr:reexports]{dplyr::tibble()}} defining several proportions
+(see examples).}
 
 \item{by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> List of variables to
 group by (comparison is done separately for each variable).}
@@ -117,6 +118,7 @@ titanic |>
   )
 
 \donttest{
+
 titanic |>
   plot_proportions(
     Survived == "Yes",
@@ -164,6 +166,28 @@ titanic |>
     show_overall_line = TRUE,
     show_pvalues = FALSE
  )
+
+# defining several proportions
+iris |>
+  plot_proportions(
+    dplyr::tibble(
+      "Long sepal" = Sepal.Length > 6,
+      "Short petal" = Petal.Width < 1
+    ),
+    by = Species,
+    fill = "palegreen"
+  )
+
+iris |>
+  plot_proportions(
+    dplyr::tibble(
+      "Long sepal" = Sepal.Length > 6,
+      "Short petal" = Petal.Width < 1
+    ),
+    by = Species,
+    fill = "palegreen",
+    flip = TRUE
+  )
 
 # works with continuous by variables
 iris |>
