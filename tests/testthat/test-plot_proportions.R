@@ -61,4 +61,15 @@ test_that("plot_proportions() does not produce an error", {
     iris |>
       plot_proportions(Species == "versicolor", by = dplyr::contains("leng"))
   )
+
+  expect_no_error(
+    iris |>
+      plot_proportions(
+        dplyr::tibble(
+          "Long sepal" = Sepal.Length > 6,
+          "Short petal" = Petal.Width < 1
+        ),
+        by = Species
+      )
+  )
 })
