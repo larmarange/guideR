@@ -374,7 +374,7 @@ plot_proportions <- function(
       ggplot2::stat_identity(geom = geom, ...)
 
   # plotting p-values
-  if (show_pvalues && !is.null(pvalues)) {
+  if (show_pvalues && !is.null(pvalues) && nrow(pvalues) > 0) {
     pvalues <-
       pvalues |>
       dplyr::left_join(
