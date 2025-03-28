@@ -2,11 +2,12 @@
 
 **New features**
 
+* `plot_proportions()` now accepts several conditions (#18)
+* `stratified_by()` helper for `plot_proportions()` (#19)
 * new function `cut_quartiles()` (#13)
+* new argument `convert_continuous` for `plot_proportions()` (#14)
 * new argument `.drop_by_na` for `proportion()` (#12)
 * new argument `drop_by_na` for `plot_proportions()` (#16)
-* `plot_proportions()` now accepts several conditions (#18)
-* new argument `convert_continuous` for `plot_proportions()` (#14)
 
 **Bug fixes**
 
