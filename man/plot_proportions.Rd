@@ -2,6 +2,7 @@
 % Please edit documentation in R/plot_proportions.R
 \name{plot_proportions}
 \alias{plot_proportions}
+\alias{stratified_by}
 \title{Plot proportions by sub-groups}
 \usage{
 plot_proportions(
@@ -33,6 +34,8 @@ plot_proportions(
   flip = FALSE,
   return_data = FALSE
 )
+
+stratified_by(condition, strata)
 }
 \arguments{
 \item{data}{A data frame, data frame extension (e.g. a tibble),
@@ -96,11 +99,18 @@ or more) be converted to quartiles (using \code{cut_quartiles()})?}
 \item{flip}{Flip x and y axis?}
 
 \item{return_data}{Return data used instead of the plot?}
+
+\item{strata}{Stratification variable}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 See \code{\link[=proportion]{proportion()}} for more details on the way proportions and confidence
 intervals are computed.
+}
+\note{
+\code{stratified_by()} is an helper facilitating a stratified analysis
+(see examples). Please note that only a simple condition could be passed to
+that function.
 }
 \examples{
 titanic |>
@@ -213,5 +223,15 @@ titanic |>
     labels_labeller = scales::label_percent(.1)
  )
 }
+
+# stratified analysis
+titanic |>
+  plot_proportions(
+    (Survived == "Yes") |>  stratified_by(Sex),
+    by = Class,
+    mapping = ggplot2::aes(fill = condition)
+  ) +
+  ggplot2::theme(legend.position = "bottom") +
+  ggplot2::labs(fill = NULL)
 }
 \keyword{univar}

@@ -524,3 +524,38 @@ plot_proportions <- function(
     x
   }
 }
+
+#' @rdname plot_proportions
+#' @note
+#' `stratified_by()` is an helper facilitating a stratified analysis
+#' (see examples). Please note that only a simple condition could be passed to
+#' that function.
+#' @export
+#' @param strata Stratification variable
+#' @examples
+#'
+#' # stratified analysis
+#' titanic |>
+#'   plot_proportions(
+#'     (Survived == "Yes") |>  stratified_by(Sex),
+#'     by = Class,
+#'     mapping = ggplot2::aes(fill = condition)
+#'   ) +
+#'   ggplot2::theme(legend.position = "bottom") +
+#'   ggplot2::labs(fill = NULL)
+stratified_by <- function(condition, strata) {
+  if (is.numeric(strata)) strata <- .convert_continuous(strata)
+  if (!is.factor(strata)) strata <- factor(strata)
+  res <-
+    strata |>
+    levels() |>
+    purrr::map(
+      ~ dplyr::if_else(
+        strata == .x,
+        condition,
+        NA
+      )
+    )
+  names(res) <- levels(strata)
+  dplyr::as_tibble(res)
+}

@@ -72,4 +72,12 @@ test_that("plot_proportions() does not produce an error", {
         by = Species
       )
   )
+
+  expect_no_error(
+    titanic |>
+      plot_proportions(
+        (Survived == "Yes") |>  stratified_by(Sex),
+        by = Class
+      )
+  )
 })
