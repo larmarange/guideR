@@ -11,7 +11,7 @@ intervals are computed."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">guideR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,6 +49,8 @@ intervals are computed.</p>
 <span>  <span class="va">data</span>,</span>
 <span>  <span class="va">condition</span>,</span>
 <span>  by <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  drop_na_by <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  convert_continuous <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  geom <span class="op">=</span> <span class="st">"bar"</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  show_overall <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -71,7 +73,9 @@ intervals are computed.</p>
 <span>  facet_labeller <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labellers.html" class="external-link">label_wrap_gen</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">50</span>, multi_line <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>  flip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  return_data <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">stratified_by</span><span class="op">(</span><span class="va">condition</span>, <span class="va">strata</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -85,12 +89,22 @@ or a survey design object.</p></dd>
 
 <dt id="arg-condition">condition<a class="anchor" aria-label="anchor" href="#arg-condition"></a></dt>
 <dd><p>&lt;<code><a href="https://rlang.r-lib.org/reference/args_data_masking.html" class="external-link">data-masking</a></code>&gt; A condition
-defining a proportion (see examples).</p></dd>
+defining a proportion, or a <code><a href="https://dplyr.tidyverse.org/reference/reexports.html" class="external-link">dplyr::tibble()</a></code> defining several proportions
+(see examples).</p></dd>
 
 
 <dt id="arg-by">by<a class="anchor" aria-label="anchor" href="#arg-by"></a></dt>
 <dd><p>&lt;<code><a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html" class="external-link">tidy-select</a></code>&gt; List of variables to
 group by (comparison is done separately for each variable).</p></dd>
+
+
+<dt id="arg-drop-na-by">drop_na_by<a class="anchor" aria-label="anchor" href="#arg-drop-na-by"></a></dt>
+<dd><p>Remove <code>NA</code> values in <code>by</code> variables?</p></dd>
+
+
+<dt id="arg-convert-continuous">convert_continuous<a class="anchor" aria-label="anchor" href="#arg-convert-continuous"></a></dt>
+<dd><p>Should continuous variables (with 5 unique values
+or more) be converted to quartiles (using <code><a href="cut_quartiles.html">cut_quartiles()</a></code>)?</p></dd>
 
 
 <dt id="arg-geom">geom<a class="anchor" aria-label="anchor" href="#arg-geom"></a></dt>
@@ -183,7 +197,17 @@ group by (comparison is done separately for each variable).</p></dd>
 <dt id="arg-return-data">return_data<a class="anchor" aria-label="anchor" href="#arg-return-data"></a></dt>
 <dd><p>Return data used instead of the plot?</p></dd>
 
+
+<dt id="arg-strata">strata<a class="anchor" aria-label="anchor" href="#arg-strata"></a></dt>
+<dd><p>Stratification variable</p></dd>
+
 </dl></div>
+    <div class="section level2">
+    <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
+    <p><code>stratified_by()</code> is an helper facilitating a stratified analysis
+(see examples). Please note that only a simple condition could be passed to
+that function.</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
@@ -204,6 +228,7 @@ group by (comparison is done separately for each variable).</p></dd>
 <span class="r-plt img"><img src="plot_proportions-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">titanic</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">plot_proportions</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="va">Survived</span> <span class="op">==</span> <span class="st">"Yes"</span>,</span></span>
@@ -257,6 +282,43 @@ group by (comparison is done separately for each variable).</p></dd>
 <span class="r-in"><span> <span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot_proportions-7.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># defining several proportions</span></span></span>
+<span class="r-in"><span><span class="va">iris</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">plot_proportions</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      <span class="st">"Long sepal"</span> <span class="op">=</span> <span class="va">Sepal.Length</span> <span class="op">&gt;</span> <span class="fl">6</span>,</span></span>
+<span class="r-in"><span>      <span class="st">"Short petal"</span> <span class="op">=</span> <span class="va">Petal.Width</span> <span class="op">&lt;</span> <span class="fl">1</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span>,</span></span>
+<span class="r-in"><span>    by <span class="op">=</span> <span class="va">Species</span>,</span></span>
+<span class="r-in"><span>    fill <span class="op">=</span> <span class="st">"palegreen"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plot_proportions-8.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">iris</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">plot_proportions</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      <span class="st">"Long sepal"</span> <span class="op">=</span> <span class="va">Sepal.Length</span> <span class="op">&gt;</span> <span class="fl">6</span>,</span></span>
+<span class="r-in"><span>      <span class="st">"Short petal"</span> <span class="op">=</span> <span class="va">Petal.Width</span> <span class="op">&lt;</span> <span class="fl">1</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span>,</span></span>
+<span class="r-in"><span>    by <span class="op">=</span> <span class="va">Species</span>,</span></span>
+<span class="r-in"><span>    fill <span class="op">=</span> <span class="st">"palegreen"</span>,</span></span>
+<span class="r-in"><span>    flip <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plot_proportions-9.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># works with continuous by variables</span></span></span>
+<span class="r-in"><span><span class="va">iris</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">labelled</span><span class="fu">::</span><span class="fu"><a href="https://larmarange.github.io/labelled/reference/var_label.html" class="external-link">set_variable_labels</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    Sepal.Length <span class="op">=</span> <span class="st">"Length of the sepal"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">plot_proportions</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="va">Species</span> <span class="op">==</span> <span class="st">"versicolor"</span>,</span></span>
+<span class="r-in"><span>    by <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"leng"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    fill <span class="op">=</span> <span class="st">"plum"</span>,</span></span>
+<span class="r-in"><span>    colour <span class="op">=</span> <span class="st">"plum4"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plot_proportions-10.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># works with survey object</span></span></span>
 <span class="r-in"><span><span class="va">titanic</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">srvyr</span><span class="fu">::</span><span class="fu"><a href="http://gdfe.co/srvyr/reference/as_survey.html" class="external-link">as_survey</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
@@ -265,10 +327,22 @@ group by (comparison is done separately for each variable).</p></dd>
 <span class="r-in"><span>    by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Class</span>, <span class="va">Sex</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    fill <span class="op">=</span> <span class="st">"darksalmon"</span>,</span></span>
 <span class="r-in"><span>    color <span class="op">=</span> <span class="st">"black"</span>,</span></span>
-<span class="r-in"><span>    show_overall_line <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span>    show_overall_line <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>    labels_labeller <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_percent.html" class="external-link">label_percent</a></span><span class="op">(</span><span class="fl">.1</span><span class="op">)</span></span></span>
 <span class="r-in"><span> <span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot_proportions-8.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot_proportions-11.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># stratified analysis</span></span></span>
+<span class="r-in"><span><span class="va">titanic</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">plot_proportions</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="op">(</span><span class="va">Survived</span> <span class="op">==</span> <span class="st">"Yes"</span><span class="op">)</span> <span class="op">|&gt;</span>  <span class="fu">stratified_by</span><span class="op">(</span><span class="va">Sex</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    by <span class="op">=</span> <span class="va">Class</span>,</span></span>
+<span class="r-in"><span>    mapping <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">condition</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plot_proportions-12.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

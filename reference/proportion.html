@@ -11,7 +11,7 @@ group (see examples)."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">guideR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,6 +57,7 @@ group (see examples).</p>
 <span>  .scale <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  .sort <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  .drop <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  .drop_na_by <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  .conf.int <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  .conf.level <span class="op">=</span> <span class="fl">0.95</span>,</span>
 <span>  .options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>correct <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -70,6 +71,7 @@ group (see examples).</p>
 <span>  .na.rm <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  .scale <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  .sort <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  .drop_na_by <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  .conf.int <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  .conf.level <span class="op">=</span> <span class="fl">0.95</span>,</span>
 <span>  .options <span class="op">=</span> <span class="cn">NULL</span></span>
@@ -130,6 +132,11 @@ proportions unchanged.</p></dd>
 
 <dt id="arg--drop">.drop<a class="anchor" aria-label="anchor" href="#arg--drop"></a></dt>
 <dd><p>If <code>TRUE</code>, will remove empty groups from the output.</p></dd>
+
+
+<dt id="arg--drop-na-by">.drop_na_by<a class="anchor" aria-label="anchor" href="#arg--drop-na-by"></a></dt>
+<dd><p>If <code>TRUE</code>, will remove any <code>NA</code> values observed in the
+<code>.by</code> variables (or variables defined with <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">dplyr::group_by()</a></code>).</p></dd>
 
 
 <dt id="arg--conf-int">.conf.int<a class="anchor" aria-label="anchor" href="#arg--conf-int"></a></dt>
