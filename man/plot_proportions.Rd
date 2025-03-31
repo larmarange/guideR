@@ -3,6 +3,7 @@
 \name{plot_proportions}
 \alias{plot_proportions}
 \alias{stratified_by}
+\alias{dummy_proportions}
 \title{Plot proportions by sub-groups}
 \usage{
 plot_proportions(
@@ -36,6 +37,8 @@ plot_proportions(
 )
 
 stratified_by(condition, strata)
+
+dummy_proportions(variable)
 }
 \arguments{
 \item{data}{A data frame, data frame extension (e.g. a tibble),
@@ -101,16 +104,19 @@ or more) be converted to quartiles (using \code{cut_quartiles()})?}
 \item{return_data}{Return data used instead of the plot?}
 
 \item{strata}{Stratification variable}
+
+\item{variable}{Variable to be converted into dummy variables.}
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-See \code{\link[=proportion]{proportion()}} for more details on the way proportions and confidence
-intervals are computed.
-}
-\note{
-\code{stratified_by()} is an helper facilitating a stratified analysis
-(see examples). Please note that only a simple condition could be passed to
-that function.
+Plot one or several proportions (defined by logical conditions) by
+sub-groups. See \code{\link[=proportion]{proportion()}} for more details on the way proportions and
+confidence intervals are computed. By default, return a bar plot, but other
+geometries could be used (see examples). \code{stratified_by()} is an helper
+function facilitating a stratified analyses (i.e. proportions by groups
+stratified according to a third variable, see examples).
+\code{dummy_proportions()} is an helper to easily convert a categorical variable
+into dummy variables and therefore showing the proportion of each level of
+the original variable (see examples).
 }
 \examples{
 titanic |>
@@ -233,5 +239,13 @@ titanic |>
   ) +
   ggplot2::theme(legend.position = "bottom") +
   ggplot2::labs(fill = NULL)
+
+# Convert Class into dummy variables
+titanic |>
+  plot_proportions(
+    dummy_proportions(Class),
+    by = Sex,
+    mapping = ggplot2::aes(fill = level)
+  )
 }
 \keyword{univar}
