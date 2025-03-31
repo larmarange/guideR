@@ -1,5 +1,9 @@
 # guideR (development version)
 
+**New features**
+
+* `dummy_proportions()` helper for `plot_proportions()` (#21)
+
 # guideR 0.3.0
 
 **New features**
