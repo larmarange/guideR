@@ -33,6 +33,7 @@ plot_proportions(
   overall_line_width = 0.5,
   facet_labeller = ggplot2::label_wrap_gen(width = 50, multi_line = TRUE),
   flip = FALSE,
+  free_scale = FALSE,
   return_data = FALSE
 )
 
@@ -100,6 +101,8 @@ or more) be converted to quartiles (using \code{cut_quartiles()})?}
 \item{facet_labeller}{Labeller function for strip labels.}
 
 \item{flip}{Flip x and y axis?}
+
+\item{free_scale}{Allow y axis to vary between conditions?}
 
 \item{return_data}{Return data used instead of the plot?}
 
@@ -184,6 +187,28 @@ titanic |>
  )
 
 # defining several proportions
+
+titanic |>
+  plot_proportions(
+    dplyr::tibble(
+      Survived = Survived == "Yes",
+      Male = Sex == "Male"
+    ),
+    by = c(Class),
+    mapping = ggplot2::aes(fill = condition)
+  )
+
+titanic |>
+  plot_proportions(
+    dplyr::tibble(
+      Survived = Survived == "Yes",
+      Male = Sex == "Male"
+    ),
+    by = c(Class),
+    mapping = ggplot2::aes(fill = condition),
+    free_scale = TRUE
+  )
+
 iris |>
   plot_proportions(
     dplyr::tibble(

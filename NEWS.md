@@ -3,6 +3,7 @@
 **New features**
 
 * `dummy_proportions()` helper for `plot_proportions()` (#21)
+* new argument `free_scale` for `plot_proportions()` (#22)
 
 # guideR 0.3.0
 
