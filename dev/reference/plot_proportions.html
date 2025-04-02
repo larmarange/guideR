@@ -90,6 +90,7 @@ the original variable (see examples).</p>
 <span>  overall_line_width <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  facet_labeller <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labellers.html" class="external-link">label_wrap_gen</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">50</span>, multi_line <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>  flip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  free_scale <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  return_data <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -214,6 +215,10 @@ or more) be converted to quartiles (using <code><a href="cut_quartiles.html">cut
 <dd><p>Flip x and y axis?</p></dd>
 
 
+<dt id="arg-free-scale">free_scale<a class="anchor" aria-label="anchor" href="#arg-free-scale"></a></dt>
+<dd><p>Allow y axis to vary between conditions?</p></dd>
+
+
 <dt id="arg-return-data">return_data<a class="anchor" aria-label="anchor" href="#arg-return-data"></a></dt>
 <dd><p>Return data used instead of the plot?</p></dd>
 
@@ -301,6 +306,30 @@ or more) be converted to quartiles (using <code><a href="cut_quartiles.html">cut
 <span class="r-plt img"><img src="plot_proportions-7.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># defining several proportions</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">titanic</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">plot_proportions</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      Survived <span class="op">=</span> <span class="va">Survived</span> <span class="op">==</span> <span class="st">"Yes"</span>,</span></span>
+<span class="r-in"><span>      Male <span class="op">=</span> <span class="va">Sex</span> <span class="op">==</span> <span class="st">"Male"</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span>,</span></span>
+<span class="r-in"><span>    by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Class</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    mapping <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">condition</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plot_proportions-8.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">titanic</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">plot_proportions</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      Survived <span class="op">=</span> <span class="va">Survived</span> <span class="op">==</span> <span class="st">"Yes"</span>,</span></span>
+<span class="r-in"><span>      Male <span class="op">=</span> <span class="va">Sex</span> <span class="op">==</span> <span class="st">"Male"</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span>,</span></span>
+<span class="r-in"><span>    by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Class</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    mapping <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">condition</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    free_scale <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plot_proportions-9.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">iris</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">plot_proportions</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span></span>
@@ -310,7 +339,7 @@ or more) be converted to quartiles (using <code><a href="cut_quartiles.html">cut
 <span class="r-in"><span>    by <span class="op">=</span> <span class="va">Species</span>,</span></span>
 <span class="r-in"><span>    fill <span class="op">=</span> <span class="st">"palegreen"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot_proportions-8.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot_proportions-10.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">iris</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">plot_proportions</span><span class="op">(</span></span></span>
@@ -322,7 +351,7 @@ or more) be converted to quartiles (using <code><a href="cut_quartiles.html">cut
 <span class="r-in"><span>    fill <span class="op">=</span> <span class="st">"palegreen"</span>,</span></span>
 <span class="r-in"><span>    flip <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot_proportions-9.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot_proportions-11.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># works with continuous by variables</span></span></span>
 <span class="r-in"><span><span class="va">iris</span> <span class="op">|&gt;</span></span></span>
@@ -335,7 +364,7 @@ or more) be converted to quartiles (using <code><a href="cut_quartiles.html">cut
 <span class="r-in"><span>    fill <span class="op">=</span> <span class="st">"plum"</span>,</span></span>
 <span class="r-in"><span>    colour <span class="op">=</span> <span class="st">"plum4"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot_proportions-10.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot_proportions-12.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># works with survey object</span></span></span>
 <span class="r-in"><span><span class="va">titanic</span> <span class="op">|&gt;</span></span></span>
@@ -348,7 +377,7 @@ or more) be converted to quartiles (using <code><a href="cut_quartiles.html">cut
 <span class="r-in"><span>    show_overall_line <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>    labels_labeller <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_percent.html" class="external-link">label_percent</a></span><span class="op">(</span><span class="fl">.1</span><span class="op">)</span></span></span>
 <span class="r-in"><span> <span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot_proportions-11.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot_proportions-13.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># stratified analysis</span></span></span>
@@ -360,7 +389,7 @@ or more) be converted to quartiles (using <code><a href="cut_quartiles.html">cut
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot_proportions-12.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot_proportions-14.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Convert Class into dummy variables</span></span></span>
 <span class="r-in"><span><span class="va">titanic</span> <span class="op">|&gt;</span></span></span>
@@ -369,7 +398,7 @@ or more) be converted to quartiles (using <code><a href="cut_quartiles.html">cut
 <span class="r-in"><span>    by <span class="op">=</span> <span class="va">Sex</span>,</span></span>
 <span class="r-in"><span>    mapping <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">level</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot_proportions-13.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot_proportions-15.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
