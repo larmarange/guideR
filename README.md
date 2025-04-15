@@ -12,6 +12,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 coverage](https://codecov.io/gh/larmarange/guideR/graph/badge.svg)](https://app.codecov.io/gh/larmarange/guideR)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/guideR)](https://CRAN.R-project.org/package=guideR)
+[![DOI](https://zenodo.org/badge/927604735.svg)](https://doi.org/10.5281/zenodo.14871649)
 <!-- badges: end -->
 
 `guideR` package is a companion for the manual *guide-R : Guide pour
