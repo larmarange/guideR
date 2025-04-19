@@ -60,7 +60,7 @@ d <- titanic |>
   )
 mod <- glm(as.factor(Survived) ~ ., data = d, family = binomial())
 # step(mod) should produce an error
-mod2 <- step_with_na(mod)
+mod2 <- step_with_na(mod, full_data = d)
 mod2
 
 \donttest{
