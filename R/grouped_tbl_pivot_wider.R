@@ -21,7 +21,7 @@
 #' [gtsummary::tbl_regression()].
 #' @returns A `gtsummary` or a `gt` table.
 #' @keywords models
-#' @examplesIf rlang::is_installed("gtsummary") && rlang::is_installed("nnet")
+#' @examplesIf rlang::is_installed(c("gtsummary", "cardx", "nnet"))
 #' mod <- nnet::multinom(
 #'   grade ~ stage + marker + age,
 #'   data = gtsummary::trial,
