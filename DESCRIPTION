@@ -44,6 +44,8 @@ RoxygenNote: 7.3.2
 Suggests: 
     broom.helpers,
     FactoMineR,
+    gt,
+    gtsummary,
     nnet,
     spelling,
     survey,
