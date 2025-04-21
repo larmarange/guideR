@@ -49,6 +49,7 @@ Suggests:
     gt,
     gtsummary,
     nnet,
+    parameters,
     spelling,
     survey,
     survival,

@@ -21,7 +21,7 @@
 #' [gtsummary::tbl_regression()].
 #' @returns A `gtsummary` or a `gt` table.
 #' @keywords models
-#' @examplesIf rlang::is_installed(c("gtsummary", "cardx", "nnet"))
+#' @examplesIf rlang::is_installed(c("gtsummary", "cardx", "nnet", "parameters"))
 #' mod <- nnet::multinom(
 #'   grade ~ stage + marker + age,
 #'   data = gtsummary::trial,
@@ -68,10 +68,10 @@ grouped_tbl_pivot_wider <- function(x) {
 #' @param p_value_header Header for the p-value column.
 #' @export
 multinom_add_global_p_pivot_wider <- function(
-    x,
-    ...,
-    p_value_header = "**Likelihood-ratio test**"
-  ) {
+  x,
+  ...,
+  p_value_header = "**Likelihood-ratio test**"
+) {
   rlang::check_installed("gtsummary")
   res <- x |>
     gtsummary::add_global_p(...) |>
@@ -80,7 +80,7 @@ multinom_add_global_p_pivot_wider <- function(
     dplyr::select(dplyr::starts_with("p.value")) |>
     colnames() |>
     utils::tail(n = 1L)
-  res|>
+  res |>
     gtsummary::modify_column_hide(dplyr::starts_with("p.value")) |>
     gtsummary::modify_column_unhide(dplyr::all_of(last_p)) |>
     gtsummary::modify_spanning_header(dplyr::all_of(last_p) ~ p_value_header)
@@ -162,5 +162,5 @@ style_grouped_tbl <- function(
   if (uppercase_groups)
     x <- x |> gt::tab_options(row_group.text_transform = "uppercase")
 
- x
+  x
 }
