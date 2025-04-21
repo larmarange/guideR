@@ -43,7 +43,7 @@ grouped_tbl_pivot_wider <- function(x) {
       "{.arg x} is not a grouped table."
     )
 
-  df <- tibble::tibble(outcome_level = unique(x$table_body$groupname_col))
+  df <- dplyr::tibble(outcome_level = unique(x$table_body$groupname_col))
   df$tbl <-
     purrr::map(
       df$outcome_level,
@@ -79,7 +79,7 @@ multinom_add_global_p_pivot_wider <- function(
   last_p <- res$table_body |>
     dplyr::select(dplyr::starts_with("p.value")) |>
     colnames() |>
-    tail(n = 1L)
+    utils::tail(n = 1L)
   res|>
     gtsummary::modify_column_hide(dplyr::starts_with("p.value")) |>
     gtsummary::modify_column_unhide(dplyr::all_of(last_p)) |>
