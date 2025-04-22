@@ -35,4 +35,19 @@ testthat::test_that("grouped_tbl helpers works", {
         indent_levels = 20
       )
   )
+
+  expect_error(
+    iris |> grouped_tbl_pivot_wider()
+  )
+  expect_error(
+    iris |> style_grouped_tbl()
+  )
+  tbl2 <- lm(Petal.Length ~ Petal.Width, data = iris) |>
+    gtsummary::tbl_regression()
+  expect_error(
+    tbl2 |> grouped_tbl_pivot_wider()
+  )
+  expect_error(
+    tbl2 |> style_grouped_tbl()
+  )
 })
