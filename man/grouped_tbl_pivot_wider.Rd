@@ -81,7 +81,7 @@ mod <- nnet::multinom(
 tbl <- mod |> gtsummary::tbl_regression(exponentiate = TRUE)
 tbl
 tbl |> grouped_tbl_pivot_wider()
-tbl |> multinom_add_global_p_pivot_wider()
+tbl |> multinom_add_global_p_pivot_wider() |> gtsummary::bold_labels()
 tbl |> style_grouped_tbl()
 \dontshow{\}) # examplesIf}
 }
