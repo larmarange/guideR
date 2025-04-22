@@ -4,7 +4,7 @@
 #' case of multinomial models, multi-components models or other grouped results.
 #' `grouped_tbl_pivot_wider()` allows to display results in a a wide format,
 #' with one set of columns per group. `multinom_add_global_p_pivot_wider()` is
-#' a specfic case for multinomial models, when displaying global p-values in a
+#' a specific case for multinomial models, when displaying global p-values in a
 #' wide format: it calls [gtsummary::add_global_p()], followed by
 #' `grouped_tbl_pivot_wider()`, and then keep only the last column with p-values
 #' (see examples). Finally, as grouped regression tables doesn't have exactly
@@ -30,7 +30,7 @@
 #' tbl <- mod |> gtsummary::tbl_regression(exponentiate = TRUE)
 #' tbl
 #' tbl |> grouped_tbl_pivot_wider()
-#' tbl |> multinom_add_global_p_pivot_wider()
+#' tbl |> multinom_add_global_p_pivot_wider() |> gtsummary::bold_labels()
 #' tbl |> style_grouped_tbl()
 grouped_tbl_pivot_wider <- function(x) {
   rlang::check_installed("gtsummary")
