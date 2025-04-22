@@ -108,10 +108,37 @@ may try to pass <code>full_data</code> to the function.</p>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">Survived</span><span class="op">)</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">d</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># step(mod) should produce an error</span></span></span>
-<span class="r-in"><span><span class="va">mod2</span> <span class="op">&lt;-</span> <span class="fu">step_with_na</span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(model$call$data):</span> object 'd' not found</span>
+<span class="r-in"><span><span class="va">mod2</span> <span class="op">&lt;-</span> <span class="fu">step_with_na</span><span class="op">(</span><span class="va">mod</span>, full_data <span class="op">=</span> <span class="va">d</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Start:  AIC=1473.08</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(Survived) ~ Class + Sex + Age + Group</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         Df Deviance    AIC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Group  1   1459.4 1471.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;none&gt;       1459.1 1473.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Age    1   1462.2 1474.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Class  3   1527.8 1535.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Sex    1   1704.4 1716.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Step:  AIC=1471.42</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(Survived) ~ Class + Sex + Age</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         Df Deviance    AIC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;none&gt;       1459.4 1471.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Age    1   1462.6 1472.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Class  3   1528.3 1534.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Sex    1   1704.8 1714.8</span>
 <span class="r-in"><span><span class="va">mod2</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'mod2' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:  glm(formula = as.factor(Survived) ~ Class + Sex + Age, family = binomial(), </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     data = full_data)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)     Class2nd     Class3rd    ClassCrew      SexMale     AgeChild  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      2.0438      -1.0181      -1.7778      -0.8577      -2.4201       1.0615  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Degrees of Freedom: 2200 Total (i.e. Null);  2195 Residual</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Null Deviance:	    2769 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual Deviance: 2210 	AIC: 2222</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co">## WITH SURVEY ---------------------------------------</span></span></span>
