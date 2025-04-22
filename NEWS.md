@@ -19,6 +19,8 @@
 * new argument `convert_continuous` for `plot_proportions()` (#14)
 * new argument `.drop_by_na` for `proportion()` (#12)
 * new argument `drop_by_na` for `plot_proportions()` (#16)
+* `install_dependencies()` now checks if dependencies are on CRAN, installs
+  those available and returns the list of packages not installed/updated.
 
 **Bug fixes**
 

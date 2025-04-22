@@ -18,7 +18,8 @@ package(s).
 \description{
 This function uses \code{\link[renv:dependencies]{renv::dependencies()}} to identify R package dependencies
 in a project and then calls \code{\link[pak:pkg_install]{pak::pkg_install()}} to install / update these
-packages.
+packages. If some packages are not found, the function will install those
+available and returns a message indicated packages not installed/updated.
 }
 \examples{
 \dontrun{
