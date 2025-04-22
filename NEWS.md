@@ -10,6 +10,8 @@
   multi-components models or other grouped models (#3)
 * `dummy_proportions()` helper for `plot_proportions()` (#21)
 * new argument `free_scale` for `plot_proportions()` (#22)
+* `install_dependencies()` now checks if dependencies are on CRAN/BIOC, installs
+  those available and returns the list of packages not installed/updated.
 
 # guideR 0.3.0
 
@@ -21,8 +23,6 @@
 * new argument `convert_continuous` for `plot_proportions()` (#14)
 * new argument `.drop_by_na` for `proportion()` (#12)
 * new argument `drop_by_na` for `plot_proportions()` (#16)
-* `install_dependencies()` now checks if dependencies are on CRAN/BIOC, installs
-  those available and returns the list of packages not installed/updated.
 
 **Bug fixes**
 
