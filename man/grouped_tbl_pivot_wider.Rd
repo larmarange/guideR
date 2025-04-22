@@ -68,7 +68,7 @@ is kept in a long format, \code{style_grouped_tbl()} could be use to improve the
 output by styling variable labels, levels and/or group names.
 \strong{TO BE NOTED:} to style group names, \code{style_grouped_tbl()} convert the
 table into a \code{gt} object with \code{\link[gtsummary:as_gt]{gtsummary::as_gt()}}. This function should
-therefore be used last. If the table is intendend to be exported to another
+therefore be used last. If the table is intended to be exported to another
 format, do not use \code{style_grouped_tbl()}.
 }
 \examples{
@@ -81,8 +81,11 @@ mod <- nnet::multinom(
 tbl <- mod |> gtsummary::tbl_regression(exponentiate = TRUE)
 tbl
 tbl |> grouped_tbl_pivot_wider()
+
+\donttest{
 tbl |> multinom_add_global_p_pivot_wider() |> gtsummary::bold_labels()
 tbl |> style_grouped_tbl()
+}
 \dontshow{\}) # examplesIf}
 }
 \keyword{models}

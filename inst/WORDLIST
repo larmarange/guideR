@@ -1,5 +1,6 @@
 CMD
 Codecov
+DOI
 Labeller
 Lifecycle
 ORCID
@@ -9,3 +10,4 @@ données
 d’enquêtes
 l’analyse
 tibble
+ungrouped

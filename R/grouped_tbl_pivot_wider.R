@@ -14,7 +14,7 @@
 #' output by styling variable labels, levels and/or group names.
 #' **TO BE NOTED:** to style group names, `style_grouped_tbl()` convert the
 #' table into a `gt` object with [gtsummary::as_gt()]. This function should
-#' therefore be used last. If the table is intendend to be exported to another
+#' therefore be used last. If the table is intended to be exported to another
 #' format, do not use `style_grouped_tbl()`.
 #' @export
 #' @param x A grouped regression table generated with
@@ -30,8 +30,11 @@
 #' tbl <- mod |> gtsummary::tbl_regression(exponentiate = TRUE)
 #' tbl
 #' tbl |> grouped_tbl_pivot_wider()
+#'
+#' \donttest{
 #' tbl |> multinom_add_global_p_pivot_wider() |> gtsummary::bold_labels()
 #' tbl |> style_grouped_tbl()
+#' }
 grouped_tbl_pivot_wider <- function(x) {
   rlang::check_installed("gtsummary")
   if (!inherits(x, "tbl_regression"))
