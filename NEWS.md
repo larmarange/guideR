@@ -1,5 +1,9 @@
 # guideR (development version)
 
+**New features**
+
+* new argument `dependencies` for `install_dependencies()` (#27)
+
 # guideR 0.4.0
 
 **New features**
