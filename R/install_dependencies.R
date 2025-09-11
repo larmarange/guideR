@@ -27,6 +27,7 @@ install_dependencies <- function(dependencies = NULL, ask = TRUE) {
     dependencies <- renv::dependencies() |>
       purrr::pluck("Package") |>
       unique()
+
   pak::meta_update()
   m <- pak::meta_list()
 
