@@ -4,15 +4,16 @@
 \alias{install_dependencies}
 \title{Install / Update project dependencies}
 \usage{
-install_dependencies(ask = TRUE, dep = NULL)
+install_dependencies(dependencies = NULL, ask = TRUE)
 }
 \arguments{
+\item{dependencies}{An optional list of dependencies. If \code{NULL}, will be
+determined with \code{\link[renv:dependencies]{renv::dependencies()}}. If equal to \code{"old"}, will use the
+list returned by \code{\link[utils:update.packages]{utils::old.packages()}}.}
+
 \item{ask}{Whether to ask for confirmation when installing a different
 version of a package that is already installed. Installations that only add
 new packages never require confirmation.}
-
-\item{dep}{An optional list of dependencies. If \code{NULL}, will be determined
-with \code{\link[renv:dependencies]{renv::dependencies()}}.}
 }
 \value{
 (Invisibly) A data frame with information about the installed

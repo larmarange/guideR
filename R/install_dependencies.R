@@ -5,11 +5,12 @@
 #' packages. If some packages are not found, the function will install those
 #' available and returns a message indicated packages not installed/updated.
 #'
+#' @param dependencies An optional list of dependencies. If `NULL`, will be
+#' determined with [renv::dependencies()]. If equal to `"old"`, will use the
+#' list returned by [utils::old.packages()].
 #' @param ask Whether to ask for confirmation when installing a different
 #' version of a package that is already installed. Installations that only add
 #' new packages never require confirmation.
-#' @param dep An optional list of dependencies. If `NULL`, will be determined
-#' with [renv::dependencies()].
 #' @export
 #' @return (Invisibly) A data frame with information about the installed
 #' package(s).
@@ -18,18 +19,23 @@
 #' \dontrun{
 #' install_dependencies()
 #' }
-install_dependencies <- function(ask = TRUE, dep = NULL) {
-  if (is.null(dep))
-    dep <- renv::dependencies() |>
+install_dependencies <- function(dependencies = NULL, ask = TRUE) {
+  if (length(dependencies) == 1 && dependencies == "old")
+    dependencies <- utils::old.packages()[, 1]
+
+  if (is.null(dependencies))
+    dependencies <- renv::dependencies() |>
       purrr::pluck("Package") |>
       unique()
   pak::meta_update()
   m <- pak::meta_list()
 
-  r <- dep[dep %in% m$package] |>
-    pak::pkg_install(upgrade = TRUE, ask = ask)
+  r <- dependencies[dependencies %in% m$package]
+  if (length(r) > 0)
+    r <- r|>
+      pak::pkg_install(upgrade = TRUE, ask = ask)
 
-  missing <- dep[!dep %in% m$package]
+  missing <- dependencies[!dependencies %in% m$package]
   if (length(missing) > 0)
     cli::cli_alert_danger("Packages {.pkg {missing}} not installed/updated.")
 

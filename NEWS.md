@@ -2,7 +2,7 @@
 
 **New features**
 
-* new argument `dep` for `install_dependencies()` (#27)
+* new argument `dependencies` for `install_dependencies()` (#27)
 
 # guideR 0.4.0
 
