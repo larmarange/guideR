@@ -32,7 +32,7 @@ install_dependencies <- function(dependencies = NULL, ask = TRUE) {
 
   r <- dependencies[dependencies %in% m$package]
   if (length(r) > 0)
-    r <- r|>
+    r <- r |>
       pak::pkg_install(upgrade = TRUE, ask = ask)
 
   missing <- dependencies[!dependencies %in% m$package]
