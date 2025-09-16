@@ -72,7 +72,7 @@ therefore be used last. If the table is intended to be exported to another
 format, do not use \code{style_grouped_tbl()}.
 }
 \examples{
-\dontshow{if (rlang::is_installed(c("gtsummary", "cardx", "nnet", "parameters"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed(c("gtsummary", "cardx", "nnet", "parameters"))) withAutoprint(\{ # examplesIf}
 mod <- nnet::multinom(
   grade ~ stage + marker + age,
   data = gtsummary::trial,
