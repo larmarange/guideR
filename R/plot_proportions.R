@@ -45,7 +45,7 @@
 #' @param facet_labeller Labeller function for strip labels.
 #' @param flip Flip x and y axis?
 #' @param free_scale Allow y axis to vary between conditions?
-#' @param return_data Return data used instead of the plot?
+#' @param return_data Return computed data instead of the plot?
 #' @export
 #' @keywords univar
 #' @examples

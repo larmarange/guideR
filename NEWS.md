@@ -4,6 +4,8 @@
 
 **New features**
 
+* new function `plot_multiple_choice()` to plot a multiple choice question coded
+  as several binary variables, one per item
 * new argument `dependencies` for `install_dependencies()` (#27)
 
 # guideR 0.4.0

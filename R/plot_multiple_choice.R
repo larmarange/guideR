@@ -1,0 +1,226 @@
+#' Plot a multiple choice question
+#'
+#' Considering a multiple choice question coded as several binary variables (one
+#' per item), plot the proportion of positive answers of each item.
+#' See [proportion()] for more details on the way proportions and
+#' confidence intervals are computed. By default, return a bar plot, but other
+#' geometries could be used (see examples).
+#'
+#' @param data A data frame, data frame extension (e.g. a tibble),
+#' or a survey design object.
+#' @param items <[`tidy-select`][dplyr::dplyr_tidy_select ]> List of variables
+#' identifying the different items of the multiple choice question.
+#' @param value Value indicating a positive answer. By default, will use the
+#' maximum observed value and will display a message.
+#' @param drop_na Should any observation with a least one `NA` value be dropped?
+#' @param show_ci Display confidence intervals?
+#' @param conf_level Confidence level for the confidence intervals.
+#' @param sort Should items be sorted according to the proportion of positive
+#' answers?
+#' @param geom Geometry to use for plotting proportions (`"bar"` by default).
+#' @param ... Additional arguments passed to the geom defined by `geom`.
+#' @param show_ci Display confidence intervals?
+#' @param conf_level Confidence level for the confidence intervals.
+#' @param ci_color Color of the error bars representing confidence intervals.
+#' @param show_labels Display proportion labels?
+#' @param labels_labeller Labeller function for proportion labels.
+#' @param labels_size Size of proportion labels.
+#' @param labels_color Color of proportion labels.
+#' @param flip Flip x and y axis?
+#' @param return_data Return computed data instead of the plot?
+#' @export
+#' @keywords univar
+#' @examples
+#' d <-
+#'   dplyr::tibble(
+#'     q1a = sample(c("y", "n"), size = 200, replace = TRUE),
+#'     q1b = sample(c("y", "n", "n", NA), size = 200, replace = TRUE),
+#'     q1c = sample(c("y", "y", "n"), size = 200, replace = TRUE),
+#'     q1d = sample("n", size = 200, replace = TRUE)
+#'   )
+#'
+#' d |> plot_multiple_choice(q1a:q1c)
+#'
+#' d |>
+#'   labelled::set_variable_labels(
+#'     q1a = "apple",
+#'     q1b = "banana",
+#'     q1c = "chocolate",
+#'     q1d = "Dijon mustard"
+#'   ) |>
+#'   plot_multiple_choice(
+#'     value = "y",
+#'     drop_na = TRUE,
+#'     sort = "d",
+#'     fill = "lightblue",
+#'     flip = TRUE
+#'   )
+plot_multiple_choice <- function(
+  data,
+  items = dplyr::everything(),
+  value = NULL,
+  drop_na = FALSE,
+  sort = c("none", "ascending", "descending"),
+  geom = "bar",
+  ...,
+  show_ci = TRUE,
+  conf_level = 0.95,
+  ci_color = "black",
+  show_labels = TRUE,
+  labels_labeller = scales::label_percent(1),
+  labels_size = 3.5,
+  labels_color = "black",
+  flip = FALSE,
+  return_data = FALSE
+) {
+  data <- data |> dplyr::select({{ items }})
+  items <- colnames(data)
+
+  if (drop_na)
+    data <- tidyr::drop_na(data)
+
+  if (is.null(value)) {
+    value <- max(unlist(d), na.rm = TRUE)
+    cli::cli_alert_warning("Automatically selected value: {.val {value}}")
+    cli::cli_alert_info(
+      "To remove this message, please specify {.arg value}."
+    )
+  }
+
+  d <-
+    items |>
+    purrr::map(
+      \(v) {
+        data |>
+          dplyr::mutate(
+            .value = factor(.data[[v]] == value, levels = c(FALSE, TRUE))
+          ) |>
+          proportion(
+            .data$.value,
+            .conf.int = show_ci,
+            .scale = 1,
+            .conf.level = conf_level
+          ) |>
+          dplyr::mutate(item = v)
+      }
+    ) |>
+    dplyr::bind_rows() |>
+    dplyr::filter(.data$.value == "TRUE") |>
+    dplyr::select(-.data$.value)
+
+  # variable labels
+  if (inherits(data, "survey.design")) {
+    vl <- labelled::var_label(
+      data$variables,
+      null_action = "fill",
+      unlist = TRUE
+    )
+  } else {
+    vl <- labelled::var_label(
+      data,
+      null_action = "fill",
+      unlist = TRUE
+    )
+  }
+  d$item_label <- vl[d$item]
+
+  sort <- match.arg(sort)
+  d$item_label <-
+    switch (
+      sort,
+      none = d$item_label |> forcats::fct_inorder(),
+      ascending = d$item_label |> forcats::fct_reorder(d$prop),
+      descending = d$item_label |> forcats::fct_reorder(d$prop, .desc = TRUE)
+    )
+
+  if (flip) d$item_label <- d$item_label |> forcats::fct_rev()
+
+  d <-
+    d |>
+    dplyr::relocate(dplyr::all_of(c("item", "item_label")))
+
+  # proportion labels
+  d$prop_label <- labels_labeller(d$prop)
+  d$y_label <- 0
+
+  if (return_data) return(d)
+
+  # main plot
+  plot <- d |>
+    ggplot2::ggplot() +
+    ggplot2::aes(
+      x = .data$item_label,
+      y = .data$prop,
+      group = 1
+    )
+  if (geom != "point") # if point, should be drawn after ci
+    plot <-
+      plot +
+      ggplot2::stat_identity(geom = geom, ...)
+
+  # plotting confidence intervals
+  if (show_ci) {
+    plot <-
+      plot +
+      ggplot2::geom_errorbar(
+        mapping = ggplot2::aes(
+          ymin = .data$prop_low,
+          ymax = .data$prop_high
+        ),
+        width = .1,
+        color = ci_color
+      )
+  }
+
+  if (geom == "point")
+    plot <-
+      plot +
+      ggplot2::stat_identity(geom = geom, ...)
+
+  # plotting proportion labels
+  if (show_labels) {
+    plot <-
+      plot +
+      ggplot2::geom_text(
+        mapping = ggplot2::aes(
+          label = .data$prop_label,
+          y = .data$y_label
+        ),
+        size = labels_size,
+        color = labels_color,
+        vjust = ifelse(flip, .5, 0),
+        hjust = ifelse(flip, 0, 0.5),
+        nudge_y = .01
+      )
+  }
+
+  # scales and theme
+  plot <-
+    plot +
+    ggplot2::labs(x = NULL, y = NULL) +
+    ggplot2::scale_y_continuous(
+      labels = scales::percent,
+      expand = ggplot2::expansion(mult = c(0, .1))
+    ) +
+    ggplot2::theme_light() +
+    ggplot2::theme(strip.background = ggplot2::element_rect(fill = "grey50"))
+
+  if (flip) {
+    plot <-
+      plot +
+      ggplot2::coord_flip() +
+      ggplot2::theme(
+        panel.grid.major.y = ggplot2::element_blank(),
+        axis.ticks.y = ggplot2::element_blank()
+      )
+  } else {
+    plot <-
+      plot +
+      ggplot2::theme(
+        panel.grid.major.x = ggplot2::element_blank(),
+        axis.ticks.x = ggplot2::element_blank()
+      )
+  }
+
+  plot
+}
