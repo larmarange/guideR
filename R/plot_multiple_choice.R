@@ -1,17 +1,35 @@
 #' Plot a multiple choice question
 #'
 #' Considering a multiple choice question coded as several binary variables (one
-#' per item), plot the proportion of positive answers of each item.
+#' per item), plot the proportion of positive answers.
+#' If `combine_items = FALSE`, plot the proportion of positive answers of each
+#' item, separately. If `combine_items = FALSE`, combine the different items
+#' (see [combine_items()]) and plot the proportion of each combination
+#' ([`ggupset`][ggupset::axis_combmatrix] package required when
+#' `flip = FALSE`).
 #' See [proportion()] for more details on the way proportions and
 #' confidence intervals are computed. By default, return a bar plot, but other
-#' geometries could be used (see examples).
-#'
+#' geometries could be used (see examples). If defined, use variable labels
+#' (see examples).
+#' @note
+#' If `drop_na = TRUE`, any observation with at least one `NA` value for one
+#' item will be dropped.
+#' If `drop_na = FALSE` and `combine_items = FALSE`, `NA` values for a specific
+#' item are taken into account in the denominators when computing proportions.
+#' If `drop_na = FALSE` and `combine_items = TRUE`, any observation with at
+#' least one `NA` value will be labeled with `missing_label`.
 #' @param data A data frame, data frame extension (e.g. a tibble),
 #' or a survey design object.
 #' @param items <[`tidy-select`][dplyr::dplyr_tidy_select ]> List of variables
 #' identifying the different items of the multiple choice question.
 #' @param value Value indicating a positive answer. By default, will use the
 #' maximum observed value and will display a message.
+#' @param combine_items Should items be combined? (see examples)
+#' @param combine_sep Character string to separate combined items.
+#' @param missing_label When combining items and
+#' `drop_na = FALSE`, label for missing values.
+#' @param none_label When combining items and `flip = TRUE`,
+#' label when no item is selected.
 #' @param drop_na Should any observation with a least one `NA` value be dropped?
 #' @param show_ci Display confidence intervals?
 #' @param conf_level Confidence level for the confidence intervals.
@@ -55,10 +73,32 @@
 #'     fill = "lightblue",
 #'     flip = TRUE
 #'   )
+#' @examplesIf rlang::is_installed("ggupset")
+#' d |>
+#'   plot_multiple_choice(
+#'     combine_items = TRUE,
+#'     value = "y",
+#'     fill = "#DDCC77",
+#'     drop_na = TRUE
+#'   )
+#'
+#' d |>
+#'   plot_multiple_choice(
+#'     combine_items = TRUE,
+#'     value = "y",
+#'     flip = TRUE,
+#'     mapping = ggplot2::aes(fill = prop),
+#'     show.legend = FALSE
+#'   ) +
+#'   ggplot2::scale_fill_distiller(palette = "Spectral")
 plot_multiple_choice <- function(
   data,
   items = dplyr::everything(),
   value = NULL,
+  combine_items = FALSE,
+  combine_sep = " | ",
+  missing_label = " missing",
+  none_label = "none",
   drop_na = FALSE,
   sort = c("none", "ascending", "descending"),
   geom = "bar",
@@ -80,53 +120,96 @@ plot_multiple_choice <- function(
     data <- tidyr::drop_na(data)
 
   if (is.null(value)) {
-    value <- max(unlist(d), na.rm = TRUE)
+    value <- max(unlist(data), na.rm = TRUE)
     cli::cli_alert_warning("Automatically selected value: {.val {value}}")
     cli::cli_alert_info(
       "To remove this message, please specify {.arg value}."
     )
   }
 
-  d <-
-    items |>
-    purrr::map(
-      \(v) {
-        data |>
-          dplyr::mutate(
-            .value = factor(.data[[v]] == value, levels = c(FALSE, TRUE))
-          ) |>
-          proportion(
-            .data$.value,
-            .conf.int = show_ci,
-            .scale = 1,
-            .conf.level = conf_level
-          ) |>
-          dplyr::mutate(item = v)
-      }
-    ) |>
-    dplyr::bind_rows() |>
-    dplyr::filter(.data$.value == "TRUE") |>
-    dplyr::select(-.data$.value)
-
-  # variable labels
-  if (inherits(data, "survey.design")) {
-    vl <- labelled::var_label(
-      data$variables,
-      null_action = "fill",
-      unlist = TRUE
-    )
+  if (combine_items) {
+    d <-
+      data |>
+      combine_items(
+        dplyr::everything(),
+        into = "item_label",
+        value = value,
+        sep = combine_sep
+      ) |>
+      proportion(
+        .data$item_label,
+        .conf.int = show_ci,
+        .scale = 1,
+        .conf.level = conf_level
+      ) |>
+      dplyr::mutate(
+        item = .data$item_label |>
+          stringr::str_split(stringr::str_escape(combine_sep)),
+        item = .data$item |>
+          purrr::map(
+            \(x) {
+              if (all(!is.na(x) & x == "")) return(NULL)
+              x
+            }
+          ),
+        degrees = .data$item |> purrr::map(length) |> unlist(),
+        degrees = dplyr::if_else(is.na(.data$item_label), NA, .data$degrees),
+        item_label = dplyr::if_else(
+          .data$item_label == "" & flip,
+          none_label,
+          .data$item_label
+        ),
+        item_label = dplyr::if_else(
+          is.na(.data$item_label),
+          missing_label,
+          .data$item_label
+        )
+      ) |>
+      dplyr::relocate(dplyr::all_of("item")) |>
+      dplyr::arrange(.data$degrees, dplyr::desc(.data$prop))
   } else {
-    vl <- labelled::var_label(
-      data,
-      null_action = "fill",
-      unlist = TRUE
-    )
+    d <-
+      items |>
+      purrr::map(
+        \(v) {
+          data |>
+            dplyr::mutate(
+              .value = factor(.data[[v]] == value, levels = c(FALSE, TRUE))
+            ) |>
+            proportion(
+              .data$.value,
+              .conf.int = show_ci,
+              .scale = 1,
+              .conf.level = conf_level
+            ) |>
+            dplyr::mutate(item = v)
+        }
+      ) |>
+      dplyr::bind_rows() |>
+      dplyr::filter(.data$.value == "TRUE") |>
+      dplyr::select(-.data$.value)
+
+    # variable labels
+    if (inherits(data, "survey.design")) {
+      vl <- labelled::var_label(
+        data$variables,
+        null_action = "fill",
+        unlist = TRUE
+      )
+    } else {
+      vl <- labelled::var_label(
+        data,
+        null_action = "fill",
+        unlist = TRUE
+      )
+    }
+
+    d$item_label <- vl[d$item]
   }
-  d$item_label <- vl[d$item]
 
   sort <- match.arg(sort)
   d$item_label <-
-    switch (
+    switch(
       sort,
       none = d$item_label |> forcats::fct_inorder(),
       ascending = d$item_label |> forcats::fct_reorder(d$prop),
@@ -220,6 +303,13 @@ plot_multiple_choice <- function(
         panel.grid.major.x = ggplot2::element_blank(),
         axis.ticks.x = ggplot2::element_blank()
       )
+  }
+
+  if (combine_items && !flip) {
+    rlang::check_installed("ggupset")
+    plot <-
+      plot +
+      ggupset::axis_combmatrix(sep = stringr::str_escape(combine_sep))
   }
 
   plot

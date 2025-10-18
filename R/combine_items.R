@@ -2,7 +2,7 @@
 #'
 #' Considering a multiple choice question coded as several binary variables (one
 #' per item), create a new variable (list column or character) combining all
-#' positive answers.
+#' positive answers. If defined, use variable labels (see examples).
 #' @note
 #' If `NA` is observed for at least one item, return `NA`.
 #' @param data A data frame, data frame extension (e.g. a tibble),

@@ -8,6 +8,10 @@ plot_multiple_choice(
   data,
   items = dplyr::everything(),
   value = NULL,
+  combine_items = FALSE,
+  combine_sep = " | ",
+  missing_label = " missing",
+  none_label = "none",
   drop_na = FALSE,
   sort = c("none", "ascending", "descending"),
   geom = "bar",
@@ -32,6 +36,16 @@ identifying the different items of the multiple choice question.}
 
 \item{value}{Value indicating a positive answer. By default, will use the
 maximum observed value and will display a message.}
+
+\item{combine_items}{Should items be combined? (see examples)}
+
+\item{combine_sep}{Character string to separate combined items.}
+
+\item{missing_label}{When combining items and
+\code{drop_na = FALSE}, label for missing values.}
+
+\item{none_label}{When combining items and \code{flip = TRUE},
+label when no item is selected.}
 
 \item{drop_na}{Should any observation with a least one \code{NA} value be dropped?}
 
@@ -62,10 +76,24 @@ answers?}
 }
 \description{
 Considering a multiple choice question coded as several binary variables (one
-per item), plot the proportion of positive answers of each item.
+per item), plot the proportion of positive answers.
+If \code{combine_items = FALSE}, plot the proportion of positive answers of each
+item, separately. If \code{combine_items = FALSE}, combine the different items
+(see \code{\link[=combine_items]{combine_items()}}) and plot the proportion of each combination
+(\code{\link[ggupset:axis_combmatrix]{ggupset}} package required when
+\code{flip = FALSE}).
 See \code{\link[=proportion]{proportion()}} for more details on the way proportions and
 confidence intervals are computed. By default, return a bar plot, but other
-geometries could be used (see examples).
+geometries could be used (see examples). If defined, use variable labels
+(see examples).
+}
+\note{
+If \code{drop_na = TRUE}, any observation with at least one \code{NA} value for one
+item will be dropped.
+If \code{drop_na = FALSE} and \code{combine_items = FALSE}, \code{NA} values for a specific
+item are taken into account in the denominators when computing proportions.
+If \code{drop_na = FALSE} and \code{combine_items = TRUE}, any observation with at
+least one \code{NA} value will be labeled with \code{missing_label}.
 }
 \examples{
 d <-
@@ -92,5 +120,24 @@ d |>
     fill = "lightblue",
     flip = TRUE
   )
+\dontshow{if (rlang::is_installed("ggupset")) withAutoprint(\{ # examplesIf}
+d |>
+  plot_multiple_choice(
+    combine_items = TRUE,
+    value = "y",
+    fill = "#DDCC77",
+    drop_na = TRUE
+  )
+
+d |>
+  plot_multiple_choice(
+    combine_items = TRUE,
+    value = "y",
+    flip = TRUE,
+    mapping = ggplot2::aes(fill = prop),
+    show.legend = FALSE
+  ) +
+  ggplot2::scale_fill_distiller(palette = "Spectral")
+\dontshow{\}) # examplesIf}
 }
 \keyword{univar}

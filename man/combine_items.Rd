@@ -24,7 +24,7 @@ character. If \code{NULL}, return a list column (see examples).}
 \description{
 Considering a multiple choice question coded as several binary variables (one
 per item), create a new variable (list column or character) combining all
-positive answers.
+positive answers. If defined, use variable labels (see examples).
 }
 \note{
 If \code{NA} is observed for at least one item, return \code{NA}.

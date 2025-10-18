@@ -46,6 +46,7 @@ Suggests:
     broom.helpers,
     cardx,
     FactoMineR,
+    ggupset,
     gt,
     gtsummary,
     nnet,
