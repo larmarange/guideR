@@ -4,6 +4,9 @@
 
 **New features**
 
+* new function `plot_multiple_answers()` to plot a multiple answers question
+  coded as several binary variables (#29)
+* new helper `combine_answers()` for multiple answers questions (#29)
 * new argument `dependencies` for `install_dependencies()` (#27)
 
 # guideR 0.4.0

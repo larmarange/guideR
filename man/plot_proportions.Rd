@@ -104,7 +104,7 @@ or more) be converted to quartiles (using \code{cut_quartiles()})?}
 
 \item{free_scale}{Allow y axis to vary between conditions?}
 
-\item{return_data}{Return data used instead of the plot?}
+\item{return_data}{Return computed data instead of the plot?}
 
 \item{strata}{Stratification variable}
 
