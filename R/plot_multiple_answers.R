@@ -25,6 +25,8 @@
 #' identifying the different answers of the question.
 #' @param value Value indicating a positive answer. By default, will use the
 #' maximum observed value and will display a message.
+#' @param by <[`tidy-select`][dplyr::dplyr_tidy_select ]> Optional list of
+#' variables to compare (using facets).
 #' @param combine_answers Should answers be combined? (see examples)
 #' @param combine_sep Character string to separate combined answers.
 #' @param missing_label When combining answers and
@@ -34,7 +36,8 @@
 #' @param drop_na Should any observation with a least one `NA` value be dropped?
 #' @param show_ci Display confidence intervals?
 #' @param conf_level Confidence level for the confidence intervals.
-#' @param sort Should answers be sorted according to their proportion?
+#' @param sort Should answers be sorted according to their proportion? They
+#' could also be sorted by degrees (number of elements) when combining answers.
 #' @param geom Geometry to use for plotting proportions (`"bar"` by default).
 #' @param ... Additional arguments passed to the geom defined by `geom`.
 #' @param show_ci Display confidence intervals?
@@ -91,16 +94,28 @@
 #'     show.legend = FALSE
 #'   ) +
 #'   ggplot2::scale_fill_distiller(palette = "Spectral")
+#'
+#' d$group <- sample(c("group A", "groupe B"), size = 200, replace = TRUE)
+#' d |>
+#'   plot_multiple_answers(
+#'     answers = q1a:q1d,
+#'     by = group,
+#'     combine_answers = TRUE,
+#'     sort = "degrees",
+#'     value = "y",
+#'     fill = "grey80"
+#'   )
 plot_multiple_answers <- function(
   data,
   answers = dplyr::everything(),
   value = NULL,
+  by = NULL,
   combine_answers = FALSE,
   combine_sep = " | ",
   missing_label = " missing",
   none_label = "none",
   drop_na = FALSE,
-  sort = c("none", "ascending", "descending"),
+  sort = c("none", "ascending", "descending", "degrees"),
   geom = "bar",
   ...,
   show_ci = TRUE,
@@ -113,11 +128,11 @@ plot_multiple_answers <- function(
   flip = FALSE,
   return_data = FALSE
 ) {
-  data <- data |> dplyr::select({{ answers }})
-  answers <- colnames(data)
+  answers <- data |> dplyr::select({{ answers }}) |> colnames()
+  sort <- match.arg(sort)
 
   if (drop_na)
-    data <- tidyr::drop_na(data)
+    data <- tidyr::drop_na(data, dplyr::all_of(answers))
 
   if (is.null(value)) {
     value <- max(unlist(data), na.rm = TRUE)
@@ -131,7 +146,7 @@ plot_multiple_answers <- function(
     d <-
       data |>
       combine_answers(
-        dplyr::everything(),
+        dplyr::all_of(answers),
         into = "item_label",
         value = value,
         sep = combine_sep
@@ -140,7 +155,8 @@ plot_multiple_answers <- function(
         .data$item_label,
         .conf.int = show_ci,
         .scale = 1,
-        .conf.level = conf_level
+        .conf.level = conf_level,
+        .by = {{ by }}
       ) |>
       dplyr::mutate(
         item = .data$item_label |>
@@ -163,10 +179,15 @@ plot_multiple_answers <- function(
           is.na(.data$item_label),
           missing_label,
           .data$item_label
-        )
+        ),
+        item_label = .data$item_label |>
+          forcats::fct_reorder(.data$n, .fun = sum, .desc = TRUE)
       ) |>
       dplyr::relocate(dplyr::all_of("item")) |>
-      dplyr::arrange(.data$degrees, dplyr::desc(.data$prop))
+      dplyr::arrange(.data$item_label)
+    if (sort == "degrees")
+      d <- d |>
+        dplyr::arrange(.data$degrees, .data$item_label)
   } else {
     d <-
       answers |>
@@ -180,7 +201,8 @@ plot_multiple_answers <- function(
               .data$.value,
               .conf.int = show_ci,
               .scale = 1,
-              .conf.level = conf_level
+              .conf.level = conf_level,
+              .by = {{ by }}
             ) |>
             dplyr::mutate(item = v)
         }
@@ -207,13 +229,15 @@ plot_multiple_answers <- function(
     d$item_label <- vl[d$item]
   }
 
-  sort <- match.arg(sort)
   d$item_label <-
     switch(
       sort,
       none = d$item_label |> forcats::fct_inorder(),
-      ascending = d$item_label |> forcats::fct_reorder(d$prop),
-      descending = d$item_label |> forcats::fct_reorder(d$prop, .desc = TRUE)
+      ascending = d$item_label |>
+        forcats::fct_reorder(d$n, .fun = sum),
+      descending = d$item_label |>
+        forcats::fct_reorder(d$n, .fun = sum, .desc = TRUE),
+      degrees = d$item_label |> forcats::fct_inorder()
     )
 
   if (flip) d$item_label <- d$item_label |> forcats::fct_rev()
@@ -292,6 +316,7 @@ plot_multiple_answers <- function(
     plot <-
       plot +
       ggplot2::coord_flip() +
+      ggplot2::facet_grid(cols = ggplot2::vars({{ by }})) +
       ggplot2::theme(
         panel.grid.major.y = ggplot2::element_blank(),
         axis.ticks.y = ggplot2::element_blank()
@@ -299,9 +324,19 @@ plot_multiple_answers <- function(
   } else {
     plot <-
       plot +
+      ggplot2::facet_grid(
+        rows = ggplot2::vars({{ by }}),
+        switch = "y"
+      ) +
       ggplot2::theme(
         panel.grid.major.x = ggplot2::element_blank(),
-        axis.ticks.x = ggplot2::element_blank()
+        axis.ticks.x = ggplot2::element_blank(),
+        strip.placement = "outside",
+        strip.text.y.left = ggplot2::element_text(
+          face = "bold", angle = 0, color = "black",
+          hjust = 0, vjust = 1
+        ),
+        strip.background.y = ggplot2::element_blank()
       )
   }
 

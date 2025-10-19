@@ -8,12 +8,13 @@ plot_multiple_answers(
   data,
   answers = dplyr::everything(),
   value = NULL,
+  by = NULL,
   combine_answers = FALSE,
   combine_sep = " | ",
   missing_label = " missing",
   none_label = "none",
   drop_na = FALSE,
-  sort = c("none", "ascending", "descending"),
+  sort = c("none", "ascending", "descending", "degrees"),
   geom = "bar",
   ...,
   show_ci = TRUE,
@@ -37,6 +38,9 @@ identifying the different answers of the question.}
 \item{value}{Value indicating a positive answer. By default, will use the
 maximum observed value and will display a message.}
 
+\item{by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> Optional list of
+variables to compare (using facets).}
+
 \item{combine_answers}{Should answers be combined? (see examples)}
 
 \item{combine_sep}{Character string to separate combined answers.}
@@ -49,7 +53,8 @@ label when no item is selected.}
 
 \item{drop_na}{Should any observation with a least one \code{NA} value be dropped?}
 
-\item{sort}{Should answers be sorted according to their proportion?}
+\item{sort}{Should answers be sorted according to their proportion? They
+could also be sorted by degrees (number of elements) when combining answers.}
 
 \item{geom}{Geometry to use for plotting proportions (\code{"bar"} by default).}
 
@@ -138,6 +143,17 @@ d |>
     show.legend = FALSE
   ) +
   ggplot2::scale_fill_distiller(palette = "Spectral")
+
+d$group <- sample(c("group A", "groupe B"), size = 200, replace = TRUE)
+d |>
+  plot_multiple_answers(
+    answers = q1a:q1d,
+    by = group,
+    combine_answers = TRUE,
+    sort = "degrees",
+    value = "y",
+    fill = "grey80"
+  )
 \dontshow{\}) # examplesIf}
 }
 \keyword{univar}
