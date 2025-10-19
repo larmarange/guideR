@@ -1,10 +1,10 @@
-#' Plot a multiple choice question
+#' Plot a multiple answers question
 #'
-#' Considering a multiple choice question coded as several binary variables (one
-#' per item), plot the proportion of positive answers.
-#' If `combine_items = FALSE`, plot the proportion of positive answers of each
-#' item, separately. If `combine_items = FALSE`, combine the different items
-#' (see [combine_items()]) and plot the proportion of each combination
+#' Considering a multiple answers question coded as several binary variables
+#' (one per answer), plot the proportion of positive answers.
+#' If `combine_answers = FALSE`, plot the proportion of positive answers of each
+#' item, separately. If `combine_answers = FALSE`, combine the different answers
+#' (see [combine_answers()]) and plot the proportion of each combination
 #' ([`ggupset`][ggupset::axis_combmatrix] package required when
 #' `flip = FALSE`).
 #' See [proportion()] for more details on the way proportions and
@@ -14,27 +14,27 @@
 #' @note
 #' If `drop_na = TRUE`, any observation with at least one `NA` value for one
 #' item will be dropped.
-#' If `drop_na = FALSE` and `combine_items = FALSE`, `NA` values for a specific
-#' item are taken into account in the denominators when computing proportions.
-#' If `drop_na = FALSE` and `combine_items = TRUE`, any observation with at
+#' If `drop_na = FALSE` and `combine_answers = FALSE`, `NA` values for a
+#' specific answer are taken into account in the denominators when computing
+#' proportions.
+#' If `drop_na = FALSE` and `combine_answers = TRUE`, any observation with at
 #' least one `NA` value will be labeled with `missing_label`.
 #' @param data A data frame, data frame extension (e.g. a tibble),
 #' or a survey design object.
-#' @param items <[`tidy-select`][dplyr::dplyr_tidy_select ]> List of variables
-#' identifying the different items of the multiple choice question.
+#' @param answers <[`tidy-select`][dplyr::dplyr_tidy_select ]> List of variables
+#' identifying the different answers of the question.
 #' @param value Value indicating a positive answer. By default, will use the
 #' maximum observed value and will display a message.
-#' @param combine_items Should items be combined? (see examples)
-#' @param combine_sep Character string to separate combined items.
-#' @param missing_label When combining items and
+#' @param combine_answers Should answers be combined? (see examples)
+#' @param combine_sep Character string to separate combined answers.
+#' @param missing_label When combining answers and
 #' `drop_na = FALSE`, label for missing values.
-#' @param none_label When combining items and `flip = TRUE`,
+#' @param none_label When combining answers and `flip = TRUE`,
 #' label when no item is selected.
 #' @param drop_na Should any observation with a least one `NA` value be dropped?
 #' @param show_ci Display confidence intervals?
 #' @param conf_level Confidence level for the confidence intervals.
-#' @param sort Should items be sorted according to the proportion of positive
-#' answers?
+#' @param sort Should answers be sorted according to their proportion?
 #' @param geom Geometry to use for plotting proportions (`"bar"` by default).
 #' @param ... Additional arguments passed to the geom defined by `geom`.
 #' @param show_ci Display confidence intervals?
@@ -57,7 +57,7 @@
 #'     q1d = sample("n", size = 200, replace = TRUE)
 #'   )
 #'
-#' d |> plot_multiple_choice(q1a:q1c)
+#' d |> plot_multiple_answers(q1a:q1c)
 #'
 #' d |>
 #'   labelled::set_variable_labels(
@@ -66,7 +66,7 @@
 #'     q1c = "chocolate",
 #'     q1d = "Dijon mustard"
 #'   ) |>
-#'   plot_multiple_choice(
+#'   plot_multiple_answers(
 #'     value = "y",
 #'     drop_na = TRUE,
 #'     sort = "d",
@@ -75,27 +75,27 @@
 #'   )
 #' @examplesIf rlang::is_installed("ggupset")
 #' d |>
-#'   plot_multiple_choice(
-#'     combine_items = TRUE,
+#'   plot_multiple_answers(
+#'     combine_answers = TRUE,
 #'     value = "y",
 #'     fill = "#DDCC77",
 #'     drop_na = TRUE
 #'   )
 #'
 #' d |>
-#'   plot_multiple_choice(
-#'     combine_items = TRUE,
+#'   plot_multiple_answers(
+#'     combine_answers = TRUE,
 #'     value = "y",
 #'     flip = TRUE,
 #'     mapping = ggplot2::aes(fill = prop),
 #'     show.legend = FALSE
 #'   ) +
 #'   ggplot2::scale_fill_distiller(palette = "Spectral")
-plot_multiple_choice <- function(
+plot_multiple_answers <- function(
   data,
-  items = dplyr::everything(),
+  answers = dplyr::everything(),
   value = NULL,
-  combine_items = FALSE,
+  combine_answers = FALSE,
   combine_sep = " | ",
   missing_label = " missing",
   none_label = "none",
@@ -113,8 +113,8 @@ plot_multiple_choice <- function(
   flip = FALSE,
   return_data = FALSE
 ) {
-  data <- data |> dplyr::select({{ items }})
-  items <- colnames(data)
+  data <- data |> dplyr::select({{ answers }})
+  answers <- colnames(data)
 
   if (drop_na)
     data <- tidyr::drop_na(data)
@@ -127,10 +127,10 @@ plot_multiple_choice <- function(
     )
   }
 
-  if (combine_items) {
+  if (combine_answers) {
     d <-
       data |>
-      combine_items(
+      combine_answers(
         dplyr::everything(),
         into = "item_label",
         value = value,
@@ -169,7 +169,7 @@ plot_multiple_choice <- function(
       dplyr::arrange(.data$degrees, dplyr::desc(.data$prop))
   } else {
     d <-
-      items |>
+      answers |>
       purrr::map(
         \(v) {
           data |>
@@ -305,7 +305,7 @@ plot_multiple_choice <- function(
       )
   }
 
-  if (combine_items && !flip) {
+  if (combine_answers && !flip) {
     rlang::check_installed("ggupset")
     plot <-
       plot +
