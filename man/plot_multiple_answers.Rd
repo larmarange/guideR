@@ -121,7 +121,7 @@ d |>
   plot_multiple_answers(
     value = "y",
     drop_na = TRUE,
-    sort = "d",
+    sort = "desc",
     fill = "lightblue",
     flip = TRUE
   )

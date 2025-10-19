@@ -66,7 +66,7 @@ combine_answers <- function(
     d |>
     dplyr::rowwise() |>
     dplyr::summarise(
-      answers = list(dplyr::c_across())
+      answers = list(dplyr::c_across(dplyr::everything()))
     ) |>
     dplyr::pull("answers") |>
     purrr::map(
