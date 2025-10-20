@@ -1,3 +1,35 @@
+test_that("plot_multiple_answers_dodge() does not produce an error", {
+  skip_on_cran()
+  skip_if_not_installed("ggupset")
+  skip_if_not_installed("ggstats")
+
+  d <-
+    dplyr::tibble(
+      q1a = sample(c("y", "n"), size = 200, replace = TRUE),
+      q1b = sample(c("y", "n", "n", NA), size = 200, replace = TRUE),
+      q1c = sample(c("y", "y", "n"), size = 200, replace = TRUE),
+      q1d = sample("n", size = 200, replace = TRUE),
+      group = sample(c("group A", "group B"), size = 200, replace = TRUE)
+    )
+
+  expect_no_error(
+    d |>
+      plot_multiple_answers_dodge(q1a:q1d, by = group)
+  )
+  expect_no_error(
+    d |>
+      plot_multiple_answers_dodge(q1a:q1d, by = group, flip = TRUE)
+  )
+  expect_no_error(
+    d |>
+      plot_multiple_answers_dodge(q1a:q1d, by = group, combine_answers = TRUE)
+  )
+  expect_no_error(
+    d |>
+      plot_multiple_answers_dodge(q1a:q1d, by = group, geom = "point")
+  )
+})
+
 test_that("plot_multiple_answers() does not produce an error", {
   d <-
     dplyr::tibble(
