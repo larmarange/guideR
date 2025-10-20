@@ -365,27 +365,27 @@ plot_multiple_answers <- function(
 #' d |>
 #'   plot_multiple_answers_dodge(q1a:q1d, by = group, combine_answers = TRUE)
 plot_multiple_answers_dodge <- function(
-    data,
-    answers = dplyr::everything(),
-    value = NULL,
-    by,
-    combine_answers = FALSE,
-    combine_sep = " | ",
-    missing_label = " missing",
-    none_label = "none",
-    drop_na = FALSE,
-    sort = c("none", "ascending", "descending", "degrees"),
-    geom = c("bar", "point"),
-    width = .75,
-    ...,
-    show_ci = TRUE,
-    conf_level = 0.95,
-    ci_color = "black",
-    show_labels = TRUE,
-    labels_labeller = scales::label_percent(1),
-    labels_size = 3.5,
-    labels_color = "black",
-    flip = FALSE
+  data,
+  answers = dplyr::everything(),
+  value = NULL,
+  by,
+  combine_answers = FALSE,
+  combine_sep = " | ",
+  missing_label = " missing",
+  none_label = "none",
+  drop_na = FALSE,
+  sort = c("none", "ascending", "descending", "degrees"),
+  geom = c("bar", "point"),
+  width = .75,
+  ...,
+  show_ci = TRUE,
+  conf_level = 0.95,
+  ci_color = "black",
+  show_labels = TRUE,
+  labels_labeller = scales::label_percent(1),
+  labels_size = 3.5,
+  labels_color = "black",
+  flip = FALSE
 ) {
   rlang::check_installed("ggstats")
 
