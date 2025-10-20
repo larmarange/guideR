@@ -95,8 +95,9 @@ geometries could be used (see examples). If defined, use variable labels
 If \code{drop_na = TRUE}, any observation with at least one \code{NA} value for one
 item will be dropped.
 If \code{drop_na = FALSE} and \code{combine_answers = FALSE}, \code{NA} values for a
-specific answer are taken into account in the denominators when computing
-proportions.
+specific answer are excluded the denominator when computing
+proportions. Therefore, all proportions may be computed on different
+population sizes.
 If \code{drop_na = FALSE} and \code{combine_answers = TRUE}, any observation with at
 least one \code{NA} value will be labeled with \code{missing_label}.
 }

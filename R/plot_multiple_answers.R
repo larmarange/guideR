@@ -15,8 +15,9 @@
 #' If `drop_na = TRUE`, any observation with at least one `NA` value for one
 #' item will be dropped.
 #' If `drop_na = FALSE` and `combine_answers = FALSE`, `NA` values for a
-#' specific answer are taken into account in the denominators when computing
-#' proportions.
+#' specific answer are excluded the denominator when computing
+#' proportions. Therefore, all proportions may be computed on different
+#' population sizes.
 #' If `drop_na = FALSE` and `combine_answers = TRUE`, any observation with at
 #' least one `NA` value will be labeled with `missing_label`.
 #' @param data A data frame, data frame extension (e.g. a tibble),
