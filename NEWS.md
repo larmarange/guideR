@@ -2,11 +2,11 @@
 
 **New feature**
 
-* new function `plot_multiple_answers_dodge()`
+* new function `plot_multiple_answers_dodge()` (#31)
 
 **Fix**
 
-* fix in `plot_multiple_answers()` with `NA` values when `drop_na = FALSE`
+* fix in `plot_multiple_answers()` with `NA` values when `drop_na = FALSE` (#31)
 
 # guideR 0.5.0
 
