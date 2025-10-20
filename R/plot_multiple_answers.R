@@ -202,7 +202,8 @@ plot_multiple_answers <- function(
               .conf.int = show_ci,
               .scale = 1,
               .conf.level = conf_level,
-              .by = {{ by }}
+              .by = {{ by }},
+              .na.rm = TRUE
             ) |>
             dplyr::mutate(item = v)
         }

@@ -1,5 +1,9 @@
 # guideR (development version)
 
+**Fix**
+
+* Fix in `plot_multiple_answers()` with `NA` values when `drop_na = FALSE`
+
 # guideR 0.5.0
 
 **New features**
