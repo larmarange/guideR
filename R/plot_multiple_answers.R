@@ -235,9 +235,9 @@ plot_multiple_answers <- function(
       sort,
       none = d$item_label |> forcats::fct_inorder(),
       ascending = d$item_label |>
-        forcats::fct_reorder(d$n, .fun = sum),
+        forcats::fct_reorder(d$prop, .fun = mean),
       descending = d$item_label |>
-        forcats::fct_reorder(d$n, .fun = sum, .desc = TRUE),
+        forcats::fct_reorder(d$prop, .fun = mean, .desc = TRUE),
       degrees = d$item_label |> forcats::fct_inorder()
     )
 
