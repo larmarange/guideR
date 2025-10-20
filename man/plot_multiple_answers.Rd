@@ -2,6 +2,7 @@
 % Please edit documentation in R/plot_multiple_answers.R
 \name{plot_multiple_answers}
 \alias{plot_multiple_answers}
+\alias{plot_multiple_answers_dodge}
 \title{Plot a multiple answers question}
 \usage{
 plot_multiple_answers(
@@ -26,6 +27,30 @@ plot_multiple_answers(
   labels_color = "black",
   flip = FALSE,
   return_data = FALSE
+)
+
+plot_multiple_answers_dodge(
+  data,
+  answers = dplyr::everything(),
+  value = NULL,
+  by,
+  combine_answers = FALSE,
+  combine_sep = " | ",
+  missing_label = " missing",
+  none_label = "none",
+  drop_na = FALSE,
+  sort = c("none", "ascending", "descending", "degrees"),
+  geom = c("bar", "point"),
+  width = 0.75,
+  ...,
+  show_ci = TRUE,
+  conf_level = 0.95,
+  ci_color = "black",
+  show_labels = TRUE,
+  labels_labeller = scales::label_percent(1),
+  labels_size = 3.5,
+  labels_color = "black",
+  flip = FALSE
 )
 }
 \arguments{
@@ -77,6 +102,8 @@ could also be sorted by degrees (number of elements) when combining answers.}
 \item{flip}{Flip x and y axis?}
 
 \item{return_data}{Return computed data instead of the plot?}
+
+\item{width}{Dodging width.}
 }
 \description{
 Considering a multiple answers question coded as several binary variables
@@ -95,8 +122,9 @@ geometries could be used (see examples). If defined, use variable labels
 If \code{drop_na = TRUE}, any observation with at least one \code{NA} value for one
 item will be dropped.
 If \code{drop_na = FALSE} and \code{combine_answers = FALSE}, \code{NA} values for a
-specific answer are taken into account in the denominators when computing
-proportions.
+specific answer are excluded the denominator when computing
+proportions. Therefore, all proportions may be computed on different
+population sizes.
 If \code{drop_na = FALSE} and \code{combine_answers = TRUE}, any observation with at
 least one \code{NA} value will be labeled with \code{missing_label}.
 }
@@ -144,7 +172,7 @@ d |>
   ) +
   ggplot2::scale_fill_distiller(palette = "Spectral")
 
-d$group <- sample(c("group A", "groupe B"), size = 200, replace = TRUE)
+d$group <- sample(c("group A", "group B"), size = 200, replace = TRUE)
 d |>
   plot_multiple_answers(
     answers = q1a:q1d,
@@ -154,6 +182,14 @@ d |>
     value = "y",
     fill = "grey80"
   )
+\dontshow{\}) # examplesIf}
+\dontshow{if (rlang::is_installed(c("ggupset", "ggstats"))) withAutoprint(\{ # examplesIf}
+d |>
+  plot_multiple_answers_dodge(q1a:q1d, by = group)
+d |>
+  plot_multiple_answers_dodge(q1a:q1d, by = group, flip = TRUE)
+d |>
+  plot_multiple_answers_dodge(q1a:q1d, by = group, combine_answers = TRUE)
 \dontshow{\}) # examplesIf}
 }
 \keyword{univar}

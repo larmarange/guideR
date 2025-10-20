@@ -47,6 +47,7 @@ Suggests:
     cardx,
     FactoMineR,
     ggupset,
+    ggstats,
     gt,
     gtsummary,
     nnet,

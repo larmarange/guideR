@@ -15,8 +15,9 @@
 #' If `drop_na = TRUE`, any observation with at least one `NA` value for one
 #' item will be dropped.
 #' If `drop_na = FALSE` and `combine_answers = FALSE`, `NA` values for a
-#' specific answer are taken into account in the denominators when computing
-#' proportions.
+#' specific answer are excluded the denominator when computing
+#' proportions. Therefore, all proportions may be computed on different
+#' population sizes.
 #' If `drop_na = FALSE` and `combine_answers = TRUE`, any observation with at
 #' least one `NA` value will be labeled with `missing_label`.
 #' @param data A data frame, data frame extension (e.g. a tibble),
@@ -95,7 +96,7 @@
 #'   ) +
 #'   ggplot2::scale_fill_distiller(palette = "Spectral")
 #'
-#' d$group <- sample(c("group A", "groupe B"), size = 200, replace = TRUE)
+#' d$group <- sample(c("group A", "group B"), size = 200, replace = TRUE)
 #' d |>
 #'   plot_multiple_answers(
 #'     answers = q1a:q1d,
@@ -202,7 +203,8 @@ plot_multiple_answers <- function(
               .conf.int = show_ci,
               .scale = 1,
               .conf.level = conf_level,
-              .by = {{ by }}
+              .by = {{ by }},
+              .na.rm = TRUE
             ) |>
             dplyr::mutate(item = v)
         }
@@ -234,9 +236,9 @@ plot_multiple_answers <- function(
       sort,
       none = d$item_label |> forcats::fct_inorder(),
       ascending = d$item_label |>
-        forcats::fct_reorder(d$n, .fun = sum),
+        forcats::fct_reorder(d$prop, .fun = mean),
       descending = d$item_label |>
-        forcats::fct_reorder(d$n, .fun = sum, .desc = TRUE),
+        forcats::fct_reorder(d$prop, .fun = mean, .desc = TRUE),
       degrees = d$item_label |> forcats::fct_inorder()
     )
 
@@ -244,7 +246,8 @@ plot_multiple_answers <- function(
 
   d <-
     d |>
-    dplyr::relocate(dplyr::all_of(c("item", "item_label")))
+    dplyr::relocate(dplyr::all_of(c("item", "item_label"))) |>
+    dplyr::ungroup()
 
   # proportion labels
   d$prop_label <- labels_labeller(d$prop)
@@ -337,6 +340,174 @@ plot_multiple_answers <- function(
           hjust = 0, vjust = 1
         ),
         strip.background.y = ggplot2::element_blank()
+      )
+  }
+
+  if (combine_answers && !flip) {
+    rlang::check_installed("ggupset")
+    plot <-
+      plot +
+      ggupset::axis_combmatrix(sep = stringr::str_escape(combine_sep))
+  }
+
+  plot
+}
+
+
+#' @rdname plot_multiple_answers
+#' @param width Dodging width.
+#' @export
+#' @examplesIf rlang::is_installed(c("ggupset", "ggstats"))
+#' d |>
+#'   plot_multiple_answers_dodge(q1a:q1d, by = group)
+#' d |>
+#'   plot_multiple_answers_dodge(q1a:q1d, by = group, flip = TRUE)
+#' d |>
+#'   plot_multiple_answers_dodge(q1a:q1d, by = group, combine_answers = TRUE)
+plot_multiple_answers_dodge <- function(
+  data,
+  answers = dplyr::everything(),
+  value = NULL,
+  by,
+  combine_answers = FALSE,
+  combine_sep = " | ",
+  missing_label = " missing",
+  none_label = "none",
+  drop_na = FALSE,
+  sort = c("none", "ascending", "descending", "degrees"),
+  geom = c("bar", "point"),
+  width = .75,
+  ...,
+  show_ci = TRUE,
+  conf_level = 0.95,
+  ci_color = "black",
+  show_labels = TRUE,
+  labels_labeller = scales::label_percent(1),
+  labels_size = 3.5,
+  labels_color = "black",
+  flip = FALSE
+) {
+  rlang::check_installed("ggstats")
+
+  d <-
+    data |>
+    plot_multiple_answers(
+      answers = {{ answers }},
+      value = value,
+      by = {{ by }},
+      combine_answers = combine_answers,
+      combine_sep = combine_sep,
+      missing_label = missing_label,
+      none_label = none_label,
+      drop_na = drop_na,
+      sort = sort,
+      show_ci = show_ci,
+      conf_level = conf_level,
+      ci_color = ci_color,
+      show_labels = show_labels,
+      labels_labeller = labels_labeller,
+      return_data = TRUE
+    )
+  geom <- match.arg(geom)
+
+  d <-
+    d |>
+    dplyr::mutate(y_label = .data$y_label + 0.01) |>
+    dplyr::ungroup() |>
+    dplyr::rowwise() |>
+    dplyr::mutate(
+      .fill = paste(dplyr::c_across({{ by }}), sep = ", ")
+    ) |>
+    dplyr::ungroup()
+
+  # main plot
+  plot <- d |>
+    ggplot2::ggplot() +
+    ggplot2::aes(
+      x = .data$item_label,
+      y = .data$prop,
+      group = .data$.fill
+    ) +
+    ggstats::geom_stripped_cols()
+
+  if (geom == "bar") # if point, should be drawn after ci
+    plot <-
+      plot +
+      ggplot2::geom_bar(
+        stat = "identity",
+        mapping = ggplot2::aes(fill = .data$.fill),
+        position = ggplot2::position_dodge(width = width),
+        width = width,
+        ...
+      )
+
+  # plotting confidence intervals
+  if (show_ci) {
+    plot <-
+      plot +
+      ggplot2::geom_errorbar(
+        mapping = ggplot2::aes(
+          ymin = .data$prop_low,
+          ymax = .data$prop_high
+        ),
+        width = .1,
+        color = ci_color,
+        position = ggplot2::position_dodge(width = width)
+      )
+  }
+
+  if (geom == "point")
+    plot <-
+      plot +
+      ggplot2::geom_point(
+        stat = "identity",
+        mapping = ggplot2::aes(colour = .data$.fill),
+        position = ggplot2::position_dodge(width = width),
+        ...
+      )
+
+  # plotting proportion labels
+  if (show_labels) {
+    plot <-
+      plot +
+      ggplot2::geom_text(
+        mapping = ggplot2::aes(
+          label = .data$prop_label,
+          y = .data$y_label
+        ),
+        size = labels_size,
+        color = labels_color,
+        vjust = ifelse(flip, .5, 0),
+        hjust = ifelse(flip, 0, 0.5),
+        position = ggplot2::position_dodge(width = width)
+      )
+  }
+
+  # scales and theme
+  plot <-
+    plot +
+    ggplot2::labs(x = NULL, y = NULL, fill = NULL, colour = NULL) +
+    ggplot2::scale_y_continuous(
+      labels = scales::percent,
+      expand = ggplot2::expansion(mult = c(0, .1))
+    ) +
+    ggplot2::theme_light() +
+    ggplot2::theme(legend.position = "bottom")
+
+  if (flip) {
+    plot <-
+      plot +
+      ggplot2::coord_flip() +
+      ggplot2::theme(
+        panel.grid.major.y = ggplot2::element_blank(),
+        axis.ticks.y = ggplot2::element_blank()
+      )
+  } else {
+    plot <-
+      plot +
+      ggplot2::theme(
+        panel.grid.major.x = ggplot2::element_blank(),
+        axis.ticks.x = ggplot2::element_blank()
       )
   }
 
