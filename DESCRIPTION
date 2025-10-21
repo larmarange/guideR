@@ -1,7 +1,7 @@
 Package: guideR
 Type: Package
 Title: Miscellaneous Statistical Functions Used in 'guide-R'
-Version: 0.5.1
+Version: 0.5.1.9000
 Authors@R: c(
     person(
       "Joseph", "Larmarange", ,
