@@ -185,7 +185,7 @@ to_DT <- function(
       rownames = FALSE,
       colnames = labelled::var_label(x, unlist = TRUE) |> unname(),
       caption = caption,
-      extensions = 'Buttons',
+      extensions = "Buttons",
       options = list(
         paging = FALSE,
         initComplete = htmlwidgets::JS(
@@ -193,9 +193,9 @@ to_DT <- function(
           "$(\'body\').css({\'font-family\': \'\"Source Sans Pro\",Calibri,Candara,Arial,sans-serif\'});", # nolint
           "}"
         ),
-        dom = 'Bfrtip',
-        buttons = c('csv', 'excel', 'pdf')
+        dom = "Bfrtip",
+        buttons = c("csv", "excel", "pdf")
       )
     ) |>
-    DT::formatStyle(1:ncol(x), "vertical-align" = "top")
+    DT::formatStyle(seq_len(ncol(x)), "vertical-align" = "top")
 }
