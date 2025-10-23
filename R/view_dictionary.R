@@ -193,8 +193,8 @@ to_DT <- function(
           "$(\'body\').css({\'font-family\': \'\"Source Sans Pro\",Calibri,Candara,Arial,sans-serif\'});", # nolint
           "}"
         ),
-        dom = 'frtipB',
-        buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
+        dom = 'Bfrtip',
+        buttons = c('csv', 'excel', 'pdf')
       )
     ) |>
     DT::formatStyle(1:ncol(x), "vertical-align" = "top")
