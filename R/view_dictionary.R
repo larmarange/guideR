@@ -75,7 +75,7 @@ view_detailed_dictionary <- function(data = NULL) {
 #' @param caption an optional caption for the table
 #' @param column_labels Optional column labels
 #' @export
-#' @examplesIf rlang::is_installed(c("DT"))
+#' @examplesIf rlang::is_installed(c("DT", "htmltools", "htmlwidgets"))
 #' iris |> labelled::look_for(details = TRUE) |> to_DT()
 to_DT <- function(
   x,
@@ -92,7 +92,7 @@ to_DT <- function(
     na_range = "User-defined missings (range)"
   )
 ) {
-  rlang::check_installed(c("DT", "htmltools"))
+  rlang::check_installed(c("DT", "htmltools", "htmlwidgets"))
   if (!inherits(x, "look_for"))
     cli::cli_abort("{.arg x} shoud be a {.class look_for} object.")
   if (nrow(x) == 0) return(gt::gt(data.frame()))

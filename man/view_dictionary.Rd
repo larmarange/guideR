@@ -37,9 +37,9 @@ Generate an interactive dictionary based on \code{\link[labelled:look_for]{label
 }
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
-mtcars |> view_dictionary()
+iris |> view_dictionary()
 \dontshow{\}) # examplesIf}
-\dontshow{if (rlang::is_installed(c("DT"))) withAutoprint(\{ # examplesIf}
+\dontshow{if (rlang::is_installed(c("DT", "htmltools", "htmlwidgets"))) withAutoprint(\{ # examplesIf}
 iris |> labelled::look_for(details = TRUE) |> to_DT()
 \dontshow{\}) # examplesIf}
 }

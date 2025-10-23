@@ -53,6 +53,7 @@ Suggests:
     gt,
     gtsummary,
     htmltools,
+    htmlwidgets,
     nnet,
     parameters,
     spelling,
