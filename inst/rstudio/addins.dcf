@@ -1,0 +1,9 @@
+Name: View variable dictionary
+Description: Display the variable dictionary of the currently selected data frame
+Binding: view_dictionary
+Interactive: true
+
+Name: View variable dictionary (full details)
+Description: Display the variable dictionary of the currently selected data frame
+Binding: view_detailed_dictionary
+Interactive: true
