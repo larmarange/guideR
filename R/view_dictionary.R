@@ -173,6 +173,34 @@ to_DT <- function(
   if ("na_range" %in% names(x) && !is.null(unlist(x$na_range)))
     keep <- c(keep, "na_range")
 
+  if ("na_range" %in% names(x)) {
+    x <-
+      x |>
+      dplyr::mutate(
+        na_range = purrr::map(
+          .data$na_range,
+          function(x) {
+            if (is.null(x)) return("")
+            paste(x, collapse = " \u2013 ")
+          }
+        )
+      )
+  }
+
+  if ("na_values" %in% names(x)) {
+    x <-
+      x |>
+      dplyr::mutate(
+        na_values = purrr::map(
+          .data$na_values,
+          function(x) {
+            if (is.null(x)) return("")
+            paste(x, collapse = "<br />")
+          }
+        )
+      )
+  }
+
   if (!is.null(caption))
     caption <- htmltools::HTML(paste0("<h1>", caption, "</h1>"))
 
