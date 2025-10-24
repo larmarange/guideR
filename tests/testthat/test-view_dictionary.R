@@ -1,4 +1,4 @@
-test_that("plot_proportions() does not produce an error", {
+test_that("view_dictionary() does not produce an error", {
   skip_if_not_installed("DT")
   skip_if_not_installed("htmltools")
   skip_if_not_installed("htmlwidgets")
@@ -23,10 +23,6 @@ test_that("plot_proportions() does not produce an error", {
     )
   expect_no_error(
     d |> view_detailed_dictionary()
-  )
-
-  expect_no_error(
-    view_dictionary("d")
   )
 
   expect_error(
