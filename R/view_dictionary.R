@@ -190,7 +190,7 @@ to_DT <- function(
         paging = FALSE,
         initComplete = htmlwidgets::JS(
           "function(settings, json) {",
-          "$(\'body\').css({\'font-family\': \'\"Source Sans Pro\",Calibri,Candara,Arial,sans-serif\'});", # nolint
+          "$(\'body\').css({\'font-family\': \'-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif'});", # nolint
           "}"
         ),
         dom = "Bfrtip",
