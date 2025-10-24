@@ -25,6 +25,17 @@ test_that("plot_proportions() does not produce an error", {
     d |> view_detailed_dictionary()
   )
 
+  expect_no_error(
+    view_dictionary("d")
+  )
+
+  expect_error(
+    view_dictionary("hello")
+  )
+  expect_error(
+    view_dictionary(letters)
+  )
+
   skip_if_not_installed("gtsummary")
   expect_no_error(
     gtsummary::trial |> view_detailed_dictionary()
