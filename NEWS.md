@@ -5,6 +5,12 @@
 **New feature**
 
 * new function `plot_multiple_answers_dodge()` (#31)
+* new functions `view_dictionary()` and `view_detailed_dictionary()` to display
+  the variable dictionary of a data frame, a tibble or a survey object (#33)
+* `view_dictionary()` and `view_detailed_dictionary()` are also accessible
+  through dedicated addins (#33)
+* new utility `to_DT()` to convert the result of `labelled::look_for()` into
+  a `DT::datatable()` (#33)
 
 **Fix**
 

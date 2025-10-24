@@ -1,9 +1,10 @@
-#' Display a data frame dictionary in RStudio viewer
+#' Display the variable dictionary of a data frame in the RStudio viewer
 #'
-#' Generate an interactive dictionary based on [labelled::look_for()].
+#' Generates an interactive variable dictionary based on [labelled::look_for()].
+#' Accepts data frames, tibbles, and also survey objects.
 #'
 #' @param data a data frame, a tibble or a survey object
-#' (if `NULL`, will use the text you currently select in **RStudio**, usefull
+#' (if `NULL`, will use the text you currently select in **RStudio**, useful
 #' if the function is called through the corresponding addin)
 #' @param details add details about each variable (see [labelled::look_for()])
 #' @export
@@ -74,6 +75,9 @@ view_detailed_dictionary <- function(data = NULL) {
 #' @param x a tibble returned by `look_for()`
 #' @param caption an optional caption for the table
 #' @param column_labels Optional column labels
+#' @note
+#' `to_DT()` is an utility to convert the result of [labelled::look_for()] into
+#' a [DT::datatable()].
 #' @export
 #' @examplesIf rlang::is_installed(c("DT", "htmltools", "htmlwidgets"))
 #' iris |> labelled::look_for(details = TRUE) |> to_DT()
