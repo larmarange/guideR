@@ -24,7 +24,7 @@ view_dictionary <- function(
       df_name <- deparse(substitute(data))
     }
   } else {
-    if (rstudioapi::isAvailable()) {
+    if (rstudioapi::isAvailable()) { # nocov start
       # if text is selected, use that
       context <- rstudioapi::getActiveDocumentContext()
 
@@ -43,7 +43,7 @@ view_dictionary <- function(
         cli::cli_abort("No data frame selected.")
       }
     }
-  }
+  } # nocov end
 
   if (!inherits(data, c("data.frame", "survey.design", "svyrep.design")))
     cli::cli_abort(
