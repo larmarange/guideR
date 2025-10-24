@@ -39,7 +39,7 @@ To install **development version**:
 
 ``` r
 # install.packages("pak")
-pak::pak("larmarange/guideR")
+pak::pkg_install("larmarange/guideR")
 ```
 
 Documentation of development version:

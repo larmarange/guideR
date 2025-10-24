@@ -44,7 +44,7 @@ To install **development version**:
 
 ```{r eval=FALSE}
 # install.packages("pak")
-pak::pak("larmarange/guideR")
+pak::pkg_install("larmarange/guideR")
 ```
 
 Documentation of development version: <https://larmarange.github.io/guideR/dev/>
