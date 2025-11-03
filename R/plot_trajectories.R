@@ -8,6 +8,8 @@
 #' Column containing individual ids.
 #' @param time <[`tidy-select`][dplyr::dplyr_tidy_select ]>
 #' Time variable.
+#' @param fill <[`tidy-select`][dplyr::dplyr_tidy_select ]>
+#' Variable mapped to `fill` aesthetic.
 #' @param by <[`tidy-select`][dplyr::dplyr_tidy_select ]>
 #' Optional variables to group by.
 #' @param sort_by <[`tidy-select`][dplyr::dplyr_tidy_select ]>

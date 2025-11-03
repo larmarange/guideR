@@ -25,6 +25,9 @@ Column containing individual ids.}
 \item{time}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
 Time variable.}
 
+\item{fill}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
+Variable mapped to \code{fill} aesthetic.}
+
 \item{by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
 Optional variables to group by.}
 
