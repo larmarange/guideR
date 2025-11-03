@@ -77,7 +77,9 @@ plot_trajectories <- function(
   d[[timev]] <- d[[timev]] + nudge_x
   d <- d |>
     dplyr::arrange(!!!rlang::syms(sort_byv), {{ id }}, {{ time }})
-  d[[idv]] <- forcats::fct_inorder(d[[idv]])
+  d[[idv]] <- d[[idv]] |>
+    forcats::fct_inorder() |>
+    forcats::fct_drop()
 
   # plot
   p <-
