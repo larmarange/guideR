@@ -73,7 +73,11 @@ plot_trajectories <- function(
   # data preparation
   d <- data |>
     dplyr::ungroup() |>
-    dplyr::select({{ id }}, {{ time }}, {{ fill }}, {{ by }}, {{ sort_by }})
+    dplyr::select(
+      {{ id }}, {{ time }}, {{ fill }},
+      {{ by }}, {{ sort_by }},
+      dplyr::any_of(".period.width...")
+    )
   if (!is.factor(d[[idv]]))
     d[[idv]] <- factor(d[[idv]])
   d[[timev]] <- d[[timev]] + nudge_x
@@ -118,4 +122,56 @@ plot_trajectories <- function(
   }
 
   p
+}
+
+#' @rdname plot_trajectories
+#' @param start,stop <[`tidy-select`][dplyr::dplyr_tidy_select ]>
+#' Start and stop variables of the periods.
+#' @export
+plot_periods <- function(
+    data,
+    id,
+    start,
+    stop,
+    fill,
+    by = NULL,
+    sort_by = NULL,
+    nudge_x = 0,
+    facet_labeller = ggplot2::label_wrap_gen(width = 50, multi_line = TRUE),
+    ...
+) {
+  startv <-
+    tidyselect::eval_select(
+      rlang::enquo(start),
+      data = data,
+      allow_empty = FALSE
+    ) |>
+    names()
+  if (length(startv) > 1)
+    cli::cli_abort("{.arg start} should select only one variable.")
+  stopv <-
+    tidyselect::eval_select(
+      rlang::enquo(stop),
+      data = data,
+      allow_empty = FALSE
+    ) |>
+    names()
+  if (length(stopv) > 1)
+    cli::cli_abort("{.arg stop} should select only one variable.")
+
+  data$.period.width... <- data[[stopv]] - data[[startv]]
+  data[[startv]] <- data[[startv]] + (data$.period.width... / 2)
+
+  plot_trajectories(
+    data = data,
+    id = {{ id }},
+    time = {{ start }},
+    fill = {{ fill }},
+    by = {{ by }},
+    sort_by = {{ sort_by }},
+    nudge_x = nudge_x,
+    facet_labeller = facet_labeller,
+    ...
+  ) +
+    ggplot2::aes(width = .data$.period.width...)
 }

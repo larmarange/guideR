@@ -2,12 +2,26 @@
 % Please edit documentation in R/plot_trajectories.R
 \name{plot_trajectories}
 \alias{plot_trajectories}
+\alias{plot_periods}
 \title{Plot trajectories}
 \usage{
 plot_trajectories(
   data,
   id,
   time,
+  fill,
+  by = NULL,
+  sort_by = NULL,
+  nudge_x = 0,
+  facet_labeller = ggplot2::label_wrap_gen(width = 50, multi_line = TRUE),
+  ...
+)
+
+plot_periods(
+  data,
+  id,
+  start,
+  stop,
   fill,
   by = NULL,
   sort_by = NULL,
@@ -39,6 +53,9 @@ Optional variables to sort trajectories.}
 \item{facet_labeller}{Labeller function for strip labels.}
 
 \item{...}{Additional arguments passed to \code{\link[ggplot2:geom_tile]{ggplot2::geom_tile()}}}
+
+\item{start, stop}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
+Start and stop variables of the periods.}
 }
 \description{
 \code{plot_trajectories()} assumes that data are stored in a long format (i.e.
