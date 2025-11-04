@@ -17,6 +17,7 @@
 #' @param nudge_x Amount of horizontal distance to move.
 #' @param facet_labeller Labeller function for strip labels.
 #' @param ... Additional arguments passed to [ggplot2::geom_tile()]
+#' @keywords hplot
 #' @export
 plot_trajectories <- function(
   data,

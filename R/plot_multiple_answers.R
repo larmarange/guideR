@@ -51,7 +51,7 @@
 #' @param flip Flip x and y axis?
 #' @param return_data Return computed data instead of the plot?
 #' @export
-#' @keywords univar
+#' @keywords hplot
 #' @examples
 #' d <-
 #'   dplyr::tibble(

@@ -62,3 +62,4 @@ Start and stop variables of the periods.}
 one row per time step). You can use \code{\link[tidyr:pivot_longer]{tidyr::pivot_longer()}} or
 \code{\link[=periods_to_long]{periods_to_long()}} to transform your data in such format.
 }
+\keyword{hplot}
