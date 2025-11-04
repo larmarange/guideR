@@ -49,7 +49,14 @@
 #'   dplyr::mutate(end = time + 1) |>
 #'   long_to_periods(id = id, start = time, stop = end, by = status)
 #' d2
-#' d2 |> plot_periods(id = id, start = time, stop = end, fill = status, height = 0.8)
+#' d2 |> plot_periods(
+#'   id = id,
+#'   start = time,
+#'   stop = end,
+#'   fill = status,
+#'   colour = "black",
+#'   height = 0.8
+#' )
 plot_trajectories <- function(
   data,
   id,
