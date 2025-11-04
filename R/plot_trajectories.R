@@ -130,16 +130,16 @@ plot_trajectories <- function(
 #' Start and stop variables of the periods.
 #' @export
 plot_periods <- function(
-    data,
-    id,
-    start,
-    stop,
-    fill,
-    by = NULL,
-    sort_by = NULL,
-    nudge_x = 0,
-    facet_labeller = ggplot2::label_wrap_gen(width = 50, multi_line = TRUE),
-    ...
+  data,
+  id,
+  start,
+  stop,
+  fill,
+  by = NULL,
+  sort_by = NULL,
+  nudge_x = 0,
+  facet_labeller = ggplot2::label_wrap_gen(width = 50, multi_line = TRUE),
+  ...
 ) {
   startv <-
     tidyselect::eval_select(
