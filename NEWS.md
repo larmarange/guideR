@@ -4,6 +4,8 @@
 
 **New feature**
 
+* new functions `plot_trajectories()` and `plot_periods()` to plot individual
+  trajectories (similar to sequence index plots) (#35)
 * new function `plot_multiple_answers_dodge()` (#31)
 * new functions `view_dictionary()` and `view_detailed_dictionary()` to display
   the variable dictionary of a data frame, a tibble or a survey object (#33)
