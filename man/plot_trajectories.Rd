@@ -13,6 +13,7 @@ plot_trajectories(
   by = NULL,
   sort_by = NULL,
   nudge_x = 0,
+  hide_y_labels = NULL,
   facet_labeller = ggplot2::label_wrap_gen(width = 50, multi_line = TRUE),
   ...
 )
@@ -26,6 +27,7 @@ plot_periods(
   by = NULL,
   sort_by = NULL,
   nudge_x = 0,
+  hide_y_labels = NULL,
   facet_labeller = ggplot2::label_wrap_gen(width = 50, multi_line = TRUE),
   ...
 )
@@ -49,6 +51,9 @@ Optional variables to group by.}
 Optional variables to sort trajectories.}
 
 \item{nudge_x}{Amount of horizontal distance to move.}
+
+\item{hide_y_labels}{Hide y labels? If \code{NULL}, hide them when more than 20
+trajectories are displayed.}
 
 \item{facet_labeller}{Labeller function for strip labels.}
 

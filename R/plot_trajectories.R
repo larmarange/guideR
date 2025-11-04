@@ -15,6 +15,8 @@
 #' @param sort_by <[`tidy-select`][dplyr::dplyr_tidy_select ]>
 #' Optional variables to sort trajectories.
 #' @param nudge_x Amount of horizontal distance to move.
+#' @param hide_y_labels Hide y labels? If `NULL`, hide them when more than 20
+#' trajectories are displayed.
 #' @param facet_labeller Labeller function for strip labels.
 #' @param ... Additional arguments passed to [ggplot2::geom_tile()]
 #' @keywords hplot
@@ -27,6 +29,7 @@ plot_trajectories <- function(
   by = NULL,
   sort_by = NULL,
   nudge_x = 0,
+  hide_y_labels = NULL,
   facet_labeller = ggplot2::label_wrap_gen(width = 50, multi_line = TRUE),
   ...
 ) {
@@ -94,13 +97,23 @@ plot_trajectories <- function(
     ggplot2::aes(x = .data[[timev]], y = .data[[idv]], fill = .data[[fillv]]) +
     ggplot2::geom_tile(...) +
     ggplot2::ylab(NULL) +
-    ggplot2::scale_y_discrete(label = NULL) +
     ggplot2::theme_light() +
     ggplot2::theme(
       legend.position = "bottom",
       panel.grid.major.y = ggplot2::element_blank(),
       axis.ticks.y = ggplot2::element_blank()
     )
+
+  if (is.null(hide_y_labels)) {
+    hide_y_labels <- length(unique(d[[idv]])) > 20
+  }
+
+  if (hide_y_labels)
+    p <-
+      p +
+      ggplot2::theme(
+        axis.text.y = ggplot2::element_blank()
+      )
 
   if (length(byv) > 0) {
     p <-
@@ -138,6 +151,7 @@ plot_periods <- function(
   by = NULL,
   sort_by = NULL,
   nudge_x = 0,
+  hide_y_labels = NULL,
   facet_labeller = ggplot2::label_wrap_gen(width = 50, multi_line = TRUE),
   ...
 ) {
@@ -171,6 +185,7 @@ plot_periods <- function(
     by = {{ by }},
     sort_by = {{ sort_by }},
     nudge_x = nudge_x,
+    hide_y_labels = hide_y_labels,
     facet_labeller = facet_labeller,
     ...
   ) +
