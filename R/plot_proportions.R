@@ -47,7 +47,7 @@
 #' @param free_scale Allow y axis to vary between conditions?
 #' @param return_data Return computed data instead of the plot?
 #' @export
-#' @keywords univar
+#' @keywords hplot
 #' @examples
 #' titanic |>
 #'   plot_proportions(

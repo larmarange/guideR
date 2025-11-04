@@ -273,4 +273,4 @@ titanic |>
     mapping = ggplot2::aes(fill = level)
   )
 }
-\keyword{univar}
+\keyword{hplot}
