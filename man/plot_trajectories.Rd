@@ -63,8 +63,38 @@ trajectories are displayed.}
 Start and stop variables of the periods.}
 }
 \description{
+Create a trajectory index plot (similar to sequence index plot) from a data
+frame in long or period format.
+}
+\note{
 \code{plot_trajectories()} assumes that data are stored in a long format (i.e.
-one row per time step). You can use \code{\link[tidyr:pivot_longer]{tidyr::pivot_longer()}} or
-\code{\link[=periods_to_long]{periods_to_long()}} to transform your data in such format.
+one row per unit of time). You can use \code{\link[tidyr:pivot_longer]{tidyr::pivot_longer()}} or
+\code{\link[=periods_to_long]{periods_to_long()}} to transform your data in such format. By default, tiles
+are centered on the value of \code{time}. You can adjust horizontal position with
+\code{nudge_x}. By default, each row is assumed to represent one unit of time and
+represented with a width of 1. You can adjust tiles' width with \code{width}.
+
+\code{plot_periods()} is adapted for period format with a start and a stop
+variable. You can use \code{\link[=long_to_periods]{long_to_periods()}} to transform your data in such
+format. Beginning and ending of each tile is determined by \code{start} and
+\code{stop} arguments.
+}
+\examples{
+d <- dplyr::tibble(
+  id = c(1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 3),
+  time = c(0:3, 0:2, 0:4),
+  status = c("a", "a", "b", "b", "b", "b", "a", "b", "b", "b", "b", "a"),
+  group = c("f", "f", "f", "f", "f", "f", "f", "m", "m", "m", "m", "m")
+)
+
+d |> plot_trajectories(id = id, time = time, fill = status, colour = "black")
+d |> plot_trajectories(id = id, time = time, fill = status, nudge_x = .5)
+d |> plot_trajectories(id = id, time = time, fill = status, by = group)
+
+d2 <- d |>
+  dplyr::mutate(end = time + 1) |>
+  long_to_periods(id = id, start = time, stop = end, by = status)
+d2
+d2 |> plot_periods(id = id, start = time, stop = end, fill = status, height = 0.8)
 }
 \keyword{hplot}

@@ -1,8 +1,20 @@
 #' Plot trajectories
 #'
+#' Create a trajectory index plot (similar to sequence index plot) from a data
+#' frame in long or period format.
+#'
+#' @note
 #' `plot_trajectories()` assumes that data are stored in a long format (i.e.
-#' one row per time step). You can use [tidyr::pivot_longer()] or
-#' [periods_to_long()] to transform your data in such format.
+#' one row per unit of time). You can use [tidyr::pivot_longer()] or
+#' [periods_to_long()] to transform your data in such format. By default, tiles
+#' are centered on the value of `time`. You can adjust horizontal position with
+#' `nudge_x`. By default, each row is assumed to represent one unit of time and
+#' represented with a width of 1. You can adjust tiles' width with `width`.
+#'
+#' `plot_periods()` is adapted for period format with a start and a stop
+#' variable. You can use [long_to_periods()] to transform your data in such
+#' format. Beginning and ending of each tile is determined by `start` and
+#' `stop` arguments.
 #' @param data A data frame, or a data frame extension (e.g. a tibble).
 #' @param id <[`tidy-select`][dplyr::dplyr_tidy_select ]>
 #' Column containing individual ids.
@@ -21,6 +33,23 @@
 #' @param ... Additional arguments passed to [ggplot2::geom_tile()]
 #' @keywords hplot
 #' @export
+#' @examples
+#' d <- dplyr::tibble(
+#'   id = c(1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 3),
+#'   time = c(0:3, 0:2, 0:4),
+#'   status = c("a", "a", "b", "b", "b", "b", "a", "b", "b", "b", "b", "a"),
+#'   group = c("f", "f", "f", "f", "f", "f", "f", "m", "m", "m", "m", "m")
+#' )
+#'
+#' d |> plot_trajectories(id = id, time = time, fill = status, colour = "black")
+#' d |> plot_trajectories(id = id, time = time, fill = status, nudge_x = .5)
+#' d |> plot_trajectories(id = id, time = time, fill = status, by = group)
+#'
+#' d2 <- d |>
+#'   dplyr::mutate(end = time + 1) |>
+#'   long_to_periods(id = id, start = time, stop = end, by = status)
+#' d2
+#' d2 |> plot_periods(id = id, start = time, stop = end, fill = status, height = 0.8)
 plot_trajectories <- function(
   data,
   id,
