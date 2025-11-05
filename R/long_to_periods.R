@@ -95,5 +95,5 @@ long_to_periods <- function(data, id, start, stop = NULL, by = NULL) {
   class(periods[[stopv]]) <- class(periods$.next_prev_stop) # bug fix
 
   periods |>
-    dplyr::select({{ id }}, .data[[startv]], .data[[stopv]], {{ by }})
+    dplyr::select({{ id }}, dplyr::all_of(c(startv, stopv)), {{ by }})
 }
