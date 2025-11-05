@@ -111,17 +111,11 @@ plot_trajectories <- function(
     names()
 
   # data preparation
-  data <- data |>
-    dplyr::ungroup() |>
-    dplyr::select(
-      {{ id }}, {{ time }}, {{ fill }},
-      {{ by }}, {{ sort_by }},
-      dplyr::everything()
-    )
   if (!is.factor(data[[idv]]))
     data[[idv]] <- factor(data[[idv]])
   if (!is.null(nudge_x)) data[[timev]] <- data[[timev]] + nudge_x
   data <- data |>
+    dplyr::ungroup() |>
     dplyr::arrange(!!!rlang::syms(sort_byv), {{ id }}, {{ time }})
   data[[idv]] <- data[[idv]] |>
     forcats::fct_inorder() |>
