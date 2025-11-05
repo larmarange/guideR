@@ -230,7 +230,9 @@ plot_proportions <- function(
     dplyr::mutate(
       dplyr::across(
         dplyr::all_of(vars),
-        \(x) {.convert_continuous(x, convert_continuous)}
+        \(x) {
+          .convert_continuous(x, convert_continuous)
+        }
       )
     )
 
