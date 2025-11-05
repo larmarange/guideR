@@ -11,14 +11,16 @@
 #' @examplesIf rlang::is_installed("gtsummary")
 #' tbl <-
 #'   gtsummary::trial |>
-#'   gtsummary::tbl_summary() |>
+#'   gtsummary::tbl_summary(
+#'     include = c(stage, grade, age, trt, response, death)
+#'   ) |>
 #'   gtsummary::add_variable_group_header(
 #'     header = "Clinical situation at diagnosis",
-#'     variables = c(stage, grade, age, marker)
+#'     variables = c(stage, grade, age)
 #'   ) |>
 #'   gtsummary::add_variable_group_header(
 #'     header = "Treatment and outcome",
-#'     variables = c(trt, response, death, ttdeath)
+#'     variables = c(trt, response, death)
 #'   )
 #' tbl
 #'

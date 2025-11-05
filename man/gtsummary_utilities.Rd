@@ -28,14 +28,16 @@ Utilities for tables generated with \link[gtsummary:gtsummary-package]{gtsummary
 \dontshow{if (rlang::is_installed("gtsummary")) withAutoprint(\{ # examplesIf}
 tbl <-
   gtsummary::trial |>
-  gtsummary::tbl_summary() |>
+  gtsummary::tbl_summary(
+    include = c(stage, grade, age, trt, response, death)
+  ) |>
   gtsummary::add_variable_group_header(
     header = "Clinical situation at diagnosis",
-    variables = c(stage, grade, age, marker)
+    variables = c(stage, grade, age)
   ) |>
   gtsummary::add_variable_group_header(
     header = "Treatment and outcome",
-    variables = c(trt, response, death, ttdeath)
+    variables = c(trt, response, death)
   )
 tbl
 
