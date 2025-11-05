@@ -22,7 +22,7 @@ Depends:
     R (>= 4.2)
 Imports:
     cli,
-    dplyr,
+    dplyr (>= 1.1.0),
     forcats,
     ggplot2,
     labelled,
@@ -51,7 +51,7 @@ Suggests:
     ggupset,
     ggstats,
     gt,
-    gtsummary,
+    gtsummary (>= 2.3.0),
     htmltools,
     htmlwidgets,
     nnet,

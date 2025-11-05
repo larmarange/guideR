@@ -75,14 +75,17 @@ proportion.data.frame <- function(data,
                                   .conf.int = FALSE,
                                   .conf.level = .95,
                                   .options = list(correct = TRUE)) {
-  if (.na.rm)
-    data <-
-      data |>
-      tidyr::drop_na(...)
-
   res <-
     data |>
-    dplyr::group_by(dplyr::pick({{ .by }}), .add = TRUE, .drop = FALSE) |>
+    dplyr::group_by(dplyr::pick({{ .by }}), .add = TRUE, .drop = FALSE)
+
+  if (.na.rm)
+    res <-
+      res |>
+      tidyr::drop_na()
+
+  res <-
+    res |>
     dplyr::count(..., wt = {{ .weight }}, .drop = .drop, name = "n") |>
     dplyr::mutate(
       N = sum(.data$n),
@@ -172,14 +175,15 @@ proportion.survey.design <- function(data,
                                      .conf.int = FALSE,
                                      .conf.level = .95,
                                      .options = NULL) {
+  v <-
+    data |>
+    dplyr::ungroup() |>
+    dplyr::mutate(..., .keep = "none") |>
+    colnames()
+  data <-
+    data |>
+    dplyr::mutate(...)
   if (.na.rm) {
-    v <-
-      tidyselect::eval_select(
-        rlang::expr(c(...)),
-        data = data$variables,
-        allow_rename = FALSE
-      ) |>
-      names()
     data <-
       data |>
       tidyr::drop_na(dplyr::all_of(v))
@@ -187,7 +191,7 @@ proportion.survey.design <- function(data,
   res <-
     data |>
     dplyr::group_by(dplyr::pick({{ .by }}), .add = TRUE) |>
-    .add_interact(...) |>
+    .add_interact(dplyr::all_of(v)) |>
     dplyr::summarise(
       n = srvyr::survey_total(vartype = NULL),
       prop = rlang::inject(
@@ -208,11 +212,11 @@ proportion.survey.design <- function(data,
     dplyr::mutate(
       N = sum(.data$n)
     ) |>
-    dplyr::relocate(.data$N, .after = .data$n)
+    dplyr::relocate(dplyr::all_of("N"), .after = dplyr::all_of("n"))
   if (.conf.int)
     res <-
       res |>
-      dplyr::rename(prop_high = .data$prop_upp)
+      dplyr::rename(prop_high = dplyr::all_of("prop_upp"))
   if (.drop_na_by)
     res <-
       res |>

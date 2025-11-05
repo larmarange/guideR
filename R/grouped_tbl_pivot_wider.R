@@ -132,7 +132,7 @@ style_grouped_tbl <- function(
         rows = .data$row_type == "label"
       )
   x <- x |>
-    gtsummary::modify_column_indent(
+    gtsummary::modify_indent(
       columns = dplyr::all_of("label"),
       rows = .data$row_type == "label",
       indent = indent_labels
@@ -150,7 +150,7 @@ style_grouped_tbl <- function(
         rows = .data$row_type == "level"
       )
   x <- x |>
-    gtsummary::modify_column_indent(
+    gtsummary::modify_indent(
       columns = dplyr::all_of("label"),
       rows = .data$row_type == "level",
       indent = indent_levels
