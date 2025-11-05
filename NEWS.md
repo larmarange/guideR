@@ -13,6 +13,9 @@
   through dedicated addins (#33)
 * new utility `to_DT()` to convert the result of `labelled::look_for()` into
   a `DT::datatable()` (#33)
+* new utilities for tables generated with `gtsummary`:
+  `bold_variable_group_headers()`, `italicize_variable_group_headers()`,
+  `indent_labels()` and `indent_levels()` (#34)
 
 **Fix**
 
