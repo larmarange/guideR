@@ -12,7 +12,7 @@ plot_trajectories(
   fill,
   by = NULL,
   sort_by = NULL,
-  nudge_x = 0,
+  nudge_x = NULL,
   hide_y_labels = NULL,
   facet_labeller = ggplot2::label_wrap_gen(width = 50, multi_line = TRUE),
   ...
@@ -26,7 +26,7 @@ plot_periods(
   fill,
   by = NULL,
   sort_by = NULL,
-  nudge_x = 0,
+  nudge_x = NULL,
   hide_y_labels = NULL,
   facet_labeller = ggplot2::label_wrap_gen(width = 50, multi_line = TRUE),
   ...
@@ -50,7 +50,7 @@ Optional variables to group by.}
 \item{sort_by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
 Optional variables to sort trajectories.}
 
-\item{nudge_x}{Amount of horizontal distance to move.}
+\item{nudge_x}{Optional amount of horizontal distance to move.}
 
 \item{hide_y_labels}{Hide y labels? If \code{NULL}, hide them when more than 20
 trajectories are displayed.}

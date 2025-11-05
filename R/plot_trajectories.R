@@ -26,7 +26,7 @@
 #' Optional variables to group by.
 #' @param sort_by <[`tidy-select`][dplyr::dplyr_tidy_select ]>
 #' Optional variables to sort trajectories.
-#' @param nudge_x Amount of horizontal distance to move.
+#' @param nudge_x Optional amount of horizontal distance to move.
 #' @param hide_y_labels Hide y labels? If `NULL`, hide them when more than 20
 #' trajectories are displayed.
 #' @param facet_labeller Labeller function for strip labels.
@@ -64,7 +64,7 @@ plot_trajectories <- function(
   fill,
   by = NULL,
   sort_by = NULL,
-  nudge_x = 0,
+  nudge_x = NULL,
   hide_y_labels = NULL,
   facet_labeller = ggplot2::label_wrap_gen(width = 50, multi_line = TRUE),
   ...
@@ -111,25 +111,25 @@ plot_trajectories <- function(
     names()
 
   # data preparation
-  d <- data |>
+  data <- data |>
     dplyr::ungroup() |>
     dplyr::select(
       {{ id }}, {{ time }}, {{ fill }},
       {{ by }}, {{ sort_by }},
-      dplyr::any_of(".period.width...")
+      dplyr::everything()
     )
-  if (!is.factor(d[[idv]]))
-    d[[idv]] <- factor(d[[idv]])
-  d[[timev]] <- d[[timev]] + nudge_x
-  d <- d |>
+  if (!is.factor(data[[idv]]))
+    data[[idv]] <- factor(data[[idv]])
+  if (!is.null(nudge_x)) data[[timev]] <- data[[timev]] + nudge_x
+  data <- data |>
     dplyr::arrange(!!!rlang::syms(sort_byv), {{ id }}, {{ time }})
-  d[[idv]] <- d[[idv]] |>
+  data[[idv]] <- data[[idv]] |>
     forcats::fct_inorder() |>
     forcats::fct_drop()
 
   # plot
   p <-
-    ggplot2::ggplot(d) +
+    ggplot2::ggplot(data) +
     ggplot2::aes(x = .data[[timev]], y = .data[[idv]], fill = .data[[fillv]]) +
     ggplot2::geom_tile(...) +
     ggplot2::ylab(NULL) +
@@ -141,7 +141,7 @@ plot_trajectories <- function(
     )
 
   if (is.null(hide_y_labels)) {
-    hide_y_labels <- length(unique(d[[idv]])) > 20
+    hide_y_labels <- length(unique(data[[idv]])) > 20
   }
 
   if (hide_y_labels)
@@ -186,7 +186,7 @@ plot_periods <- function(
   fill,
   by = NULL,
   sort_by = NULL,
-  nudge_x = 0,
+  nudge_x = NULL,
   hide_y_labels = NULL,
   facet_labeller = ggplot2::label_wrap_gen(width = 50, multi_line = TRUE),
   ...
