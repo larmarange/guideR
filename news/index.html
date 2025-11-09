@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">guideR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,9 +33,18 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.6.0" id="guider-060">guideR 0.6.0<a class="anchor" aria-label="anchor" href="#guider-060"></a></h2><p class="text-muted">CRAN release: 2025-11-08</p>
+</div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.5.1" id="guider-051">guideR 0.5.1<a class="anchor" aria-label="anchor" href="#guider-051"></a></h2><p class="text-muted">CRAN release: 2025-10-21</p>
 <p><strong>New feature</strong></p>
-<ul><li>new function <code><a href="../reference/plot_multiple_answers.html">plot_multiple_answers_dodge()</a></code> (<a href="https://github.com/larmarange/guideR/issues/31" class="external-link">#31</a>)</li>
+<ul><li>new functions <code><a href="../reference/plot_trajectories.html">plot_trajectories()</a></code> and <code><a href="../reference/plot_trajectories.html">plot_periods()</a></code> to plot individual trajectories (similar to sequence index plots) (<a href="https://github.com/larmarange/guideR/issues/35" class="external-link">#35</a>)</li>
+<li>new function <code><a href="../reference/plot_multiple_answers.html">plot_multiple_answers_dodge()</a></code> (<a href="https://github.com/larmarange/guideR/issues/31" class="external-link">#31</a>)</li>
+<li>new functions <code><a href="../reference/view_dictionary.html">view_dictionary()</a></code> and <code><a href="../reference/view_dictionary.html">view_detailed_dictionary()</a></code> to display the variable dictionary of a data frame, a tibble or a survey object (<a href="https://github.com/larmarange/guideR/issues/33" class="external-link">#33</a>)</li>
+<li>
+<code><a href="../reference/view_dictionary.html">view_dictionary()</a></code> and <code><a href="../reference/view_dictionary.html">view_detailed_dictionary()</a></code> are also accessible through dedicated addins (<a href="https://github.com/larmarange/guideR/issues/33" class="external-link">#33</a>)</li>
+<li>new utility <code><a href="../reference/view_dictionary.html">to_DT()</a></code> to convert the result of <code><a href="https://larmarange.github.io/labelled/reference/look_for.html" class="external-link">labelled::look_for()</a></code> into a <code><a href="https://rdrr.io/pkg/DT/man/datatable.html" class="external-link">DT::datatable()</a></code> (<a href="https://github.com/larmarange/guideR/issues/33" class="external-link">#33</a>)</li>
+<li>new utilities for tables generated with <code>gtsummary</code>: <code><a href="../reference/gtsummary_utilities.html">bold_variable_group_headers()</a></code>, <code><a href="../reference/gtsummary_utilities.html">italicize_variable_group_headers()</a></code>, <code><a href="../reference/gtsummary_utilities.html">indent_labels()</a></code> and <code><a href="../reference/gtsummary_utilities.html">indent_levels()</a></code> (<a href="https://github.com/larmarange/guideR/issues/34" class="external-link">#34</a>)</li>
 </ul><p><strong>Fix</strong></p>
 <ul><li>fix in <code><a href="../reference/plot_multiple_answers.html">plot_multiple_answers()</a></code> with <code>NA</code> values when <code>drop_na = FALSE</code> (<a href="https://github.com/larmarange/guideR/issues/31" class="external-link">#31</a>)</li>
 </ul></div>
@@ -95,7 +104,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>
