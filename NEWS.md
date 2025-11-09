@@ -2,13 +2,10 @@
 
 # guideR 0.6.0
 
-# guideR 0.5.1
-
-**New feature**
+**New features**
 
 * new functions `plot_trajectories()` and `plot_periods()` to plot individual
   trajectories (similar to sequence index plots) (#35)
-* new function `plot_multiple_answers_dodge()` (#31)
 * new functions `view_dictionary()` and `view_detailed_dictionary()` to display
   the variable dictionary of a data frame, a tibble or a survey object (#33)
 * `view_dictionary()` and `view_detailed_dictionary()` are also accessible
@@ -18,6 +15,12 @@
 * new utilities for tables generated with `gtsummary`:
   `bold_variable_group_headers()`, `italicize_variable_group_headers()`,
   `indent_labels()` and `indent_levels()` (#34)
+
+# guideR 0.5.1
+
+**New feature**
+
+* new function `plot_multiple_answers_dodge()` (#31)
 
 **Fix**
 
