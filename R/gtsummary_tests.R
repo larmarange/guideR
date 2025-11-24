@@ -18,8 +18,9 @@
 #'   tbl_summary(include = grade, by = trt) |>
 #'   add_p(test = all_categorical() ~ "fisher.simulate.p")
 fisher.simulate.p <- function(data, variable, by, ...) {
+  rlang::check_installed("broom")
   data <- data[c(variable, by)] |> tidyr::drop_na()
-  fisher.test(
+  stats::fisher.test(
     data[[variable]],
     factor(data[[by]]),
     simulate.p.value = TRUE
