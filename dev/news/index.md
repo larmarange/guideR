@@ -6,11 +6,7 @@
 
 CRAN release: 2025-11-08
 
-## guideR 0.5.1
-
-CRAN release: 2025-10-21
-
-**New feature**
+**New features**
 
 - new functions
   [`plot_trajectories()`](https://larmarange.github.io/guideR/dev/reference/plot_trajectories.md)
@@ -18,9 +14,6 @@ CRAN release: 2025-10-21
   [`plot_periods()`](https://larmarange.github.io/guideR/dev/reference/plot_trajectories.md)
   to plot individual trajectories (similar to sequence index plots)
   ([\#35](https://github.com/larmarange/guideR/issues/35))
-- new function
-  [`plot_multiple_answers_dodge()`](https://larmarange.github.io/guideR/dev/reference/plot_multiple_answers.md)
-  ([\#31](https://github.com/larmarange/guideR/issues/31))
 - new functions
   [`view_dictionary()`](https://larmarange.github.io/guideR/dev/reference/view_dictionary.md)
   and
@@ -45,6 +38,16 @@ CRAN release: 2025-10-21
   and
   [`indent_levels()`](https://larmarange.github.io/guideR/dev/reference/gtsummary_utilities.md)
   ([\#34](https://github.com/larmarange/guideR/issues/34))
+
+## guideR 0.5.1
+
+CRAN release: 2025-10-21
+
+**New feature**
+
+- new function
+  [`plot_multiple_answers_dodge()`](https://larmarange.github.io/guideR/dev/reference/plot_multiple_answers.md)
+  ([\#31](https://github.com/larmarange/guideR/issues/31))
 
 **Fix**
 
