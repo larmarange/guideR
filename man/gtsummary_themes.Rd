@@ -50,7 +50,7 @@ Should \code{\link[gtsummary:bold_italicize_labels_levels]{gtsummary::bold_label
 Logical indicating whether to set the theme. Default is \code{TRUE}.
 When \code{FALSE} the named list of theme elements is returned invisibly}
 
-\item{n_unweighted_prefix, n_unweighted_sufffix}{(\code{character})\cr
+\item{n_unweighted_prefix, n_unweighted_suffix}{(\code{character})\cr
 Prefix and suffix displayed before and after the unweighted number of
 observations.}
 }

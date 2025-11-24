@@ -95,7 +95,7 @@ theme_gtsummary_fisher_simulate_p <- function(
 }
 
 #' @rdname gtsummary_themes
-#' @param n_unweighted_prefix,n_unweighted_sufffix (`character`)\cr
+#' @param n_unweighted_prefix,n_unweighted_suffix (`character`)\cr
 #'   Prefix and suffix displayed before and after the unweighted number of
 #'   observations.
 #' @export
