@@ -26,4 +26,3 @@ fisher.simulate.p <- function(data, variable, by, ...) {
   ) |>
     broom::tidy()
 }
-

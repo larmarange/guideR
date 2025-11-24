@@ -81,7 +81,7 @@ theme_gtsummary_prop_n <- function(
 #' @rdname gtsummary_themes
 #' @export
 theme_gtsummary_fisher_simulate_p <- function(
-    set_theme = TRUE
+  set_theme = TRUE
 ) {
   rlang::check_installed("gtsummary")
   lst_theme <- list(
@@ -123,7 +123,7 @@ theme_gtsummary_unweighted_n <- function(
 ) {
   rlang::check_installed("gtsummary")
 
-  cat_stat <- paste0(
+  cat_stat <- paste0( # nolint
     "{p}% (",
     n_unweighted_prefix,
     "{n_unweighted}",
