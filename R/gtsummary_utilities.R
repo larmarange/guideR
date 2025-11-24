@@ -1,8 +1,8 @@
-#' Utilities for gtsummary
+#' Utilities for `gtsummary`
 #'
 #' Utilities for tables generated with [gtsummary][gtsummary::gtsummary]
 #'
-#' @param x A gtsummary object.
+#' @param x A `gtsummary` object.
 #' @keywords utilities
 #' @name gtsummary_utilities
 #' @export

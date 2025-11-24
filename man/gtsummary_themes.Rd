@@ -3,21 +3,29 @@
 \name{gtsummary_themes}
 \alias{gtsummary_themes}
 \alias{theme_gtsummary_prop_n}
-\title{Themes for gtsummary}
+\alias{theme_gtsummary_unweighted_n}
+\title{Themes for \code{gtsummary}}
 \usage{
 theme_gtsummary_prop_n(
-  mean_sd = FALSE,
   prop_stat = "{p}\% ({n})",
   prop_digits = 1,
+  mean_sd = FALSE,
   cont_digits = 1,
+  bold_labels = TRUE,
+  set_theme = TRUE
+)
+
+theme_gtsummary_unweighted_n(
+  n_unweighted_prefix = "",
+  n_unweighted_suffix = " obs.",
+  prop_digits = 1,
+  mean_sd = FALSE,
+  cont_digits = 1,
+  bold_labels = TRUE,
   set_theme = TRUE
 )
 }
 \arguments{
-\item{mean_sd}{(scalar \code{logical})\cr
-Also, set default summary statistics to mean and standard deviation in
-\code{\link[gtsummary:tbl_summary]{gtsummary::tbl_summary()}}. Default is \code{FALSE}.}
-
 \item{prop_stat}{(\code{character})\cr
 Statistics to display for categorical variables (see
 \code{\link[gtsummary:tbl_summary]{gtsummary::tbl_summary()}}).}
@@ -25,12 +33,23 @@ Statistics to display for categorical variables (see
 \item{prop_digits}{(non-negative \code{integer})\cr
 Define the number of decimals to display for proportions.}
 
+\item{mean_sd}{(scalar \code{logical})\cr
+Also, set default summary statistics to mean and standard deviation in
+\code{\link[gtsummary:tbl_summary]{gtsummary::tbl_summary()}}. Default is \code{FALSE}.}
+
 \item{cont_digits}{(non-negative \code{integer})\cr
 Define the number of decimals to display for continuous variables.}
+
+\item{bold_labels}{(scalar \code{logical})\cr
+Should \code{\link[gtsummary:bold_italicize_labels_levels]{gtsummary::bold_labels()}} be systematically applied?}
 
 \item{set_theme}{(scalar \code{logical})\cr
 Logical indicating whether to set the theme. Default is \code{TRUE}.
 When \code{FALSE} the named list of theme elements is returned invisibly}
+
+\item{n_unweighted_prefix, n_unweighted_sufffix}{(\code{character})\cr
+Prefix and suffix displayed before and after the unweighted number of
+observations.}
 }
 \description{
 \code{theme_gtsummary_prop_n()} displays, by default, proportions before the
@@ -44,6 +63,20 @@ library(gtsummary)
 trial |> tbl_summary(include = c(grade, age))
 theme_gtsummary_prop_n(mean_sd = TRUE)
 trial |> tbl_summary(include = c(grade, age))
+\dontshow{\}) # examplesIf}
+\dontshow{if (rlang::is_installed(c("gtsummary", "srvyr"))) withAutoprint(\{ # examplesIf}
+data("api", package = "survey")
+apistrat$both[1:5] <- NA
+apistrat |>
+  srvyr::as_survey(strata = stype, weights = pw) |>
+  tbl_svysummary(include = c(stype, both), by = awards) |>
+  add_overall()
+
+theme_gtsummary_unweighted_n()
+apistrat |>
+  srvyr::as_survey(strata = stype, weights = pw) |>
+  tbl_svysummary(include = c(stype, both), by = awards) |>
+  add_overall()
 \dontshow{\}) # examplesIf}
 }
 \keyword{utilities}

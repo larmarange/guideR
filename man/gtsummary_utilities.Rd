@@ -6,7 +6,7 @@
 \alias{italicize_variable_group_headers}
 \alias{indent_levels}
 \alias{indent_labels}
-\title{Utilities for gtsummary}
+\title{Utilities for \code{gtsummary}}
 \usage{
 bold_variable_group_headers(x)
 
@@ -17,7 +17,7 @@ indent_levels(x, indent = 8L)
 indent_labels(x, indent = 4L)
 }
 \arguments{
-\item{x}{A gtsummary object.}
+\item{x}{A \code{gtsummary} object.}
 
 \item{indent}{An integer indicating how many space to indent text.}
 }
