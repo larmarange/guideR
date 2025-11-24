@@ -3,6 +3,7 @@
 \name{gtsummary_themes}
 \alias{gtsummary_themes}
 \alias{theme_gtsummary_prop_n}
+\alias{theme_gtsummary_fisher_simulate_p}
 \alias{theme_gtsummary_unweighted_n}
 \title{Themes for \code{gtsummary}}
 \usage{
@@ -14,6 +15,8 @@ theme_gtsummary_prop_n(
   bold_labels = TRUE,
   set_theme = TRUE
 )
+
+theme_gtsummary_fisher_simulate_p(set_theme = TRUE)
 
 theme_gtsummary_unweighted_n(
   n_unweighted_prefix = "",
@@ -56,13 +59,24 @@ observations.}
 number of observations (between brackets). This function cannot be used
 simultaneously with \code{\link[gtsummary:theme_gtsummary]{gtsummary::theme_gtsummary_mean_sd()}}, but you can use
 the \code{mean_sd = TRUE} option of \code{theme_gtsummary_prop_n()}.
+\code{theme_gtsummary_fisher_simulate_p()} modify the default test used for
+categorical variables by Fisher test, with computation of p-values by
+Monte Carlo simulation in larger than 2×2 tables.
+\code{theme_gtsummary_unweighted_n()} modifies default values of tables returned
+by \code{\link[gtsummary:tbl_svysummary]{gtsummary::tbl_svysummary()}} and displays the unweighted number of
+observations instead of the weighted n.
 }
 \examples{
 \dontshow{if (rlang::is_installed("gtsummary")) withAutoprint(\{ # examplesIf}
 library(gtsummary)
-trial |> tbl_summary(include = c(grade, age))
+trial |>
+  tbl_summary(include = c(grade, age), by = trt) |>
+  add_p()
 theme_gtsummary_prop_n(mean_sd = TRUE)
-trial |> tbl_summary(include = c(grade, age))
+theme_gtsummary_fisher_simulate_p()
+trial |>
+  tbl_summary(include = c(grade, age), by = trt) |>
+  add_p()
 \dontshow{\}) # examplesIf}
 \dontshow{if (rlang::is_installed(c("gtsummary", "srvyr"))) withAutoprint(\{ # examplesIf}
 data("api", package = "survey")

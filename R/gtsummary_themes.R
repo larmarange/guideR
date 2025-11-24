@@ -4,6 +4,12 @@
 #' number of observations (between brackets). This function cannot be used
 #' simultaneously with [gtsummary::theme_gtsummary_mean_sd()], but you can use
 #' the `mean_sd = TRUE` option of `theme_gtsummary_prop_n()`.
+#' `theme_gtsummary_fisher_simulate_p()` modify the default test used for
+#' categorical variables by Fisher test, with computation of p-values by
+#' Monte Carlo simulation in larger than 2×2 tables.
+#' `theme_gtsummary_unweighted_n()` modifies default values of tables returned
+#' by [gtsummary::tbl_svysummary()] and displays the unweighted number of
+#' observations instead of the weighted n.
 #'
 #' @param prop_stat (`character`)\cr
 #'   Statistics to display for categorical variables (see
@@ -25,9 +31,14 @@
 #' @export
 #' @examplesIf rlang::is_installed("gtsummary")
 #' library(gtsummary)
-#' trial |> tbl_summary(include = c(grade, age))
+#' trial |>
+#'   tbl_summary(include = c(grade, age), by = trt) |>
+#'   add_p()
 #' theme_gtsummary_prop_n(mean_sd = TRUE)
-#' trial |> tbl_summary(include = c(grade, age))
+#' theme_gtsummary_fisher_simulate_p()
+#' trial |>
+#'   tbl_summary(include = c(grade, age), by = trt) |>
+#'   add_p()
 theme_gtsummary_prop_n <- function(
   prop_stat = "{p}% ({n})",
   prop_digits = 1,
@@ -63,6 +74,22 @@ theme_gtsummary_prop_n <- function(
   if (isTRUE(bold_labels))
     lst_theme[["tbl_summary-fn:addnl-fn-to-run"]] <- gtsummary::bold_labels
 
+  if (isTRUE(set_theme)) gtsummary::set_gtsummary_theme(lst_theme)
+  return(invisible(lst_theme))
+}
+
+#' @rdname gtsummary_themes
+#' @export
+theme_gtsummary_fisher_simulate_p <- function(
+    set_theme = TRUE
+) {
+  rlang::check_installed("gtsummary")
+  lst_theme <- list(
+    "add_p.tbl_summary-attr:test.categorical" =
+      "guideR::fisher.simulate.p",
+    "add_p.tbl_summary-attr:test.categorical.low_count" =
+      "guideR::fisher.simulate.p"
+  )
   if (isTRUE(set_theme)) gtsummary::set_gtsummary_theme(lst_theme)
   return(invisible(lst_theme))
 }
@@ -157,5 +184,3 @@ theme_gtsummary_unweighted_n <- function(
   if (isTRUE(set_theme)) gtsummary::set_gtsummary_theme(lst_theme)
   return(invisible(lst_theme))
 }
-
-
