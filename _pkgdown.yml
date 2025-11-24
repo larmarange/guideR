@@ -27,6 +27,10 @@ reference:
   contents:
   - has_keyword("univar")
 
+- title: "Statistical tests"
+  contents:
+  - has_keyword("htest")
+
 - title: "Statistical plots"
   contents:
   - has_keyword("hplot")
