@@ -1,15 +1,20 @@
 #' Themes for `gtsummary`
 #'
+#' Additional themes for tables generated with `gtsummary`.
+#'
 #' `theme_gtsummary_prop_n()` displays, by default, proportions before the
 #' number of observations (between brackets). This function cannot be used
 #' simultaneously with [gtsummary::theme_gtsummary_mean_sd()], but you can use
 #' the `mean_sd = TRUE` option of `theme_gtsummary_prop_n()`.
+#'
 #' `theme_gtsummary_fisher_simulate_p()` modify the default test used for
 #' categorical variables by Fisher test, with computation of p-values by
 #' Monte Carlo simulation in larger than 2×2 tables.
+#'
 #' `theme_gtsummary_unweighted_n()` modifies default values of tables returned
 #' by [gtsummary::tbl_svysummary()] and displays the unweighted number of
 #' observations instead of the weighted n.
+#'
 #' `theme_gtsummary_bold_labels()` applies automatically
 #' [gtsummary::bold_labels()] to all tables generated with `gtsummary`.
 #'
