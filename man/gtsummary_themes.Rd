@@ -5,6 +5,7 @@
 \alias{theme_gtsummary_prop_n}
 \alias{theme_gtsummary_fisher_simulate_p}
 \alias{theme_gtsummary_unweighted_n}
+\alias{theme_gtsummary_bold_labels}
 \title{Themes for \code{gtsummary}}
 \usage{
 theme_gtsummary_prop_n(
@@ -12,7 +13,6 @@ theme_gtsummary_prop_n(
   prop_digits = 1,
   mean_sd = FALSE,
   cont_digits = 1,
-  bold_labels = TRUE,
   set_theme = TRUE
 )
 
@@ -24,9 +24,10 @@ theme_gtsummary_unweighted_n(
   prop_digits = 1,
   mean_sd = FALSE,
   cont_digits = 1,
-  bold_labels = TRUE,
   set_theme = TRUE
 )
+
+theme_gtsummary_bold_labels(set_theme = TRUE)
 }
 \arguments{
 \item{prop_stat}{(\code{character})\cr
@@ -42,9 +43,6 @@ Also, set default summary statistics to mean and standard deviation in
 
 \item{cont_digits}{(non-negative \code{integer})\cr
 Define the number of decimals to display for continuous variables.}
-
-\item{bold_labels}{(scalar \code{logical})\cr
-Should \code{\link[gtsummary:bold_italicize_labels_levels]{gtsummary::bold_labels()}} be systematically applied?}
 
 \item{set_theme}{(scalar \code{logical})\cr
 Logical indicating whether to set the theme. Default is \code{TRUE}.
@@ -65,6 +63,8 @@ Monte Carlo simulation in larger than 2×2 tables.
 \code{theme_gtsummary_unweighted_n()} modifies default values of tables returned
 by \code{\link[gtsummary:tbl_svysummary]{gtsummary::tbl_svysummary()}} and displays the unweighted number of
 observations instead of the weighted n.
+\code{theme_gtsummary_bold_labels()} applies automatically
+\code{\link[gtsummary:bold_italicize_labels_levels]{gtsummary::bold_labels()}} to all tables generated with \code{gtsummary}.
 }
 \examples{
 \dontshow{if (rlang::is_installed("gtsummary")) withAutoprint(\{ # examplesIf}
@@ -72,8 +72,10 @@ library(gtsummary)
 trial |>
   tbl_summary(include = c(grade, age), by = trt) |>
   add_p()
+
 theme_gtsummary_prop_n(mean_sd = TRUE)
 theme_gtsummary_fisher_simulate_p()
+theme_gtsummary_bold_labels()
 trial |>
   tbl_summary(include = c(grade, age), by = trt) |>
   add_p()
@@ -91,6 +93,8 @@ apistrat |>
   srvyr::as_survey(strata = stype, weights = pw) |>
   tbl_svysummary(include = c(stype, both), by = awards) |>
   add_overall()
+
+gtsummary::reset_gtsummary_theme()
 \dontshow{\}) # examplesIf}
 }
 \keyword{utilities}

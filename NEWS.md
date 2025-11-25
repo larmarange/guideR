@@ -2,8 +2,9 @@
 
 **New features**
 
-* additional themes for `gtsummary`: `theme_gtsummary_prop_n()` and
-  `theme_gtsummary_unweighted_n()` (#42)
+* additional themes for `gtsummary`: `theme_gtsummary_prop_n()`,
+  `theme_gtsummary_unweighted_n()`, `theme_gtsummary_fisher_simulate_p()` and
+  `theme_gtsummary_bold_labels()` (#42)
 * `fisher.simulate.p()`, an implementation of the Fisher test, with computation
   of p-values by Monte Carlo simulation in larger than 2×2 tables, to be used
   in `gtsummary::add_p()` (#41)
