@@ -178,7 +178,7 @@ theme_gtsummary_unweighted_n <- function(
 #' @rdname gtsummary_themes
 #' @export
 theme_gtsummary_bold_labels <- function(
-    set_theme = TRUE
+  set_theme = TRUE
 ) {
   rlang::check_installed("gtsummary")
   lst_theme <- list(
@@ -191,4 +191,3 @@ theme_gtsummary_bold_labels <- function(
   if (isTRUE(set_theme)) gtsummary::set_gtsummary_theme(lst_theme)
   return(invisible(lst_theme))
 }
-
