@@ -140,7 +140,7 @@ theme_gtsummary_unweighted_n <- function(
         all_categorical() ~ cat_stat
       ),
       "add_p.tbl_svysummary-arg:test" = list(
-        all_continuous() ~ "emmeans",
+        all_continuous() ~ "svy.t.test",
         all_categorical() ~ "svy.chisq.test"
       )
     )
