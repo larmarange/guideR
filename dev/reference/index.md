@@ -20,6 +20,13 @@
 - [`round_preserve_sum()`](https://larmarange.github.io/guideR/dev/reference/round_preserve_sum.md)
   : Round values while preserve their rounded sum in R
 
+## Statistical tests
+
+- [`fisher.simulate.p()`](https://larmarange.github.io/guideR/dev/reference/gtsummary_test.md)
+  :
+
+  Additional tests for `gtsummary`
+
 ## Statistical plots
 
 - [`plot_multiple_answers()`](https://larmarange.github.io/guideR/dev/reference/plot_multiple_answers.md)
@@ -70,15 +77,28 @@
 
 ## Utilities
 
+- [`theme_gtsummary_prop_n()`](https://larmarange.github.io/guideR/dev/reference/gtsummary_themes.md)
+  [`theme_gtsummary_fisher_simulate_p()`](https://larmarange.github.io/guideR/dev/reference/gtsummary_themes.md)
+  [`theme_gtsummary_unweighted_n()`](https://larmarange.github.io/guideR/dev/reference/gtsummary_themes.md)
+  [`theme_gtsummary_bold_labels()`](https://larmarange.github.io/guideR/dev/reference/gtsummary_themes.md)
+  :
+
+  Themes for `gtsummary`
+
 - [`bold_variable_group_headers()`](https://larmarange.github.io/guideR/dev/reference/gtsummary_utilities.md)
   [`italicize_variable_group_headers()`](https://larmarange.github.io/guideR/dev/reference/gtsummary_utilities.md)
   [`indent_levels()`](https://larmarange.github.io/guideR/dev/reference/gtsummary_utilities.md)
   [`indent_labels()`](https://larmarange.github.io/guideR/dev/reference/gtsummary_utilities.md)
-  : Utilities for gtsummary
+  :
+
+  Utilities for `gtsummary`
+
 - [`install_dependencies()`](https://larmarange.github.io/guideR/dev/reference/install_dependencies.md)
   : Install / Update project dependencies
+
 - [`leading_zeros()`](https://larmarange.github.io/guideR/dev/reference/leading_zeros.md)
   : Add leading zeros
+
 - [`view_dictionary()`](https://larmarange.github.io/guideR/dev/reference/view_dictionary.md)
   [`view_detailed_dictionary()`](https://larmarange.github.io/guideR/dev/reference/view_dictionary.md)
   [`to_DT()`](https://larmarange.github.io/guideR/dev/reference/view_dictionary.md)
