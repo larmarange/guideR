@@ -1,20 +1,6 @@
 # Themes for `gtsummary`
 
-`theme_gtsummary_prop_n()` displays, by default, proportions before the
-number of observations (between brackets). This function cannot be used
-simultaneously with
-[`gtsummary::theme_gtsummary_mean_sd()`](https://www.danieldsjoberg.com/gtsummary/reference/theme_gtsummary.html),
-but you can use the `mean_sd = TRUE` option of
-`theme_gtsummary_prop_n()`. `theme_gtsummary_fisher_simulate_p()` modify
-the default test used for categorical variables by Fisher test, with
-computation of p-values by Monte Carlo simulation in larger than 2×2
-tables. `theme_gtsummary_unweighted_n()` modifies default values of
-tables returned by
-[`gtsummary::tbl_svysummary()`](https://www.danieldsjoberg.com/gtsummary/reference/tbl_svysummary.html)
-and displays the unweighted number of observations instead of the
-weighted n. `theme_gtsummary_bold_labels()` applies automatically
-[`gtsummary::bold_labels()`](https://www.danieldsjoberg.com/gtsummary/reference/bold_italicize_labels_levels.html)
-to all tables generated with `gtsummary`.
+Additional themes for tables generated with `gtsummary`.
 
 ## Usage
 
@@ -83,6 +69,29 @@ theme_gtsummary_bold_labels(set_theme = TRUE)
 
   (`character`)  
   Optional string to name the *overall* column.
+
+## Details
+
+`theme_gtsummary_prop_n()` displays, by default, proportions before the
+number of observations (between brackets). This function cannot be used
+simultaneously with
+[`gtsummary::theme_gtsummary_mean_sd()`](https://www.danieldsjoberg.com/gtsummary/reference/theme_gtsummary.html),
+but you can use the `mean_sd = TRUE` option of
+`theme_gtsummary_prop_n()`.
+
+`theme_gtsummary_fisher_simulate_p()` modify the default test used for
+categorical variables by Fisher test, with computation of p-values by
+Monte Carlo simulation in larger than 2×2 tables.
+
+`theme_gtsummary_unweighted_n()` modifies default values of tables
+returned by
+[`gtsummary::tbl_svysummary()`](https://www.danieldsjoberg.com/gtsummary/reference/tbl_svysummary.html)
+and displays the unweighted number of observations instead of the
+weighted n.
+
+`theme_gtsummary_bold_labels()` applies automatically
+[`gtsummary::bold_labels()`](https://www.danieldsjoberg.com/gtsummary/reference/bold_italicize_labels_levels.html)
+to all tables generated with `gtsummary`.
 
 ## Examples
 
