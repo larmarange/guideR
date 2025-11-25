@@ -24,6 +24,7 @@ theme_gtsummary_unweighted_n(
   prop_digits = 1,
   mean_sd = FALSE,
   cont_digits = 1,
+  overall_string = NULL,
   set_theme = TRUE
 )
 
@@ -51,6 +52,9 @@ When \code{FALSE} the named list of theme elements is returned invisibly}
 \item{n_unweighted_prefix, n_unweighted_suffix}{(\code{character})\cr
 Prefix and suffix displayed before and after the unweighted number of
 observations.}
+
+\item{overall_string}{(\code{character})\cr
+Optional string to name the \emph{overall} column.}
 }
 \description{
 \code{theme_gtsummary_prop_n()} displays, by default, proportions before the

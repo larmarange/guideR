@@ -96,6 +96,8 @@ theme_gtsummary_fisher_simulate_p <- function(
 #' @param n_unweighted_prefix,n_unweighted_suffix (`character`)\cr
 #'   Prefix and suffix displayed before and after the unweighted number of
 #'   observations.
+#' @param overall_string (`character`)\cr
+#'   Optional string to name the *overall* column.
 #' @export
 #' @examplesIf rlang::is_installed(c("gtsummary", "srvyr"))
 #' data("api", package = "survey")
@@ -118,17 +120,18 @@ theme_gtsummary_unweighted_n <- function(
   prop_digits = 1,
   mean_sd = FALSE,
   cont_digits = 1,
+  overall_string = NULL,
   set_theme = TRUE
 ) {
   rlang::check_installed("gtsummary")
 
-  cat_stat <- paste0( # nolint
-    "{p}% (",
-    n_unweighted_prefix,
-    "{n_unweighted}",
-    n_unweighted_suffix,
-    ")"
-  )
+  un <- paste0(n_unweighted_prefix, "{n_unweighted}", n_unweighted_suffix)
+  uN <- paste0(n_unweighted_prefix, "{N_unweighted}", n_unweighted_suffix)
+
+  if (is.null(overall_string))
+    overall_string <- "{gtsummary:::translate_string('Overall')}"
+
+  cat_stat <- paste0("{p}% (", un, ")") # nolint
 
   if (isTRUE(mean_sd)) {
     lst_theme <- list(
@@ -153,24 +156,15 @@ theme_gtsummary_unweighted_n <- function(
     all_categorical() ~ c(p = prop_digits, n = 0, n_unweighted = 0),
     all_continuous() ~ cont_digits
   )
-  lst_theme[["tbl_svysummary-str:header-noby"]] <-
-    paste0(n_unweighted_prefix, "{N_unweighted}", n_unweighted_suffix)
+  lst_theme[["tbl_svysummary-str:header-noby"]] <- uN
   lst_theme[["tbl_svysummary-str:header-withby"]] <-
-    paste0(
-      "**{level}**\n(",
-      n_unweighted_prefix,
-      "{n_unweighted}",
-      n_unweighted_suffix,
-      ")"
-    )
+    paste0("**{level}**\n(", uN, ")")
   lst_theme[["tbl_svysummary-arg:missing_stat"]] <-
     paste0(n_unweighted_prefix, "{N_miss_unweighted}", n_unweighted_suffix)
 
   lst_theme[["add_overall.tbl_summary-arg:col_label"]] <-
     paste0(
-      "**",
-      gtsummary:::translate_string("Overall"),
-      "**\n(",
+      "**", overall_string, "**\n(",
       n_unweighted_prefix,
       "{ifelse(exists('N_unweighted'), N_unweighted, N)}",
       n_unweighted_suffix,
