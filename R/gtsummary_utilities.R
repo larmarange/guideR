@@ -1,24 +1,25 @@
-#' Utilities for gtsummary
+#' Utilities for `gtsummary`
 #'
-#' Utilities for tables generated with [gtsummary][gtsummary::gtsummary]
+#' Utilities for tables generated with [gtsummary][gtsummary::gtsummary].
 #'
-#' @param x A gtsummary object.
+#' @param x A `gtsummary` object.
 #' @keywords utilities
 #' @name gtsummary_utilities
 #' @export
 #' @seealso [gtsummary::modify_bold()], [gtsummary::modify_italic()],
 #' [gtsummary::modify_indent()]
 #' @examplesIf rlang::is_installed("gtsummary")
+#' library(gtsummary)
 #' tbl <-
-#'   gtsummary::trial |>
-#'   gtsummary::tbl_summary(
+#'   trial |>
+#'   tbl_summary(
 #'     include = c(stage, grade, age, trt, response, death)
 #'   ) |>
-#'   gtsummary::add_variable_group_header(
+#'   add_variable_group_header(
 #'     header = "Clinical situation at diagnosis",
 #'     variables = c(stage, grade, age)
 #'   ) |>
-#'   gtsummary::add_variable_group_header(
+#'   add_variable_group_header(
 #'     header = "Treatment and outcome",
 #'     variables = c(trt, response, death)
 #'   )
@@ -26,7 +27,7 @@
 #'
 #' tbl |>
 #'   bold_variable_group_headers() |>
-#'   gtsummary::italicize_labels() |>
+#'   italicize_labels() |>
 #'   indent_levels(indent = 8L)
 bold_variable_group_headers <- function(x) {
   rlang::check_installed("gtsummary")

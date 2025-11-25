@@ -6,7 +6,7 @@
 \alias{italicize_variable_group_headers}
 \alias{indent_levels}
 \alias{indent_labels}
-\title{Utilities for gtsummary}
+\title{Utilities for \code{gtsummary}}
 \usage{
 bold_variable_group_headers(x)
 
@@ -17,25 +17,26 @@ indent_levels(x, indent = 8L)
 indent_labels(x, indent = 4L)
 }
 \arguments{
-\item{x}{A gtsummary object.}
+\item{x}{A \code{gtsummary} object.}
 
 \item{indent}{An integer indicating how many space to indent text.}
 }
 \description{
-Utilities for tables generated with \link[gtsummary:gtsummary-package]{gtsummary}
+Utilities for tables generated with \link[gtsummary:gtsummary-package]{gtsummary}.
 }
 \examples{
 \dontshow{if (rlang::is_installed("gtsummary")) withAutoprint(\{ # examplesIf}
+library(gtsummary)
 tbl <-
-  gtsummary::trial |>
-  gtsummary::tbl_summary(
+  trial |>
+  tbl_summary(
     include = c(stage, grade, age, trt, response, death)
   ) |>
-  gtsummary::add_variable_group_header(
+  add_variable_group_header(
     header = "Clinical situation at diagnosis",
     variables = c(stage, grade, age)
   ) |>
-  gtsummary::add_variable_group_header(
+  add_variable_group_header(
     header = "Treatment and outcome",
     variables = c(trt, response, death)
   )
@@ -43,7 +44,7 @@ tbl
 
 tbl |>
   bold_variable_group_headers() |>
-  gtsummary::italicize_labels() |>
+  italicize_labels() |>
   indent_levels(indent = 8L)
 \dontshow{\}) # examplesIf}
 }
