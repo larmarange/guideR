@@ -83,6 +83,18 @@ if the function is called through the corresponding addin)</p></dd>
 
 </dl></div>
     <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p><code>view_dictionary()</code> calls <code><a href="https://larmarange.github.io/labelled/reference/look_for.html" class="external-link">labelled::look_for()</a></code> and applies <code>to_DT()</code> to
+the result to produce an HTML version of the variable dictionary. If you are
+using <strong>RStudio</strong>, it will be displayed by default in the <em>Viewer</em> pane,
+allowing to have the dictionary close to your code.</p>
+<p><code>view_detailed_dictionary()</code> is similar to <code>view_dictionary()</code> with the
+option <code>details = "full"</code>.</p>
+<p>These two functions are also available through dedicated addins in
+<strong>RStudio</strong>. To use them, select the name of a data frame, then choose
+<em>View variable dictionary</em> in the <em>Addins</em> menu.</p>
+    </div>
+    <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
     <p><code>to_DT()</code> is an utility to convert the result of <code><a href="https://larmarange.github.io/labelled/reference/look_for.html" class="external-link">labelled::look_for()</a></code> into
 a <code><a href="https://rdrr.io/pkg/DT/man/datatable.html" class="external-link">DT::datatable()</a></code>.</p>
