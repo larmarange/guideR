@@ -36,6 +36,19 @@ if the function is called through the corresponding addin)}
 Generates an interactive variable dictionary based on \code{\link[labelled:look_for]{labelled::look_for()}}.
 Accepts data frames, tibbles, and also survey objects.
 }
+\details{
+\code{view_dictionary()} calls \code{\link[labelled:look_for]{labelled::look_for()}} and applies \code{to_DT()} to
+the result to produce an HTML version of the variable dictionary. If you are
+using \strong{RStudio}, it will be displayed by default in the \emph{Viewer} pane,
+allowing to have the dictionary close to your code.
+
+\code{view_detailed_dictionary()} is similar to \code{view_dictionary()} with the
+option \code{details = "full"}.
+
+These two functions are also available through dedicated addins in
+\strong{RStudio}. To use them, select the name of a data frame, then choose
+\emph{View variable dictionary} in the \emph{Addins} menu.
+}
 \note{
 \code{to_DT()} is an utility to convert the result of \code{\link[labelled:look_for]{labelled::look_for()}} into
 a \code{\link[DT:datatable]{DT::datatable()}}.

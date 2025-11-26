@@ -3,6 +3,18 @@
 #' Generates an interactive variable dictionary based on [labelled::look_for()].
 #' Accepts data frames, tibbles, and also survey objects.
 #'
+#' `view_dictionary()` calls [labelled::look_for()] and applies `to_DT()` to
+#' the result to produce an HTML version of the variable dictionary. If you are
+#' using **RStudio**, it will be displayed by default in the *Viewer* pane,
+#' allowing to have the dictionary close to your code.
+#'
+#' `view_detailed_dictionary()` is similar to `view_dictionary()` with the
+#' option `details = "full"`.
+#'
+#' These two functions are also available through dedicated addins in
+#' **RStudio**. To use them, select the name of a data frame, then choose
+#' *View variable dictionary* in the *Addins* menu.
+#'
 #' @param data a data frame, a tibble or a survey object
 #' (if `NULL`, will use the text you currently select in **RStudio**, useful
 #' if the function is called through the corresponding addin)
