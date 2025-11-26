@@ -1,7 +1,7 @@
-# Utilities for gtsummary
+# Utilities for `gtsummary`
 
 Utilities for tables generated with
-[gtsummary](https://www.danieldsjoberg.com/gtsummary/reference/gtsummary-package.html)
+[gtsummary](https://www.danieldsjoberg.com/gtsummary/reference/gtsummary-package.html).
 
 ## Usage
 
@@ -19,7 +19,7 @@ indent_labels(x, indent = 4L)
 
 - x:
 
-  A gtsummary object.
+  A `gtsummary` object.
 
 - indent:
 
@@ -34,16 +34,18 @@ indent_labels(x, indent = 4L)
 ## Examples
 
 ``` r
+# \donttest{
+library(gtsummary)
 tbl <-
-  gtsummary::trial |>
-  gtsummary::tbl_summary(
+  trial |>
+  tbl_summary(
     include = c(stage, grade, age, trt, response, death)
   ) |>
-  gtsummary::add_variable_group_header(
+  add_variable_group_header(
     header = "Clinical situation at diagnosis",
     variables = c(stage, grade, age)
   ) |>
-  gtsummary::add_variable_group_header(
+  add_variable_group_header(
     header = "Treatment and outcome",
     variables = c(trt, response, death)
   )
@@ -136,7 +138,9 @@ Treatment and outcome
 ¹ n (%); Median (Q1, Q3)
 
 tbl \|\> bold_variable_group_headers() \|\>
-gtsummary::[italicize_labels](https://www.danieldsjoberg.com/gtsummary/reference/bold_italicize_labels_levels.html)()
+[italicize_labels](https://www.danieldsjoberg.com/gtsummary/reference/bold_italicize_labels_levels.html)()
 \|\> indent_levels(indent = 8L)
 
 [TABLE]
+
+\# }

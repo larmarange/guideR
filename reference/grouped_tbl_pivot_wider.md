@@ -100,6 +100,7 @@ A `gtsummary` or a `gt` table.
 ## Examples
 
 ``` r
+# \donttest{
 mod <- nnet::multinom(
   grade ~ stage + marker + age,
   data = gtsummary::trial,
@@ -247,7 +248,7 @@ tbl \|\> grouped_tbl_pivot_wider()
 
 [TABLE]
 
-\# \donttest{ tbl \|\> multinom_add_global_p_pivot_wider() \|\>
+tbl \|\> multinom_add_global_p_pivot_wider() \|\>
 gtsummary::[bold_labels](https://www.danieldsjoberg.com/gtsummary/reference/bold_italicize_labels_levels.html)()
 
 [TABLE]

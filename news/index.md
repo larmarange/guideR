@@ -1,14 +1,27 @@
 # Changelog
 
+## guideR 0.7.0
+
+**New features**
+
+- additional themes for `gtsummary`:
+  [`theme_gtsummary_prop_n()`](https://larmarange.github.io/guideR/reference/gtsummary_themes.md),
+  [`theme_gtsummary_unweighted_n()`](https://larmarange.github.io/guideR/reference/gtsummary_themes.md),
+  [`theme_gtsummary_fisher_simulate_p()`](https://larmarange.github.io/guideR/reference/gtsummary_themes.md)
+  and
+  [`theme_gtsummary_bold_labels()`](https://larmarange.github.io/guideR/reference/gtsummary_themes.md)
+  ([\#42](https://github.com/larmarange/guideR/issues/42))
+- [`fisher.simulate.p()`](https://larmarange.github.io/guideR/reference/gtsummary_test.md),
+  an implementation of the Fisher test, with computation of p-values by
+  Monte Carlo simulation in larger than 2×2 tables, to be used in
+  [`gtsummary::add_p()`](https://www.danieldsjoberg.com/gtsummary/reference/add_p.html)
+  ([\#41](https://github.com/larmarange/guideR/issues/41))
+
 ## guideR 0.6.0
 
 CRAN release: 2025-11-08
 
-## guideR 0.5.1
-
-CRAN release: 2025-10-21
-
-**New feature**
+**New features**
 
 - new functions
   [`plot_trajectories()`](https://larmarange.github.io/guideR/reference/plot_trajectories.md)
@@ -16,9 +29,6 @@ CRAN release: 2025-10-21
   [`plot_periods()`](https://larmarange.github.io/guideR/reference/plot_trajectories.md)
   to plot individual trajectories (similar to sequence index plots)
   ([\#35](https://github.com/larmarange/guideR/issues/35))
-- new function
-  [`plot_multiple_answers_dodge()`](https://larmarange.github.io/guideR/reference/plot_multiple_answers.md)
-  ([\#31](https://github.com/larmarange/guideR/issues/31))
 - new functions
   [`view_dictionary()`](https://larmarange.github.io/guideR/reference/view_dictionary.md)
   and
@@ -43,6 +53,16 @@ CRAN release: 2025-10-21
   and
   [`indent_levels()`](https://larmarange.github.io/guideR/reference/gtsummary_utilities.md)
   ([\#34](https://github.com/larmarange/guideR/issues/34))
+
+## guideR 0.5.1
+
+CRAN release: 2025-10-21
+
+**New feature**
+
+- new function
+  [`plot_multiple_answers_dodge()`](https://larmarange.github.io/guideR/reference/plot_multiple_answers.md)
+  ([\#31](https://github.com/larmarange/guideR/issues/31))
 
 **Fix**
 

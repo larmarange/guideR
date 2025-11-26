@@ -204,6 +204,7 @@ d |>
     flip = TRUE
   )
 
+# \donttest{
 d |>
   plot_multiple_answers(
     combine_answers = TRUE,
@@ -239,6 +240,7 @@ d |>
     fill = "grey80"
   )
 
+
 d |>
   plot_multiple_answers_dodge(q1a:q1d, by = group)
 #> ! Automatically selected value: "y"
@@ -253,4 +255,6 @@ d |>
   plot_multiple_answers_dodge(q1a:q1d, by = group, combine_answers = TRUE)
 #> ! Automatically selected value: "y"
 #> ℹ To remove this message, please specify `value`.
+
+# }
 ```

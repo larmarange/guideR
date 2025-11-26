@@ -46,6 +46,22 @@ to_DT(
 
   Optional column labels
 
+## Details
+
+`view_dictionary()` calls
+[`labelled::look_for()`](https://larmarange.github.io/labelled/reference/look_for.html)
+and applies `to_DT()` to the result to produce an HTML version of the
+variable dictionary. If you are using **RStudio**, it will be displayed
+by default in the *Viewer* pane, allowing to have the dictionary close
+to your code.
+
+`view_detailed_dictionary()` is similar to `view_dictionary()` with the
+option `details = "full"`.
+
+These two functions are also available through dedicated addins in
+**RStudio**. To use them, select the name of a data frame, then choose
+*View variable dictionary* in the *Addins* menu.
+
 ## Note
 
 `to_DT()` is an utility to convert the result of
