@@ -22,6 +22,7 @@
 #' @returns A `gtsummary` or a `gt` table.
 #' @keywords models
 #' @examplesIf rlang::is_installed(c("gtsummary", "cardx", "nnet", "parameters"))
+#' \donttest{
 #' mod <- nnet::multinom(
 #'   grade ~ stage + marker + age,
 #'   data = gtsummary::trial,
@@ -31,7 +32,6 @@
 #' tbl
 #' tbl |> grouped_tbl_pivot_wider()
 #'
-#' \donttest{
 #' tbl |> multinom_add_global_p_pivot_wider() |> gtsummary::bold_labels()
 #' tbl |> style_grouped_tbl()
 #' }

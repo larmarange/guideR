@@ -73,6 +73,7 @@ format, do not use \code{style_grouped_tbl()}.
 }
 \examples{
 \dontshow{if (rlang::is_installed(c("gtsummary", "cardx", "nnet", "parameters"))) withAutoprint(\{ # examplesIf}
+\donttest{
 mod <- nnet::multinom(
   grade ~ stage + marker + age,
   data = gtsummary::trial,
@@ -82,7 +83,6 @@ tbl <- mod |> gtsummary::tbl_regression(exponentiate = TRUE)
 tbl
 tbl |> grouped_tbl_pivot_wider()
 
-\donttest{
 tbl |> multinom_add_global_p_pivot_wider() |> gtsummary::bold_labels()
 tbl |> style_grouped_tbl()
 }

@@ -78,7 +78,9 @@ observations instead of the weighted n.
 }
 \examples{
 \dontshow{if (rlang::is_installed("gtsummary")) withAutoprint(\{ # examplesIf}
+\donttest{
 library(gtsummary)
+
 trial |>
   tbl_summary(include = c(grade, age), by = trt) |>
   add_p()
@@ -89,8 +91,10 @@ theme_gtsummary_bold_labels()
 trial |>
   tbl_summary(include = c(grade, age), by = trt) |>
   add_p()
+}
 \dontshow{\}) # examplesIf}
 \dontshow{if (rlang::is_installed(c("gtsummary", "srvyr"))) withAutoprint(\{ # examplesIf}
+\donttest{
 data("api", package = "survey")
 apistrat$both[1:5] <- NA
 apistrat |>
@@ -103,6 +107,7 @@ apistrat |>
   srvyr::as_survey(strata = stype, weights = pw) |>
   tbl_svysummary(include = c(stype, both), by = awards) |>
   add_overall()
+}
 
 gtsummary::reset_gtsummary_theme()
 \dontshow{\}) # examplesIf}

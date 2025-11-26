@@ -154,6 +154,7 @@ d |>
     flip = TRUE
   )
 \dontshow{if (rlang::is_installed("ggupset")) withAutoprint(\{ # examplesIf}
+\donttest{
 d |>
   plot_multiple_answers(
     combine_answers = TRUE,
@@ -182,14 +183,16 @@ d |>
     value = "y",
     fill = "grey80"
   )
-\dontshow{\}) # examplesIf}
-\dontshow{if (rlang::is_installed(c("ggupset", "ggstats"))) withAutoprint(\{ # examplesIf}
+
 d |>
   plot_multiple_answers_dodge(q1a:q1d, by = group)
 d |>
   plot_multiple_answers_dodge(q1a:q1d, by = group, flip = TRUE)
 d |>
   plot_multiple_answers_dodge(q1a:q1d, by = group, combine_answers = TRUE)
+}
+\dontshow{\}) # examplesIf}
+\dontshow{if (rlang::is_installed(c("ggupset", "ggstats"))) withAutoprint(\{ # examplesIf}
 \dontshow{\}) # examplesIf}
 }
 \keyword{hplot}

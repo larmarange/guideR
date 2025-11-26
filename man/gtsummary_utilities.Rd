@@ -26,6 +26,7 @@ Utilities for tables generated with \link[gtsummary:gtsummary-package]{gtsummary
 }
 \examples{
 \dontshow{if (rlang::is_installed("gtsummary")) withAutoprint(\{ # examplesIf}
+\donttest{
 library(gtsummary)
 tbl <-
   trial |>
@@ -46,6 +47,7 @@ tbl |>
   bold_variable_group_headers() |>
   italicize_labels() |>
   indent_levels(indent = 8L)
+}
 \dontshow{\}) # examplesIf}
 }
 \seealso{

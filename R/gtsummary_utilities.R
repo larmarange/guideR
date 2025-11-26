@@ -9,6 +9,7 @@
 #' @seealso [gtsummary::modify_bold()], [gtsummary::modify_italic()],
 #' [gtsummary::modify_indent()]
 #' @examplesIf rlang::is_installed("gtsummary")
+#' \donttest{
 #' library(gtsummary)
 #' tbl <-
 #'   trial |>
@@ -29,6 +30,7 @@
 #'   bold_variable_group_headers() |>
 #'   italicize_labels() |>
 #'   indent_levels(indent = 8L)
+#' }
 bold_variable_group_headers <- function(x) {
   rlang::check_installed("gtsummary")
   x |>

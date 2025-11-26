@@ -35,7 +35,9 @@
 #' @name gtsummary_themes
 #' @export
 #' @examplesIf rlang::is_installed("gtsummary")
+#' \donttest{
 #' library(gtsummary)
+#'
 #' trial |>
 #'   tbl_summary(include = c(grade, age), by = trt) |>
 #'   add_p()
@@ -46,6 +48,7 @@
 #' trial |>
 #'   tbl_summary(include = c(grade, age), by = trt) |>
 #'   add_p()
+#' }
 theme_gtsummary_prop_n <- function(
   prop_stat = "{p}% ({n})",
   prop_digits = 1,
@@ -105,6 +108,7 @@ theme_gtsummary_fisher_simulate_p <- function(
 #'   Optional string to name the *overall* column.
 #' @export
 #' @examplesIf rlang::is_installed(c("gtsummary", "srvyr"))
+#' \donttest{
 #' data("api", package = "survey")
 #' apistrat$both[1:5] <- NA
 #' apistrat |>
@@ -117,6 +121,7 @@ theme_gtsummary_fisher_simulate_p <- function(
 #'   srvyr::as_survey(strata = stype, weights = pw) |>
 #'   tbl_svysummary(include = c(stype, both), by = awards) |>
 #'   add_overall()
+#' }
 #'
 #' gtsummary::reset_gtsummary_theme()
 theme_gtsummary_unweighted_n <- function(

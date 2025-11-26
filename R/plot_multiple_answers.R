@@ -78,6 +78,7 @@
 #'     flip = TRUE
 #'   )
 #' @examplesIf rlang::is_installed("ggupset")
+#' \donttest{
 #' d |>
 #'   plot_multiple_answers(
 #'     combine_answers = TRUE,
@@ -106,6 +107,14 @@
 #'     value = "y",
 #'     fill = "grey80"
 #'   )
+#'
+#' d |>
+#'   plot_multiple_answers_dodge(q1a:q1d, by = group)
+#' d |>
+#'   plot_multiple_answers_dodge(q1a:q1d, by = group, flip = TRUE)
+#' d |>
+#'   plot_multiple_answers_dodge(q1a:q1d, by = group, combine_answers = TRUE)
+#' }
 plot_multiple_answers <- function(
   data,
   answers = dplyr::everything(),
@@ -358,12 +367,6 @@ plot_multiple_answers <- function(
 #' @param width Dodging width.
 #' @export
 #' @examplesIf rlang::is_installed(c("ggupset", "ggstats"))
-#' d |>
-#'   plot_multiple_answers_dodge(q1a:q1d, by = group)
-#' d |>
-#'   plot_multiple_answers_dodge(q1a:q1d, by = group, flip = TRUE)
-#' d |>
-#'   plot_multiple_answers_dodge(q1a:q1d, by = group, combine_answers = TRUE)
 plot_multiple_answers_dodge <- function(
   data,
   answers = dplyr::everything(),
