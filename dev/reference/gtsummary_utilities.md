@@ -34,6 +34,7 @@ indent_labels(x, indent = 4L)
 ## Examples
 
 ``` r
+# \donttest{
 library(gtsummary)
 tbl <-
   trial |>
@@ -141,3 +142,5 @@ tbl \|\> bold_variable_group_headers() \|\>
 \|\> indent_levels(indent = 8L)
 
 [TABLE]
+
+\# }

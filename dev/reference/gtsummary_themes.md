@@ -96,7 +96,9 @@ to all tables generated with `gtsummary`.
 ## Examples
 
 ``` r
+# \donttest{
 library(gtsummary)
+
 trial |>
   tbl_summary(include = c(grade, age), by = trt) |>
   add_p()
@@ -176,8 +178,8 @@ theme_gtsummary_fisher_simulate_p() theme_gtsummary_bold_labels() trial
 
 [TABLE]
 
-[data](https://rdrr.io/r/utils/data.html)("api", package = "survey")
-apistrat\$both\[1:5\] \<- NA apistrat \|\>
+\# } \# \donttest{ [data](https://rdrr.io/r/utils/data.html)("api",
+package = "survey") apistrat\$both\[1:5\] \<- NA apistrat \|\>
 srvyr::[as_survey](http://gdfe.co/srvyr/reference/as_survey.md)(strata =
 stype, weights = pw) \|\>
 [tbl_svysummary](https://www.danieldsjoberg.com/gtsummary/reference/tbl_svysummary.html)(include
@@ -195,4 +197,5 @@ stype, weights = pw) \|\>
 
 [TABLE]
 
+\# }
 gtsummary::[reset_gtsummary_theme](https://www.danieldsjoberg.com/gtsummary/reference/set_gtsummary_theme.html)()
