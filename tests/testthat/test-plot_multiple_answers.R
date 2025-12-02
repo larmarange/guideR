@@ -63,7 +63,7 @@ test_that("plot_multiple_answers() does not produce an error", {
   vdiffr::expect_doppelganger("plot_multiple_answers()", p)
 
   expect_no_error(
-    p<-
+    p <-
       d |>
       labelled::set_variable_labels(
         q1a = "apple",

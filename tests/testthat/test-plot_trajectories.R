@@ -21,7 +21,7 @@ test_that("plot_trajectories() and plot_periods() works properly", {
   vdiffr::expect_doppelganger("plot_trajectories() nudge_x", p)
 
   expect_no_error(
-    p<-
+    p <-
       d |>
       plot_trajectories(id = id, time = time, fill = status, by = group)
   )
