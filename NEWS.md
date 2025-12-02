@@ -1,5 +1,7 @@
 # guideR (development version)
 
+* bug fix in `proportions()` when `.na.rm = TRUE`
+
 # guideR 0.7.0
 
 **New features**

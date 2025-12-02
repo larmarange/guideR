@@ -75,18 +75,29 @@ proportion.data.frame <- function(data,
                                   .conf.int = FALSE,
                                   .conf.level = .95,
                                   .options = list(correct = TRUE)) {
+  v <-
+    data |>
+    dplyr::ungroup() |>
+    dplyr::mutate(..., .keep = "none") |>
+    colnames()
+  data <-
+    data |>
+    dplyr::mutate(...)
+  if (.na.rm) {
+    data <-
+      data |>
+      tidyr::drop_na(dplyr::all_of(v))
+  }
+
   res <-
     data |>
-    dplyr::group_by(dplyr::pick({{ .by }}), .add = TRUE, .drop = FALSE)
-
-  if (.na.rm)
-    res <-
-      res |>
-      tidyr::drop_na()
-
-  res <-
-    res |>
-    dplyr::count(..., wt = {{ .weight }}, .drop = .drop, name = "n") |>
+    dplyr::group_by(dplyr::pick({{ .by }}), .add = TRUE, .drop = FALSE) |>
+    dplyr::count(
+      dplyr::pick(dplyr::all_of(v)),
+      wt = {{ .weight }},
+      .drop = .drop,
+      name = "n"
+    ) |>
     dplyr::mutate(
       N = sum(.data$n),
       prop = proportions(.data$n) * .scale
