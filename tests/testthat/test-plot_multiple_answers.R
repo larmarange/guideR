@@ -3,6 +3,7 @@ test_that("plot_multiple_answers_dodge() does not produce an error", {
   skip_if_not_installed("ggupset")
   skip_if_not_installed("ggstats")
 
+  set.seed(2025)
   d <-
     dplyr::tibble(
       q1a = sample(c("y", "n"), size = 200, replace = TRUE),
@@ -13,24 +14,41 @@ test_that("plot_multiple_answers_dodge() does not produce an error", {
     )
 
   expect_no_error(
-    d |>
-      plot_multiple_answers_dodge(q1a:q1d, by = group)
+    p <-
+      d |>
+      plot_multiple_answers_dodge(q1a:q1d, by = group, value = "y")
   )
+  vdiffr::expect_doppelganger("plot_multiple_answers_dodge()", p)
+
   expect_no_error(
-    d |>
-      plot_multiple_answers_dodge(q1a:q1d, by = group, flip = TRUE)
+    p <-
+      d |>
+      plot_multiple_answers_dodge(q1a:q1d, by = group, flip = TRUE, value = "y")
   )
+  vdiffr::expect_doppelganger("plot_multiple_answers_dodge() flip", p)
+
   expect_no_error(
-    d |>
-      plot_multiple_answers_dodge(q1a:q1d, by = group, combine_answers = TRUE)
+    p <-
+      d |>
+      plot_multiple_answers_dodge(
+        q1a:q1d, by = group, combine_answers = TRUE, value = "y"
+      )
   )
+  suppressWarnings(print(p)) # warning from ggplot2 due to ggupset
+  vdiffr::expect_doppelganger("plot_multiple_answers_dodge() combine", p)
+
   expect_no_error(
-    d |>
-      plot_multiple_answers_dodge(q1a:q1d, by = group, geom = "point")
+    p <-
+      d |>
+      plot_multiple_answers_dodge(
+        q1a:q1d, by = group, geom = "point", value = "y"
+      )
   )
+  vdiffr::expect_doppelganger("plot_multiple_answers_dodge() point", p)
 })
 
 test_that("plot_multiple_answers() does not produce an error", {
+  set.seed(2025)
   d <-
     dplyr::tibble(
       q1a = sample(c("y", "n"), size = 200, replace = TRUE),
@@ -40,10 +58,13 @@ test_that("plot_multiple_answers() does not produce an error", {
     )
 
   expect_message(
-    d |> plot_multiple_answers(q1a:q1c)
+    p <- d |> plot_multiple_answers(q1a:q1c)
   )
+  vdiffr::expect_doppelganger("plot_multiple_answers()", p)
+
   expect_no_error(
-    d |>
+    p<-
+      d |>
       labelled::set_variable_labels(
         q1a = "apple",
         q1b = "banana",
@@ -58,8 +79,14 @@ test_that("plot_multiple_answers() does not produce an error", {
         flip = TRUE
       )
   )
+  vdiffr::expect_doppelganger("plot_multiple_answers() flip and labels", p)
+
+  skip_on_cran()
+  skip_if_not_installed("ggupset")
+
   expect_no_error(
-    d |>
+    p <-
+      d |>
       plot_multiple_answers(
         combine_answers = TRUE,
         value = "y",
@@ -67,10 +94,11 @@ test_that("plot_multiple_answers() does not produce an error", {
         drop_na = TRUE
       )
   )
-  skip_on_cran()
-  skip_if_not_installed("ggupset")
+  vdiffr::expect_doppelganger("plot_multiple_answers() combine", p)
+
   expect_no_error(
-    d |>
+    p <-
+      d |>
       plot_multiple_answers(
         combine_answers = TRUE,
         value = "y",
@@ -80,9 +108,12 @@ test_that("plot_multiple_answers() does not produce an error", {
       ) +
       ggplot2::scale_fill_distiller(palette = "Spectral")
   )
+  vdiffr::expect_doppelganger("plot_multiple_answers() combine & flip", p)
+
   d$group <- sample(c("group A", "groupe B"), size = 200, replace = TRUE)
   expect_no_error(
-    d |>
+    p <-
+      d |>
       plot_multiple_answers(
         answers = q1a:q1d,
         by = group,
@@ -92,4 +123,5 @@ test_that("plot_multiple_answers() does not produce an error", {
         fill = "grey80"
       )
   )
+  vdiffr::expect_doppelganger("plot_multiple_answers() combine sort", p)
 })
