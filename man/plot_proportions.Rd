@@ -179,7 +179,7 @@ titanic |>
   plot_proportions(
     Survived == "Yes",
     by = -Survived,
-    mapping = ggplot2::aes(fill = variable),
+    mapping = ggplot2::aes(fill = by),
     color = "black",
     show.legend = FALSE,
     show_overall_line = TRUE,
