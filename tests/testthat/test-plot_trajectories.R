@@ -11,21 +11,21 @@ test_that("plot_trajectories() and plot_periods() works", {
       d |>
       plot_trajectories(id = id, time = time, fill = status, colour = "black")
   )
-  vdiffr::expect_doppelganger("plot_trajectories()", p)
+  expect_doppelganger("plot_trajectories()", p)
 
   expect_no_error(
     p <-
       d |>
       plot_trajectories(id = id, time = time, fill = status, nudge_x = .5)
   )
-  vdiffr::expect_doppelganger("plot_trajectories() nudge_x", p)
+  expect_doppelganger("plot_trajectories() nudge_x", p)
 
   expect_no_error(
     p <-
       d |>
       plot_trajectories(id = id, time = time, fill = status, by = group)
   )
-  vdiffr::expect_doppelganger("plot_trajectories() by", p)
+  expect_doppelganger("plot_trajectories() by", p)
 
   d$group2 <- "C"
   expect_no_error(
@@ -36,7 +36,7 @@ test_that("plot_trajectories() and plot_periods() works", {
         by = c(group, group2)
       )
   )
-  vdiffr::expect_doppelganger("plot_trajectories() by 2", p)
+  expect_doppelganger("plot_trajectories() by 2", p)
 
   d2 <- d |>
     dplyr::mutate(end = time + 1) |>
@@ -49,7 +49,7 @@ test_that("plot_trajectories() and plot_periods() works", {
         fill = status, height = 0.8
       )
   )
-  vdiffr::expect_doppelganger("plot_periods()", p)
+  expect_doppelganger("plot_periods()", p)
 
   expect_no_error(
     p <-
@@ -60,7 +60,7 @@ test_that("plot_trajectories() and plot_periods() works", {
         hide_y_labels = TRUE
       )
   )
-  vdiffr::expect_doppelganger("plot_periods() hide_y_labels", p)
+  expect_doppelganger("plot_periods() hide_y_labels", p)
 
   # expected errors
   expect_error(
