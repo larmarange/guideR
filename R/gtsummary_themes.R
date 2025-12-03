@@ -81,7 +81,7 @@ theme_gtsummary_prop_n <- function(
   )
 
   if (isTRUE(set_theme)) gtsummary::set_gtsummary_theme(lst_theme)
-  return(invisible(lst_theme))
+  invisible(lst_theme)
 }
 
 #' @rdname gtsummary_themes
@@ -97,7 +97,7 @@ theme_gtsummary_fisher_simulate_p <- function(
       "guideR::fisher.simulate.p"
   )
   if (isTRUE(set_theme)) gtsummary::set_gtsummary_theme(lst_theme)
-  return(invisible(lst_theme))
+  invisible(lst_theme)
 }
 
 #' @rdname gtsummary_themes
@@ -182,7 +182,7 @@ theme_gtsummary_unweighted_n <- function(
     )
 
   if (isTRUE(set_theme)) gtsummary::set_gtsummary_theme(lst_theme)
-  return(invisible(lst_theme))
+  invisible(lst_theme)
 }
 
 #' @rdname gtsummary_themes
@@ -199,5 +199,5 @@ theme_gtsummary_bold_labels <- function(
     "tbl_hierarchical_count-fn:addnl-fn-to-run" = gtsummary::bold_labels
   )
   if (isTRUE(set_theme)) gtsummary::set_gtsummary_theme(lst_theme)
-  return(invisible(lst_theme))
+  invisible(lst_theme)
 }
