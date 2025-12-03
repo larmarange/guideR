@@ -1,4 +1,17 @@
-test_that("plot_proportions() does not produce an error", {
+# adapted from https://github.com/r-lib/vdiffr/issues/141
+if (nzchar(Sys.getenv("CI")) || !rlang::is_installed("vdiffr")) {
+  #if we are running tests remotely
+  # we are opting out of using vdiffr
+  # assigning a dummy function
+
+  expect_doppelganger <- function(...) {
+    testthat::skip("`vdiffr` tests not run")
+  }
+} else {
+  expect_doppelganger <- vdiffr::expect_doppelganger
+}
+
+test_that("plot_proportions() works", {
   expect_no_error(
     p <-
       titanic |>
@@ -8,7 +21,7 @@ test_that("plot_proportions() does not produce an error", {
         labels_color = "white"
       )
   )
-  vdiffr::expect_doppelganger("plot_proportions() overall only", p)
+  expect_doppelganger("plot_proportions() overall only", p)
 
   expect_no_error(
     p <-
@@ -19,7 +32,7 @@ test_that("plot_proportions() does not produce an error", {
         fill = "lightblue"
       )
   )
-  vdiffr::expect_doppelganger("plot_proportions() by", p)
+  expect_doppelganger("plot_proportions() by", p)
 
   expect_no_error(
     p <-
@@ -32,7 +45,7 @@ test_that("plot_proportions() does not produce an error", {
         pvalues_test = "chisq"
       )
   )
-  vdiffr::expect_doppelganger("plot_proportions() by and flip", p)
+  expect_doppelganger("plot_proportions() by and flip", p)
 
   skip_on_cran()
   expect_no_error(
@@ -47,7 +60,7 @@ test_that("plot_proportions() does not produce an error", {
         show_labels = FALSE
       )
   )
-  vdiffr::expect_doppelganger("plot_proportions() points", p)
+  expect_doppelganger("plot_proportions() points", p)
 
   expect_no_error(
     p <-
@@ -61,26 +74,26 @@ test_that("plot_proportions() does not produce an error", {
         show_overall_line = TRUE
       )
   )
-  vdiffr::expect_doppelganger("plot_proportions() survey", p)
+  expect_doppelganger("plot_proportions() survey", p)
 
   d <- titanic
   d$Sex[1:50] <- NA
   expect_no_error(
     p <- d |> plot_proportions(Survived == "Yes", by = Sex)
   )
-  vdiffr::expect_doppelganger("plot_proportions() missing by", p)
+  expect_doppelganger("plot_proportions() missing by", p)
 
   expect_no_error(
     p <- d |> plot_proportions(Survived == "Yes", by = Sex, drop_na_by = TRUE)
   )
-  vdiffr::expect_doppelganger("plot_propotions() missing by and drop_na_by", p)
+  expect_doppelganger("plot_propotions() missing by and drop_na_by", p)
 
   expect_no_error(
     p <-
       iris |>
       plot_proportions(Species == "versicolor", by = dplyr::contains("leng"))
   )
-  vdiffr::expect_doppelganger("plot_proportions() tidyselect by", p)
+  expect_doppelganger("plot_proportions() tidyselect by", p)
 
   expect_no_error(
     p <-
@@ -93,7 +106,7 @@ test_that("plot_proportions() does not produce an error", {
         by = Species
       )
   )
-  vdiffr::expect_doppelganger("plot_proportions() multiple conditions", p)
+  expect_doppelganger("plot_proportions() multiple conditions", p)
 
   expect_no_error(
     p <-
@@ -103,7 +116,7 @@ test_that("plot_proportions() does not produce an error", {
         by = Class
       )
   )
-  vdiffr::expect_doppelganger("plot_proportions() stratified_by", p)
+  expect_doppelganger("plot_proportions() stratified_by", p)
 
   expect_no_error(
     p <-
@@ -114,7 +127,7 @@ test_that("plot_proportions() does not produce an error", {
         mapping = ggplot2::aes(fill = level)
       )
   )
-  vdiffr::expect_doppelganger("plot_proportions() dummy_proportions", p)
+  expect_doppelganger("plot_proportions() dummy_proportions", p)
 
   expect_no_error(
     p <-
@@ -129,5 +142,5 @@ test_that("plot_proportions() does not produce an error", {
         free_scale = TRUE
       )
   )
-  vdiffr::expect_doppelganger("plot_proportions fill=condition", p)
+  expect_doppelganger("plot_proportions fill=condition", p)
 })
