@@ -88,3 +88,4 @@ ggplot2::ggplot(iris) +
   scale_colour_safe()
 \dontshow{\}) # examplesIf}
 }
+\keyword{hplot}
