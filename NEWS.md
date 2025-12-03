@@ -3,6 +3,8 @@
 **New features**
 
 * new function `plot_categorical()` (#47)
+* new colour palette `safe_pal()` and corresponding scales `scale_fill_safe()`
+  and `scale_colour_safe()` for `ggplot2`
 
 **Minor breaking change**
 

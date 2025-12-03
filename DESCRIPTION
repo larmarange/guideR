@@ -55,6 +55,7 @@ Suggests:
     gtsummary (>= 2.3.0),
     htmltools,
     htmlwidgets,
+    khroma,
     nnet,
     parameters,
     spelling,

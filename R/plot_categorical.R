@@ -148,6 +148,7 @@ plot_categorical <- function(
       labels = scales::percent,
       expand = ggplot2::expansion(mult = c(0, 0))
     ) +
+    scale_fill_safe() +
     ggplot2::labs(fill = NULL)
 
   if (flip)
