@@ -253,7 +253,7 @@ titanic |>
   plot_proportions(
     Survived == "Yes",
     by = -Survived,
-    mapping = ggplot2::aes(fill = variable),
+    mapping = ggplot2::aes(fill = by),
     color = "black",
     show.legend = FALSE,
     show_overall_line = TRUE,
@@ -345,10 +345,6 @@ titanic |>
   ) +
   ggplot2::theme(legend.position = "bottom") +
   ggplot2::labs(fill = NULL)
-#> Warning: Removed 4 rows containing missing values or values outside the scale range
-#> (`geom_bar()`).
-#> Warning: Removed 4 rows containing missing values or values outside the scale range
-#> (`geom_text()`).
 
 
 # Convert Class into dummy variables

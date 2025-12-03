@@ -34,9 +34,18 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="guider-development-version">guideR (development version)<a class="anchor" aria-label="anchor" href="#guider-development-version"></a></h2>
-</div>
+<p><strong>New features</strong></p>
+<ul><li>new function <code><a href="../reference/plot_categorical.html">plot_categorical()</a></code> (<a href="https://github.com/larmarange/guideR/issues/47" class="external-link">#47</a>)</li>
+<li>new colour palette <code><a href="../reference/safe_pal.html">safe_pal()</a></code> and corresponding scales <code><a href="../reference/safe_pal.html">scale_fill_safe()</a></code> and <code><a href="../reference/safe_pal.html">scale_colour_safe()</a></code> for <code>ggplot2</code>
+</li>
+</ul><p><strong>Minor breaking change</strong></p>
+<ul><li>
+<code><a href="../reference/plot_proportions.html">plot_proportions()</a></code> has been reorganized (some column names have changed when calling <code>return_data = TRUE</code>)</li>
+</ul><p><strong>Fix</strong></p>
+<ul><li>bug fix in <code><a href="https://rdrr.io/r/base/proportions.html" class="external-link">proportions()</a></code> when <code>.na.rm = TRUE</code> (<a href="https://github.com/larmarange/guideR/issues/46" class="external-link">#46</a>)</li>
+</ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.7.0" id="guider-070">guideR 0.7.0<a class="anchor" aria-label="anchor" href="#guider-070"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.7.0" id="guider-070">guideR 0.7.0<a class="anchor" aria-label="anchor" href="#guider-070"></a></h2><p class="text-muted">CRAN release: 2025-11-26</p>
 <p><strong>New features</strong></p>
 <ul><li>additional themes for <code>gtsummary</code>: <code><a href="../reference/gtsummary_themes.html">theme_gtsummary_prop_n()</a></code>, <code><a href="../reference/gtsummary_themes.html">theme_gtsummary_unweighted_n()</a></code>, <code><a href="../reference/gtsummary_themes.html">theme_gtsummary_fisher_simulate_p()</a></code> and <code><a href="../reference/gtsummary_themes.html">theme_gtsummary_bold_labels()</a></code> (<a href="https://github.com/larmarange/guideR/issues/42" class="external-link">#42</a>)</li>
 <li>

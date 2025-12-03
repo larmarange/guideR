@@ -2,7 +2,34 @@
 
 ## guideR (development version)
 
+**New features**
+
+- new function
+  [`plot_categorical()`](https://larmarange.github.io/guideR/dev/reference/plot_categorical.md)
+  ([\#47](https://github.com/larmarange/guideR/issues/47))
+- new colour palette
+  [`safe_pal()`](https://larmarange.github.io/guideR/dev/reference/safe_pal.md)
+  and corresponding scales
+  [`scale_fill_safe()`](https://larmarange.github.io/guideR/dev/reference/safe_pal.md)
+  and
+  [`scale_colour_safe()`](https://larmarange.github.io/guideR/dev/reference/safe_pal.md)
+  for `ggplot2`
+
+**Minor breaking change**
+
+- [`plot_proportions()`](https://larmarange.github.io/guideR/dev/reference/plot_proportions.md)
+  has been reorganized (some column names have changed when calling
+  `return_data = TRUE`)
+
+**Fix**
+
+- bug fix in [`proportions()`](https://rdrr.io/r/base/proportions.html)
+  when `.na.rm = TRUE`
+  ([\#46](https://github.com/larmarange/guideR/issues/46))
+
 ## guideR 0.7.0
+
+CRAN release: 2025-11-26
 
 **New features**
 

@@ -29,6 +29,8 @@
 
 ## Statistical plots
 
+- [`plot_categorical()`](https://larmarange.github.io/guideR/dev/reference/plot_categorical.md)
+  : Plot a categorical variable by sub-groups
 - [`plot_multiple_answers()`](https://larmarange.github.io/guideR/dev/reference/plot_multiple_answers.md)
   [`plot_multiple_answers_dodge()`](https://larmarange.github.io/guideR/dev/reference/plot_multiple_answers.md)
   : Plot a multiple answers question
@@ -39,6 +41,11 @@
 - [`plot_trajectories()`](https://larmarange.github.io/guideR/dev/reference/plot_trajectories.md)
   [`plot_periods()`](https://larmarange.github.io/guideR/dev/reference/plot_trajectories.md)
   : Plot trajectories
+- [`safe_pal()`](https://larmarange.github.io/guideR/dev/reference/safe_pal.md)
+  [`scale_fill_safe()`](https://larmarange.github.io/guideR/dev/reference/safe_pal.md)
+  [`scale_colour_safe()`](https://larmarange.github.io/guideR/dev/reference/safe_pal.md)
+  [`scale_color_safe()`](https://larmarange.github.io/guideR/dev/reference/safe_pal.md)
+  : A safe discrete colour palette
 
 ## Models
 
