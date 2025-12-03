@@ -1,8 +1,17 @@
 # guideR (development version)
 
-* bug fix in `proportions()` when `.na.rm = TRUE`
+**New features**
+
+* new function `plot_categorical()` (#47)
+
+**Minor breaking change**
+
 * `plot_proportions()` has been reorganized (some column names have changed
   when calling `return_data = TRUE`)
+
+**Fix**
+
+* bug fix in `proportions()` when `.na.rm = TRUE` (#46)
 
 # guideR 0.7.0
 
