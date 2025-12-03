@@ -18,6 +18,7 @@
 #' be reversed?
 #' @return A palette function.
 #' @export
+#' @keywords hplot
 #' @examplesIf rlang::is_installed(c("scales", "ggplot2"))
 #'
 #' scales::show_col(safe_pal()(6))
