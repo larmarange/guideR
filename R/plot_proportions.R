@@ -389,6 +389,7 @@ plot_proportions <- function(
     pvalues_size = pvalues_size,
     show_labels = show_labels,
     label = "prop_label",
+    y_label = "y_label",
     label_position = "nudge",
     labels_size = labels_size,
     labels_color = labels_color,
@@ -399,10 +400,13 @@ plot_proportions <- function(
     overall_line_width = overall_line_width,
     facet_labeller = facet_labeller,
     flip = flip,
-    scale_y_labels = scales::percent,
     free_scale = free_scale,
     cols_facet = cols_facet
-  )
+  ) +
+    ggplot2::scale_y_continuous(
+      labels = scales::percent,
+      expand = ggplot2::expansion(mult = c(0, .1))
+    )
 }
 
 .convert_continuous <- function(x, convert_continuous) {
@@ -513,35 +517,35 @@ dummy_proportions <- function(variable) {
 }
 
 .guideR_generic_plot_by <- function(
-    d,
-    y = "prop",
-    outcome = "condition",
-    geom = "bar",
-    position = "identity",
-    ...,
-    show_ci = TRUE,
-    ci_ymin = "prop_low",
-    ci_ymax = "prop_high",
-    ci_color = "black",
-    show_pvalues = TRUE,
-    pvalues = NULL,
-    pvalues_labeller = scales::label_pvalue(add_p = TRUE),
-    pvalues_size = 3.5,
-    show_labels = TRUE,
-    label = "prop_label",
-    label_position = "nudge",
-    labels_size = 3.5,
-    labels_color = "black",
-    show_overall_line = FALSE,
-    yintercepts = NULL,
-    overall_line_type = "dashed",
-    overall_line_color = "black",
-    overall_line_width = .5,
-    facet_labeller = ggplot2::label_wrap_gen(width = 50, multi_line = TRUE),
-    flip = FALSE,
-    scale_y_labels = scales::percent,
-    free_scale = FALSE,
-    cols_facet = NULL
+  d,
+  y = "prop",
+  outcome = "condition",
+  geom = "bar",
+  position = "identity",
+  ...,
+  show_ci = TRUE,
+  ci_ymin = "prop_low",
+  ci_ymax = "prop_high",
+  ci_color = "black",
+  show_pvalues = TRUE,
+  pvalues = NULL,
+  pvalues_labeller = scales::label_pvalue(add_p = TRUE),
+  pvalues_size = 3.5,
+  show_labels = TRUE,
+  label = "prop_label",
+  y_label = "y_label",
+  label_position = "nudge",
+  labels_size = 3.5,
+  labels_color = "black",
+  show_overall_line = FALSE,
+  yintercepts = NULL,
+  overall_line_type = "dashed",
+  overall_line_color = "black",
+  overall_line_width = .5,
+  facet_labeller = ggplot2::label_wrap_gen(width = 50, multi_line = TRUE),
+  flip = FALSE,
+  free_scale = FALSE,
+  cols_facet = NULL
 ) {
   # main plot
   plot <- d |>
@@ -553,8 +557,8 @@ dummy_proportions <- function(variable) {
     )
   if (geom != "point") # if point, should be drawn after ci
     plot <-
-    plot +
-    ggplot2::stat_identity(geom = geom, ..., position = position)
+      plot +
+      ggplot2::stat_identity(geom = geom, ..., position = position)
 
   # plotting confidence intervals
   if (show_ci) {
@@ -573,8 +577,8 @@ dummy_proportions <- function(variable) {
 
   if (geom == "point")
     plot <-
-    plot +
-    ggplot2::stat_identity(geom = geom, ..., position = position)
+      plot +
+      ggplot2::stat_identity(geom = geom, ..., position = position)
 
   # plotting p-values
   if (show_pvalues && !is.null(pvalues) && nrow(pvalues) > 0) {
@@ -622,19 +626,40 @@ dummy_proportions <- function(variable) {
 
   # plotting labels
   if (show_labels) {
-    plot <-
-      plot +
-      ggplot2::geom_text(
-        mapping = ggplot2::aes(
-          label = .data[[label]],
-          y = .data$y_label
-        ),
-        size = labels_size,
-        color = labels_color,
-        vjust = ifelse(flip, .5, 0),
-        hjust = ifelse(flip, 0, 0.5),
-        position = label_position
-      )
+    if (is.null(y_label)) { # categorical case
+      m <- ggplot2::aes(label = .data[[label]])
+      vj <- .5
+      hj <- .5
+    } else {
+      m <- ggplot2::aes(label = .data[[label]], y = .data[[y_label]])
+      vj <- ifelse(flip, .5, 0)
+      hj <- ifelse(flip, 0, .5)
+    }
+
+    if (labels_color == "auto") {
+      rlang::check_installed("ggstats")
+      m$colour <- ggstats::auto_contrast$colour
+      plot <-
+        plot +
+        ggplot2::geom_text(
+          mapping = m,
+          size = labels_size,
+          vjust = vj,
+          hjust = hj,
+          position = label_position
+        )
+    } else {
+      plot <-
+        plot +
+        ggplot2::geom_text(
+          mapping = m,
+          size = labels_size,
+          color = labels_color,
+          vjust = vj,
+          hjust = hj,
+          position = label_position
+        )
+    }
   }
 
   # overall line
@@ -654,10 +679,6 @@ dummy_proportions <- function(variable) {
   plot <-
     plot +
     ggplot2::labs(x = NULL, y = NULL) +
-    ggplot2::scale_y_continuous(
-      labels = scale_y_labels,
-      expand = ggplot2::expansion(mult = c(0, .1))
-    ) +
     ggplot2::scale_x_discrete(
       labels = \(x) {
         stringr::str_remove(x, "^[0-9]*_")

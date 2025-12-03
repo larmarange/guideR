@@ -1,6 +1,8 @@
 # guideR (development version)
 
 * bug fix in `proportions()` when `.na.rm = TRUE`
+* `plot_proportions()` has been reorganized (some column names have changed
+  when calling `return_data = TRUE`)
 
 # guideR 0.7.0
 
