@@ -79,5 +79,10 @@ titanic |>
     show_overall = FALSE,
     flip = TRUE
   )
+\dontshow{if (rlang::is_installed("gtsummary")) withAutoprint(\{ # examplesIf}
+trial |> plot_categorical(grade, by = c(age, stage, trt))
+trial |> plot_categorical(grade, by = c(age, stage, trt), drop_na_by = TRUE)
+trial |> plot_categorical(c(grade, stage), by = c(trt, response))
+\dontshow{\}) # examplesIf}
 }
 \keyword{hplot}
