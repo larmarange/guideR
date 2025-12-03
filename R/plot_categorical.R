@@ -26,9 +26,12 @@
 #'     flip = TRUE
 #'   )
 #' @examplesIf rlang::is_installed("gtsummary")
-#' trial |> plot_categorical(grade, by = c(age, stage, trt))
-#' trial |> plot_categorical(grade, by = c(age, stage, trt), drop_na_by = TRUE)
-#' trial |> plot_categorical(c(grade, stage), by = c(trt, response))
+#' gtsummary::trial |>
+#'   plot_categorical(grade, by = c(age, stage, trt))
+#' gtsummary::trial |>
+#'   plot_categorical(grade, by = c(age, stage, trt), drop_na_by = TRUE)
+#' gtsummary::trial |>
+#'   plot_categorical(c(grade, stage), by = c(trt, response))
 plot_categorical <- function(
   data,
   outcome,
