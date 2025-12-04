@@ -167,7 +167,7 @@ plot_categorical <- function(
     ggplot2::aes(fill = .data$outcome_level) +
     ggplot2::scale_y_continuous(
       labels = scales::percent,
-      expand = ggplot2::expansion(mult = c(.025, .025))
+      expand = ggplot2::expansion(mult = c(.02, .02))
     ) +
     scale_fill_safe() +
     ggplot2::labs(fill = NULL)
