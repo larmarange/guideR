@@ -34,6 +34,18 @@ test_that("plot_proportions() works", {
   )
   expect_doppelganger("plot_proportions() by and flip", p)
 
+  expect_no_error(
+    p <-
+      titanic |>
+      plot_proportions(
+        Survived == "Yes",
+        by = c(Class, Sex),
+        fill = "lightblue",
+        minimal = TRUE
+      )
+  )
+  expect_doppelganger("plot_proportions() minimal", p)
+
   skip_on_cran()
   expect_no_error(
     p <-

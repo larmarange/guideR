@@ -49,6 +49,13 @@ test_that("plot_categorical() works", {
   expect_no_error(
     p <-
       gtsummary::trial |>
+      plot_categorical(c(grade, stage), by = c(trt, response), minimal = TRUE)
+  )
+  expect_doppelganger("plot_categorical() multiple outcome & minimal", p)
+
+  expect_no_error(
+    p <-
+      gtsummary::trial |>
       plot_categorical(c(grade, stage), by = c(trt, response), flip = TRUE)
   )
   expect_doppelganger("plot_categorical() multiple outcome flip", p)
