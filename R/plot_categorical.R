@@ -18,6 +18,7 @@
 #'     by = c(Age, Sex)
 #'   )
 #'
+#' \donttest{
 #' titanic |>
 #'   plot_categorical(
 #'     Class,
@@ -25,13 +26,24 @@
 #'     show_overall = FALSE,
 #'     flip = TRUE
 #'   )
+#'
+#' titanic |>
+#'   plot_categorical(
+#'     Class,
+#'     by = c(Age, Sex),
+#'     flip = TRUE,
+#'     minimal = TRUE
+#'   )
+#' }
 #' @examplesIf rlang::is_installed("gtsummary")
+#' \donttest{
 #' gtsummary::trial |>
 #'   plot_categorical(grade, by = c(age, stage, trt))
 #' gtsummary::trial |>
 #'   plot_categorical(grade, by = c(age, stage, trt), drop_na_by = TRUE)
 #' gtsummary::trial |>
 #'   plot_categorical(c(grade, stage), by = c(trt, response))
+#' }
 plot_categorical <- function(
   data,
   outcome,
@@ -48,6 +60,7 @@ plot_categorical <- function(
   labels_color = "auto",
   facet_labeller = ggplot2::label_wrap_gen(width = 50, multi_line = TRUE),
   flip = FALSE,
+  minimal = FALSE,
   return_data = FALSE
 ) {
   # variable identification
@@ -147,13 +160,14 @@ plot_categorical <- function(
       show_overall_line = FALSE,
       facet_labeller = facet_labeller,
       flip = flip,
+      minimal = minimal,
       free_scale = FALSE,
       cols_facet = cols_facet
     ) +
     ggplot2::aes(fill = .data$outcome_level) +
     ggplot2::scale_y_continuous(
       labels = scales::percent,
-      expand = ggplot2::expansion(mult = c(0, 0))
+      expand = ggplot2::expansion(mult = c(.025, .025))
     ) +
     scale_fill_safe() +
     ggplot2::labs(fill = NULL)

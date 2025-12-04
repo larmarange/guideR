@@ -44,6 +44,7 @@
 #' @param overall_line_width Line width of the overall line.
 #' @param facet_labeller Labeller function for strip labels.
 #' @param flip Flip x and y axis?
+#' @param minimal Should a minimal theme be applied? (no y-axis, no grid)
 #' @param free_scale Allow y axis to vary between conditions?
 #' @param return_data Return computed data instead of the plot?
 #' @export
@@ -71,6 +72,14 @@
 #'     by = c(Class, Sex),
 #'     fill = "lightblue",
 #'     flip = TRUE
+#'   )
+#'
+#' titanic |>
+#'   plot_proportions(
+#'     Survived == "Yes",
+#'     by = c(Class, Sex),
+#'     fill = "lightblue",
+#'     minimal = TRUE
 #'   )
 #'
 #' titanic |>
@@ -208,6 +217,7 @@ plot_proportions <- function(
   overall_line_width = .5,
   facet_labeller = ggplot2::label_wrap_gen(width = 50, multi_line = TRUE),
   flip = FALSE,
+  minimal = FALSE,
   free_scale = FALSE,
   return_data = FALSE
 ) {
@@ -400,6 +410,7 @@ plot_proportions <- function(
     overall_line_width = overall_line_width,
     facet_labeller = facet_labeller,
     flip = flip,
+    minimal = minimal,
     free_scale = free_scale,
     cols_facet = cols_facet
   ) +
@@ -544,6 +555,7 @@ dummy_proportions <- function(variable) {
   overall_line_width = .5,
   facet_labeller = ggplot2::label_wrap_gen(width = 50, multi_line = TRUE),
   flip = FALSE,
+  minimal = FALSE,
   free_scale = FALSE,
   cols_facet = NULL
 ) {
@@ -723,6 +735,36 @@ dummy_proportions <- function(variable) {
         panel.grid.major.x = ggplot2::element_blank(),
         axis.ticks.x = ggplot2::element_blank()
       )
+  }
+
+  if (minimal) {
+    plot <-
+      plot +
+      ggplot2::theme(
+        panel.grid = ggplot2::element_blank(),
+        panel.border = ggplot2::element_blank(),
+        axis.ticks = ggplot2::element_blank(),
+        panel.background = ggplot2::element_rect(fill = "grey97")
+      )
+
+    if (flip) {
+      plot <-
+        plot +
+        ggplot2::theme(
+          axis.text.x = ggplot2::element_blank()
+        )
+    } else {
+      plot <-
+        plot +
+        ggplot2::theme(
+          axis.text.y = ggplot2::element_blank(),
+          strip.text.x.top = ggplot2::element_text(
+            face = "bold", angle = 0, color = "black",
+            hjust = 0.5, vjust = 1
+          ),
+          strip.background.x = ggplot2::element_blank()
+        )
+    }
   }
 
   plot
