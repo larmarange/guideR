@@ -33,6 +33,7 @@ plot_proportions(
   overall_line_width = 0.5,
   facet_labeller = ggplot2::label_wrap_gen(width = 50, multi_line = TRUE),
   flip = FALSE,
+  minimal = FALSE,
   free_scale = FALSE,
   return_data = FALSE
 )
@@ -102,6 +103,8 @@ or more) be converted to quartiles (using \code{cut_quartiles()})?}
 
 \item{flip}{Flip x and y axis?}
 
+\item{minimal}{Should a minimal theme be applied? (no y-axis, no grid)}
+
 \item{free_scale}{Allow y axis to vary between conditions?}
 
 \item{return_data}{Return computed data instead of the plot?}
@@ -144,6 +147,14 @@ titanic |>
     by = c(Class, Sex),
     fill = "lightblue",
     flip = TRUE
+  )
+
+titanic |>
+  plot_proportions(
+    Survived == "Yes",
+    by = c(Class, Sex),
+    fill = "lightblue",
+    minimal = TRUE
   )
 
 titanic |>

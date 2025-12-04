@@ -20,6 +20,7 @@ plot_categorical(
   labels_color = "auto",
   facet_labeller = ggplot2::label_wrap_gen(width = 50, multi_line = TRUE),
   flip = FALSE,
+  minimal = FALSE,
   return_data = FALSE
 )
 }
@@ -58,6 +59,8 @@ or more) be converted to quartiles (using \code{cut_quartiles()})?}
 
 \item{flip}{Flip x and y axis?}
 
+\item{minimal}{Should a minimal theme be applied? (no y-axis, no grid)}
+
 \item{return_data}{Return computed data instead of the plot?}
 }
 \description{
@@ -72,6 +75,7 @@ titanic |>
     by = c(Age, Sex)
   )
 
+\donttest{
 titanic |>
   plot_categorical(
     Class,
@@ -79,13 +83,24 @@ titanic |>
     show_overall = FALSE,
     flip = TRUE
   )
+
+titanic |>
+  plot_categorical(
+    Class,
+    by = c(Age, Sex),
+    flip = TRUE,
+    minimal = TRUE
+  )
+}
 \dontshow{if (rlang::is_installed("gtsummary")) withAutoprint(\{ # examplesIf}
+\donttest{
 gtsummary::trial |>
   plot_categorical(grade, by = c(age, stage, trt))
 gtsummary::trial |>
   plot_categorical(grade, by = c(age, stage, trt), drop_na_by = TRUE)
 gtsummary::trial |>
   plot_categorical(c(grade, stage), by = c(trt, response))
+}
 \dontshow{\}) # examplesIf}
 }
 \keyword{hplot}
