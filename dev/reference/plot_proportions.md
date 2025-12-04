@@ -42,6 +42,7 @@ plot_proportions(
   overall_line_width = 0.5,
   facet_labeller = ggplot2::label_wrap_gen(width = 50, multi_line = TRUE),
   flip = FALSE,
+  minimal = FALSE,
   free_scale = FALSE,
   return_data = FALSE
 )
@@ -171,6 +172,10 @@ dummy_proportions(variable)
 
   Flip x and y axis?
 
+- minimal:
+
+  Should a minimal theme be applied? (no y-axis, no grid)
+
 - free_scale:
 
   Allow y axis to vary between conditions?
@@ -214,6 +219,15 @@ titanic |>
     by = c(Class, Sex),
     fill = "lightblue",
     flip = TRUE
+  )
+
+
+titanic |>
+  plot_proportions(
+    Survived == "Yes",
+    by = c(Class, Sex),
+    fill = "lightblue",
+    minimal = TRUE
   )
 
 

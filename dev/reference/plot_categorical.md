@@ -24,6 +24,7 @@ plot_categorical(
   labels_color = "auto",
   facet_labeller = ggplot2::label_wrap_gen(width = 50, multi_line = TRUE),
   flip = FALSE,
+  minimal = FALSE,
   return_data = FALSE
 )
 ```
@@ -97,6 +98,10 @@ plot_categorical(
 
   Flip x and y axis?
 
+- minimal:
+
+  Should a minimal theme be applied? (no y-axis, no grid)
+
 - return_data:
 
   Return computed data instead of the plot?
@@ -111,6 +116,7 @@ titanic |>
   )
 
 
+# \donttest{
 titanic |>
   plot_categorical(
     Class,
@@ -119,6 +125,17 @@ titanic |>
     flip = TRUE
   )
 
+
+titanic |>
+  plot_categorical(
+    Class,
+    by = c(Age, Sex),
+    flip = TRUE,
+    minimal = TRUE
+  )
+
+# }
+# \donttest{
 gtsummary::trial |>
   plot_categorical(grade, by = c(age, stage, trt))
 
@@ -127,4 +144,6 @@ gtsummary::trial |>
 
 gtsummary::trial |>
   plot_categorical(c(grade, stage), by = c(trt, response))
+
+# }
 ```

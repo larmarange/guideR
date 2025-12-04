@@ -13,7 +13,10 @@
   [`scale_fill_safe()`](https://larmarange.github.io/guideR/dev/reference/safe_pal.md)
   and
   [`scale_colour_safe()`](https://larmarange.github.io/guideR/dev/reference/safe_pal.md)
-  for `ggplot2`
+  for `ggplot2` ([\#49](https://github.com/larmarange/guideR/issues/49))
+- new argument `minimal` for
+  [`plot_proportions()`](https://larmarange.github.io/guideR/dev/reference/plot_proportions.md)
+  ([\#51](https://github.com/larmarange/guideR/issues/51))
 
 **Minor breaking change**
 
