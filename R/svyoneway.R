@@ -16,7 +16,7 @@
 #'   Petal.Length ~ Species,
 #'   design = srvyr::as_survey(iris)
 #' )
-svyoneway <- function (formula, design, ...) {
+svyoneway <- function(formula, design, ...) {
   rlang::check_installed("survey")
   m <- survey::svyglm(formula, design, family = stats::gaussian())
   o <- survey::regTermTest(m, as.character(formula[[3]]), ...)

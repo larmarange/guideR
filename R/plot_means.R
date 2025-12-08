@@ -141,7 +141,7 @@ plot_means <- function(
 
   d <-
     outcome_variables |>
-      purrr::map(fn_one_outcome) |>
+    purrr::map(fn_one_outcome) |>
     dplyr::bind_rows()
 
   d$outcome <- forcats::fct_inorder(d$outcome)
@@ -154,7 +154,7 @@ plot_means <- function(
   d <-
     d |>
     dplyr::relocate(dplyr::all_of(c("outcome", "by", "by_label"))) |>
-    dplyr::select(-.data$x)
+    dplyr::select(-dplyr::all_of("x"))
 
   # mean labels
   d$mean_label <- labels_labeller(d$mean)
@@ -172,7 +172,7 @@ plot_means <- function(
   pvalues <- NULL
   if (show_pvalues) {
     if (inherits(data, "survey.design")) {
-      test_fun <- svyoneway
+      test_fun <- svyoneway # nolint
     } else {
       test_fun <- stats::oneway.test
     }

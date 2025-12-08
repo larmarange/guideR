@@ -83,7 +83,7 @@ mean_sd.data.frame <- function(data,
         n = sum(!is.na(.data[[x]])),
         missing = sum(is.na(.data[[x]]))
       ) |>
-      dplyr::relocate(.data$x)
+      dplyr::relocate(dplyr::all_of("x"))
   }
 
   res <- v |>
@@ -158,9 +158,9 @@ mean_sd.survey.design <- function(data,
         missing = sum(is.na(.data[[x]]))
       ) |>
       dplyr::mutate(sd = sqrt(.data$mean_var)) |>
-      dplyr::relocate(.data$sd, .before = .data$n) |>
-      dplyr::select(-.data$mean_var) |>
-      dplyr::relocate(.data$x)
+      dplyr::relocate(dplyr::all_of("sd"), .before = dplyr::all_of("n")) |>
+      dplyr::select(-dplyr::all_of("mean_var")) |>
+      dplyr::relocate(dplyr::all_of("x"))
   }
 
   res <- v |>
@@ -169,13 +169,13 @@ mean_sd.survey.design <- function(data,
 
   if (.drop_na_by)
     res <-
-    res |>
-    tidyr::drop_na(dplyr::all_of(dplyr::group_vars(res)))
+      res |>
+      tidyr::drop_na(dplyr::all_of(dplyr::group_vars(res)))
 
   if (.conf.int)
     res <-
       res |>
-      dplyr::rename(mean_high = .data$mean_upp)
+      dplyr::rename(mean_high = dplyr::all_of("mean_upp"))
 
   res |>
     labelled::copy_labels_from(data |> dplyr::select({{ .by }}))
@@ -194,7 +194,7 @@ mean_sd.default <- function(data,
   data <- dplyr::tibble(vector = data)
   data |>
     mean_sd(
-      .data$vector,
+      dplyr::pick(dplyr::all_of("vector")),
       .drop = .drop,
       .conf.int = .conf.int,
       .conf.level = .conf.level,
