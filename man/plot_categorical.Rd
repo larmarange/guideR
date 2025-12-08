@@ -38,8 +38,8 @@ group by (comparison is done separately for each variable).}
 
 \item{drop_na_by}{Remove \code{NA} values in \code{by} variables?}
 
-\item{convert_continuous}{Should continuous variables (with 5 unique values
-or more) be converted to quartiles (using \code{cut_quartiles()})?}
+\item{convert_continuous}{Should continuous by variables (with 5 unique
+values or more) be converted to quartiles (using \code{cut_quartiles()})?}
 
 \item{...}{Additional arguments passed to \code{\link[ggplot2:geom_bar]{ggplot2::geom_bar()}}.}
 
@@ -49,11 +49,11 @@ or more) be converted to quartiles (using \code{cut_quartiles()})?}
 
 \item{show_labels}{Display proportion labels?}
 
-\item{labels_labeller}{Labeller function for proportion labels.}
+\item{labels_labeller}{Labeller function for labels.}
 
-\item{labels_size}{Size of proportion labels.}
+\item{labels_size}{Size of labels.}
 
-\item{labels_color}{Color of proportion labels.}
+\item{labels_color}{Color of labels.}
 
 \item{facet_labeller}{Labeller function for strip labels.}
 

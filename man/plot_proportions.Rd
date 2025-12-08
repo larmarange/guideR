@@ -24,6 +24,7 @@ plot_proportions(
   pvalues_labeller = scales::label_pvalue(add_p = TRUE),
   pvalues_size = 3.5,
   show_labels = TRUE,
+  label_y = NULL,
   labels_labeller = scales::label_percent(1),
   labels_size = 3.5,
   labels_color = "black",
@@ -55,8 +56,8 @@ group by (comparison is done separately for each variable).}
 
 \item{drop_na_by}{Remove \code{NA} values in \code{by} variables?}
 
-\item{convert_continuous}{Should continuous variables (with 5 unique values
-or more) be converted to quartiles (using \code{cut_quartiles()})?}
+\item{convert_continuous}{Should continuous by variables (with 5 unique
+values or more) be converted to quartiles (using \code{cut_quartiles()})?}
 
 \item{geom}{Geometry to use for plotting proportions (\code{"bar"} by default).}
 
@@ -85,11 +86,13 @@ or more) be converted to quartiles (using \code{cut_quartiles()})?}
 
 \item{show_labels}{Display proportion labels?}
 
-\item{labels_labeller}{Labeller function for proportion labels.}
+\item{label_y}{Y position of labels. If \code{NULL}, will be auto-determined.}
 
-\item{labels_size}{Size of proportion labels.}
+\item{labels_labeller}{Labeller function for labels.}
 
-\item{labels_color}{Color of proportion labels.}
+\item{labels_size}{Size of labels.}
+
+\item{labels_color}{Color of labels.}
 
 \item{show_overall_line}{Add an overall line?}
 

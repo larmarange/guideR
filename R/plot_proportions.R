@@ -18,8 +18,8 @@
 #' @param by <[`tidy-select`][dplyr::dplyr_tidy_select ]> List of variables to
 #' group by (comparison is done separately for each variable).
 #' @param drop_na_by Remove `NA` values in `by` variables?
-#' @param convert_continuous Should continuous variables (with 5 unique values
-#' or more) be converted to quartiles (using `cut_quartiles()`)?
+#' @param convert_continuous Should continuous by variables (with 5 unique
+#' values or more) be converted to quartiles (using `cut_quartiles()`)?
 #' @param geom Geometry to use for plotting proportions (`"bar"` by default).
 #' @param ... Additional arguments passed to the geom defined by `geom`.
 #' @param show_overall Display "Overall" column?
@@ -35,9 +35,10 @@
 #' @param pvalues_labeller Labeller function for p-values.
 #' @param pvalues_size Text size for p-values.
 #' @param show_labels Display proportion labels?
-#' @param labels_labeller Labeller function for proportion labels.
-#' @param labels_size Size of proportion labels.
-#' @param labels_color Color of proportion labels.
+#' @param label_y Y position of labels. If `NULL`, will be auto-determined.
+#' @param labels_labeller Labeller function for labels.
+#' @param labels_size Size of labels.
+#' @param labels_color Color of labels.
 #' @param show_overall_line Add an overall line?
 #' @param overall_line_type Line type of the overall line.
 #' @param overall_line_color Color of the overall line.
@@ -208,6 +209,7 @@ plot_proportions <- function(
   pvalues_labeller = scales::label_pvalue(add_p = TRUE),
   pvalues_size = 3.5,
   show_labels = TRUE,
+  label_y = NULL,
   labels_labeller = scales::label_percent(1),
   labels_size = 3.5,
   labels_color = "black",
@@ -296,7 +298,15 @@ plot_proportions <- function(
 
   # proportion labels
   d$prop_label <- labels_labeller(d$prop)
-  d$y_label <- 0.01
+  if (!is.null(label_y)) {
+    d$y_label <- label_y
+  } else if (geom %in% c("bar", "area")) {
+    d$y_label <- 0.01
+  } else if (show_ci) {
+    d$y_label <- min(d$prop_low) - .1 * diff(range(d$prop_low, d$prop_high))
+  } else {
+    d$y_label <- min(d$prop) - .1 * diff(range(d$prop))
+  }
 
   # computing p-values
   pvalues <- NULL
@@ -611,7 +621,7 @@ dummy_proportions <- function(variable) {
         d |>
           dplyr::group_by(.data[[outcome]]) |>
           dplyr::summarise(
-            y = ifelse(show_ci, max(.data$prop_high), max(.data$prop))
+            y = ifelse(show_ci, max(.data[[ci_ymax]]), max(.data[[y]]))
           ),
         by = outcome
       )
