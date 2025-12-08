@@ -2,7 +2,9 @@
 
 **New features**
 
-* new function `plot_categorical()` (#47)
+* new function `plot_categorical()` to plot a categorical variable by sub-groups
+  using bar plots (#47)
+* new function `svyoneway()` to test for equal means for survey design object
 * new colour palette `safe_pal()` and corresponding scales `scale_fill_safe()`
   and `scale_colour_safe()` for `ggplot2` (#49)
 * new argument `minimal` for `plot_proportions()` (#51)
