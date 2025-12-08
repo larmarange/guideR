@@ -5,8 +5,8 @@
 #' mean.
 #' @param data A vector, a data frame, data frame extension (e.g. a tibble),
 #' or a survey design object.
-#' @param ... <[`data-masking`][rlang::args_data_masking]> Variable(s) for those
-#' computing mean and standard deviation.
+#' @param ... <[`data-masking`][rlang::args_data_masking]> Variable(s) for which
+#' to compute mean and standard deviation.
 #' @param .by <[`tidy-select`][dplyr::dplyr_tidy_select]> Optional additional
 #' variables to group by (in addition to those eventually previously declared
 #' using [dplyr::group_by()]).
