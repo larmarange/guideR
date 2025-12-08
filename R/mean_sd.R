@@ -188,7 +188,7 @@ mean_sd.default <- function(data,
                             .drop = FALSE,
                             .conf.int = FALSE,
                             .conf.level = .95,
-                            .options = list(correct = TRUE)) {
+                            .options = NULL) {
   if (!is.atomic(data))
     cli::cli_abort("Objects of class `{class(data)}` are not covered.")
   data <- dplyr::tibble(vector = data)
