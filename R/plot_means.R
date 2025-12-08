@@ -11,7 +11,8 @@
 #' continuous variables to be plotted.
 #' @param geom Geometry to use for plotting means (`"point"` by default).
 #' @param show_pvalues Display p-values in the top-left corner? p-values are
-#' computed with [stats::oneway.test()] for data frames, and with [svyoneway()]
+#' computed with [stats::oneway.test()] for data frames, and with
+#' [survey::svyttest()] (2 groupes) or [svyoneway()] (3 groups or more)
 #' for survey objects.
 #' @param show_labels Display mean labels?
 #' @inheritParams plot_proportions
@@ -172,7 +173,7 @@ plot_means <- function(
   pvalues <- NULL
   if (show_pvalues) {
     if (inherits(data, "survey.design")) {
-      test_fun <- svyoneway # nolint
+      test_fun <- svyttest_oneway_formula # nolint
     } else {
       test_fun <- stats::oneway.test
     }

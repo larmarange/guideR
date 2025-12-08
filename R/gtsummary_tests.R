@@ -48,17 +48,21 @@ svyttest_oneway <- function(data, variable, by, ...) {
     dplyr::select(dplyr::all_of(c(variable, by))) |>
     tidyr::drop_na()
 
-  if (length(unique(data$variables[[by]])) == 2) {
-    survey::svyttest(
-      as.formula(paste(variable, " ~ ", by)),
-      design = data
-    ) |>
-      broom::tidy()
+  svyttest_oneway_formula(
+    as.formula(paste(variable, " ~ ", by)),
+    design = data
+  ) |>
+    broom::tidy()
+}
+
+# works only if one variable on rhs
+svyttest_oneway_formula <- function(formula, design) {
+  rlang::check_installed("broom")
+  rlang::check_installed("survey")
+
+  if (length(unique(design$variables[[as.character(formula[[3]])]])) == 2) {
+    survey::svyttest(formula, design)
   } else {
-    svyoneway(
-      as.formula(paste(variable, " ~ ", by)),
-      design = data
-    ) |>
-      broom::tidy()
+    svyoneway(formula, design)
   }
 }
