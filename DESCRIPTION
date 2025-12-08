@@ -52,7 +52,7 @@ Suggests:
     ggupset,
     ggstats,
     gt,
-    gtsummary (>= 2.3.0),
+    gtsummary (>= 2.5.0),
     htmltools,
     htmlwidgets,
     khroma,

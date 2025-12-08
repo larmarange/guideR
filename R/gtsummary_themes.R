@@ -6,6 +6,20 @@
 #' number of observations (between brackets). This function cannot be used
 #' simultaneously with [gtsummary::theme_gtsummary_mean_sd()], but you can use
 #' the `mean_sd = TRUE` option of `theme_gtsummary_prop_n()`.
+#' `theme_gtsummary_prop_n()` also modifies default method for
+#' [gtsummary::add_ci.tbl_summary()] (`"wilson"` for categorical variables,
+#' `"t.test"`, i.e. mean confidence interval, for continuous variables if
+#' `mean_sd = TRUE`, `"wilcox.test"`, i.e. confidence interval of the
+#' pseudomedian, for continuous variables if `mean_sd = FALSE`).
+#' Finally, `theme_gtsummary_prop_n()` also modifies default tests for
+#' [gtsummary::add_p.tbl_summary()]  for continuous variables if
+#' `mean_sd = TRUE` (`"t.test"` for comparing 2 groups, or `"oneway.test"` for
+#'  3 groups or more). If `mean_sd = FALSE`, the default tests for continuous
+#'  variables remain `"wilcox.test"` (2 groups) or `"kruskal.test"` (3 groups
+#'  or more). For categorical variables, `"chisq.test.no.correct"` and
+#'  `"fisher.test"` are used by default.
+#'  See `theme_gtsummary_fisher_simulate_p()` to change the default test for
+#'  categorical variables.
 #'
 #' `theme_gtsummary_fisher_simulate_p()` modify the default test used for
 #' categorical variables by Fisher test, with computation of p-values by
@@ -14,6 +28,19 @@
 #' `theme_gtsummary_unweighted_n()` modifies default values of tables returned
 #' by [gtsummary::tbl_svysummary()] and displays the unweighted number of
 #' observations instead of the weighted n.
+#' `theme_gtsummary_unweighted_n()` also modifies default method for
+#' [gtsummary::add_ci.tbl_svysummary()] (`"svyprop.logit"` for categorical
+#' variables, `"svymean"`, i.e. mean confidence interval, for continuous
+#' variables if `mean_sd = TRUE`, `"svymedian.mean"`, i.e. confidence interval
+#' of the median, for continuous variables if `mean_sd = FALSE`).
+#' Finally, `theme_gtsummary_unweighted_n()` also modifies default tests for
+#' [gtsummary::add_p.tbl_svysummary()]  for continuous variables if
+#' `mean_sd = TRUE` (`svyttest_oneway` which calls [survey::svyttest()] for
+#' comparing 2 means and [svyoneway()] for comparing 3 means or more).
+#' If `mean_sd = FALSE`, the default tests for continuous
+#'  variables remain `"svy.wilcox.test"` which used a designed-based Wilcoxon
+#'  test (2 groups) or Kruskal-Wallis test (3 groups or more). For categorical
+#'  variables, `"svy.chisq.test"`is used by default.
 #'
 #' `theme_gtsummary_bold_labels()` applies automatically
 #' [gtsummary::bold_labels()] to all tables generated with `gtsummary`.
@@ -65,13 +92,17 @@ theme_gtsummary_prop_n <- function(
         all_categorical() ~ prop_stat
       ),
       "add_p.tbl_summary-attr:test.continuous_by2" = "t.test",
-      "add_p.tbl_summary-attr:test.continuous" = "oneway.test"
+      "add_p.tbl_summary-attr:test.continuous" = "oneway.test",
+      "add_ci.tbl_summary-arg:method" =
+        list(all_continuous() ~ "t.test", all_categorical() ~ "wilson")
     )
   } else {
     lst_theme <- list(
       "tbl_summary-arg:statistic" = list(
         all_continuous() ~ "{median} ({p25}, {p75})",
-        all_categorical() ~ prop_stat
+        all_categorical() ~ prop_stat,
+        "add_ci.tbl_summary-arg:method" =
+          list(all_continuous() ~ "wilcox.test", all_categorical() ~ "wilson")
       )
     )
   }
@@ -150,16 +181,23 @@ theme_gtsummary_unweighted_n <- function(
         all_categorical() ~ cat_stat
       ),
       "add_p.tbl_svysummary-arg:test" = list(
-        all_continuous() ~ "svy.t.test",
+        all_continuous() ~ guideR::svyttest_oneway,
         all_categorical() ~ "svy.chisq.test"
-      )
+      ),
+      "add_ci.tbl_svysummary-arg:method" =
+        list(all_continuous() ~ "svymean", all_categorical() ~ "svyprop.logit")
     )
   } else {
     lst_theme <- list(
       "tbl_svysummary-arg:statistic" = list(
         all_continuous() ~ "{median} ({p25}, {p75})",
         all_categorical() ~ cat_stat
-      )
+      ),
+      "add_ci.tbl_svysummary-arg:method" =
+        list(
+          all_continuous() ~ "svymedian.mean",
+          all_categorical() ~ "svyprop.logit"
+        )
     )
   }
   lst_theme[["tbl_svysummary-arg:digits"]] <- list(
@@ -172,7 +210,7 @@ theme_gtsummary_unweighted_n <- function(
   lst_theme[["tbl_svysummary-arg:missing_stat"]] <-
     paste0(n_unweighted_prefix, "{N_miss_unweighted}", n_unweighted_suffix)
 
-  lst_theme[["add_overall.tbl_summary-arg:col_label"]] <-
+  lst_theme[["add_overall.tbl_svysummary-arg:col_label"]] <-
     paste0(
       "**", overall_string, "**\n(",
       n_unweighted_prefix,

@@ -15,7 +15,7 @@ values and \code{rhs} the corresponding groups}
 \item{...}{additional parameters passed to \code{\link[survey:regTermTest]{survey::regTermTest()}}}
 }
 \value{
-an object of class \code{"regTermTest"}
+an object of class \code{"htest"}
 }
 \description{
 This function allows to compare several means using \code{\link[survey:svyglm]{survey::svyglm()}}. More

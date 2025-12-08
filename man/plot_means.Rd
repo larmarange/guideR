@@ -51,7 +51,7 @@ group by (comparison is done separately for each variable).}
 \item{convert_continuous}{Should continuous by variables (with 5 unique
 values or more) be converted to quartiles (using \code{cut_quartiles()})?}
 
-\item{geom}{Geometry to use for plotting proportions (\code{"point"} by default).}
+\item{geom}{Geometry to use for plotting means (\code{"point"} by default).}
 
 \item{...}{Additional arguments passed to the geom defined by \code{geom}.}
 

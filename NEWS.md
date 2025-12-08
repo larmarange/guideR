@@ -8,12 +8,17 @@
 * new method `mean_sd()` to compute means, standard deviation and confidence
   intervals by sub-group
 * new function `svyoneway()` to test for equal means for survey design object
+* new `svyttest_oneway()` test for `gtsummary::add_p.tbl_svysummary` using
+  `survey::svyttest()` for comparing 2 means and `svyoneway()` for comparing 3
+  means or more
 * new colour palette `safe_pal()` and corresponding scales `scale_fill_safe()`
   and `scale_colour_safe()` for `ggplot2` (#49)
 * new argument `minimal` for `plot_proportions()` (#51)
 
 **Minor breaking change**
 
+* `theme_gtsummary_prop_n()` and `theme_gtsummary_unweighted_n()` have been
+  updated following version 2.5.0 of `gtsummary` (#44)
 * `plot_proportions()` has been reorganized (some column names have changed
   when calling `return_data = TRUE`)
 
