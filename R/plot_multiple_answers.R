@@ -35,6 +35,8 @@
 #' @param none_label When combining answers and `flip = TRUE`,
 #' label when no item is selected.
 #' @param drop_na Should any observation with a least one `NA` value be dropped?
+#' @param drop_na_by If TRUE, will remove any `NA` values observed in the
+#' `by` variables
 #' @param show_ci Display confidence intervals?
 #' @param conf_level Confidence level for the confidence intervals.
 #' @param sort Should answers be sorted according to their proportion? They
@@ -125,6 +127,7 @@ plot_multiple_answers <- function(
   missing_label = " missing",
   none_label = "none",
   drop_na = FALSE,
+  drop_na_by = FALSE,
   sort = c("none", "ascending", "descending", "degrees"),
   geom = "bar",
   ...,
@@ -166,7 +169,8 @@ plot_multiple_answers <- function(
         .conf.int = show_ci,
         .scale = 1,
         .conf.level = conf_level,
-        .by = {{ by }}
+        .by = {{ by }},
+        .drop_na_by = drop_na_by
       ) |>
       dplyr::mutate(
         item = .data$item_label |>
@@ -213,6 +217,7 @@ plot_multiple_answers <- function(
               .scale = 1,
               .conf.level = conf_level,
               .by = {{ by }},
+              .drop_na_by = drop_na_by,
               .na.rm = TRUE
             ) |>
             dplyr::mutate(item = v)
@@ -377,6 +382,7 @@ plot_multiple_answers_dodge <- function(
   missing_label = " missing",
   none_label = "none",
   drop_na = FALSE,
+  drop_na_by = FALSE,
   sort = c("none", "ascending", "descending", "degrees"),
   geom = c("bar", "point"),
   width = .75,
@@ -403,6 +409,7 @@ plot_multiple_answers_dodge <- function(
       missing_label = missing_label,
       none_label = none_label,
       drop_na = drop_na,
+      drop_na_by = drop_na_by,
       sort = sort,
       show_ci = show_ci,
       conf_level = conf_level,
