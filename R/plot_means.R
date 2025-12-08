@@ -9,7 +9,7 @@
 #' or a survey design object.
 #' @param outcome <[`tidy-select`][dplyr::dplyr_tidy_select ]> List of
 #' continuous variables to be plotted.
-#' @param geom Geometry to use for plotting proportions (`"point"` by default).
+#' @param geom Geometry to use for plotting means (`"point"` by default).
 #' @param show_pvalues Display p-values in the top-left corner? p-values are
 #' computed with [stats::oneway.test()] for data frames, and with [svyoneway()]
 #' for survey objects.
