@@ -27,5 +27,6 @@ svyoneway <- function (formula, design, ...) {
     deparse(substitute(design)),
     ", family = gaussian)"
   ))
+  o$p.value <- c(o$p)
   o
 }

@@ -4,6 +4,7 @@
 
 * new function `plot_categorical()` to plot a categorical variable by sub-groups
   using bar plots (#47)
+* new function `plot_means()` to compare means by sub-groups
 * new method `mean_sd()` to compute means, standard deviation and confidence
   intervals by sub-group
 * new function `svyoneway()` to test for equal means for survey design object

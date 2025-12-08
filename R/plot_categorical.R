@@ -74,7 +74,7 @@ plot_categorical <- function(
   # conversion of numeric by variables
   data <- data |> .convert_numeric_by(by_variables, convert_continuous)
 
-  # computation of conditions
+  # identification of outcome variables
   outcome_variables <-
     data |>
     dplyr::select({{ outcome }}) |>
