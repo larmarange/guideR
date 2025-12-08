@@ -66,7 +66,8 @@ values or more) be converted to quartiles (using \code{cut_quartiles()})?}
 \item{ci_color}{Color of the error bars representing confidence intervals.}
 
 \item{show_pvalues}{Display p-values in the top-left corner? p-values are
-computed with \code{\link[stats:oneway.test]{stats::oneway.test()}} for data frames, and with \code{\link[=svyoneway]{svyoneway()}}
+computed with \code{\link[stats:oneway.test]{stats::oneway.test()}} for data frames, and with
+\code{\link[survey:svyttest]{survey::svyttest()}} (2 groupes) or \code{\link[=svyoneway]{svyoneway()}} (3 groups or more)
 for survey objects.}
 
 \item{pvalues_labeller}{Labeller function for p-values.}
