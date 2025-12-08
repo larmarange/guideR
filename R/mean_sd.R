@@ -79,7 +79,7 @@ mean_sd.data.frame <- function(data,
             conf.level = .conf.level,
             options = .options
           ),
-        sd = sd(.data[[x]], na.rm = TRUE),
+        sd = stats::sd(.data[[x]], na.rm = TRUE),
         n = sum(!is.na(.data[[x]])),
         missing = sum(is.na(.data[[x]]))
       ) |>
