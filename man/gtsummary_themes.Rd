@@ -64,6 +64,20 @@ Additional themes for tables generated with \code{gtsummary}.
 number of observations (between brackets). This function cannot be used
 simultaneously with \code{\link[gtsummary:theme_gtsummary]{gtsummary::theme_gtsummary_mean_sd()}}, but you can use
 the \code{mean_sd = TRUE} option of \code{theme_gtsummary_prop_n()}.
+\code{theme_gtsummary_prop_n()} also modifies default method for
+\code{\link[gtsummary:add_ci]{gtsummary::add_ci.tbl_summary()}} (\code{"wilson"} for categorical variables,
+\code{"t.test"}, i.e. mean confidence interval, for continuous variables if
+\code{mean_sd = TRUE}, \code{"wilcox.test"}, i.e. confidence interval of the
+pseudomedian, for continuous variables if \code{mean_sd = FALSE}).
+Finally, \code{theme_gtsummary_prop_n()} also modifies default tests for
+\code{\link[gtsummary:add_p.tbl_summary]{gtsummary::add_p.tbl_summary()}}  for continuous variables if
+\code{mean_sd = TRUE} (\code{"t.test"} for comparing 2 groups, or \code{"oneway.test"} for
+3 groups or more). If \code{mean_sd = FALSE}, the default tests for continuous
+variables remain \code{"wilcox.test"} (2 groups) or \code{"kruskal.test"} (3 groups
+or more). For categorical variables, \code{"chisq.test.no.correct"} and
+\code{"fisher.test"} are used by default.
+See \code{theme_gtsummary_fisher_simulate_p()} to change the default test for
+categorical variables.
 
 \code{theme_gtsummary_fisher_simulate_p()} modify the default test used for
 categorical variables by Fisher test, with computation of p-values by
@@ -72,6 +86,19 @@ Monte Carlo simulation in larger than 2×2 tables.
 \code{theme_gtsummary_unweighted_n()} modifies default values of tables returned
 by \code{\link[gtsummary:tbl_svysummary]{gtsummary::tbl_svysummary()}} and displays the unweighted number of
 observations instead of the weighted n.
+\code{theme_gtsummary_unweighted_n()} also modifies default method for
+\code{\link[gtsummary:add_ci.tbl_svysummary]{gtsummary::add_ci.tbl_svysummary()}} (\code{"svyprop.logit"} for categorical
+variables, \code{"svymean"}, i.e. mean confidence interval, for continuous
+variables if \code{mean_sd = TRUE}, \code{"svymedian.mean"}, i.e. confidence interval
+of the median, for continuous variables if \code{mean_sd = FALSE}).
+Finally, \code{theme_gtsummary_unweighted_n()} also modifies default tests for
+\code{\link[gtsummary:add_p.tbl_svysummary]{gtsummary::add_p.tbl_svysummary()}}  for continuous variables if
+\code{mean_sd = TRUE} (\code{svyttest_oneway} which calls \code{\link[survey:svyttest]{survey::svyttest()}} for
+comparing 2 means and \code{\link[=svyoneway]{svyoneway()}} for comparing 3 means or more).
+If \code{mean_sd = FALSE}, the default tests for continuous
+variables remain \code{"svy.wilcox.test"} which used a designed-based Wilcoxon
+test (2 groups) or Kruskal-Wallis test (3 groups or more). For categorical
+variables, \code{"svy.chisq.test"}is used by default.
 
 \code{theme_gtsummary_bold_labels()} applies automatically
 \code{\link[gtsummary:bold_italicize_labels_levels]{gtsummary::bold_labels()}} to all tables generated with \code{gtsummary}.

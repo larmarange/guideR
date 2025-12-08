@@ -8,7 +8,7 @@
 #' values and `rhs` the corresponding groups
 #' @param design a survey design object
 #' @param ... additional parameters passed to [survey::regTermTest()]
-#' @return an object of class `"regTermTest"`
+#' @return an object of class `"htest"`
 #' @keywords htest
 #' @seealso [stats::oneway.test()] for classic data frames
 #' @examplesIf rlang::is_installed(c("survey", "srvyr"))
@@ -20,13 +20,17 @@ svyoneway <- function(formula, design, ...) {
   rlang::check_installed("survey")
   m <- survey::svyglm(formula, design, family = stats::gaussian())
   o <- survey::regTermTest(m, as.character(formula[[3]]), ...)
-  o$mcall <- str2lang(paste0(
-    "survey::svyglm(",
-    format(formula),
-    ", design = ",
-    deparse(substitute(design)),
-    ", family = gaussian)"
-  ))
-  o$p.value <- c(o$p)
-  o
+  h <- list(
+    statistic = rlang::set_names(c(o$Ftest), "F"),
+    parameter = rlang::set_names(c(o$df, o$ddf), c("df", "ddf")),
+    p.value = c(o$p),
+    method = "Design-based one-way analysis of means",
+    data.name = paste(
+      as.character(formula[[2]]),
+      "and",
+      as.character(formula[[3]])
+    )
+  )
+  class(h) <- "htest"
+  h
 }

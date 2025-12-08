@@ -3,9 +3,12 @@
 \name{gtsummary_test}
 \alias{gtsummary_test}
 \alias{fisher.simulate.p}
+\alias{svyttest_oneway}
 \title{Additional tests for \code{gtsummary}}
 \usage{
 fisher.simulate.p(data, variable, by, ...)
+
+svyttest_oneway(data, variable, by, ...)
 }
 \arguments{
 \item{data}{A data set.}
@@ -21,6 +24,9 @@ See \link[gtsummary:tests]{gtsummary::tests} for more details on how defining cu
 \code{fisher.simulate.p()} implements Fisher test with computation of p-values by
 Monte Carlo simulation in larger than 2×2 tables (see
 \code{\link[stats:fisher.test]{stats::fisher.test()}}).
+\code{svyttest_oneway()} is designed to compare means between sub-groups for
+survey objects. It is based on \code{\link[survey:svyttest]{survey::svyttest()}} for comparing 2 means,
+and on \code{\link[=svyoneway]{svyoneway()}} for comparing 3 means or more.
 }
 \examples{
 \dontshow{if (rlang::is_installed("gtsummary")) withAutoprint(\{ # examplesIf}
@@ -28,6 +34,15 @@ library(gtsummary)
 trial |>
   tbl_summary(include = grade, by = trt) |>
   add_p(test = all_categorical() ~ "fisher.simulate.p")
+\dontshow{\}) # examplesIf}
+\dontshow{if (rlang::is_installed(c("gtsummary", "srvyr", "survey"))) withAutoprint(\{ # examplesIf}
+iris |>
+  srvyr::as_survey() |>
+  tbl_svysummary(
+    include = Petal.Length,
+    by = Species
+   ) |>
+   add_p(test = all_continuous() ~ svyttest_oneway)
 \dontshow{\}) # examplesIf}
 }
 \keyword{htest}

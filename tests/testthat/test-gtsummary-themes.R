@@ -31,5 +31,23 @@ test_that("Test gtsummary themes", {
       add_p()
   )
 
+  expect_no_error(
+    apistrat |>
+      srvyr::as_survey(strata = stype, weights = pw) |>
+      tbl_svysummary(include = c(stype, both, api.stu), by = awards) |>
+      add_overall() |>
+      add_p()
+  )
+
+  expect_no_error(
+    iris |>
+      srvyr::as_survey() |>
+      tbl_svysummary(
+        include = Petal.Length,
+        by = Species
+      ) |>
+      add_p()
+  )
+
   gtsummary::reset_gtsummary_theme()
 })

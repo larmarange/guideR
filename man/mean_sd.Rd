@@ -37,15 +37,15 @@ mean_sd(data, ...)
   .drop = FALSE,
   .conf.int = FALSE,
   .conf.level = 0.95,
-  .options = list(correct = TRUE)
+  .options = NULL
 )
 }
 \arguments{
 \item{data}{A vector, a data frame, data frame extension (e.g. a tibble),
 or a survey design object.}
 
-\item{...}{<\code{\link[rlang:args_data_masking]{data-masking}}> Variable(s) for those
-computing mean and standard deviation.}
+\item{...}{<\code{\link[rlang:args_data_masking]{data-masking}}> Variable(s) for which
+to compute mean and standard deviation.}
 
 \item{.by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> Optional additional
 variables to group by (in addition to those eventually previously declared
