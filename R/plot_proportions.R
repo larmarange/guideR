@@ -340,7 +340,7 @@ plot_proportions <- function(
       res <- v2 |>
         purrr::map(
           ~ paste0("~ `", cond_var, "` + ", .x) |>
-            as.formula() |>
+            stats::as.formula() |>
             test_fun(data) |>
             purrr::pluck("p.value")
         )
