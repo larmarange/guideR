@@ -49,7 +49,7 @@ svyttest_oneway <- function(data, variable, by, ...) {
     tidyr::drop_na()
 
   svyttest_oneway_formula(
-    as.formula(paste(variable, " ~ ", by)),
+    stats::as.formula(paste(variable, " ~ ", by)),
     design = data
   ) |>
     broom::tidy()
