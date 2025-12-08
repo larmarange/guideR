@@ -14,6 +14,8 @@
 * new colour palette `safe_pal()` and corresponding scales `scale_fill_safe()`
   and `scale_colour_safe()` for `ggplot2` (#49)
 * new argument `minimal` for `plot_proportions()` (#51)
+* new argument `drop_ba_by` for `plot_multiple_answers()` and
+  `plot_multiple_answers_dodge()`
 
 **Minor breaking change**
 

@@ -15,6 +15,7 @@ plot_multiple_answers(
   missing_label = " missing",
   none_label = "none",
   drop_na = FALSE,
+  drop_na_by = FALSE,
   sort = c("none", "ascending", "descending", "degrees"),
   geom = "bar",
   ...,
@@ -39,6 +40,7 @@ plot_multiple_answers_dodge(
   missing_label = " missing",
   none_label = "none",
   drop_na = FALSE,
+  drop_na_by = FALSE,
   sort = c("none", "ascending", "descending", "degrees"),
   geom = c("bar", "point"),
   width = 0.75,
@@ -77,6 +79,9 @@ variables to compare (using facets).}
 label when no item is selected.}
 
 \item{drop_na}{Should any observation with a least one \code{NA} value be dropped?}
+
+\item{drop_na_by}{If TRUE, will remove any \code{NA} values observed in the
+\code{by} variables}
 
 \item{sort}{Should answers be sorted according to their proportion? They
 could also be sorted by degrees (number of elements) when combining answers.}
