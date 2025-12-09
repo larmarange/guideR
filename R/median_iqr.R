@@ -144,7 +144,7 @@ median_iqr.survey.design <- function(data,
       dplyr::group_by(dplyr::pick({{ .by }}), .add = TRUE, .drop = .drop) |>
       dplyr::summarise(
         x = x,
-        q = survey_quantile(.data[[x]], 0:4 / 4, vartype = NULL),
+        q = srvyr::survey_quantile(.data[[x]], 0:4 / 4, vartype = NULL),
         .x = list(.data[[x]]),
         n = sum(!is.na(.data[[x]])),
         missing = sum(is.na(.data[[x]]))
