@@ -7,6 +7,8 @@
 * new function `plot_means()` to compare means by sub-groups
 * new method `mean_sd()` to compute means, standard deviation and confidence
   intervals by sub-group
+* new method `median_iqr()` to compute medians, quartiles and interquartile
+  ranges by sub-group
 * new function `svyoneway()` to test for equal means for survey design object
 * new `svyttest_oneway()` test for `gtsummary::add_p.tbl_svysummary` using
   `survey::svyttest()` for comparing 2 means and `svyoneway()` for comparing 3
