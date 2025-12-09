@@ -86,7 +86,7 @@ median_iqr.data.frame <- function(data,
 }
 
 .compute_median_iqr <- function(x, .outliers = FALSE, coef = 1.5) {
-  q <- stats::quantile(x, probs = 0:4/4, na.rm = TRUE) |> unname()
+  q <- stats::quantile(x, probs = 0:4 / 4, na.rm = TRUE) |> unname()
   iqr <- q[4] - q[2]
 
   res <- dplyr::tibble(
@@ -144,7 +144,7 @@ median_iqr.survey.design <- function(data,
       dplyr::group_by(dplyr::pick({{ .by }}), .add = TRUE, .drop = .drop) |>
       dplyr::summarise(
         x = x,
-        q = survey_quantile(.data[[x]], 0:4/4, vartype = NULL),
+        q = survey_quantile(.data[[x]], 0:4 / 4, vartype = NULL),
         .x = list(.data[[x]]),
         n = sum(!is.na(.data[[x]])),
         missing = sum(is.na(.data[[x]]))
