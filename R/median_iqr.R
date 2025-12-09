@@ -147,7 +147,7 @@ median_iqr.survey.design <- function(data,
         q = srvyr::survey_quantile(.data[[x]], 0:4 / 4, vartype = NULL),
         .x = list(.data[[x]]),
         n = sum(!is.na(.data[[x]])),
-        missing = sum(is.na(.data[[x]]))
+        missing = sum(is.na(.data[[x]])),
       ) |>
       dplyr::rename(
         median = dplyr::all_of("q_q50"),
@@ -170,7 +170,6 @@ median_iqr.survey.design <- function(data,
     }
 
     res |>
-      dplyr::ungroup() |>
       dplyr::select(-dplyr::all_of(".x")) |>
       dplyr::relocate(
         dplyr::all_of(c("n", "missing")),
