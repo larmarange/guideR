@@ -577,10 +577,16 @@ dummy_proportions <- function(variable) {
       y = .data[[y]],
       group = 1
     )
-  if (geom != "point") # if point, should be drawn after ci
+  if (geom != "point" && geom != "boxplot") # if point, should be drawn after ci
     plot <-
       plot +
       ggplot2::stat_identity(geom = geom, ..., position = position)
+
+  # specific case for boxplot
+  if (geom == "boxplot")
+    plot <-
+      plot +
+      ggplot2::geom_boxplot(stat = "identity", ..., position = position)
 
   # plotting confidence intervals
   if (show_ci) {
@@ -636,7 +642,11 @@ dummy_proportions <- function(variable) {
           y = .data$y,
           label = .data$label,
           ymin = NULL,
-          ymax = NULL
+          ymax = NULL,
+          middle = NULL,
+          lower = NULL,
+          upper = NULL,
+          outliers = NULL
         ),
         nudge_y = .01,
         nudge_x = 0.5,
