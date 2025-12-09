@@ -12,7 +12,7 @@
 #' @param geom Geometry to use for plotting means (`"point"` by default).
 #' @param show_pvalues Display p-values in the top-left corner? p-values are
 #' computed with [stats::oneway.test()] for data frames, and with
-#' [survey::svyttest()] (2 groupes) or [svyoneway()] (3 groups or more)
+#' [survey::svyttest()] (2 groups) or [svyoneway()] (3 groups or more)
 #' for survey objects.
 #' @param show_labels Display mean labels?
 #' @inheritParams plot_proportions
