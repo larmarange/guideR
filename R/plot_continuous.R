@@ -138,7 +138,7 @@ plot_continuous <- function(
   pvalues <- NULL
   if (show_pvalues) {
     if (inherits(data, "survey.design")) {
-      test_fun <- survey::svyranktest
+      test_fun <- survey::svyranktest # nolint
     } else {
       test_fun <- stats::kruskal.test
     }
