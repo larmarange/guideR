@@ -42,6 +42,15 @@ test_that("mean_sd() works with data frames", {
   expect_equal(res$n, 140)
   expect_equal(res$missing, 10)
 
+  d$Species[30:50] <- NA
+  expect_no_error(
+    res <- d |> mean_sd(Petal.Length, .by = Species)
+  )
+  expect_equal(nrow(res), 4)
+  expect_no_error(
+    res <- d |> mean_sd(Petal.Length, .by = Species, .drop_na_by = TRUE)
+  )
+  expect_equal(nrow(res), 3)
 })
 
 test_that("mean_sd() works with survey designs", {

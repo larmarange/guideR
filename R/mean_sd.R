@@ -67,6 +67,11 @@ mean_sd.data.frame <- function(data,
     data |>
     dplyr::mutate(...)
 
+  all_by <-
+    data |>
+    dplyr::group_by(dplyr::pick({{ .by }}), .add = TRUE, .drop = .drop) |>
+    dplyr::group_vars()
+
   f <- function(x) {
     data |>
       dplyr::group_by(dplyr::pick({{ .by }}), .add = TRUE, .drop = .drop) |>
@@ -90,10 +95,10 @@ mean_sd.data.frame <- function(data,
     purrr::map(f) |>
     dplyr::bind_rows()
 
-  if (.drop_na_by)
+  if (.drop_na_by && length(all_by) > 0)
     res <-
       res |>
-      tidyr::drop_na(dplyr::all_of(dplyr::group_vars(res)))
+      tidyr::drop_na(dplyr::all_of(all_by))
 
   res |>
     labelled::copy_labels_from(data |> dplyr::select({{ .by }}))
@@ -141,6 +146,11 @@ mean_sd.survey.design <- function(data,
     data |>
     dplyr::mutate(...)
 
+  all_by <-
+    data |>
+    dplyr::group_by(dplyr::pick({{ .by }}), .add = TRUE, .drop = .drop) |>
+    dplyr::group_vars()
+
   f <- function(x) {
     data |>
       dplyr::group_by(dplyr::pick({{ .by }}), .add = TRUE, .drop = .drop) |>
@@ -167,10 +177,10 @@ mean_sd.survey.design <- function(data,
     purrr::map(f) |>
     dplyr::bind_rows()
 
-  if (.drop_na_by)
+  if (.drop_na_by && length(all_by) > 0)
     res <-
       res |>
-      tidyr::drop_na(dplyr::all_of(dplyr::group_vars(res)))
+      tidyr::drop_na(dplyr::all_of(all_by))
 
   if (.conf.int)
     res <-

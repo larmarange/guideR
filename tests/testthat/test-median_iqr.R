@@ -41,6 +41,16 @@ test_that("median_iqr() works with data frames", {
   )
   expect_equal(res$n, 140)
   expect_equal(res$missing, 10)
+
+  d$Species[30:50] <- NA
+  expect_no_error(
+    res <- d |> median_iqr(Petal.Length, .by = Species)
+  )
+  expect_equal(nrow(res), 4)
+  expect_no_error(
+    res <- d |> median_iqr(Petal.Length, .by = Species, .drop_na_by = TRUE)
+  )
+  expect_equal(nrow(res), 3)
 })
 
 test_that("median_iqr() works with survey designs", {
@@ -55,7 +65,13 @@ test_that("median_iqr() works with survey designs", {
   expect_equal(res$median, q$Petal.Length[1, 1])
 
   expect_no_error(
-    res <- ds |> median_iqr(Petal.Length, .by = Species, .outliers = TRUE)
+    res <- ds |>
+      median_iqr(
+        Petal.Length,
+        .by = Species,
+        .outliers = TRUE,
+        .drop_na_by = TRUE
+      )
   )
   expect_equal(sum(res$n), 150)
 })
