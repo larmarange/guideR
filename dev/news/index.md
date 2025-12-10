@@ -2,6 +2,8 @@
 
 ## guideR (development version)
 
+## guideR 0.8.0
+
 **Minor breaking change**
 
 - [`theme_gtsummary_prop_n()`](https://larmarange.github.io/guideR/dev/reference/gtsummary_themes.md)

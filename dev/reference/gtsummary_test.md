@@ -98,7 +98,7 @@ Grade
 ² Fisher’s Exact Test for Count Data with simulated p-value (based on
 2000 replicates)
 
-iris \|\>
+\# \donttest{ iris \|\>
 srvyr::[as_survey](http://gdfe.co/srvyr/reference/as_survey.md)() \|\>
 [tbl_svysummary](https://www.danieldsjoberg.com/gtsummary/reference/tbl_svysummary.html)(
 include = Petal.Length, by = Species ) \|\>
@@ -108,3 +108,5 @@ include = Petal.Length, by = Species ) \|\>
 ~ svyttest_oneway)
 
 [TABLE]
+
+\# }
