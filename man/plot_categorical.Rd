@@ -14,6 +14,11 @@ plot_categorical(
   ...,
   show_overall = TRUE,
   overall_label = "Overall",
+  show_pvalues = TRUE,
+  pvalues_test = c("fisher", "chisq"),
+  pvalues_labeller = scales::label_pvalue(add_p = TRUE),
+  pvalues_size = 3.5,
+  pvalues_y = ifelse(flip, 1.05, 1),
   show_labels = TRUE,
   labels_labeller = scales::label_percent(1),
   labels_size = 3.5,
@@ -46,6 +51,19 @@ values or more) be converted to quartiles (using \code{cut_quartiles()})?}
 \item{show_overall}{Display "Overall" column?}
 
 \item{overall_label}{Label for the overall column.}
+
+\item{show_pvalues}{Display p-values in the top-left corner?}
+
+\item{pvalues_test}{Test to compute p-values for data frames: \code{"fisher"} for
+\code{\link[stats:fisher.test]{stats::fisher.test()}} (with \code{simulate.p.value = TRUE}) or \code{"chisq"} for
+\code{\link[stats:chisq.test]{stats::chisq.test()}}. Has no effect on survey objects for those
+\code{\link[survey:svychisq]{survey::svychisq()}} is used.}
+
+\item{pvalues_labeller}{Labeller function for p-values.}
+
+\item{pvalues_size}{Text size for p-values.}
+
+\item{pvalues_y}{Y position of p-values.}
 
 \item{show_labels}{Display proportion labels?}
 

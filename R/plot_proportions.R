@@ -552,6 +552,7 @@ dummy_proportions <- function(variable) {
   pvalues = NULL,
   pvalues_labeller = scales::label_pvalue(add_p = TRUE),
   pvalues_size = 3.5,
+  pvalues_y = NULL, # to manually pass position of p-values
   show_labels = TRUE,
   label = "prop_label",
   y_label = "y_label",
@@ -627,7 +628,11 @@ dummy_proportions <- function(variable) {
         d |>
           dplyr::group_by(.data[[outcome]]) |>
           dplyr::summarise(
-            y = ifelse(show_ci, max(.data[[ci_ymax]]), max(.data[[y]]))
+            y = ifelse(
+              is.null(pvalues_y),
+              ifelse(show_ci, max(.data[[ci_ymax]]), max(.data[[y]])),
+              pvalues_y
+            )
           ),
         by = outcome
       )
@@ -639,15 +644,11 @@ dummy_proportions <- function(variable) {
       ggplot2::geom_text(
         data = pvalues,
         mapping = ggplot2::aes(
+          x = .data$num_level,
           y = .data$y,
           label = .data$label,
-          ymin = NULL,
-          ymax = NULL,
-          middle = NULL,
-          lower = NULL,
-          upper = NULL,
-          outliers = NULL
         ),
+        inherit.aes = FALSE,
         nudge_y = .01,
         nudge_x = 0.5,
         vjust = ifelse(flip, 1, 0),
