@@ -36,6 +36,7 @@ trial |>
   add_p(test = all_categorical() ~ "fisher.simulate.p")
 \dontshow{\}) # examplesIf}
 \dontshow{if (rlang::is_installed(c("gtsummary", "srvyr", "survey"))) withAutoprint(\{ # examplesIf}
+\donttest{
 iris |>
   srvyr::as_survey() |>
   tbl_svysummary(
@@ -43,6 +44,7 @@ iris |>
     by = Species
    ) |>
    add_p(test = all_continuous() ~ svyttest_oneway)
+}
 \dontshow{\}) # examplesIf}
 }
 \keyword{htest}

@@ -21,6 +21,7 @@
 #'   tbl_summary(include = grade, by = trt) |>
 #'   add_p(test = all_categorical() ~ "fisher.simulate.p")
 #' @examplesIf rlang::is_installed(c("gtsummary", "srvyr", "survey"))
+#' \donttest{
 #' iris |>
 #'   srvyr::as_survey() |>
 #'   tbl_svysummary(
@@ -28,6 +29,7 @@
 #'     by = Species
 #'    ) |>
 #'    add_p(test = all_continuous() ~ svyttest_oneway)
+#' }
 fisher.simulate.p <- function(data, variable, by, ...) {
   rlang::check_installed("broom")
   data <- data[c(variable, by)] |> tidyr::drop_na()
