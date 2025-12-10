@@ -18,6 +18,11 @@ plot_categorical(
   ...,
   show_overall = TRUE,
   overall_label = "Overall",
+  show_pvalues = TRUE,
+  pvalues_test = c("fisher", "chisq"),
+  pvalues_labeller = scales::label_pvalue(add_p = TRUE),
+  pvalues_size = 3.5,
+  pvalues_y = ifelse(flip, 1.05, 1),
   show_labels = TRUE,
   labels_labeller = scales::label_percent(1),
   labels_size = 3.5,
@@ -57,7 +62,7 @@ plot_categorical(
 
 - convert_continuous:
 
-  Should continuous variables (with 5 unique values or more) be
+  Should continuous by variables (with 5 unique values or more) be
   converted to quartiles (using
   [`cut_quartiles()`](https://larmarange.github.io/guideR/dev/reference/cut_quartiles.md))?
 
@@ -74,21 +79,47 @@ plot_categorical(
 
   Label for the overall column.
 
+- show_pvalues:
+
+  Display p-values in the top-left corner?
+
+- pvalues_test:
+
+  Test to compute p-values for data frames: `"fisher"` for
+  [`stats::fisher.test()`](https://rdrr.io/r/stats/fisher.test.html)
+  (with `simulate.p.value = TRUE`) or `"chisq"` for
+  [`stats::chisq.test()`](https://rdrr.io/r/stats/chisq.test.html). Has
+  no effect on survey objects for those
+  [`survey::svychisq()`](https://rdrr.io/pkg/survey/man/svychisq.html)
+  is used.
+
+- pvalues_labeller:
+
+  Labeller function for p-values.
+
+- pvalues_size:
+
+  Text size for p-values.
+
+- pvalues_y:
+
+  Y position of p-values.
+
 - show_labels:
 
   Display proportion labels?
 
 - labels_labeller:
 
-  Labeller function for proportion labels.
+  Labeller function for labels.
 
 - labels_size:
 
-  Size of proportion labels.
+  Size of labels.
 
 - labels_color:
 
-  Color of proportion labels.
+  Color of labels.
 
 - facet_labeller:
 

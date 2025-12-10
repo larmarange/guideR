@@ -27,6 +27,7 @@ plot_multiple_answers(
   missing_label = " missing",
   none_label = "none",
   drop_na = FALSE,
+  drop_na_by = FALSE,
   sort = c("none", "ascending", "descending", "degrees"),
   geom = "bar",
   ...,
@@ -51,6 +52,7 @@ plot_multiple_answers_dodge(
   missing_label = " missing",
   none_label = "none",
   drop_na = FALSE,
+  drop_na_by = FALSE,
   sort = c("none", "ascending", "descending", "degrees"),
   geom = c("bar", "point"),
   width = 0.75,
@@ -109,6 +111,10 @@ plot_multiple_answers_dodge(
 - drop_na:
 
   Should any observation with a least one `NA` value be dropped?
+
+- drop_na_by:
+
+  If TRUE, will remove any `NA` values observed in the `by` variables
 
 - sort:
 

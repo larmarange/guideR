@@ -15,6 +15,11 @@
 
 ## Descriptive statistics
 
+- [`mean_sd()`](https://larmarange.github.io/guideR/dev/reference/mean_sd.md)
+  : Compute means, standard deviations and confidence intervals by
+  sub-groups
+- [`median_iqr()`](https://larmarange.github.io/guideR/dev/reference/median_iqr.md)
+  : Compute median, quartiles and interquartile range by sub-groups
 - [`proportion()`](https://larmarange.github.io/guideR/dev/reference/proportion.md)
   : Compute proportions
 - [`round_preserve_sum()`](https://larmarange.github.io/guideR/dev/reference/round_preserve_sum.md)
@@ -23,14 +28,22 @@
 ## Statistical tests
 
 - [`fisher.simulate.p()`](https://larmarange.github.io/guideR/dev/reference/gtsummary_test.md)
+  [`svyttest_oneway()`](https://larmarange.github.io/guideR/dev/reference/gtsummary_test.md)
   :
 
   Additional tests for `gtsummary`
+
+- [`svyoneway()`](https://larmarange.github.io/guideR/dev/reference/svyoneway.md)
+  : Test for Equal Means for survey design object
 
 ## Statistical plots
 
 - [`plot_categorical()`](https://larmarange.github.io/guideR/dev/reference/plot_categorical.md)
   : Plot a categorical variable by sub-groups
+- [`plot_continuous()`](https://larmarange.github.io/guideR/dev/reference/plot_continuous.md)
+  : Plot a continuous variable by sub-groups
+- [`plot_means()`](https://larmarange.github.io/guideR/dev/reference/plot_means.md)
+  : Plot means by sub-groups
 - [`plot_multiple_answers()`](https://larmarange.github.io/guideR/dev/reference/plot_multiple_answers.md)
   [`plot_multiple_answers_dodge()`](https://larmarange.github.io/guideR/dev/reference/plot_multiple_answers.md)
   : Plot a multiple answers question

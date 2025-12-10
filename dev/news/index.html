@@ -34,13 +34,23 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="guider-development-version">guideR (development version)<a class="anchor" aria-label="anchor" href="#guider-development-version"></a></h2>
-<p><strong>New features</strong></p>
-<ul><li>new function <code><a href="../reference/plot_categorical.html">plot_categorical()</a></code> (<a href="https://github.com/larmarange/guideR/issues/47" class="external-link">#47</a>)</li>
+<p><strong>Minor breaking change</strong></p>
+<ul><li>
+<code><a href="../reference/gtsummary_themes.html">theme_gtsummary_prop_n()</a></code> and <code><a href="../reference/gtsummary_themes.html">theme_gtsummary_unweighted_n()</a></code> have been updated following version 2.5.0 of <code>gtsummary</code> (<a href="https://github.com/larmarange/guideR/issues/44" class="external-link">#44</a>)</li>
+<li>
+<code><a href="../reference/plot_proportions.html">plot_proportions()</a></code> has been reorganized (some column names have changed when calling <code>return_data = TRUE</code>)</li>
+</ul><p><strong>New features</strong></p>
+<ul><li>new function <code><a href="../reference/plot_categorical.html">plot_categorical()</a></code> to plot a categorical variable by sub-groups using bar plots (<a href="https://github.com/larmarange/guideR/issues/47" class="external-link">#47</a>)</li>
+<li>new function <code><a href="../reference/plot_continuous.html">plot_continuous()</a></code> to plot a continuous variable by sub-groups using bar boxplots (<a href="https://github.com/larmarange/guideR/issues/47" class="external-link">#47</a>)</li>
+<li>new function <code><a href="../reference/plot_means.html">plot_means()</a></code> to compare means by sub-groups</li>
+<li>new method <code><a href="../reference/mean_sd.html">mean_sd()</a></code> to compute means, standard deviation and confidence intervals by sub-group</li>
+<li>new method <code><a href="../reference/median_iqr.html">median_iqr()</a></code> to compute medians, quartiles and interquartile ranges by sub-group</li>
+<li>new function <code><a href="../reference/svyoneway.html">svyoneway()</a></code> to test for equal means for survey design object</li>
+<li>new <code><a href="../reference/gtsummary_test.html">svyttest_oneway()</a></code> test for <code><a href="https://www.danieldsjoberg.com/gtsummary/reference/add_p.tbl_svysummary.html" class="external-link">gtsummary::add_p.tbl_svysummary</a></code> using <code><a href="https://rdrr.io/pkg/survey/man/svyttest.html" class="external-link">survey::svyttest()</a></code> for comparing 2 means and <code><a href="../reference/svyoneway.html">svyoneway()</a></code> for comparing 3 means or more</li>
 <li>new colour palette <code><a href="../reference/safe_pal.html">safe_pal()</a></code> and corresponding scales <code><a href="../reference/safe_pal.html">scale_fill_safe()</a></code> and <code><a href="../reference/safe_pal.html">scale_colour_safe()</a></code> for <code>ggplot2</code> (<a href="https://github.com/larmarange/guideR/issues/49" class="external-link">#49</a>)</li>
 <li>new argument <code>minimal</code> for <code><a href="../reference/plot_proportions.html">plot_proportions()</a></code> (<a href="https://github.com/larmarange/guideR/issues/51" class="external-link">#51</a>)</li>
-</ul><p><strong>Minor breaking change</strong></p>
-<ul><li>
-<code><a href="../reference/plot_proportions.html">plot_proportions()</a></code> has been reorganized (some column names have changed when calling <code>return_data = TRUE</code>)</li>
+<li>new argument <code>drop_ba_by</code> for <code><a href="../reference/plot_multiple_answers.html">plot_multiple_answers()</a></code> and <code><a href="../reference/plot_multiple_answers.html">plot_multiple_answers_dodge()</a></code>
+</li>
 </ul><p><strong>Fix</strong></p>
 <ul><li>bug fix in <code><a href="https://rdrr.io/r/base/proportions.html" class="external-link">proportions()</a></code> when <code>.na.rm = TRUE</code> (<a href="https://github.com/larmarange/guideR/issues/46" class="external-link">#46</a>)</li>
 </ul></div>

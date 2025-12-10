@@ -33,6 +33,7 @@ plot_proportions(
   pvalues_labeller = scales::label_pvalue(add_p = TRUE),
   pvalues_size = 3.5,
   show_labels = TRUE,
+  label_y = NULL,
   labels_labeller = scales::label_percent(1),
   labels_size = 3.5,
   labels_color = "black",
@@ -78,7 +79,7 @@ dummy_proportions(variable)
 
 - convert_continuous:
 
-  Should continuous variables (with 5 unique values or more) be
+  Should continuous by variables (with 5 unique values or more) be
   converted to quartiles (using
   [`cut_quartiles()`](https://larmarange.github.io/guideR/dev/reference/cut_quartiles.md))?
 
@@ -136,17 +137,21 @@ dummy_proportions(variable)
 
   Display proportion labels?
 
+- label_y:
+
+  Y position of labels. If `NULL`, will be auto-determined.
+
 - labels_labeller:
 
-  Labeller function for proportion labels.
+  Labeller function for labels.
 
 - labels_size:
 
-  Size of proportion labels.
+  Size of labels.
 
 - labels_color:
 
-  Color of proportion labels.
+  Color of labels.
 
 - show_overall_line:
 

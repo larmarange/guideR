@@ -77,7 +77,22 @@ number of observations (between brackets). This function cannot be used
 simultaneously with
 [`gtsummary::theme_gtsummary_mean_sd()`](https://www.danieldsjoberg.com/gtsummary/reference/theme_gtsummary.html),
 but you can use the `mean_sd = TRUE` option of
-`theme_gtsummary_prop_n()`.
+`theme_gtsummary_prop_n()`. `theme_gtsummary_prop_n()` also modifies
+default method for
+[`gtsummary::add_ci.tbl_summary()`](https://www.danieldsjoberg.com/gtsummary/reference/add_ci.html)
+(`"wilson"` for categorical variables, `"t.test"`, i.e. mean confidence
+interval, for continuous variables if `mean_sd = TRUE`, `"wilcox.test"`,
+i.e. confidence interval of the pseudomedian, for continuous variables
+if `mean_sd = FALSE`). Finally, `theme_gtsummary_prop_n()` also modifies
+default tests for
+[`gtsummary::add_p.tbl_summary()`](https://www.danieldsjoberg.com/gtsummary/reference/add_p.tbl_summary.html)
+for continuous variables if `mean_sd = TRUE` (`"t.test"` for comparing 2
+groups, or `"oneway.test"` for 3 groups or more). If `mean_sd = FALSE`,
+the default tests for continuous variables remain `"wilcox.test"` (2
+groups) or `"kruskal.test"` (3 groups or more). For categorical
+variables, `"chisq.test.no.correct"` and `"fisher.test"` are used by
+default. See `theme_gtsummary_fisher_simulate_p()` to change the default
+test for categorical variables.
 
 `theme_gtsummary_fisher_simulate_p()` modify the default test used for
 categorical variables by Fisher test, with computation of p-values by
@@ -87,7 +102,25 @@ Monte Carlo simulation in larger than 2×2 tables.
 returned by
 [`gtsummary::tbl_svysummary()`](https://www.danieldsjoberg.com/gtsummary/reference/tbl_svysummary.html)
 and displays the unweighted number of observations instead of the
-weighted n.
+weighted n. `theme_gtsummary_unweighted_n()` also modifies default
+method for
+[`gtsummary::add_ci.tbl_svysummary()`](https://www.danieldsjoberg.com/gtsummary/reference/add_ci.tbl_svysummary.html)
+(`"svyprop.logit"` for categorical variables, `"svymean"`, i.e. mean
+confidence interval, for continuous variables if `mean_sd = TRUE`,
+`"svymedian.mean"`, i.e. confidence interval of the median, for
+continuous variables if `mean_sd = FALSE`). Finally,
+`theme_gtsummary_unweighted_n()` also modifies default tests for
+[`gtsummary::add_p.tbl_svysummary()`](https://www.danieldsjoberg.com/gtsummary/reference/add_p.tbl_svysummary.html)
+for continuous variables if `mean_sd = TRUE` (`svyttest_oneway` which
+calls
+[`survey::svyttest()`](https://rdrr.io/pkg/survey/man/svyttest.html) for
+comparing 2 means and
+[`svyoneway()`](https://larmarange.github.io/guideR/dev/reference/svyoneway.md)
+for comparing 3 means or more). If `mean_sd = FALSE`, the default tests
+for continuous variables remain `"svy.wilcox.test"` which used a
+designed-based Wilcoxon test (2 groups) or Kruskal-Wallis test (3 groups
+or more). For categorical variables, `"svy.chisq.test"`is used by
+default.
 
 `theme_gtsummary_bold_labels()` applies automatically
 [`gtsummary::bold_labels()`](https://www.danieldsjoberg.com/gtsummary/reference/bold_italicize_labels_levels.html)
