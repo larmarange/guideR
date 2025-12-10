@@ -8,6 +8,7 @@
 #' categorical variables to be plotted.
 #' @param na.rm Should `NA` values be removed from the `outcome`?
 #' @param ... Additional arguments passed to [ggplot2::geom_bar()].
+#' @param pvalues_y Y position of p-values.
 #' @inheritParams plot_proportions
 #' @export
 #' @keywords hplot
@@ -54,6 +55,11 @@ plot_categorical <- function(
   ...,
   show_overall = TRUE,
   overall_label = "Overall",
+  show_pvalues = TRUE,
+  pvalues_test = c("fisher", "chisq"),
+  pvalues_labeller = scales::label_pvalue(add_p = TRUE),
+  pvalues_size = 3.5,
+  pvalues_y = ifelse(flip, 1.05, 1),
   show_labels = TRUE,
   labels_labeller = scales::label_percent(1),
   labels_size = 3.5,
@@ -131,7 +137,65 @@ plot_categorical <- function(
   d$prop_label <- labels_labeller(d$prop)
 
 
-  if (return_data) return(d)
+  # computing p-values
+  pvalues <- NULL
+  if (show_pvalues) {
+    if (inherits(data, "survey.design")) {
+      test_fun <- survey::svychisq # nolint
+    } else {
+      pvalues_test <- match.arg(pvalues_test)
+      if (pvalues_test == "fisher") {
+        test_fun <- function(formula, data) {
+          stats::xtabs(formula, data, addNA = !drop_na_by) |>
+            stats::fisher.test(simulate.p.value = TRUE)
+        }
+      } else {
+        test_fun <- function(formula, data) {
+          stats::xtabs(formula, data, addNA = !drop_na_by) |>
+            stats::chisq.test()
+        }
+      }
+    }
+
+    p_one_outcome <- function(outcome_var) {
+      v2 <- # selecting only variables with at least 2 levels
+        d |>
+        dplyr::filter(outcome == outcome_var) |>
+        dplyr::group_by(.data$outcome_level) |>
+        dplyr::count(.data$by, name = "n") |>
+        dplyr::filter(.data$n >= 2) |>
+        dplyr::pull("by") |>
+        as.character() |>
+        unique()
+
+      res <- v2 |>
+        purrr::map(
+          ~ paste0("~ `", outcome_var, "` + ", .x) |>
+            stats::as.formula() |>
+            test_fun(data) |>
+            purrr::pluck("p.value")
+        )
+      res <- unlist(res)
+      res <- dplyr::tibble(
+        by = v2,
+        outcome = outcome_var,
+        p = res
+      )
+    }
+
+    pvalues <-
+      outcome_variables |>
+      purrr::map(p_one_outcome) |>
+      dplyr::bind_rows()
+  }
+
+  if (return_data) {
+    if (!is.null(pvalues))
+      d <-
+        d |>
+        dplyr::left_join(pvalues, by = c("by", "outcome"))
+    return(d)
+  }
 
   # facets per outcome
   if (length(outcome_variables) > 1) {
@@ -145,12 +209,16 @@ plot_categorical <- function(
     .guideR_generic_plot_by(
       d,
       y = "prop",
-      outcome = "condition",
+      outcome = "outcome",
       geom = "bar",
       position = "fill",
       ...,
       show_ci = FALSE,
-      show_pvalues = FALSE,
+      show_pvalues = show_pvalues,
+      pvalues = pvalues,
+      pvalues_labeller = pvalues_labeller,
+      pvalues_size = pvalues_size,
+      pvalues_y = pvalues_y,
       show_labels = show_labels,
       label = "prop_label",
       y_label = NULL,
