@@ -1,5 +1,12 @@
 # guideR (development version)
 
+**Minor breaking change**
+
+* `theme_gtsummary_prop_n()` and `theme_gtsummary_unweighted_n()` have been
+  updated following version 2.5.0 of `gtsummary` (#44)
+* `plot_proportions()` has been reorganized (some column names have changed
+  when calling `return_data = TRUE`)
+
 **New features**
 
 * new function `plot_categorical()` to plot a categorical variable by sub-groups
@@ -20,13 +27,6 @@
 * new argument `minimal` for `plot_proportions()` (#51)
 * new argument `drop_ba_by` for `plot_multiple_answers()` and
   `plot_multiple_answers_dodge()`
-
-**Minor breaking change**
-
-* `theme_gtsummary_prop_n()` and `theme_gtsummary_unweighted_n()` have been
-  updated following version 2.5.0 of `gtsummary` (#44)
-* `plot_proportions()` has been reorganized (some column names have changed
-  when calling `return_data = TRUE`)
 
 **Fix**
 
