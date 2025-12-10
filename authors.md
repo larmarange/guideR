@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/larmarange/guideR/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/larmarange/guideR/blob/v0.8.0/DESCRIPTION)
 
 Larmarange J (2025). *guideR: Miscellaneous Statistical Functions Used
 in 'guide-R'*. R package version 0.8.0,
