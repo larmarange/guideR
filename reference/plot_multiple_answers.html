@@ -27,7 +27,7 @@ geometries could be used (see examples). If defined, use variable labels
 
     <a class="navbar-brand me-2" href="../index.html">guideR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.8.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,6 +79,7 @@ geometries could be used (see examples). If defined, use variable labels
 <span>  missing_label <span class="op">=</span> <span class="st">" missing"</span>,</span>
 <span>  none_label <span class="op">=</span> <span class="st">"none"</span>,</span>
 <span>  drop_na <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  drop_na_by <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  sort <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"ascending"</span>, <span class="st">"descending"</span>, <span class="st">"degrees"</span><span class="op">)</span>,</span>
 <span>  geom <span class="op">=</span> <span class="st">"bar"</span>,</span>
 <span>  <span class="va">...</span>,</span>
@@ -103,6 +104,7 @@ geometries could be used (see examples). If defined, use variable labels
 <span>  missing_label <span class="op">=</span> <span class="st">" missing"</span>,</span>
 <span>  none_label <span class="op">=</span> <span class="st">"none"</span>,</span>
 <span>  drop_na <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  drop_na_by <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  sort <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"ascending"</span>, <span class="st">"descending"</span>, <span class="st">"degrees"</span><span class="op">)</span>,</span>
 <span>  geom <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bar"</span>, <span class="st">"point"</span><span class="op">)</span>,</span>
 <span>  width <span class="op">=</span> <span class="fl">0.75</span>,</span>
@@ -162,6 +164,11 @@ label when no item is selected.</p></dd>
 
 <dt id="arg-drop-na">drop_na<a class="anchor" aria-label="anchor" href="#arg-drop-na"></a></dt>
 <dd><p>Should any observation with a least one <code>NA</code> value be dropped?</p></dd>
+
+
+<dt id="arg-drop-na-by">drop_na_by<a class="anchor" aria-label="anchor" href="#arg-drop-na-by"></a></dt>
+<dd><p>If TRUE, will remove any <code>NA</code> values observed in the
+<code>by</code> variables</p></dd>
 
 
 <dt id="arg-sort">sort<a class="anchor" aria-label="anchor" href="#arg-sort"></a></dt>

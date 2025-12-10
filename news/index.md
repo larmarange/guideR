@@ -1,6 +1,74 @@
 # Changelog
 
+## guideR 0.8.0
+
+**Minor breaking change**
+
+- [`theme_gtsummary_prop_n()`](https://larmarange.github.io/guideR/reference/gtsummary_themes.md)
+  and
+  [`theme_gtsummary_unweighted_n()`](https://larmarange.github.io/guideR/reference/gtsummary_themes.md)
+  have been updated following version 2.5.0 of `gtsummary`
+  ([\#44](https://github.com/larmarange/guideR/issues/44))
+- [`plot_proportions()`](https://larmarange.github.io/guideR/reference/plot_proportions.md)
+  has been reorganized (some column names have changed when calling
+  `return_data = TRUE`)
+
+**New features**
+
+- new function
+  [`plot_categorical()`](https://larmarange.github.io/guideR/reference/plot_categorical.md)
+  to plot a categorical variable by sub-groups using bar plots
+  ([\#47](https://github.com/larmarange/guideR/issues/47))
+- new function
+  [`plot_continuous()`](https://larmarange.github.io/guideR/reference/plot_continuous.md)
+  to plot a continuous variable by sub-groups using bar boxplots
+  ([\#47](https://github.com/larmarange/guideR/issues/47))
+- new function
+  [`plot_means()`](https://larmarange.github.io/guideR/reference/plot_means.md)
+  to compare means by sub-groups
+- new method
+  [`mean_sd()`](https://larmarange.github.io/guideR/reference/mean_sd.md)
+  to compute means, standard deviation and confidence intervals by
+  sub-group
+- new method
+  [`median_iqr()`](https://larmarange.github.io/guideR/reference/median_iqr.md)
+  to compute medians, quartiles and interquartile ranges by sub-group
+- new function
+  [`svyoneway()`](https://larmarange.github.io/guideR/reference/svyoneway.md)
+  to test for equal means for survey design object
+- new
+  [`svyttest_oneway()`](https://larmarange.github.io/guideR/reference/gtsummary_test.md)
+  test for
+  [`gtsummary::add_p.tbl_svysummary`](https://www.danieldsjoberg.com/gtsummary/reference/add_p.tbl_svysummary.html)
+  using
+  [`survey::svyttest()`](https://rdrr.io/pkg/survey/man/svyttest.html)
+  for comparing 2 means and
+  [`svyoneway()`](https://larmarange.github.io/guideR/reference/svyoneway.md)
+  for comparing 3 means or more
+- new colour palette
+  [`safe_pal()`](https://larmarange.github.io/guideR/reference/safe_pal.md)
+  and corresponding scales
+  [`scale_fill_safe()`](https://larmarange.github.io/guideR/reference/safe_pal.md)
+  and
+  [`scale_colour_safe()`](https://larmarange.github.io/guideR/reference/safe_pal.md)
+  for `ggplot2` ([\#49](https://github.com/larmarange/guideR/issues/49))
+- new argument `minimal` for
+  [`plot_proportions()`](https://larmarange.github.io/guideR/reference/plot_proportions.md)
+  ([\#51](https://github.com/larmarange/guideR/issues/51))
+- new argument `drop_ba_by` for
+  [`plot_multiple_answers()`](https://larmarange.github.io/guideR/reference/plot_multiple_answers.md)
+  and
+  [`plot_multiple_answers_dodge()`](https://larmarange.github.io/guideR/reference/plot_multiple_answers.md)
+
+**Fix**
+
+- bug fix in [`proportions()`](https://rdrr.io/r/base/proportions.html)
+  when `.na.rm = TRUE`
+  ([\#46](https://github.com/larmarange/guideR/issues/46))
+
 ## guideR 0.7.0
+
+CRAN release: 2025-11-26
 
 **New features**
 

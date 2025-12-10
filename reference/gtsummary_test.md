@@ -6,11 +6,19 @@ for more details on how defining custom tests. `fisher.simulate.p()`
 implements Fisher test with computation of p-values by Monte Carlo
 simulation in larger than 2×2 tables (see
 [`stats::fisher.test()`](https://rdrr.io/r/stats/fisher.test.html)).
+`svyttest_oneway()` is designed to compare means between sub-groups for
+survey objects. It is based on
+[`survey::svyttest()`](https://rdrr.io/pkg/survey/man/svyttest.html) for
+comparing 2 means, and on
+[`svyoneway()`](https://larmarange.github.io/guideR/reference/svyoneway.md)
+for comparing 3 means or more.
 
 ## Usage
 
 ``` r
 fisher.simulate.p(data, variable, by, ...)
+
+svyttest_oneway(data, variable, by, ...)
 ```
 
 ## Arguments
@@ -89,3 +97,16 @@ Grade
 
 ² Fisher’s Exact Test for Count Data with simulated p-value (based on
 2000 replicates)
+
+\# \donttest{ iris \|\>
+srvyr::[as_survey](http://gdfe.co/srvyr/reference/as_survey.md)() \|\>
+[tbl_svysummary](https://www.danieldsjoberg.com/gtsummary/reference/tbl_svysummary.html)(
+include = Petal.Length, by = Species ) \|\>
+[add_p](https://www.danieldsjoberg.com/gtsummary/reference/add_p.html)(test
+=
+[all_continuous](https://www.danieldsjoberg.com/gtsummary/reference/select_helpers.html)()
+~ svyttest_oneway)
+
+[TABLE]
+
+\# }

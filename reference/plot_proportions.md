@@ -33,6 +33,7 @@ plot_proportions(
   pvalues_labeller = scales::label_pvalue(add_p = TRUE),
   pvalues_size = 3.5,
   show_labels = TRUE,
+  label_y = NULL,
   labels_labeller = scales::label_percent(1),
   labels_size = 3.5,
   labels_color = "black",
@@ -42,6 +43,7 @@ plot_proportions(
   overall_line_width = 0.5,
   facet_labeller = ggplot2::label_wrap_gen(width = 50, multi_line = TRUE),
   flip = FALSE,
+  minimal = FALSE,
   free_scale = FALSE,
   return_data = FALSE
 )
@@ -77,7 +79,7 @@ dummy_proportions(variable)
 
 - convert_continuous:
 
-  Should continuous variables (with 5 unique values or more) be
+  Should continuous by variables (with 5 unique values or more) be
   converted to quartiles (using
   [`cut_quartiles()`](https://larmarange.github.io/guideR/reference/cut_quartiles.md))?
 
@@ -135,17 +137,21 @@ dummy_proportions(variable)
 
   Display proportion labels?
 
+- label_y:
+
+  Y position of labels. If `NULL`, will be auto-determined.
+
 - labels_labeller:
 
-  Labeller function for proportion labels.
+  Labeller function for labels.
 
 - labels_size:
 
-  Size of proportion labels.
+  Size of labels.
 
 - labels_color:
 
-  Color of proportion labels.
+  Color of labels.
 
 - show_overall_line:
 
@@ -170,6 +176,10 @@ dummy_proportions(variable)
 - flip:
 
   Flip x and y axis?
+
+- minimal:
+
+  Should a minimal theme be applied? (no y-axis, no grid)
 
 - free_scale:
 
@@ -221,6 +231,15 @@ titanic |>
   plot_proportions(
     Survived == "Yes",
     by = c(Class, Sex),
+    fill = "lightblue",
+    minimal = TRUE
+  )
+
+
+titanic |>
+  plot_proportions(
+    Survived == "Yes",
+    by = c(Class, Sex),
     geom = "point",
     color = "red",
     size = 3,
@@ -253,7 +272,7 @@ titanic |>
   plot_proportions(
     Survived == "Yes",
     by = -Survived,
-    mapping = ggplot2::aes(fill = variable),
+    mapping = ggplot2::aes(fill = by),
     color = "black",
     show.legend = FALSE,
     show_overall_line = TRUE,
@@ -345,10 +364,6 @@ titanic |>
   ) +
   ggplot2::theme(legend.position = "bottom") +
   ggplot2::labs(fill = NULL)
-#> Warning: Removed 4 rows containing missing values or values outside the scale range
-#> (`geom_bar()`).
-#> Warning: Removed 4 rows containing missing values or values outside the scale range
-#> (`geom_text()`).
 
 
 # Convert Class into dummy variables

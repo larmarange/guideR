@@ -46,6 +46,11 @@ Documentation of development version:
 
 ## Descriptive statistics
 
+- [`mean_sd()`](https://larmarange.github.io/guideR/reference/mean_sd.md)
+  : Compute means, standard deviations and confidence intervals by
+  sub-groups
+- [`median_iqr()`](https://larmarange.github.io/guideR/reference/median_iqr.md)
+  : Compute median, quartiles and interquartile range by sub-groups
 - [`proportion()`](https://larmarange.github.io/guideR/reference/proportion.md)
   : Compute proportions
 - [`round_preserve_sum()`](https://larmarange.github.io/guideR/reference/round_preserve_sum.md)
@@ -54,12 +59,22 @@ Documentation of development version:
 ## Statistical tests
 
 - [`fisher.simulate.p()`](https://larmarange.github.io/guideR/reference/gtsummary_test.md)
+  [`svyttest_oneway()`](https://larmarange.github.io/guideR/reference/gtsummary_test.md)
   :
 
   Additional tests for `gtsummary`
 
+- [`svyoneway()`](https://larmarange.github.io/guideR/reference/svyoneway.md)
+  : Test for Equal Means for survey design object
+
 ## Statistical plots
 
+- [`plot_categorical()`](https://larmarange.github.io/guideR/reference/plot_categorical.md)
+  : Plot a categorical variable by sub-groups
+- [`plot_continuous()`](https://larmarange.github.io/guideR/reference/plot_continuous.md)
+  : Plot a continuous variable by sub-groups
+- [`plot_means()`](https://larmarange.github.io/guideR/reference/plot_means.md)
+  : Plot means by sub-groups
 - [`plot_multiple_answers()`](https://larmarange.github.io/guideR/reference/plot_multiple_answers.md)
   [`plot_multiple_answers_dodge()`](https://larmarange.github.io/guideR/reference/plot_multiple_answers.md)
   : Plot a multiple answers question
@@ -70,6 +85,11 @@ Documentation of development version:
 - [`plot_trajectories()`](https://larmarange.github.io/guideR/reference/plot_trajectories.md)
   [`plot_periods()`](https://larmarange.github.io/guideR/reference/plot_trajectories.md)
   : Plot trajectories
+- [`safe_pal()`](https://larmarange.github.io/guideR/reference/safe_pal.md)
+  [`scale_fill_safe()`](https://larmarange.github.io/guideR/reference/safe_pal.md)
+  [`scale_colour_safe()`](https://larmarange.github.io/guideR/reference/safe_pal.md)
+  [`scale_color_safe()`](https://larmarange.github.io/guideR/reference/safe_pal.md)
+  : A safe discrete colour palette
 
 ## Models
 
