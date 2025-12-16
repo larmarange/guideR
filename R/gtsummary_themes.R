@@ -100,10 +100,10 @@ theme_gtsummary_prop_n <- function(
     lst_theme <- list(
       "tbl_summary-arg:statistic" = list(
         all_continuous() ~ "{median} ({p25}, {p75})",
-        all_categorical() ~ prop_stat,
-        "add_ci.tbl_summary-arg:method" =
-          list(all_continuous() ~ "wilcox.test", all_categorical() ~ "wilson")
-      )
+        all_categorical() ~ prop_stat
+      ),
+      "add_ci.tbl_summary-arg:method" =
+        list(all_continuous() ~ "wilcox.test", all_categorical() ~ "wilson")
     )
   }
   lst_theme[["tbl_summary-arg:digits"]] <- list(
