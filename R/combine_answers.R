@@ -28,6 +28,11 @@
 #' d |> combine_answers(q1a:q1d, into = "combined")
 #' d |> combine_answers(q1a:q1d, into = "combined", sep = ", ", value = "y")
 #' d |> combine_answers(q1a:q1d, into = "combined", sep = " | ", value = "n")
+#'
+#' works sith survey objects
+#' d |>
+#'   srvyr::as_survey() |>
+#'   combine_answers(q1a:q1d, into = "combined")
 combine_answers <- function(
   data,
   answers,
@@ -35,6 +40,18 @@ combine_answers <- function(
   value = NULL,
   sep = NULL
 ) {
+  if (inherits(data, "survey.design")) {
+    data$variables <-
+      data$variables |>
+      combine_answers(
+        answers = {{ answers }},
+        into = into,
+        value = value,
+        sep = sep
+      )
+    return(data)
+  }
+
   d <- data |> dplyr::select({{ answers }})
   answers <- colnames(d)
 

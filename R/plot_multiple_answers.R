@@ -449,7 +449,8 @@ plot_multiple_answers_dodge <- function(
         position = ggplot2::position_dodge(width = width),
         width = width,
         ...
-      )
+      ) +
+      scale_fill_safe()
 
   # plotting confidence intervals
   if (show_ci) {
@@ -474,7 +475,8 @@ plot_multiple_answers_dodge <- function(
         mapping = ggplot2::aes(colour = .data$.fill),
         position = ggplot2::position_dodge(width = width),
         ...
-      )
+      ) +
+      scale_colour_safe()
 
   # plotting proportion labels
   if (show_labels) {
