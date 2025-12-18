@@ -34,8 +34,21 @@ test_that("plot_multiple_answers_dodge() works", {
         q1a:q1d, by = group, combine_answers = TRUE, value = "y"
       )
   )
-  suppressWarnings(print(p)) # warning from ggplot2 due to ggupset
+  # warning from ggplot2 due to ggupset
+  expect_no_error(suppressWarnings(print(p)))
   expect_doppelganger("plot_multiple_answers_dodge() combine", p)
+
+  expect_no_error(
+    p <-
+      d |>
+      srvyr::as_survey() |>
+      plot_multiple_answers_dodge(
+        q1a:q1d, by = group, combine_answers = TRUE, value = "y"
+      )
+  )
+  # warning from ggplot2 due to ggupset
+  expect_no_error(suppressWarnings(print(p)))
+  expect_doppelganger("plot_multiple_answers_dodge() combine survey", p)
 
   expect_no_error(
     p <-
@@ -95,6 +108,19 @@ test_that("plot_multiple_answers() works", {
       )
   )
   expect_doppelganger("plot_multiple_answers() combine", p)
+
+  expect_no_error(
+    p <-
+      d |>
+      srvyr::as_survey() |>
+      plot_multiple_answers(
+        combine_answers = TRUE,
+        value = "y",
+        fill = "#DDCC77",
+        drop_na = TRUE
+      )
+  )
+  expect_doppelganger("plot_multiple_answers() combine & survey", p)
 
   expect_no_error(
     p <-
