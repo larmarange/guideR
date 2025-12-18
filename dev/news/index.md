@@ -4,7 +4,17 @@
 
 **Bug fix**
 
-- buf fix in `theme_gtsummary_prop_n(mean_sd = FALSE)`
+- bug fix in `theme_gtsummary_prop_n(mean_sd = FALSE)`
+- bug fix in
+  [`combine_answers()`](https://larmarange.github.io/guideR/dev/reference/combine_answers.md)
+  when `data` is a `survey` object
+
+**Improvements**
+
+- [`plot_multiple_answers_dodge()`](https://larmarange.github.io/guideR/dev/reference/plot_multiple_answers.md)
+  now uses
+  [`safe_pal()`](https://larmarange.github.io/guideR/dev/reference/safe_pal.md)
+  by default
 
 ## guideR 0.8.0
 
