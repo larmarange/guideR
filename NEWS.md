@@ -1,5 +1,9 @@
 # guideR (development version)
 
+**Bug fix**
+
+* bug fix in `theme_gtsummary_unweighted_n()`
+
 # guideR 0.8.1
 
 **Bug fix**

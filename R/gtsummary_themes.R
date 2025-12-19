@@ -206,7 +206,7 @@ theme_gtsummary_unweighted_n <- function(
   )
   lst_theme[["tbl_svysummary-str:header-noby"]] <- uN
   lst_theme[["tbl_svysummary-str:header-withby"]] <-
-    paste0("**{level}**\n(", uN, ")")
+    paste0("**{level}**\n(", un, ")")
   lst_theme[["tbl_svysummary-arg:missing_stat"]] <-
     paste0(n_unweighted_prefix, "{N_miss_unweighted}", n_unweighted_suffix)
 
