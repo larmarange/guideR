@@ -2,6 +2,14 @@
 
 ## guideR (development version)
 
+**Improvements**
+
+- [`style_grouped_tbl()`](https://larmarange.github.io/guideR/dev/reference/grouped_tbl_pivot_wider.md)
+  and
+  [`grouped_tbl_pivot_wider()`](https://larmarange.github.io/guideR/dev/reference/grouped_tbl_pivot_wider.md)
+  now accepts tables generated with
+  [`gtsummary::tbl_stack()`](https://www.danieldsjoberg.com/gtsummary/reference/tbl_stack.html)
+
 **Bug fix**
 
 - bug fix in
