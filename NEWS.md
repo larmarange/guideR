@@ -3,11 +3,12 @@
 **Bug fix**
 
 * bug fix in `theme_gtsummary_prop_n(mean_sd = FALSE)`
-* bug fix in `combine_answers()` when `data` is a `survey` object
+* bug fix in `combine_answers()` when `data` is a `survey` object (#55)
 
 **Improvements**
 
-* `plot_multiple_answers_dodge()` now uses `safe_pal()` by default
+* `plot_multiple_answers_dodge()` now uses `safe_pal()` by default (#55)
+* `plot_trajectories()` now uses `safe_pal()` by default (#56)
 
 # guideR 0.8.0
 

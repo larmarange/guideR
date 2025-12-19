@@ -132,7 +132,8 @@ plot_trajectories <- function(
       legend.position = "bottom",
       panel.grid.major.y = ggplot2::element_blank(),
       axis.ticks.y = ggplot2::element_blank()
-    )
+    ) +
+    scale_fill_safe()
 
   if (is.null(hide_y_labels)) {
     hide_y_labels <- length(unique(data[[idv]])) > 20
