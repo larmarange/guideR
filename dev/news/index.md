@@ -2,6 +2,11 @@
 
 ## guideR (development version)
 
+**Bug fix**
+
+- bug fix in
+  [`theme_gtsummary_unweighted_n()`](https://larmarange.github.io/guideR/dev/reference/gtsummary_themes.md)
+
 ## guideR 0.8.1
 
 CRAN release: 2025-12-19
