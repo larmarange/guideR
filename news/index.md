@@ -1,6 +1,31 @@
 # Changelog
 
+## guideR 0.8.1
+
+CRAN release: 2025-12-19
+
+**Bug fix**
+
+- bug fix in `theme_gtsummary_prop_n(mean_sd = FALSE)`
+- bug fix in
+  [`combine_answers()`](https://larmarange.github.io/guideR/reference/combine_answers.md)
+  when `data` is a `survey` object
+  ([\#55](https://github.com/larmarange/guideR/issues/55))
+
+**Improvements**
+
+- [`plot_multiple_answers_dodge()`](https://larmarange.github.io/guideR/reference/plot_multiple_answers.md)
+  now uses
+  [`safe_pal()`](https://larmarange.github.io/guideR/reference/safe_pal.md)
+  by default ([\#55](https://github.com/larmarange/guideR/issues/55))
+- [`plot_trajectories()`](https://larmarange.github.io/guideR/reference/plot_trajectories.md)
+  now uses
+  [`safe_pal()`](https://larmarange.github.io/guideR/reference/safe_pal.md)
+  by default ([\#56](https://github.com/larmarange/guideR/issues/56))
+
 ## guideR 0.8.0
+
+CRAN release: 2025-12-10
 
 **Minor breaking change**
 
