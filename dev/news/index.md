@@ -2,6 +2,10 @@
 
 ## guideR (development version)
 
+## guideR 0.8.1
+
+CRAN release: 2025-12-19
+
 **Bug fix**
 
 - bug fix in `theme_gtsummary_prop_n(mean_sd = FALSE)`
