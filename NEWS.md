@@ -1,5 +1,10 @@
 # guideR (development version)
 
+**Improvements**
+
+* `style_grouped_tbl()` and `grouped_tbl_pivot_wider()` now accepts tables
+  generated with `gtsummary::tbl_stack()`
+
 **Bug fix**
 
 * bug fix in `theme_gtsummary_unweighted_n()`
