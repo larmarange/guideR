@@ -29,7 +29,7 @@
 #' d |> combine_answers(q1a:q1d, into = "combined", sep = ", ", value = "y")
 #' d |> combine_answers(q1a:q1d, into = "combined", sep = " | ", value = "n")
 #'
-#' works sith survey objects
+#' # works with survey objects
 #' d |>
 #'   srvyr::as_survey() |>
 #'   combine_answers(q1a:q1d, into = "combined")
