@@ -8,13 +8,18 @@
 - bug fix in
   [`combine_answers()`](https://larmarange.github.io/guideR/dev/reference/combine_answers.md)
   when `data` is a `survey` object
+  ([\#55](https://github.com/larmarange/guideR/issues/55))
 
 **Improvements**
 
 - [`plot_multiple_answers_dodge()`](https://larmarange.github.io/guideR/dev/reference/plot_multiple_answers.md)
   now uses
   [`safe_pal()`](https://larmarange.github.io/guideR/dev/reference/safe_pal.md)
-  by default
+  by default ([\#55](https://github.com/larmarange/guideR/issues/55))
+- [`plot_trajectories()`](https://larmarange.github.io/guideR/dev/reference/plot_trajectories.md)
+  now uses
+  [`safe_pal()`](https://larmarange.github.io/guideR/dev/reference/safe_pal.md)
+  by default ([\#56](https://github.com/larmarange/guideR/issues/56))
 
 ## guideR 0.8.0
 

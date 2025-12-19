@@ -99,4 +99,17 @@ d |> combine_answers(q1a:q1d, into = "combined", sep = " | ", value = "n")
 #>  9 n     NA    y     n     NA             
 #> 10 y     NA    y     n     NA             
 #> # ℹ 190 more rows
+
+# works with survey objects
+d |>
+  srvyr::as_survey() |>
+  combine_answers(q1a:q1d, into = "combined")
+#> ! Automatically selected value: "y"
+#> ℹ To remove this message, please specify `value`.
+#> Independent Sampling design (with replacement)
+#> Called via srvyr
+#> Sampling variables:
+#>   - ids: `1` 
+#> Data variables: 
+#>   - q1a (chr), q1b (chr), q1c (chr), q1d (chr), combined (list)
 ```
