@@ -148,7 +148,10 @@ long_to_seq <- function(data,
       # checking alphabet covers all observations
       check <- !data[[outcomev]] %in% alphabet
       if (any(check, na.rm = TRUE)) {
-        missing <- data[[outcomev]][check] |> unique() |> paste(collapse = ", ")
+        missing <- # nolint
+          data[[outcomev]][check] |>
+          unique() |>
+          paste(collapse = ", ")
         cli::cli_abort("State(s) {missing} found in data do not have a label.")
       }
     } else {
