@@ -38,6 +38,14 @@ test_that("plot_trajectories() and plot_periods() works", {
   )
   expect_doppelganger("plot_trajectories() by 2", p)
 
+  expect_no_error(
+    p <-
+      d |>
+      srvyr::as_survey() |>
+      plot_trajectories(id = id, time = time, fill = status, colour = "black")
+  )
+  expect_doppelganger("plot_trajectories() survey object", p)
+
   d2 <- d |>
     dplyr::mutate(end = time + 1) |>
     long_to_periods(id = id, start = time, stop = end, by = status)
@@ -61,6 +69,17 @@ test_that("plot_trajectories() and plot_periods() works", {
       )
   )
   expect_doppelganger("plot_periods() hide_y_labels", p)
+
+  expect_no_error(
+    p <-
+      d2 |>
+      srvyr::as_survey() |>
+      plot_periods(
+        id = id, start = time, stop = end,
+        fill = status, height = 0.8
+      )
+  )
+  expect_doppelganger("plot_periods() survey object", p)
 
   # expected errors
   expect_error(
