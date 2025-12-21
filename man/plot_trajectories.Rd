@@ -33,7 +33,7 @@ plot_periods(
 )
 }
 \arguments{
-\item{data}{A data frame, a data frame extension (e.g. a tibble), , or a
+\item{data}{A data frame, a data frame extension (e.g. a tibble), or a
 survey design object.}
 
 \item{id}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>\cr

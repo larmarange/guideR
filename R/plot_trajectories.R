@@ -18,7 +18,7 @@
 #'
 #' For survey design objects, weights are not taken into account. Each
 #' individual trajectory as the same height.
-#' @param data A data frame, a data frame extension (e.g. a tibble), , or a
+#' @param data A data frame, a data frame extension (e.g. a tibble), or a
 #' survey design object.
 #' @param id <[`tidy-select`][dplyr::dplyr_tidy_select ]>\cr
 #' Column containing individual ids.
