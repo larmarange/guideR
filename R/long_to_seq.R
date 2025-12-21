@@ -133,7 +133,7 @@ long_to_seq <- function(data,
     names()
 
   # factors are converted to labelled integer
-  if (is.factor(d[[outcomev]]))
+  if (is.factor(data[[outcomev]]))
     data[[outcomev]] <- labelled::to_labelled(data[[outcomev]])
 
   # sorting data
