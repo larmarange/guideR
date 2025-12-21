@@ -37,7 +37,6 @@ Imports:
     srvyr,
     stats,
     stringr,
-    tibble,
     tidyr,
     tidyselect,
     utils

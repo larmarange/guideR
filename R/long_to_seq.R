@@ -40,7 +40,7 @@
 #' data("biofam")
 #' d <-
 #'   biofam |>
-#'   tibble::rownames_to_column("id_ind") |>
+#'   dplyr::mutate(id_ind = rownames(biofam)) |>
 #'   dplyr::select(id_ind, dplyr::starts_with("a")) |>
 #'   tidyr::pivot_longer(
 #'     cols = dplyr::starts_with("a"),
