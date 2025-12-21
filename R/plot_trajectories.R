@@ -20,15 +20,15 @@
 #' individual trajectory as the same height.
 #' @param data A data frame, a data frame extension (e.g. a tibble), , or a
 #' survey design object.
-#' @param id <[`tidy-select`][dplyr::dplyr_tidy_select ]>
+#' @param id <[`tidy-select`][dplyr::dplyr_tidy_select ]>\cr
 #' Column containing individual ids.
-#' @param time <[`tidy-select`][dplyr::dplyr_tidy_select ]>
+#' @param time <[`tidy-select`][dplyr::dplyr_tidy_select ]>\cr
 #' Time variable.
-#' @param fill <[`tidy-select`][dplyr::dplyr_tidy_select ]>
+#' @param fill <[`tidy-select`][dplyr::dplyr_tidy_select ]>\cr
 #' Variable mapped to `fill` aesthetic.
-#' @param by <[`tidy-select`][dplyr::dplyr_tidy_select ]>
+#' @param by <[`tidy-select`][dplyr::dplyr_tidy_select ]>\cr
 #' Optional variables to group by.
-#' @param sort_by <[`tidy-select`][dplyr::dplyr_tidy_select ]>
+#' @param sort_by <[`tidy-select`][dplyr::dplyr_tidy_select ]>\cr
 #' Optional variables to sort trajectories.
 #' @param nudge_x Optional amount of horizontal distance to move.
 #' @param hide_y_labels Hide y labels? If `NULL`, hide them when more than 20

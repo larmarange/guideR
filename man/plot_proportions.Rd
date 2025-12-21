@@ -47,12 +47,13 @@ dummy_proportions(variable)
 \item{data}{A data frame, data frame extension (e.g. a tibble),
 or a survey design object.}
 
-\item{condition}{<\code{\link[rlang:args_data_masking]{data-masking}}> A condition
-defining a proportion, or a \code{\link[dplyr:reexports]{dplyr::tibble()}} defining several proportions
-(see examples).}
+\item{condition}{<\code{\link[rlang:args_data_masking]{data-masking}}>\cr
+A condition defining a proportion, or a \code{\link[dplyr:reexports]{dplyr::tibble()}} defining several
+proportions (see examples).}
 
-\item{by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> List of variables to
-group by (comparison is done separately for each variable).}
+\item{by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>\cr
+List of variables to group by (comparison is done separately for each
+variable).}
 
 \item{drop_na_by}{Remove \code{NA} values in \code{by} variables?}
 

@@ -59,14 +59,14 @@ plot_multiple_answers_dodge(
 \item{data}{A data frame, data frame extension (e.g. a tibble),
 or a survey design object.}
 
-\item{answers}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> List of variables
-identifying the different answers of the question.}
+\item{answers}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>\cr
+List of variables identifying the different answers of the question.}
 
 \item{value}{Value indicating a positive answer. By default, will use the
 maximum observed value and will display a message.}
 
-\item{by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> Optional list of
-variables to compare (using facets).}
+\item{by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>\cr
+Optional list of variables to compare (using facets).}
 
 \item{combine_answers}{Should answers be combined? (see examples)}
 

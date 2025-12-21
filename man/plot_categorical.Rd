@@ -33,13 +33,14 @@ plot_categorical(
 \item{data}{A data frame, data frame extension (e.g. a tibble),
 or a survey design object.}
 
-\item{outcome}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> List of
-categorical variables to be plotted.}
+\item{outcome}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>\cr
+List of categorical variables to be plotted.}
 
 \item{na.rm}{Should \code{NA} values be removed from the \code{outcome}?}
 
-\item{by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> List of variables to
-group by (comparison is done separately for each variable).}
+\item{by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>\cr
+List of variables to group by (comparison is done separately for each
+variable).}
 
 \item{drop_na_by}{Remove \code{NA} values in \code{by} variables?}
 

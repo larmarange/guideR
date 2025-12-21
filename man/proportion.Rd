@@ -53,18 +53,18 @@ proportion(data, ...)
 \item{data}{A vector, a data frame, data frame extension (e.g. a tibble),
 or a survey design object.}
 
-\item{...}{<\code{\link[rlang:args_data_masking]{data-masking}}> Variable(s) for those
-computing proportions.}
+\item{...}{<\code{\link[rlang:args_data_masking]{data-masking}}>\cr
+Variable(s) for those computing proportions.}
 
-\item{.by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> Optional additional
-variables to group by (in addition to those eventually previously declared
-using \code{\link[dplyr:group_by]{dplyr::group_by()}}).}
+\item{.by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>\cr
+Optional additional variables to group by (in addition to those eventually
+previously declared using \code{\link[dplyr:group_by]{dplyr::group_by()}}).}
 
 \item{.na.rm}{Should \code{NA} values be removed
 (from variables declared in \code{...})?}
 
-\item{.weight}{<\code{\link[rlang:args_data_masking]{data-masking}}> Frequency
-weights. Can be \code{NULL} or a variable.}
+\item{.weight}{<\code{\link[rlang:args_data_masking]{data-masking}}>\cr
+Frequency weights. Can be \code{NULL} or a variable.}
 
 \item{.scale}{A scaling factor applied to proportion. Use \code{1} for keeping
 proportions unchanged.}

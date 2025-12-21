@@ -12,11 +12,12 @@
 #'
 #' @param data A data frame, data frame extension (e.g. a tibble),
 #' or a survey design object.
-#' @param condition <[`data-masking`][rlang::args_data_masking]> A condition
-#' defining a proportion, or a [dplyr::tibble()] defining several proportions
-#' (see examples).
-#' @param by <[`tidy-select`][dplyr::dplyr_tidy_select ]> List of variables to
-#' group by (comparison is done separately for each variable).
+#' @param condition <[`data-masking`][rlang::args_data_masking]>\cr
+#' A condition defining a proportion, or a [dplyr::tibble()] defining several
+#' proportions (see examples).
+#' @param by <[`tidy-select`][dplyr::dplyr_tidy_select ]>\cr
+#' List of variables to group by (comparison is done separately for each
+#' variable).
 #' @param drop_na_by Remove `NA` values in `by` variables?
 #' @param convert_continuous Should continuous by variables (with 5 unique
 #' values or more) be converted to quartiles (using `cut_quartiles()`)?

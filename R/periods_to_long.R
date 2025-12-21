@@ -1,9 +1,9 @@
 #' Transform a data frame from period format to long format
 #'
 #' @param data A data frame, or a data frame extension (e.g. a tibble).
-#' @param start <[`tidy-select`][dplyr::dplyr_tidy_select ]>
+#' @param start <[`tidy-select`][dplyr::dplyr_tidy_select ]>\cr
 #' Time variable indicating the beginning of each row
-#' @param stop <[`tidy-select`][dplyr::dplyr_tidy_select ]>
+#' @param stop <[`tidy-select`][dplyr::dplyr_tidy_select ]>\cr
 #' Optional time variable indicating the end of each row. If not provided, it
 #' will be derived from the dataset, considering that each row ends at the
 #' beginning of the next one.

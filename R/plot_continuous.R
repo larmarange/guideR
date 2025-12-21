@@ -6,8 +6,8 @@
 #'
 #' @param data A data frame, data frame extension (e.g. a tibble),
 #' or a survey design object.
-#' @param outcome <[`tidy-select`][dplyr::dplyr_tidy_select ]> List of
-#' continuous variables to be plotted.
+#' @param outcome <[`tidy-select`][dplyr::dplyr_tidy_select ]>\cr
+#' List of continuous variables to be plotted.
 #' @param ... Additional arguments passed to [ggplot2::geom_boxplot()].
 #' @param show_pvalues Display p-values in the top-left corner? p-values are
 #' computed with [stats::kruskal.test()] for data frames, and with
