@@ -15,7 +15,11 @@
 #' variable. You can use [long_to_periods()] to transform your data in such
 #' format. Beginning and ending of each tile is determined by `start` and
 #' `stop` arguments.
-#' @param data A data frame, or a data frame extension (e.g. a tibble).
+#'
+#' For survey design objects, weights are not taken into account. Each
+#' individual trajectory as the same height.
+#' @param data A data frame, a data frame extension (e.g. a tibble), , or a
+#' survey design object.
 #' @param id <[`tidy-select`][dplyr::dplyr_tidy_select ]>
 #' Column containing individual ids.
 #' @param time <[`tidy-select`][dplyr::dplyr_tidy_select ]>
@@ -69,6 +73,10 @@ plot_trajectories <- function(
   facet_labeller = ggplot2::label_wrap_gen(width = 50, multi_line = TRUE),
   ...
 ) {
+  if (inherits(data, "survey.design")) {
+    data <- data$variables
+  }
+
   # selection and checks
   idv <-
     tidyselect::eval_select(
@@ -186,6 +194,10 @@ plot_periods <- function(
   facet_labeller = ggplot2::label_wrap_gen(width = 50, multi_line = TRUE),
   ...
 ) {
+  if (inherits(data, "survey.design")) {
+    data <- data$variables
+  }
+
   startv <-
     tidyselect::eval_select(
       rlang::enquo(start),

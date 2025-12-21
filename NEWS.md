@@ -4,6 +4,7 @@
 
 * `style_grouped_tbl()` and `grouped_tbl_pivot_wider()` now accepts tables
   generated with `gtsummary::tbl_stack()`
+* `plot_trajectories()` now accepts survey object.
 
 **Bug fix**
 
