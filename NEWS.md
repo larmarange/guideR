@@ -1,10 +1,15 @@
 # guideR (development version)
 
+**New features**
+
+* new function `long_to_seq()` to convert from long format to a sequence
+  object (#57)
+
 **Improvements**
 
 * `style_grouped_tbl()` and `grouped_tbl_pivot_wider()` now accepts tables
   generated with `gtsummary::tbl_stack()`
-* `plot_trajectories()` now accepts survey object.
+* `plot_trajectories()` now accepts survey object (#57)
 
 **Bug fix**
 
