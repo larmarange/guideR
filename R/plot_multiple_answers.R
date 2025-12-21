@@ -22,12 +22,12 @@
 #' least one `NA` value will be labeled with `missing_label`.
 #' @param data A data frame, data frame extension (e.g. a tibble),
 #' or a survey design object.
-#' @param answers <[`tidy-select`][dplyr::dplyr_tidy_select ]> List of variables
-#' identifying the different answers of the question.
+#' @param answers <[`tidy-select`][dplyr::dplyr_tidy_select ]>\cr
+#' List of variables identifying the different answers of the question.
 #' @param value Value indicating a positive answer. By default, will use the
 #' maximum observed value and will display a message.
-#' @param by <[`tidy-select`][dplyr::dplyr_tidy_select ]> Optional list of
-#' variables to compare (using facets).
+#' @param by <[`tidy-select`][dplyr::dplyr_tidy_select ]>\cr
+#' Optional list of variables to compare (using facets).
 #' @param combine_answers Should answers be combined? (see examples)
 #' @param combine_sep Character string to separate combined answers.
 #' @param missing_label When combining answers and

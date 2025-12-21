@@ -6,15 +6,15 @@
 #'
 #' @param data A vector, a data frame, data frame extension (e.g. a tibble),
 #' or a survey design object.
-#' @param ... <[`data-masking`][rlang::args_data_masking]> Variable(s) for those
-#' computing proportions.
-#' @param .by <[`tidy-select`][dplyr::dplyr_tidy_select ]> Optional additional
-#' variables to group by (in addition to those eventually previously declared
-#' using [dplyr::group_by()]).
+#' @param ... <[`data-masking`][rlang::args_data_masking]>\cr
+#' Variable(s) for those computing proportions.
+#' @param .by <[`tidy-select`][dplyr::dplyr_tidy_select ]>\cr
+#' Optional additional variables to group by (in addition to those eventually
+#' previously declared using [dplyr::group_by()]).
 #' @param .na.rm Should `NA` values be removed
 #' (from variables declared in `...`)?
-#' @param .weight <[`data-masking`][rlang::args_data_masking]> Frequency
-#' weights. Can be `NULL` or a variable.
+#' @param .weight <[`data-masking`][rlang::args_data_masking]>\cr
+#' Frequency weights. Can be `NULL` or a variable.
 #' @param .scale A scaling factor applied to proportion. Use `1` for keeping
 #' proportions unchanged.
 #' @param .sort If `TRUE`, will show the highest proportions at the top.

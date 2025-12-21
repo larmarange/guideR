@@ -10,7 +10,8 @@ combine_answers(data, answers, into, value = NULL, sep = NULL)
 \item{data}{A data frame, data frame extension (e.g. a tibble),
 or a survey design object.}
 
-\item{answers}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> List of variables
+\item{answers}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>\cr
+List of variables
 identifying the different answers of the question.}
 
 \item{into}{Names of new variables to create as character vector.}

@@ -7,8 +7,8 @@
 #'
 #' @param data A data frame, data frame extension (e.g. a tibble),
 #' or a survey design object.
-#' @param outcome <[`tidy-select`][dplyr::dplyr_tidy_select ]> List of
-#' continuous variables to be plotted.
+#' @param outcome <[`tidy-select`][dplyr::dplyr_tidy_select ]>\cr
+#' List of continuous variables to be plotted.
 #' @param geom Geometry to use for plotting means (`"point"` by default).
 #' @param show_pvalues Display p-values in the top-left corner? p-values are
 #' computed with [stats::oneway.test()] for data frames, and with

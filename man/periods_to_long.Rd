@@ -16,10 +16,10 @@ periods_to_long(
 \arguments{
 \item{data}{A data frame, or a data frame extension (e.g. a tibble).}
 
-\item{start}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
+\item{start}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>\cr
 Time variable indicating the beginning of each row}
 
-\item{stop}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
+\item{stop}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>\cr
 Optional time variable indicating the end of each row. If not provided, it
 will be derived from the dataset, considering that each row ends at the
 beginning of the next one.}

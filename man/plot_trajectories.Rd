@@ -36,19 +36,19 @@ plot_periods(
 \item{data}{A data frame, a data frame extension (e.g. a tibble), , or a
 survey design object.}
 
-\item{id}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
+\item{id}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>\cr
 Column containing individual ids.}
 
-\item{time}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
+\item{time}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>\cr
 Time variable.}
 
-\item{fill}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
+\item{fill}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>\cr
 Variable mapped to \code{fill} aesthetic.}
 
-\item{by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
+\item{by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>\cr
 Optional variables to group by.}
 
-\item{sort_by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>
+\item{sort_by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>\cr
 Optional variables to sort trajectories.}
 
 \item{nudge_x}{Optional amount of horizontal distance to move.}
