@@ -2,6 +2,13 @@
 
 ## guideR (development version)
 
+**New features**
+
+- new function
+  [`long_to_seq()`](https://larmarange.github.io/guideR/dev/reference/long_to_seq.md)
+  to convert from long format to a sequence object
+  ([\#57](https://github.com/larmarange/guideR/issues/57))
+
 **Improvements**
 
 - [`style_grouped_tbl()`](https://larmarange.github.io/guideR/dev/reference/grouped_tbl_pivot_wider.md)
@@ -9,6 +16,9 @@
   [`grouped_tbl_pivot_wider()`](https://larmarange.github.io/guideR/dev/reference/grouped_tbl_pivot_wider.md)
   now accepts tables generated with
   [`gtsummary::tbl_stack()`](https://www.danieldsjoberg.com/gtsummary/reference/tbl_stack.html)
+- [`plot_trajectories()`](https://larmarange.github.io/guideR/dev/reference/plot_trajectories.md)
+  now accepts survey object
+  ([\#57](https://github.com/larmarange/guideR/issues/57))
 
 **Bug fix**
 

@@ -39,6 +39,8 @@ Documentation of development version:
   : Cut a continuous variable in quartiles
 - [`long_to_periods()`](https://larmarange.github.io/guideR/dev/reference/long_to_periods.md)
   : Transform a data frame from long format to period format
+- [`long_to_seq()`](https://larmarange.github.io/guideR/dev/reference/long_to_seq.md)
+  : Transform a data frame from long format to a sequence obect
 - [`periods_to_long()`](https://larmarange.github.io/guideR/dev/reference/periods_to_long.md)
   : Transform a data frame from period format to long format
 - [`unrowwise()`](https://larmarange.github.io/guideR/dev/reference/unrowwise.md)

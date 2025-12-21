@@ -38,31 +38,32 @@ plot_periods(
 
 - data:
 
-  A data frame, or a data frame extension (e.g. a tibble).
+  A data frame, a data frame extension (e.g. a tibble), , or a survey
+  design object.
 
 - id:
 
-  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>
+  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>  
   Column containing individual ids.
 
 - time:
 
-  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>
+  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>  
   Time variable.
 
 - fill:
 
-  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>
+  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>  
   Variable mapped to `fill` aesthetic.
 
 - by:
 
-  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>
+  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>  
   Optional variables to group by.
 
 - sort_by:
 
-  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>
+  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>  
   Optional variables to sort trajectories.
 
 - nudge_x:
@@ -105,6 +106,9 @@ variable. You can use
 [`long_to_periods()`](https://larmarange.github.io/guideR/dev/reference/long_to_periods.md)
 to transform your data in such format. Beginning and ending of each tile
 is determined by `start` and `stop` arguments.
+
+For survey design objects, weights are not taken into account. Each
+individual trajectory as the same height.
 
 ## Examples
 

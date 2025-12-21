@@ -77,7 +77,7 @@ plot_multiple_answers_dodge(
 
 - answers:
 
-  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>
+  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>  
   List of variables identifying the different answers of the question.
 
 - value:
@@ -87,7 +87,7 @@ plot_multiple_answers_dodge(
 
 - by:
 
-  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>
+  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>  
   Optional list of variables to compare (using facets).
 
 - combine_answers:

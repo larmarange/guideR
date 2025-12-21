@@ -62,14 +62,14 @@ dummy_proportions(variable)
 
 - condition:
 
-  \<[`data-masking`](https://rlang.r-lib.org/reference/args_data_masking.html)\>
+  \<[`data-masking`](https://rlang.r-lib.org/reference/args_data_masking.html)\>  
   A condition defining a proportion, or a
   [`dplyr::tibble()`](https://dplyr.tidyverse.org/reference/reexports.html)
   defining several proportions (see examples).
 
 - by:
 
-  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>
+  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>  
   List of variables to group by (comparison is done separately for each
   variable).
 

@@ -63,12 +63,12 @@ proportion(
 
 - ...:
 
-  \<[`data-masking`](https://rlang.r-lib.org/reference/args_data_masking.html)\>
+  \<[`data-masking`](https://rlang.r-lib.org/reference/args_data_masking.html)\>  
   Variable(s) for those computing proportions.
 
 - .by:
 
-  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>
+  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>  
   Optional additional variables to group by (in addition to those
   eventually previously declared using
   [`dplyr::group_by()`](https://dplyr.tidyverse.org/reference/group_by.html)).
@@ -79,7 +79,7 @@ proportion(
 
 - .weight:
 
-  \<[`data-masking`](https://rlang.r-lib.org/reference/args_data_masking.html)\>
+  \<[`data-masking`](https://rlang.r-lib.org/reference/args_data_masking.html)\>  
   Frequency weights. Can be `NULL` or a variable.
 
 - .scale:
