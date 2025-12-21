@@ -1,13 +1,14 @@
 # guideR
 
-`guideR` package is a companion for the manual *guide-R : Guide pour
+![](https://larmarange.github.io/guide-R/ressources/cover-hd.png)
+
+The `guideR` package is a companion for the manual *guide-R : Guide pour
 l’analyse de données d’enquêtes avec R* available at
 <https://larmarange.github.io/guide-R/>.
 
 `guideR` implements miscellaneous functions introduced in *guide-R* to
-facilitate statistical analysis and manipulation of survey data.
-
-![](https://larmarange.github.io/guide-R/ressources/cover-hd.png)
+facilitate statistical analysis, statistical plots and manipulation of
+survey data.
 
 ## Installation & Documentation
 

@@ -38,7 +38,7 @@ plot_periods(
 
 - data:
 
-  A data frame, a data frame extension (e.g. a tibble), , or a survey
+  A data frame, a data frame extension (e.g. a tibble), or a survey
   design object.
 
 - id:
