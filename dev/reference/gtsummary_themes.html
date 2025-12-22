@@ -44,6 +44,8 @@
 <span>  prop_digits <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  mean_sd <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  cont_digits <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  missing_text <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  overall_string <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  set_theme <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -55,6 +57,7 @@
 <span>  prop_digits <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  mean_sd <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  cont_digits <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  missing_text <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  overall_string <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  set_theme <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
@@ -88,6 +91,16 @@ Also, set default summary statistics to mean and standard deviation in
 Define the number of decimals to display for continuous variables.</p></dd>
 
 
+<dt id="arg-missing-text">missing_text<a class="anchor" aria-label="anchor" href="#arg-missing-text"></a></dt>
+<dd><p>(<code>character</code>)<br>
+String indicating text shown on missing row.</p></dd>
+
+
+<dt id="arg-overall-string">overall_string<a class="anchor" aria-label="anchor" href="#arg-overall-string"></a></dt>
+<dd><p>(<code>character</code>)<br>
+Optional string to name the <em>overall</em> column.</p></dd>
+
+
 <dt id="arg-set-theme">set_theme<a class="anchor" aria-label="anchor" href="#arg-set-theme"></a></dt>
 <dd><p>(scalar <code>logical</code>)<br>
 Logical indicating whether to set the theme. Default is <code>TRUE</code>.
@@ -98,11 +111,6 @@ When <code>FALSE</code> the named list of theme elements is returned invisibly</
 <dd><p>(<code>character</code>)<br>
 Prefix and suffix displayed before and after the unweighted number of
 observations.</p></dd>
-
-
-<dt id="arg-overall-string">overall_string<a class="anchor" aria-label="anchor" href="#arg-overall-string"></a></dt>
-<dd><p>(<code>character</code>)<br>
-Optional string to name the <em>overall</em> column.</p></dd>
 
 </dl></div>
     <div class="section level2">

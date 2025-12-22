@@ -8,6 +8,14 @@
   [`long_to_seq()`](https://larmarange.github.io/guideR/dev/reference/long_to_seq.md)
   to convert from long format to a sequence object
   ([\#57](https://github.com/larmarange/guideR/issues/57))
+- new argument `missing_text` for
+  [`theme_gtsummary_prop_n()`](https://larmarange.github.io/guideR/dev/reference/gtsummary_themes.md)
+  and
+  [`theme_gtsummary_unweighted_n()`](https://larmarange.github.io/guideR/dev/reference/gtsummary_themes.md)
+  ([\#59](https://github.com/larmarange/guideR/issues/59))
+- new argument `overall_string` for
+  [`theme_gtsummary_prop_n()`](https://larmarange.github.io/guideR/dev/reference/gtsummary_themes.md)
+  ([\#59](https://github.com/larmarange/guideR/issues/59))
 
 **Improvements**
 
