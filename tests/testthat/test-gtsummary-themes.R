@@ -5,13 +5,20 @@ test_that("Test gtsummary themes", {
   library(gtsummary)
 
   expect_no_error(theme_gtsummary_prop_n())
-  expect_no_error(theme_gtsummary_prop_n(mean_sd = TRUE))
+  expect_no_error(
+    theme_gtsummary_prop_n(
+      mean_sd = TRUE,
+      missing_text = "custom missing",
+      overall_string = "custom overall"
+    )
+  )
   expect_no_error(theme_gtsummary_fisher_simulate_p())
   expect_no_error(theme_gtsummary_bold_labels())
 
   expect_no_error(
     trial |>
       tbl_summary(include = c(grade, age), by = trt) |>
+      add_overall() |>
       add_p()
   )
 
@@ -21,7 +28,13 @@ test_that("Test gtsummary themes", {
   apistrat$both[1:5] <- NA
 
   expect_no_error(theme_gtsummary_unweighted_n())
-  expect_no_error(theme_gtsummary_unweighted_n(mean_sd = TRUE))
+  expect_no_error(
+    theme_gtsummary_unweighted_n(
+      mean_sd = TRUE,
+      missing_text = "custom missing",
+      overall_string = "custom overall"
+    )
+  )
 
   expect_no_error(
     apistrat |>
