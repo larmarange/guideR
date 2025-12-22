@@ -13,6 +13,8 @@ theme_gtsummary_prop_n(
   prop_digits = 1,
   mean_sd = FALSE,
   cont_digits = 1,
+  missing_text = NULL,
+  overall_string = NULL,
   set_theme = TRUE
 )
 
@@ -24,6 +26,7 @@ theme_gtsummary_unweighted_n(
   prop_digits = 1,
   mean_sd = FALSE,
   cont_digits = 1,
+  missing_text = NULL,
   overall_string = NULL,
   set_theme = TRUE
 )
@@ -45,6 +48,12 @@ Also, set default summary statistics to mean and standard deviation in
 \item{cont_digits}{(non-negative \code{integer})\cr
 Define the number of decimals to display for continuous variables.}
 
+\item{missing_text}{(\code{character})\cr
+String indicating text shown on missing row.}
+
+\item{overall_string}{(\code{character})\cr
+Optional string to name the \emph{overall} column.}
+
 \item{set_theme}{(scalar \code{logical})\cr
 Logical indicating whether to set the theme. Default is \code{TRUE}.
 When \code{FALSE} the named list of theme elements is returned invisibly}
@@ -52,9 +61,6 @@ When \code{FALSE} the named list of theme elements is returned invisibly}
 \item{n_unweighted_prefix, n_unweighted_suffix}{(\code{character})\cr
 Prefix and suffix displayed before and after the unweighted number of
 observations.}
-
-\item{overall_string}{(\code{character})\cr
-Optional string to name the \emph{overall} column.}
 }
 \description{
 Additional themes for tables generated with \code{gtsummary}.

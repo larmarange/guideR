@@ -55,6 +55,10 @@
 #'   [gtsummary::tbl_summary()]. Default is `FALSE`.
 #' @param cont_digits (non-negative `integer`)\cr
 #'   Define the number of decimals to display for continuous variables.
+#' @param missing_text (`character`)\cr
+#'   String indicating text shown on missing row.
+#' @param overall_string (`character`)\cr
+#'   Optional string to name the *overall* column.
 #' @param set_theme (scalar `logical`)\cr
 #'   Logical indicating whether to set the theme. Default is `TRUE`.
 #'   When `FALSE` the named list of theme elements is returned invisibly
@@ -81,9 +85,14 @@ theme_gtsummary_prop_n <- function(
   prop_digits = 1,
   mean_sd = FALSE,
   cont_digits = 1,
+  missing_text = NULL,
+  overall_string = NULL,
   set_theme = TRUE
 ) {
   rlang::check_installed("gtsummary")
+
+  if (is.null(overall_string))
+    overall_string <- "{gtsummary:::translate_string('Overall')}"
 
   if (isTRUE(mean_sd)) {
     lst_theme <- list(
@@ -111,6 +120,14 @@ theme_gtsummary_prop_n <- function(
     all_continuous() ~ cont_digits
   )
 
+  if (!is.null(missing_text))
+    lst_theme[["tbl_summary-arg:missing_text"]] <- missing_text
+
+  lst_theme[["add_overall.tbl_summary-arg:col_label"]] <-
+    paste0(
+      "**", overall_string, "**\n(N = {style_number(N)})"
+    )
+
   if (isTRUE(set_theme)) gtsummary::set_gtsummary_theme(lst_theme)
   invisible(lst_theme)
 }
@@ -135,8 +152,6 @@ theme_gtsummary_fisher_simulate_p <- function(
 #' @param n_unweighted_prefix,n_unweighted_suffix (`character`)\cr
 #'   Prefix and suffix displayed before and after the unweighted number of
 #'   observations.
-#' @param overall_string (`character`)\cr
-#'   Optional string to name the *overall* column.
 #' @export
 #' @examplesIf rlang::is_installed(c("gtsummary", "srvyr"))
 #' \donttest{
@@ -161,6 +176,7 @@ theme_gtsummary_unweighted_n <- function(
   prop_digits = 1,
   mean_sd = FALSE,
   cont_digits = 1,
+  missing_text = NULL,
   overall_string = NULL,
   set_theme = TRUE
 ) {
@@ -209,6 +225,9 @@ theme_gtsummary_unweighted_n <- function(
     paste0("**{level}**\n(", un, ")")
   lst_theme[["tbl_svysummary-arg:missing_stat"]] <-
     paste0(n_unweighted_prefix, "{N_miss_unweighted}", n_unweighted_suffix)
+
+  if (!is.null(missing_text))
+    lst_theme[["tbl_svysummary-arg:missing_text"]] <- missing_text
 
   lst_theme[["add_overall.tbl_svysummary-arg:col_label"]] <-
     paste0(

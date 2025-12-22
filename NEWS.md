@@ -4,6 +4,9 @@
 
 * new function `long_to_seq()` to convert from long format to a sequence
   object (#57)
+* new argument `missing_text` for `theme_gtsummary_prop_n()` and 
+  `theme_gtsummary_unweighted_n()` (#59)
+* new argument `overall_string` for `theme_gtsummary_prop_n()` (#59)
 
 **Improvements**
 
