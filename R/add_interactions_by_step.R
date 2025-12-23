@@ -25,7 +25,7 @@ add_interactions_by_step.default <- function(model, ...) {
   f_low <-
     model |>
     stats::terms() |>
-    rlang::f_name()
+    rlang::f_text()
   f_upp <-
     f_low |>
     stringr::str_replace_all("\\+", "\\*") |>
