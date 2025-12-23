@@ -130,7 +130,7 @@ may try to pass <code>full_data</code> to the function.</p>
 <span class="r-in"><span><span class="va">mod2</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:  glm(formula = as.factor(Survived) ~ Class + Sex + Age, family = binomial(), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     data = full_data)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     data = d)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)     Class2nd     Class3rd    ClassCrew      SexMale     AgeChild  </span>
@@ -183,7 +183,7 @@ may try to pass <code>full_data</code> to the function.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Sampling variables:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - ids: `1` </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Call:  svyglm(formula = Survived ~ Class + Sex, design = design, family = quasibinomial())</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:  svyglm(formula = Survived ~ Class + Sex, design = ds, family = quasibinomial())</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)     Class2nd     Class3rd    ClassCrew      SexMale  </span>

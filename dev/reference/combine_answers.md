@@ -58,46 +58,46 @@ d |> combine_answers(q1a:q1d, into = "combined")
 #> # A tibble: 200 × 5
 #>    q1a   q1b   q1c   q1d   combined 
 #>    <chr> <chr> <chr> <chr> <list>   
-#>  1 n     n     y     n     <chr [1]>
-#>  2 y     NA    n     n     <lgl [1]>
-#>  3 y     NA    y     n     <lgl [1]>
-#>  4 n     y     y     n     <chr [2]>
-#>  5 y     y     y     n     <chr [3]>
-#>  6 y     n     y     n     <chr [2]>
-#>  7 y     n     n     n     <chr [1]>
-#>  8 n     y     y     n     <chr [2]>
-#>  9 n     NA    y     n     <lgl [1]>
-#> 10 y     NA    y     n     <lgl [1]>
+#>  1 y     NA    y     n     <lgl [1]>
+#>  2 n     y     y     n     <chr [2]>
+#>  3 y     y     y     n     <chr [3]>
+#>  4 y     n     y     n     <chr [2]>
+#>  5 y     n     n     n     <chr [1]>
+#>  6 n     y     y     n     <chr [2]>
+#>  7 n     NA    y     n     <lgl [1]>
+#>  8 y     NA    y     n     <lgl [1]>
+#>  9 y     n     y     n     <chr [2]>
+#> 10 y     NA    n     n     <lgl [1]>
 #> # ℹ 190 more rows
 d |> combine_answers(q1a:q1d, into = "combined", sep = ", ", value = "y")
 #> # A tibble: 200 × 5
 #>    q1a   q1b   q1c   q1d   combined     
 #>    <chr> <chr> <chr> <chr> <chr>        
-#>  1 n     n     y     n     q1c          
-#>  2 y     NA    n     n     NA           
-#>  3 y     NA    y     n     NA           
-#>  4 n     y     y     n     q1b, q1c     
-#>  5 y     y     y     n     q1a, q1b, q1c
-#>  6 y     n     y     n     q1a, q1c     
-#>  7 y     n     n     n     q1a          
-#>  8 n     y     y     n     q1b, q1c     
-#>  9 n     NA    y     n     NA           
-#> 10 y     NA    y     n     NA           
+#>  1 y     NA    y     n     NA           
+#>  2 n     y     y     n     q1b, q1c     
+#>  3 y     y     y     n     q1a, q1b, q1c
+#>  4 y     n     y     n     q1a, q1c     
+#>  5 y     n     n     n     q1a          
+#>  6 n     y     y     n     q1b, q1c     
+#>  7 n     NA    y     n     NA           
+#>  8 y     NA    y     n     NA           
+#>  9 y     n     y     n     q1a, q1c     
+#> 10 y     NA    n     n     NA           
 #> # ℹ 190 more rows
 d |> combine_answers(q1a:q1d, into = "combined", sep = " | ", value = "n")
 #> # A tibble: 200 × 5
 #>    q1a   q1b   q1c   q1d   combined       
 #>    <chr> <chr> <chr> <chr> <chr>          
-#>  1 n     n     y     n     q1a | q1b | q1d
-#>  2 y     NA    n     n     NA             
-#>  3 y     NA    y     n     NA             
-#>  4 n     y     y     n     q1a | q1d      
-#>  5 y     y     y     n     q1d            
-#>  6 y     n     y     n     q1b | q1d      
-#>  7 y     n     n     n     q1b | q1c | q1d
-#>  8 n     y     y     n     q1a | q1d      
-#>  9 n     NA    y     n     NA             
-#> 10 y     NA    y     n     NA             
+#>  1 y     NA    y     n     NA             
+#>  2 n     y     y     n     q1a | q1d      
+#>  3 y     y     y     n     q1d            
+#>  4 y     n     y     n     q1b | q1d      
+#>  5 y     n     n     n     q1b | q1c | q1d
+#>  6 n     y     y     n     q1a | q1d      
+#>  7 n     NA    y     n     NA             
+#>  8 y     NA    y     n     NA             
+#>  9 y     n     y     n     q1b | q1d      
+#> 10 y     NA    n     n     NA             
 #> # ℹ 190 more rows
 
 # works with survey objects

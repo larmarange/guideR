@@ -96,6 +96,12 @@ Documentation of development version:
 
 ## Models
 
+- [`add_interactions_by_step()`](https://larmarange.github.io/guideR/dev/reference/add_interactions_by_step.md)
+  **\[experimental\]** :
+
+  Add potential relevant interactions using
+  [`step()`](https://rdrr.io/r/stats/step.html)
+
 - [`grouped_tbl_pivot_wider()`](https://larmarange.github.io/guideR/dev/reference/grouped_tbl_pivot_wider.md)
   [`multinom_add_global_p_pivot_wider()`](https://larmarange.github.io/guideR/dev/reference/grouped_tbl_pivot_wider.md)
   [`style_grouped_tbl()`](https://larmarange.github.io/guideR/dev/reference/grouped_tbl_pivot_wider.md)

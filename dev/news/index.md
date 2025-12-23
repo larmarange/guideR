@@ -4,6 +4,11 @@
 
 **New features**
 
+- new experimental function
+  [`add_interactions_by_step()`](https://larmarange.github.io/guideR/dev/reference/add_interactions_by_step.md)
+  to add potential relevant interactions using
+  [`step()`](https://rdrr.io/r/stats/step.html)
+  ([\#60](https://github.com/larmarange/guideR/issues/60))
 - new function
   [`long_to_seq()`](https://larmarange.github.io/guideR/dev/reference/long_to_seq.md)
   to convert from long format to a sequence object
