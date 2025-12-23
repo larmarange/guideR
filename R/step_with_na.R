@@ -77,17 +77,22 @@ step_with_na.default <- function(model,
 
   # recompute simplified model using full data
   if (is.null(full_data)) {
-    stats::update(
-      model,
-      formula = stats::terms(model_simplified)
-    )
+    res <-
+      stats::update(
+        model,
+        formula = stats::terms(model_simplified)
+      )
   } else {
-    stats::update(
-      model,
-      formula = stats::terms(model_simplified),
-      data = full_data
-    )
+    res <-
+      stats::update(
+        model,
+        formula = stats::terms(model_simplified),
+        data = full_data
+      )
   }
+  if (!is.null(model$call$data))
+    res$call$data <- model$call$data
+  res
 }
 
 #' @rdname step_with_na
@@ -134,9 +139,15 @@ step_with_na.svyglm <- function(model, ..., design) {
   model_simplified <- stats::step(model_no_na, ...)
 
   # recompute simplified model using full data
-  stats::update(
-    model,
-    formula = stats::terms(model_simplified),
-    design = design
-  )
+  res <-
+    stats::update(
+      model,
+      formula = stats::terms(model_simplified),
+      design = design
+    )
+
+  if (!is.null(model$call$design))
+    res$call$design <- model$call$design
+
+  res
 }
