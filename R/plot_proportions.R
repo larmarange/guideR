@@ -59,14 +59,14 @@
 #'     labels_color = "white"
 #'   )
 #'
+#' \donttest{
+#'
 #' titanic |>
 #'   plot_proportions(
 #'     Survived == "Yes",
 #'     by = c(Class, Sex),
 #'     fill = "lightblue"
 #'   )
-#'
-#' \donttest{
 #'
 #' titanic |>
 #'   plot_proportions(
