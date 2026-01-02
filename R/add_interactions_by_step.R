@@ -33,5 +33,5 @@ add_interactions_by_step.default <- function(model, ...) {
   f_low <-
     f_low |>
     stats::reformulate()
-  step(model, scope = list(lower = f_low, upper = f_upp), ...)
+  stats::step(model, scope = list(lower = f_low, upper = f_upp), ...)
 }
