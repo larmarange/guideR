@@ -9,7 +9,12 @@ cf. https://github.com/larmarange/broom.helpers/actions/workflows/R-CMD-check.ya
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 note
+0 errors | 0 warnings | 1 note
+
+Number of updates in past 6 months: 7
+
+This package is a companionship for an only manual who has been in development
+these last 12 months.
 
 ## Reverse dependencies
 
