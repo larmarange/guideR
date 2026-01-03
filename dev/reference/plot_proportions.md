@@ -208,6 +208,8 @@ titanic |>
   )
 
 
+# \donttest{
+
 titanic |>
   plot_proportions(
     Survived == "Yes",
@@ -215,8 +217,6 @@ titanic |>
     fill = "lightblue"
   )
 
-
-# \donttest{
 
 titanic |>
   plot_proportions(
