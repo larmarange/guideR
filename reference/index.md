@@ -8,6 +8,8 @@
   : Cut a continuous variable in quartiles
 - [`long_to_periods()`](https://larmarange.github.io/guideR/reference/long_to_periods.md)
   : Transform a data frame from long format to period format
+- [`long_to_seq()`](https://larmarange.github.io/guideR/reference/long_to_seq.md)
+  : Transform a data frame from long format to a sequence obect
 - [`periods_to_long()`](https://larmarange.github.io/guideR/reference/periods_to_long.md)
   : Transform a data frame from period format to long format
 - [`unrowwise()`](https://larmarange.github.io/guideR/reference/unrowwise.md)
@@ -61,6 +63,12 @@
   : A safe discrete colour palette
 
 ## Models
+
+- [`add_interactions_by_step()`](https://larmarange.github.io/guideR/reference/add_interactions_by_step.md)
+  **\[experimental\]** :
+
+  Add potential relevant interactions using
+  [`step()`](https://rdrr.io/r/stats/step.html)
 
 - [`grouped_tbl_pivot_wider()`](https://larmarange.github.io/guideR/reference/grouped_tbl_pivot_wider.md)
   [`multinom_add_global_p_pivot_wider()`](https://larmarange.github.io/guideR/reference/grouped_tbl_pivot_wider.md)

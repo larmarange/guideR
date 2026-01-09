@@ -51,12 +51,12 @@ plot_means(
 
 - outcome:
 
-  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>
+  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>  
   List of continuous variables to be plotted.
 
 - by:
 
-  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>
+  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>  
   List of variables to group by (comparison is done separately for each
   variable).
 

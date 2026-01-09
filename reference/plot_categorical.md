@@ -43,7 +43,7 @@ plot_categorical(
 
 - outcome:
 
-  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>
+  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>  
   List of categorical variables to be plotted.
 
 - na.rm:
@@ -52,7 +52,7 @@ plot_categorical(
 
 - by:
 
-  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>
+  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>  
   List of variables to group by (comparison is done separately for each
   variable).
 

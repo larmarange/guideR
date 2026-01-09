@@ -10,6 +10,8 @@ theme_gtsummary_prop_n(
   prop_digits = 1,
   mean_sd = FALSE,
   cont_digits = 1,
+  missing_text = NULL,
+  overall_string = NULL,
   set_theme = TRUE
 )
 
@@ -21,6 +23,7 @@ theme_gtsummary_unweighted_n(
   prop_digits = 1,
   mean_sd = FALSE,
   cont_digits = 1,
+  missing_text = NULL,
   overall_string = NULL,
   set_theme = TRUE
 )
@@ -53,6 +56,16 @@ theme_gtsummary_bold_labels(set_theme = TRUE)
   (non-negative `integer`)  
   Define the number of decimals to display for continuous variables.
 
+- missing_text:
+
+  (`character`)  
+  String indicating text shown on missing row.
+
+- overall_string:
+
+  (`character`)  
+  Optional string to name the *overall* column.
+
 - set_theme:
 
   (scalar `logical`)  
@@ -64,11 +77,6 @@ theme_gtsummary_bold_labels(set_theme = TRUE)
   (`character`)  
   Prefix and suffix displayed before and after the unweighted number of
   observations.
-
-- overall_string:
-
-  (`character`)  
-  Optional string to name the *overall* column.
 
 ## Details
 

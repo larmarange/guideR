@@ -23,12 +23,12 @@ periods_to_long(
 
 - start:
 
-  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>
+  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>  
   Time variable indicating the beginning of each row
 
 - stop:
 
-  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>
+  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>  
   Optional time variable indicating the end of each row. If not
   provided, it will be derived from the dataset, considering that each
   row ends at the beginning of the next one.

@@ -1,5 +1,45 @@
 # Changelog
 
+## guideR 0.9.0
+
+CRAN release: 2026-01-08
+
+**New features**
+
+- new experimental function
+  [`add_interactions_by_step()`](https://larmarange.github.io/guideR/reference/add_interactions_by_step.md)
+  to add potential relevant interactions using
+  [`step()`](https://rdrr.io/r/stats/step.html)
+  ([\#60](https://github.com/larmarange/guideR/issues/60))
+- new function
+  [`long_to_seq()`](https://larmarange.github.io/guideR/reference/long_to_seq.md)
+  to convert from long format to a sequence object
+  ([\#57](https://github.com/larmarange/guideR/issues/57))
+- new argument `missing_text` for
+  [`theme_gtsummary_prop_n()`](https://larmarange.github.io/guideR/reference/gtsummary_themes.md)
+  and
+  [`theme_gtsummary_unweighted_n()`](https://larmarange.github.io/guideR/reference/gtsummary_themes.md)
+  ([\#59](https://github.com/larmarange/guideR/issues/59))
+- new argument `overall_string` for
+  [`theme_gtsummary_prop_n()`](https://larmarange.github.io/guideR/reference/gtsummary_themes.md)
+  ([\#59](https://github.com/larmarange/guideR/issues/59))
+
+**Improvements**
+
+- [`style_grouped_tbl()`](https://larmarange.github.io/guideR/reference/grouped_tbl_pivot_wider.md)
+  and
+  [`grouped_tbl_pivot_wider()`](https://larmarange.github.io/guideR/reference/grouped_tbl_pivot_wider.md)
+  now accepts tables generated with
+  [`gtsummary::tbl_stack()`](https://www.danieldsjoberg.com/gtsummary/reference/tbl_stack.html)
+- [`plot_trajectories()`](https://larmarange.github.io/guideR/reference/plot_trajectories.md)
+  now accepts survey object
+  ([\#57](https://github.com/larmarange/guideR/issues/57))
+
+**Bug fix**
+
+- bug fix in
+  [`theme_gtsummary_unweighted_n()`](https://larmarange.github.io/guideR/reference/gtsummary_themes.md)
+
 ## guideR 0.8.1
 
 CRAN release: 2025-12-19

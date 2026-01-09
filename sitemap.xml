@@ -4,6 +4,7 @@
 <url><loc>https://larmarange.github.io/guideR/authors.html</loc></url>
 <url><loc>https://larmarange.github.io/guideR/index.html</loc></url>
 <url><loc>https://larmarange.github.io/guideR/news/index.html</loc></url>
+<url><loc>https://larmarange.github.io/guideR/reference/add_interactions_by_step.html</loc></url>
 <url><loc>https://larmarange.github.io/guideR/reference/combine_answers.html</loc></url>
 <url><loc>https://larmarange.github.io/guideR/reference/cut_quartiles.html</loc></url>
 <url><loc>https://larmarange.github.io/guideR/reference/grouped_tbl_pivot_wider.html</loc></url>
@@ -16,6 +17,7 @@
 <url><loc>https://larmarange.github.io/guideR/reference/is_different.html</loc></url>
 <url><loc>https://larmarange.github.io/guideR/reference/leading_zeros.html</loc></url>
 <url><loc>https://larmarange.github.io/guideR/reference/long_to_periods.html</loc></url>
+<url><loc>https://larmarange.github.io/guideR/reference/long_to_seq.html</loc></url>
 <url><loc>https://larmarange.github.io/guideR/reference/mean_sd.html</loc></url>
 <url><loc>https://larmarange.github.io/guideR/reference/median_iqr.html</loc></url>
 <url><loc>https://larmarange.github.io/guideR/reference/observed_vs_theoretical.html</loc></url>

@@ -101,7 +101,7 @@ mod2 <- step_with_na(mod, full_data = d)
 mod2
 #> 
 #> Call:  glm(formula = as.factor(Survived) ~ Class + Sex + Age, family = binomial(), 
-#>     data = full_data)
+#>     data = d)
 #> 
 #> Coefficients:
 #> (Intercept)     Class2nd     Class3rd    ClassCrew      SexMale     AgeChild  
@@ -154,7 +154,7 @@ mod2s
 #> Sampling variables:
 #>   - ids: `1` 
 #> 
-#> Call:  svyglm(formula = Survived ~ Class + Sex, design = design, family = quasibinomial())
+#> Call:  svyglm(formula = Survived ~ Class + Sex, design = ds, family = quasibinomial())
 #> 
 #> Coefficients:
 #> (Intercept)     Class2nd     Class3rd    ClassCrew      SexMale  
