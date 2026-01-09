@@ -5,7 +5,7 @@
 * windows-latest (on github actions): R-release
 * ubuntu-latest  (on github actions): R-devel, R-release, R-oldrel-1
 
-cf. https://github.com/larmarange/broom.helpers/actions/workflows/R-CMD-check.yaml
+cf. https://github.com/larmarange/guideR/actions/workflows/R-CMD-check.yaml
 
 ## R CMD check results
 
