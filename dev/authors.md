@@ -11,13 +11,13 @@ Source:
 [`DESCRIPTION`](https://github.com/larmarange/guideR/blob/main/DESCRIPTION)
 
 Larmarange J (2026). *guideR: Miscellaneous Statistical Functions Used
-in 'guide-R'*. R package version 0.8.1.9000,
+in 'guide-R'*. R package version 0.9.0.9000,
 <https://larmarange.github.io/guideR/>.
 
     @Manual{,
       title = {guideR: Miscellaneous Statistical Functions Used in 'guide-R'},
       author = {Joseph Larmarange},
       year = {2026},
-      note = {R package version 0.8.1.9000},
+      note = {R package version 0.9.0.9000},
       url = {https://larmarange.github.io/guideR/},
     }
