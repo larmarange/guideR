@@ -11,6 +11,9 @@
 #' @param ask Whether to ask for confirmation when installing a different
 #' version of a package that is already installed. Installations that only add
 #' new packages never require confirmation.
+#' @param pak If `TRUE` (default), use [pak::pkg_install()], otherwise will use
+#' [utils::install.packages()]. To be noted, [utils::install.packages()] will
+#' re-install packages that are already installed.
 #' @export
 #' @return (Invisibly) A data frame with information about the installed
 #' package(s).
@@ -19,7 +22,7 @@
 #' \dontrun{
 #' install_dependencies()
 #' }
-install_dependencies <- function(dependencies = NULL, ask = TRUE) {
+install_dependencies <- function(dependencies = NULL, ask = TRUE, pak = TRUE) {
   if (length(dependencies) == 1 && dependencies == "old")
     dependencies <- utils::old.packages()[, 1]
 
@@ -33,8 +36,12 @@ install_dependencies <- function(dependencies = NULL, ask = TRUE) {
 
   r <- dependencies[dependencies %in% m$package]
   if (length(r) > 0)
-    r <- r |>
-      pak::pkg_install(upgrade = TRUE, ask = ask)
+    if (pak) {
+      r <- r |>
+        pak::pkg_install(upgrade = TRUE, ask = ask)
+    } else {
+      utils::install.packages(r)
+    }
 
   missing <- dependencies[!dependencies %in% m$package]
   if (length(missing) > 0)

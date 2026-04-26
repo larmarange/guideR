@@ -4,7 +4,7 @@
 \alias{install_dependencies}
 \title{Install / Update project dependencies}
 \usage{
-install_dependencies(dependencies = NULL, ask = TRUE)
+install_dependencies(dependencies = NULL, ask = TRUE, pak = TRUE)
 }
 \arguments{
 \item{dependencies}{An optional list of dependencies. If \code{NULL}, will be
@@ -14,6 +14,10 @@ list returned by \code{\link[utils:update.packages]{utils::old.packages()}}.}
 \item{ask}{Whether to ask for confirmation when installing a different
 version of a package that is already installed. Installations that only add
 new packages never require confirmation.}
+
+\item{pak}{If \code{TRUE} (default), use \code{\link[pak:pkg_install]{pak::pkg_install()}}, otherwise will use
+\code{\link[utils:install.packages]{utils::install.packages()}}. To be noted, \code{\link[utils:install.packages]{utils::install.packages()}} will
+re-install packages that are already installed.}
 }
 \value{
 (Invisibly) A data frame with information about the installed
