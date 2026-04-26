@@ -17,7 +17,8 @@ new packages never require confirmation.}
 
 \item{pak}{If \code{TRUE} (default), use \code{\link[pak:pkg_install]{pak::pkg_install()}}, otherwise will use
 \code{\link[utils:install.packages]{utils::install.packages()}}. To be noted, \code{\link[utils:install.packages]{utils::install.packages()}} will
-re-install packages that are already installed.}
+re-install packages that are already installed. \code{pak = FALSE} could be
+helpful when \code{pak} fails to download some packages.}
 }
 \value{
 (Invisibly) A data frame with information about the installed

@@ -1,5 +1,9 @@
 # guideR (development version)
 
+**New features**
+
+* new `pak` argument for `install_dependencies()` (#61)
+
 # guideR 0.9.0
 
 **New features**

@@ -13,7 +13,8 @@
 #' new packages never require confirmation.
 #' @param pak If `TRUE` (default), use [pak::pkg_install()], otherwise will use
 #' [utils::install.packages()]. To be noted, [utils::install.packages()] will
-#' re-install packages that are already installed.
+#' re-install packages that are already installed. `pak = FALSE` could be
+#' helpful when `pak` fails to download some packages.
 #' @export
 #' @return (Invisibly) A data frame with information about the installed
 #' package(s).
