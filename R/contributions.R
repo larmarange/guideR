@@ -92,6 +92,7 @@
 #' p-values. However, it has the advantage that the sum of relative
 #' contributions will be equal to 100%.
 #' @export
+#' @keywords models
 #' @examples
 #' # Linear model
 #' m <- lm(Sepal.Length ~ Sepal.Width + Species + Petal.Length, data = iris)
@@ -133,7 +134,7 @@ contributions <- function(mod, ...) {
   # GLM case
   if (
     "LR Chisq" %in% names(a) && !is.null(mod$deviance) &&
-    !is.null(mod$null.deviance)
+      !is.null(mod$null.deviance)
   ) {
     df <- mod$deviance # full model
     d0 <- mod$null.deviance # null model
@@ -160,10 +161,10 @@ contributions <- function(mod, ...) {
 #' @param notes should table notes be added?
 #' @export
 tbl_contributions <- function(
-    mod,
-    ...,
-    show = c("Total", "Partial", "Relative"),
-    notes = TRUE
+  mod,
+  ...,
+  show = c("Total", "Partial", "Relative"),
+  notes = TRUE
 ) {
   rlang::check_installed("gt")
   rlang::check_installed("broom.helpers")
@@ -260,13 +261,13 @@ tbl_contributions <- function(
         )
     if (!is.null(attr(cc, "rss")))
       res <-
-      res |>
-      gt::tab_source_note(
-        paste(
-          "Residual sum of squares:",
-          scales::number(attr(cc, "rss"), accuracy = .1)
+        res |>
+        gt::tab_source_note(
+          paste(
+            "Residual sum of squares:",
+            scales::number(attr(cc, "rss"), accuracy = .1)
+          )
         )
-      )
   }
 
   res
