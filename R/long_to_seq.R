@@ -1,11 +1,11 @@
 #' Transform a data frame from long format to a sequence obect
 #'
 #' @param data A data frame or a data frame extension (e.g. a tibble).
-#' @param id <[`tidy-select`][dplyr::dplyr_tidy_select ]>\cr
+#' @param id <[`tidy-select`][dplyr::dplyr_tidy_select]>\cr
 #' Column containing individual ids
-#' @param time <[`tidy-select`][dplyr::dplyr_tidy_select ]>\cr
+#' @param time <[`tidy-select`][dplyr::dplyr_tidy_select]>\cr
 #' Time variable
-#' @param outcome <[`tidy-select`][dplyr::dplyr_tidy_select ]>\cr
+#' @param outcome <[`tidy-select`][dplyr::dplyr_tidy_select]>\cr
 #' Variable defining the status
 #' @param alphabet Optional vector containing the alphabet (the list of all
 #' possible states).

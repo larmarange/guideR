@@ -15,7 +15,7 @@
 #' @param condition <[`data-masking`][rlang::args_data_masking]>\cr
 #' A condition defining a proportion, or a [dplyr::tibble()] defining several
 #' proportions (see examples).
-#' @param by <[`tidy-select`][dplyr::dplyr_tidy_select ]>\cr
+#' @param by <[`tidy-select`][dplyr::dplyr_tidy_select]>\cr
 #' List of variables to group by (comparison is done separately for each
 #' variable).
 #' @param drop_na_by Remove `NA` values in `by` variables?

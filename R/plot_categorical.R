@@ -4,7 +4,7 @@
 #' for more details on the way proportions and confidence intervals are
 #' computed. Return a bar plot (see examples).
 #'
-#' @param outcome <[`tidy-select`][dplyr::dplyr_tidy_select ]>\cr
+#' @param outcome <[`tidy-select`][dplyr::dplyr_tidy_select]>\cr
 #' List of categorical variables to be plotted.
 #' @param na.rm Should `NA` values be removed from the `outcome`?
 #' @param ... Additional arguments passed to [ggplot2::geom_bar()].
