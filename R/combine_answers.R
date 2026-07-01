@@ -7,7 +7,7 @@
 #' If `NA` is observed for at least one item, return `NA`.
 #' @param data A data frame, data frame extension (e.g. a tibble),
 #' or a survey design object.
-#' @param answers <[`tidy-select`][dplyr::dplyr_tidy_select ]>\cr
+#' @param answers <[`tidy-select`][dplyr::dplyr_tidy_select]>\cr
 #' List of variables
 #' identifying the different answers of the question.
 #' @param into Names of new variables to create as character vector.

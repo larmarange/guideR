@@ -22,11 +22,11 @@
 #' least one `NA` value will be labeled with `missing_label`.
 #' @param data A data frame, data frame extension (e.g. a tibble),
 #' or a survey design object.
-#' @param answers <[`tidy-select`][dplyr::dplyr_tidy_select ]>\cr
+#' @param answers <[`tidy-select`][dplyr::dplyr_tidy_select]>\cr
 #' List of variables identifying the different answers of the question.
 #' @param value Value indicating a positive answer. By default, will use the
 #' maximum observed value and will display a message.
-#' @param by <[`tidy-select`][dplyr::dplyr_tidy_select ]>\cr
+#' @param by <[`tidy-select`][dplyr::dplyr_tidy_select]>\cr
 #' Optional list of variables to compare (using facets).
 #' @param combine_answers Should answers be combined? (see examples)
 #' @param combine_sep Character string to separate combined answers.
@@ -371,7 +371,6 @@ plot_multiple_answers <- function(
 #' @rdname plot_multiple_answers
 #' @param width Dodging width.
 #' @export
-#' @examplesIf rlang::is_installed(c("ggupset", "ggstats"))
 plot_multiple_answers_dodge <- function(
   data,
   answers = dplyr::everything(),
