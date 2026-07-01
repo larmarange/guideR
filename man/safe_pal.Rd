@@ -59,13 +59,13 @@ Provides a safe colour palette for categorical variable. It is based on
 Paul Tol's colour schemes designed to be distinct for all people, including
 colour-blind readers, distinct from black and white, distinct on screen and
 paper, and matching well together. It is primarily based on the \emph{bright}
-colour scheme implemented in \code{\link[khroma:scale_tol_bright]{khroma::scale_fill_bright()}}. This colour
+colour scheme implemented in \code{\link[khroma:scale_fill_bright]{khroma::scale_fill_bright()}}. This colour
 scheme include 7 colours, including a grey reserved for \code{NA} values.
 Therefore, \code{scale_fill_safe()} use the \emph{bright} scheme only if 6 or less
 colours are needed (keeping the grey for any \code{NA} value). If 7 to 9 colours
-are needed, the \emph{muted} scheme (cf. \code{\link[khroma:scale_tol_muted]{khroma::scale_fill_muted()}}) is used
+are needed, the \emph{muted} scheme (cf. \code{\link[khroma:scale_fill_muted]{khroma::scale_fill_muted()}}) is used
 instead. Finally, if 10 or more colours are requested, the \emph{rainbow} scheme
-is used (cf. \code{\link[khroma:scale_tol_discreterainbow]{khroma::scale_fill_discreterainbow()}}). This is a sequential
+is used (cf. \code{\link[khroma:scale_fill_discreterainbow]{khroma::scale_fill_discreterainbow()}}). This is a sequential
 colour scheme. Here, colour are randomly reordered to provide more contrasts
 between modalities.
 }

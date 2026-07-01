@@ -18,7 +18,7 @@ round_preserve_sum(x, digits = 0)
 A numerical vector of same length as \code{x}.
 }
 \description{
-Sometimes, the sum of rounded numbers (e.g., using \code{\link[base:Round]{base::round()}}) is not
+Sometimes, the sum of rounded numbers (e.g., using \code{\link[base:round]{base::round()}}) is not
 the same as their rounded sum.
 }
 \details{

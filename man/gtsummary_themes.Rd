@@ -68,10 +68,10 @@ Additional themes for tables generated with \code{gtsummary}.
 \details{
 \code{theme_gtsummary_prop_n()} displays, by default, proportions before the
 number of observations (between brackets). This function cannot be used
-simultaneously with \code{\link[gtsummary:theme_gtsummary]{gtsummary::theme_gtsummary_mean_sd()}}, but you can use
+simultaneously with \code{\link[gtsummary:theme_gtsummary_mean_sd]{gtsummary::theme_gtsummary_mean_sd()}}, but you can use
 the \code{mean_sd = TRUE} option of \code{theme_gtsummary_prop_n()}.
 \code{theme_gtsummary_prop_n()} also modifies default method for
-\code{\link[gtsummary:add_ci]{gtsummary::add_ci.tbl_summary()}} (\code{"wilson"} for categorical variables,
+\code{\link[gtsummary:add_ci.tbl_summary]{gtsummary::add_ci.tbl_summary()}} (\code{"wilson"} for categorical variables,
 \code{"t.test"}, i.e. mean confidence interval, for continuous variables if
 \code{mean_sd = TRUE}, \code{"wilcox.test"}, i.e. confidence interval of the
 pseudomedian, for continuous variables if \code{mean_sd = FALSE}).
@@ -107,7 +107,7 @@ test (2 groups) or Kruskal-Wallis test (3 groups or more). For categorical
 variables, \code{"svy.chisq.test"}is used by default.
 
 \code{theme_gtsummary_bold_labels()} applies automatically
-\code{\link[gtsummary:bold_italicize_labels_levels]{gtsummary::bold_labels()}} to all tables generated with \code{gtsummary}.
+\code{\link[gtsummary:bold_labels]{gtsummary::bold_labels()}} to all tables generated with \code{gtsummary}.
 }
 \examples{
 \dontshow{if (rlang::is_installed("gtsummary")) withAutoprint(\{ # examplesIf}

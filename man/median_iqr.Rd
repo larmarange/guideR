@@ -57,7 +57,7 @@ A tibble with one row per group.
 \description{
 \code{median_iqr()} lets you quickly compute median, quartiles and interquartile
 range by sub-groups. Use \code{.outliers = TRUE} to also return whiskers and
-outliers (see \code{\link[ggplot2:geom_boxplot]{ggplot2::stat_boxplot()}}).
+outliers (see \code{\link[ggplot2:stat_boxplot]{ggplot2::stat_boxplot()}}).
 }
 \examples{
 # using a vector

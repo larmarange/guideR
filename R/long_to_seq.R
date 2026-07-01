@@ -1,4 +1,4 @@
-#' Transform a data frame from long format to a sequence obect
+#' Transform a data frame from long format to a sequence object
 #'
 #' @param data A data frame or a data frame extension (e.g. a tibble).
 #' @param id <[`tidy-select`][dplyr::dplyr_tidy_select]>\cr

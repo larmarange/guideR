@@ -48,7 +48,7 @@ dummy_proportions(variable)
 or a survey design object.}
 
 \item{condition}{<\code{\link[rlang:args_data_masking]{data-masking}}>\cr
-A condition defining a proportion, or a \code{\link[dplyr:reexports]{dplyr::tibble()}} defining several
+A condition defining a proportion, or a \code{\link[dplyr:tibble]{dplyr::tibble()}} defining several
 proportions (see examples).}
 
 \item{by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>\cr

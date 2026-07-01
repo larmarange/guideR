@@ -16,7 +16,7 @@ computed if not provided}
 
 \item{prefix, suffix}{Symbols to display before and after value}
 
-\item{...}{additional parameters passed to \code{\link[base:formatc]{base::formatC()}},
+\item{...}{additional parameters passed to \code{\link[base:formatC]{base::formatC()}},
 as \code{big.mark} or \code{decimal.mark}}
 }
 \value{
@@ -33,6 +33,6 @@ leading_zeros(v, left_digits = 6, big.mark = " ")
 leading_zeros(c(0, 6, 12, 18), prefix = "M")
 }
 \seealso{
-\code{\link[base:formatc]{base::formatC()}}, \code{\link[base:sprintf]{base::sprintf()}}
+\code{\link[base:formatC]{base::formatC()}}, \code{\link[base:sprintf]{base::sprintf()}}
 }
 \keyword{utilities}
