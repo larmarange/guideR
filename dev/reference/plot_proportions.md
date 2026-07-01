@@ -64,7 +64,7 @@ dummy_proportions(variable)
 
   \<[`data-masking`](https://rlang.r-lib.org/reference/args_data_masking.html)\>  
   A condition defining a proportion, or a
-  [`dplyr::tibble()`](https://dplyr.tidyverse.org/reference/reexports.html)
+  [`dplyr::tibble()`](https://tibble.tidyverse.org/reference/tibble.html)
   defining several proportions (see examples).
 
 - by:

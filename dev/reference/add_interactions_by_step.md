@@ -1,7 +1,7 @@
 # Add potential relevant interactions using `step()`
 
 **\[experimental\]** Add potential relevant interactions to a model
-usind [`stats::step()`](https://rdrr.io/r/stats/step.html). The function
+using [`stats::step()`](https://rdrr.io/r/stats/step.html). The function
 extract the formula of the model, identifies all potential interactions
 and pass them as the **upper** component of the `scope` argument to
 [`stats::step()`](https://rdrr.io/r/stats/step.html). The current model

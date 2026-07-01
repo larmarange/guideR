@@ -9,7 +9,7 @@
 - [`long_to_periods()`](https://larmarange.github.io/guideR/dev/reference/long_to_periods.md)
   : Transform a data frame from long format to period format
 - [`long_to_seq()`](https://larmarange.github.io/guideR/dev/reference/long_to_seq.md)
-  : Transform a data frame from long format to a sequence obect
+  : Transform a data frame from long format to a sequence object
 - [`periods_to_long()`](https://larmarange.github.io/guideR/dev/reference/periods_to_long.md)
   : Transform a data frame from period format to long format
 - [`unrowwise()`](https://larmarange.github.io/guideR/dev/reference/unrowwise.md)
@@ -69,6 +69,11 @@
 
   Add potential relevant interactions using
   [`step()`](https://rdrr.io/r/stats/step.html)
+
+- [`contributions()`](https://larmarange.github.io/guideR/dev/reference/contributions.md)
+  [`tbl_contributions()`](https://larmarange.github.io/guideR/dev/reference/contributions.md)
+  **\[experimental\]** : Estimate the contribution of each variable of a
+  model
 
 - [`grouped_tbl_pivot_wider()`](https://larmarange.github.io/guideR/dev/reference/grouped_tbl_pivot_wider.md)
   [`multinom_add_global_p_pivot_wider()`](https://larmarange.github.io/guideR/dev/reference/grouped_tbl_pivot_wider.md)

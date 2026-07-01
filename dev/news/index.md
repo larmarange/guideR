@@ -2,17 +2,21 @@
 
 ## guideR (development version)
 
+**New features**
+
+- new experimental functions
+  [`contributions()`](https://larmarange.github.io/guideR/dev/reference/contributions.md)
+  and
+  [`tbl_contributions()`](https://larmarange.github.io/guideR/dev/reference/contributions.md)
+  to estimate the contribution of each variable of a model
+  ([\#62](https://github.com/larmarange/guideR/issues/62))
+
 ## guideR 0.9.0
 
 CRAN release: 2026-01-08
 
 **New features**
 
-- new experimental function
-  [`add_interactions_by_step()`](https://larmarange.github.io/guideR/dev/reference/add_interactions_by_step.md)
-  to add potential relevant interactions using
-  [`step()`](https://rdrr.io/r/stats/step.html)
-  ([\#60](https://github.com/larmarange/guideR/issues/60))
 - new function
   [`long_to_seq()`](https://larmarange.github.io/guideR/dev/reference/long_to_seq.md)
   to convert from long format to a sequence object

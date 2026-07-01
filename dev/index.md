@@ -15,6 +15,7 @@ survey data.
 To install **stable version**:
 
 ``` r
+
 install.packages("guideR")
 ```
 
@@ -23,6 +24,7 @@ Documentation of stable version: <https://larmarange.github.io/guideR/>
 To install **development version**:
 
 ``` r
+
 # install.packages("pak")
 pak::pkg_install("larmarange/guideR")
 ```

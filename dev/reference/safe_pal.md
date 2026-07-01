@@ -83,6 +83,7 @@ A palette function.
 ## Examples
 
 ``` r
+
 scales::show_col(safe_pal()(6))
 
 scales::show_col(safe_pal(reverse = TRUE)(6))
