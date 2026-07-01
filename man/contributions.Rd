@@ -36,7 +36,7 @@ the results as a formatted \code{{gt}} table.
 \details{
 \strong{Linear models}
 
-In linear regression, the squared multiple correlation, R² is used to assess
+In linear regression, the squared multiple correlation, R-squared is used to assess
 goodness of fit as it represents the proportion of variance in the criterion
 that is explained by the predictors. It could be expressed as \code{1 - RSS / TSS}
 where TSS represents the total sum of squares (the overall observed variance)
@@ -81,9 +81,9 @@ package for \strong{Jamovi}.
 
 For generalized linear models (GLM), model fitting does not rely on ordinary
 least squares (OLS). It is achieved by maximum likelihood. Therefore, sum
-of squares is not available and R² cannot be computed. An alternative
-goodness of fit measure used in such case is pseudo R². The McFadden pseudo
-R² (sometimes called likelihood ratio index) could be expressed using
+of squares is not available and R-squared cannot be computed. An alternative
+goodness of fit measure used in such case is pseudo R-squared. The McFadden pseudo
+R-squared (sometimes called likelihood ratio index) could be expressed using
 deviance rather than likelihood. In such case, it is equal to \code{1 - DF / D0}
 where D0 represents the deviance of a null model (i.e. a model with no
 predictor) and DF the deviance of the full model. The McFadden pseudo R2
@@ -125,4 +125,6 @@ m2 <- glm(Survived == "Yes" ~ ., data = titanic, family = binomial)
 m2 |> contributions()
 m2 |> tbl_contributions()
 m2 |> tbl_contributions(show = "Relative", notes = FALSE)
+
+m2 |> tbl_contributions(test.statistic = "F")
 }

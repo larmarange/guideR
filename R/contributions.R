@@ -14,7 +14,7 @@
 #' @details
 #' **Linear models**
 #'
-#' In linear regression, the squared multiple correlation, R² is used to assess
+#' In linear regression, the squared multiple correlation, R-squared is used to assess
 #' goodness of fit as it represents the proportion of variance in the criterion
 #' that is explained by the predictors. It could be expressed as `1 - RSS / TSS`
 #' where TSS represents the total sum of squares (the overall observed variance)
@@ -59,9 +59,9 @@
 #'
 #' For generalized linear models (GLM), model fitting does not rely on ordinary
 #' least squares (OLS). It is achieved by maximum likelihood. Therefore, sum
-#' of squares is not available and R² cannot be computed. An alternative
-#' goodness of fit measure used in such case is pseudo R². The McFadden pseudo
-#' R² (sometimes called likelihood ratio index) could be expressed using
+#' of squares is not available and R-squared cannot be computed. An alternative
+#' goodness of fit measure used in such case is pseudo R-squared. The McFadden pseudo
+#' R-squared (sometimes called likelihood ratio index) could be expressed using
 #' deviance rather than likelihood. In such case, it is equal to `1 - DF / D0`
 #' where D0 represents the deviance of a null model (i.e. a model with no
 #' predictor) and DF the deviance of the full model. The McFadden pseudo R2
@@ -103,6 +103,8 @@
 #' m2 |> contributions()
 #' m2 |> tbl_contributions()
 #' m2 |> tbl_contributions(show = "Relative", notes = FALSE)
+#'
+#' m2 |> tbl_contributions(test.statistic = "F")
 contributions <- function(mod, ...) {
   rlang::check_installed("car")
   a <- mod |> car::Anova(...)
@@ -171,7 +173,7 @@ tbl_contributions <- function(
   lv <-
     mod |>
     broom.helpers::model_list_variables() |>
-    dplyr::select(variable, var_label)
+    dplyr::select("variable", "var_label")
 
   newnames <- c(
     "Deviance" = "LR Chisq",
@@ -240,7 +242,7 @@ tbl_contributions <- function(
         res |>
         gt::tab_source_note(
           paste(
-            "McFadden pseudo R²:",
+            "McFadden pseudo R-squared:",
             scales::percent(
               1 - (attr(cc, "df") / attr(cc, "d0")),
               accuracy = .1
