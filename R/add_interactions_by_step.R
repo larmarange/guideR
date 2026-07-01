@@ -1,7 +1,7 @@
 #' Add potential relevant interactions using `step()`
 #'
 #' `r lifecycle::badge("experimental")`
-#' Add potential relevant interactions to a model usind [stats::step()]. The
+#' Add potential relevant interactions to a model using [stats::step()]. The
 #' function extract the formula of the model, identifies all potential
 #' interactions and pass them as the **upper** component of the `scope` argument
 #' to [stats::step()]. The current model formula is passed as the **lower**

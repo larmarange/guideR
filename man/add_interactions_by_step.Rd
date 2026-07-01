@@ -19,7 +19,7 @@ The stepwise-selected model.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-Add potential relevant interactions to a model usind \code{\link[stats:step]{stats::step()}}. The
+Add potential relevant interactions to a model using \code{\link[stats:step]{stats::step()}}. The
 function extract the formula of the model, identifies all potential
 interactions and pass them as the \strong{upper} component of the \code{scope} argument
 to \code{\link[stats:step]{stats::step()}}. The current model formula is passed as the \strong{lower}

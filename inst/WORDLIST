@@ -1,12 +1,16 @@
 Addins
 BIOC
 CMD
+Chisq
 Codecov
 Colour
+DF
+Jamovi
 Labeller
 Lifecycle
 ORCID
 RStudio
+TSS
 Tol's
 addin
 addins
@@ -17,7 +21,9 @@ de
 données
 d’enquêtes
 grey
+labelled
 l’analyse
+partialed
 tibble
 tibbles
 ungrouped

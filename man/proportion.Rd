@@ -81,7 +81,7 @@ proportions unchanged.}
 \item{.conf.level}{Confidence level for the returned confidence intervals.}
 
 \item{.options}{Additional arguments passed to \code{\link[stats:prop.test]{stats::prop.test()}}
-or \code{\link[srvyr:survey_mean]{srvyr::survey_prop()}}.}
+or \code{\link[srvyr:survey_prop]{srvyr::survey_prop()}}.}
 }
 \value{
 A tibble.

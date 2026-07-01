@@ -22,7 +22,7 @@ indent_labels(x, indent = 4L)
 \item{indent}{An integer indicating how many space to indent text.}
 }
 \description{
-Utilities for tables generated with \link[gtsummary:gtsummary-package]{gtsummary}.
+Utilities for tables generated with \link[gtsummary:gtsummary]{gtsummary}.
 }
 \examples{
 \dontshow{if (rlang::is_installed("gtsummary")) withAutoprint(\{ # examplesIf}
@@ -51,7 +51,7 @@ tbl |>
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link[gtsummary:modify_bold_italic]{gtsummary::modify_bold()}}, \code{\link[gtsummary:modify_bold_italic]{gtsummary::modify_italic()}},
+\code{\link[gtsummary:modify_bold]{gtsummary::modify_bold()}}, \code{\link[gtsummary:modify_italic]{gtsummary::modify_italic()}},
 \code{\link[gtsummary:modify_indent]{gtsummary::modify_indent()}}
 }
 \keyword{utilities}

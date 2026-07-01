@@ -197,7 +197,5 @@ d |>
   plot_multiple_answers_dodge(q1a:q1d, by = group, combine_answers = TRUE)
 }
 \dontshow{\}) # examplesIf}
-\dontshow{if (rlang::is_installed(c("ggupset", "ggstats"))) withAutoprint(\{ # examplesIf}
-\dontshow{\}) # examplesIf}
 }
 \keyword{hplot}

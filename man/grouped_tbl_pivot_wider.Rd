@@ -64,7 +64,7 @@ wide format: it calls \code{\link[gtsummary:add_global_p]{gtsummary::add_global_
 \code{grouped_tbl_pivot_wider()}, and then keep only the last column with p-values
 (see examples). Finally, as grouped regression tables doesn't have exactly
 the same structure as ungrouped tables, functions as
-\code{\link[gtsummary:bold_italicize_labels_levels]{gtsummary::bold_labels()}} do not always work properly. If the grouped table
+\code{\link[gtsummary:bold_labels]{gtsummary::bold_labels()}} do not always work properly. If the grouped table
 is kept in a long format, \code{style_grouped_tbl()} could be use to improve the
 output by styling variable labels, levels and/or group names.
 \strong{TO BE NOTED:} to style group names, \code{style_grouped_tbl()} convert the

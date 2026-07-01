@@ -2,7 +2,7 @@
 % Please edit documentation in R/long_to_seq.R
 \name{long_to_seq}
 \alias{long_to_seq}
-\title{Transform a data frame from long format to a sequence obect}
+\title{Transform a data frame from long format to a sequence object}
 \usage{
 long_to_seq(
   data,
@@ -61,7 +61,7 @@ inside the sequences.}
 An object of class \code{stslist}.
 }
 \description{
-Transform a data frame from long format to a sequence obect
+Transform a data frame from long format to a sequence object
 }
 \examples{
 \dontshow{if (rlang::is_installed("TraMineR")) withAutoprint(\{ # examplesIf}
