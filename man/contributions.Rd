@@ -128,3 +128,4 @@ m2 |> tbl_contributions(show = "Relative", notes = FALSE)
 
 m2 |> tbl_contributions(test.statistic = "F")
 }
+\keyword{models}
