@@ -113,8 +113,9 @@ Therefore, the *total contribution* of a predictor is the reduction of
 deviance attributable to this predictor (DP) divided by D0, the deviance
 of the null model (representing the total deviance).
 
-A *partial contribution* by dividing DP by (RD + DF), DF representing
-the deviance still not reduced by the model.
+A *partial contribution* expressed as DP / (DP + DF), DF representing
+the deviance still not reduced by the model (deviance of the full model,
+i.e. residual deviance).
 
 Finally, a *relative contribution* would be expressed as DP / (D0 -DF)
 and representing the relative reduction of deviance of the predictor
