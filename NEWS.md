@@ -1,11 +1,14 @@
 # guideR (development version)
 
+**New features**
+
+* new experimental functions `contributions()` and `tbl_contributions()` to 
+  estimate the contribution of each variable of a model (#62)
+
 # guideR 0.9.0
 
 **New features**
 
-* new experimental function `add_interactions_by_step()` to add potential
-  relevant interactions using `step()` (#60)
 * new function `long_to_seq()` to convert from long format to a sequence
   object (#57)
 * new argument `missing_text` for `theme_gtsummary_prop_n()` and 
