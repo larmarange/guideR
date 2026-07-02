@@ -77,6 +77,11 @@ of the \code{effectsize} package. Some explanations are also available in the
 \href{https://gamlj.github.io/details_glm_effectsize.html}{documentation of the \code{GAMLj}}
 package for \strong{Jamovi}.
 
+To be noted, \code{GAMLj} highlights an potential issue regarding the computation
+of TSS in \code{effectsize::eta_squared(partial = FALSE)}. For now,
+\code{comparisons()} follows \code{effectsize}. An optional \code{correct_tss} argument
+may be added in the future.
+
 \strong{GLM}
 
 For generalized linear models (GLM), model fitting does not rely on ordinary
@@ -110,10 +115,8 @@ predictors are perfectly independent. In practice, the sum is never equal
 to 100\% due to some correlation between predictors.
 
 An alternative approach consists of using \code{test.statistic = "F"} to generate
-estimates based on Pearson residuals allowing to simulate sums of squares.
-The F test is usually not recommended for GLM models to estimate global
-p-values. However, it has the advantage that the sum of relative
-contributions will be equal to 100\%.
+estimates based on Pearson residuals where deviance is somehow interpreted as
+sums of squares. The F test is usually not recommended for GLM models.
 }
 \examples{
 # Linear model
@@ -126,7 +129,5 @@ m2 <- glm(Survived == "Yes" ~ ., data = titanic, family = binomial)
 m2 |> contributions()
 m2 |> tbl_contributions()
 m2 |> tbl_contributions(show = "Relative", notes = FALSE)
-
-m2 |> tbl_contributions(test.statistic = "F")
 }
 \keyword{models}
