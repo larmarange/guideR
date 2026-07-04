@@ -90,6 +90,11 @@ of the `effectsize` package. Some explanations are also available in the
 `GAMLj`](https://gamlj.github.io/details_glm_effectsize.html) package
 for **Jamovi**.
 
+To be noted, `GAMLj` highlights an potential issue regarding the
+computation of TSS in `effectsize::eta_squared(partial = FALSE)`. For
+now, `comparisons()` follows `effectsize`. An optional `correct_tss`
+argument may be added in the future.
+
 **GLM**
 
 For generalized linear models (GLM), model fitting does not rely on
@@ -125,10 +130,9 @@ all predictors are perfectly independent. In practice, the sum is never
 equal to 100% due to some correlation between predictors.
 
 An alternative approach consists of using `test.statistic = "F"` to
-generate estimates based on Pearson residuals allowing to simulate sums
-of squares. The F test is usually not recommended for GLM models to
-estimate global p-values. However, it has the advantage that the sum of
-relative contributions will be equal to 100%.
+generate estimates based on Pearson residuals where deviance is somehow
+interpreted as sums of squares. The F test is usually not recommended
+for GLM models.
 
 ## Examples
 
