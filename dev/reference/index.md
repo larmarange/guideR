@@ -72,6 +72,7 @@
 
 - [`contributions()`](https://larmarange.github.io/guideR/dev/reference/contributions.md)
   [`tbl_contributions()`](https://larmarange.github.io/guideR/dev/reference/contributions.md)
+  [`total_deviance()`](https://larmarange.github.io/guideR/dev/reference/contributions.md)
   **\[experimental\]** : Estimate the contribution of each variable of a
   model
 
