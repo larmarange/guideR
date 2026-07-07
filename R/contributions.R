@@ -184,7 +184,7 @@
 #' m2 |> tbl_contributions()
 #' m2 |> tbl_contributions(show = "Relative", notes = FALSE)
 #'
-#' Survey-weighted GLM
+#' # Survey-weighted GLM
 #' m3 <- survey::svyglm(
 #'   Survived == "Yes" ~ Class + Sex + Age,
 #'   design = srvyr::as_survey(titanic),
