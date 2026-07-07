@@ -6,9 +6,6 @@ test_that("contributions() does not produce an error", {
     m |> contributions()
   )
   expect_no_error(
-    m |> contributions(type = "I")
-  )
-  expect_no_error(
     m |> tbl_contributions()
   )
   expect_no_error(
@@ -23,6 +20,15 @@ test_that("contributions() does not produce an error", {
   expect_no_error(
     m2 |> tbl_contributions(show = "Relative", notes = FALSE)
   )
+  expect_no_error(
+    m2 |> contributions(type = "I")
+  )
+  expect_no_error(
+    m2 |> tbl_contributions(type = "drop1")
+  )
+  expect_no_error(
+    m2 |> tbl_contributions(type = "add1")
+  )
 
   m3 <- survey::svyglm(
     Survived == "Yes" ~ Class + Sex + Age,
@@ -31,11 +37,5 @@ test_that("contributions() does not produce an error", {
   )
   expect_no_error(
     m3 |> contributions()
-  )
-  expect_no_error(
-    m3 |> tbl_contributions(type = "drop1")
-  )
-  expect_no_error(
-    m3 |> tbl_contributions(type = "add1")
   )
 })
