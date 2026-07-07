@@ -326,7 +326,7 @@ tbl_contributions <- function(
           "Total deviance (null model):",
           scales::number(attr(cc, "total_deviance"), accuracy = .1)
         )
-      )|>
+      ) |>
       gt::tab_source_note(
         paste(
           "Residual deviance (full model):",
@@ -334,14 +334,16 @@ tbl_contributions <- function(
         )
       ) |>
       gt::tab_source_note(
-        gt::html(paste(
-          "McFadden pseudo R<sup>2</sup>:",
-          scales::percent(
-            1 - (attr(cc, "residual_deviance") / attr(cc, "total_deviance")),
-            accuracy = .1
+        gt::html(
+          paste(
+            "McFadden pseudo R<sup>2</sup>:",
+            scales::percent(
+              1 - (attr(cc, "residual_deviance") / attr(cc, "total_deviance")),
+              accuracy = .1
+            )
           )
         )
-      ))
+      )
   }
 
   res
@@ -368,7 +370,7 @@ drop1_to_anova <- function(mod, ...) {
   residual_deviance <- d1["<none>", "Deviance"]
   d1$Deviance <- d1$Deviance - residual_deviance
 
-  d1[rownames(d1) != "<none>",]
+  d1[rownames(d1) != "<none>", ]
 }
 
 add1_to_anova <- function(mod, ...) {
@@ -384,5 +386,5 @@ add1_to_anova <- function(mod, ...) {
   total_deviance <- d1["<none>", "Deviance"]
   d1$Deviance <- total_deviance - d1$Deviance
 
-  d1[rownames(d1) != "<none>",]
+  d1[rownames(d1) != "<none>", ]
 }
