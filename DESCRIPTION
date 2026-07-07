@@ -27,6 +27,7 @@ Imports:
     ggplot2,
     labelled,
     lifecycle,
+    MASS,
     pak,
     patchwork,
     purrr,
