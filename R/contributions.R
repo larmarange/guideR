@@ -378,7 +378,7 @@ add1_to_anova <- function(mod, ...) {
   args$scope <- stats::terms(mod)
   d1 <- do.call(stats::add1, args)
 
-  if ("Deviance" %in% colnames(d1))
+  if (!"Deviance" %in% colnames(d1))
     cli::cli_abort("Deviance not reported by {.fn stats::add1}.")
 
   total_deviance <- d1["<none>", "Deviance"]
