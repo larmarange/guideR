@@ -3,21 +3,36 @@
 \name{contributions}
 \alias{contributions}
 \alias{tbl_contributions}
+\alias{total_deviance}
 \title{Estimate the contribution of each variable of a model}
 \usage{
-contributions(mod, ...)
+contributions(mod, type = c("II", "III", "I", 1, 2, 3, "drop1", "add1"), ...)
 
 tbl_contributions(
   mod,
+  type = c("II", "III", "I", 1, 2, 3, "drop1", "add1"),
   ...,
   show = c("Total", "Partial", "Relative"),
   notes = TRUE
 )
+
+total_deviance(mod)
 }
 \arguments{
 \item{mod}{a statistical model}
 
-\item{...}{additional parameters passed to \code{\link[car:Anova]{car::Anova()}}}
+\item{type}{type of Anova, Roman numerals being equivalent to the
+corresponding Arabic numerals: \code{\link[stats:anova]{stats::anova()}} will be used for type-I,
+Anova, \code{\link[car:Anova]{car::Anova()}} for types II and III; an alternative method, \code{"drop1"}
+uses \code{\link[stats:drop1]{stats::drop1()}} to calculate the reduction of deviance associated with
+each predictor (in the absence of interactions, is equivalent to a type-II
+Anova); \code{"add1"} uses \code{\link[stats:add1]{stats::add1()}} to calculate the reduction of deviance
+associated with each predictor in an univariable model (model with just this
+predictor compared to the null model), in this scenario, partial and relative
+contribution are not defined.}
+
+\item{...}{additional parameters passed to \code{\link[stats:anova]{stats::anova()}}, \code{\link[car:Anova]{car::Anova()}},
+\code{\link[stats:drop1]{stats::drop1()}} or \code{\link[stats:add1]{stats::add1()}}}
 
 \item{show}{list of contributions to display}
 
@@ -25,109 +40,181 @@ tbl_contributions(
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\if{html}{\out{<br />}}
-Use \code{\link[car:Anova]{car::Anova()}} to perform an analysis of variance (linear models) or
-an analysis of deviance (GLM models), and then estimate the contribution
-of each variable in reducing variance or deviance. See details for an
-explanation of the differences between \emph{total contribution},
-\emph{partial contribution} and \emph{relative contribution}. \code{contributions()}
-computes the different contributions. \code{tbl_contributions()} displays
-the results as a formatted \code{{gt}} table.
+Use an analysis of variance or an analysis of deviance to estimate the
+contribution of each variable in reducing variance or deviance. This
+contribution could be explained as a proportion of the total deviance
+(\emph{total contribution}), of the residual deviance (\emph{partial contribution})
+or of the explained deviance (\emph{relative contribution}), see details for
+more information. \code{contributions()} computes the different contributions.
+\code{tbl_contributions()} displays the results as a formatted \code{\link[gt:gt]{gt}}
+table, taking into account variable labels.
 }
 \details{
-\strong{Linear models}
-
-In linear regression, the squared multiple correlation, R-squared is used to assess
-goodness of fit as it represents the proportion of variance in the criterion
-that is explained by the predictors. It could be expressed as \code{1 - RSS / TSS}
-where TSS represents the total sum of squares (the overall observed variance)
-and RSS represents the residual sum of squares (i.e. the variance not
-explained by the full model).
-
-In the context of ANOVA-like tests, it is common to report effect sizes
-indicators representing the amount of variance explained by each variable
-included in the model.
-
-\code{\link[car:Anova]{car::Anova()}} calculates type-II or type-III analysis-of-variance tables
-indicating for each predictor the variance (or sum of squares SS) explained
-by adding this predictor in the model compared to a model without this
-predictor (but keeping all other predictors in the model).
-
-A first measure, known as \emph{Eta-squared}, report the SS explained by the
-predictor to the total sum of squares (TSS). This \emph{total contribution}
-of the variable represents the proportion of the total variance explained by
-this predictor.
-
-An alternative, known as \emph{partial Eta-squared}, which is the percent of the
-partial variance (after accounting for other predictors in the model). For
-the \emph{partial contribution}, SS is divided by (SS + RSS) (Residual Sum of
-Squares, i.e. the variance not explained by the full model). This is the
-proportion of partial variance uniquely explained by the associated effect.
-That is, the variance uniquely explained by the effect expressed as the
-proportion of variance not explained by the other effects. Here the variance
-explained by the other effects in the model is completely partialed out.
-
-Finally, it is possible to express a \emph{relative contribution} as the
-proportion of the variance explained by the model attributable to this
-predictor. In this case, SS is divided by (TSS - RSS), corresponding to
-the variance explained by the full model.
-
-Note: for more details about effect size measures for ANOVA, see the
-\href{https://easystats.github.io/effectsize/articles/anovaES.html}{dedicated vignette}
-of the \code{effectsize} package. Some explanations are also available in the
-\href{https://gamlj.github.io/details_glm_effectsize.html}{documentation of the \code{GAMLj}}
-package for \strong{Jamovi}.
-
-To be noted, \code{GAMLj} highlights an potential issue regarding the computation
-of TSS in \code{effectsize::eta_squared(partial = FALSE)}. For now,
-\code{comparisons()} follows \code{effectsize}. An optional \code{correct_tss} argument
-may be added in the future.
-
-\strong{GLM}
+In linear regression, the squared multiple correlation, R\if{html}{\out{<sup>}}2\if{html}{\out{</sup>}} is used
+to assess goodness of fit as it represents the proportion of variance in the
+criterion that is explained by the predictors. It could be expressed as
+\code{1 - RSS / TSS} where \code{TSS} represents the total sum of squares (the overall
+observed variance) and \code{RSS} represents the residual sum of squares (i.e.
+the variance not explained by the full model).
 
 For generalized linear models (GLM), model fitting does not rely on ordinary
 least squares (OLS). It is achieved by maximum likelihood. Therefore, sum
 of squares is not available and R-squared cannot be computed. An alternative
-goodness of fit measure used in such case is pseudo R-squared. The McFadden pseudo
-R-squared (sometimes called likelihood ratio index) could be expressed using
-deviance rather than likelihood. In such case, it is equal to \code{1 - DF / D0}
-where D0 represents the deviance of a null model (i.e. a model with no
-predictor) and DF the deviance of the full model. The McFadden pseudo R2
-could be seen as the proportion of deviance reduced by the model.
+goodness of fit measure used in such case is pseudo R\if{html}{\out{<sup>}}2\if{html}{\out{</sup>}}. The
+McFadden pseudo R\if{html}{\out{<sup>}}2\if{html}{\out{</sup>}} (sometimes called likelihood ratio index) could
+be expressed using deviance rather than likelihood. In such case, it is equal
+to \code{1 - Dr / Dt} where \code{Dt} represents the full deviance
+(i.e. the deviance of the null model, a model with no
+predictor) and \code{Dr} the residual deviance (i.e. the deviance of
+the full model). The McFadden pseudo R\if{html}{\out{<sup>}}2\if{html}{\out{</sup>}} corresponds the
+proportion of deviance reduced by the model. Deviance is a generalization of
+the idea of using the sum of squares of residuals in the cases where
+model-fitting is achieved by maximum likelihood.
 
-For such models, \code{\link[car:Anova]{car::Anova()}} provides an analysis of deviance with
-the reduction of deviance (called "LR Chisq" in the output) attributable to
-each predictor (comparing the deviance of a model without this predictor
-to the deviance of the full model).
+In \strong{R}, the residual deviance (\code{Dr}) of a GLM could be obtain with
+\code{\link[stats:deviance]{stats::deviance()}}. For a linear model, \code{\link[stats:deviance]{stats::deviance()}} reports RSS.
+The function \code{total_deviance()} could be used to get the total deviance
+(\code{Dt}), i.e. the deviance of the null model. For a linear model, it provides
+TSS.
 
-Therefore, the \emph{total contribution} of a predictor is the reduction of
-deviance attributable to this predictor (DP) divided by D0, the deviance
-of the null model (representing the total deviance).
+\emph{Analysis of variance} (Anova) is common to identify of the different
+predictors have a significant effect on a model. Anova approaches have been
+extended to also covers \emph{analysis of deviance}. In the context of Anova-like
+tests, it is common to report effect sizes indicators representing the amount
+of variance or deviance explained by each variable included in the model.
+These indicators are based on \code{Dpred} or the delta of deviance/variance
+reduced by the inclusion of a specific predictor in the model.
 
-A \emph{partial contribution} expressed as DP / (DP + DF), DF representing the
-deviance still not reduced by the model (deviance of the full model, i.e.
-residual deviance).
+A first measure, known as \emph{Eta-squared} (η\if{html}{\out{<sup>}}2\if{html}{\out{</sup>}}) in the context of
+linear models, expresses this delta of deviance/variance as a
+proportion of the total deviance (\code{Dpred / Dt}). This indicator represents
+the \strong{total contribution} of a predictor in the reduction of deviance. In
+the context of a linear model, it represents the proportion of variance
+explained by this predictor.
 
-Finally, a \emph{relative contribution} would be expressed as DP / (D0 -DF) and
-representing the relative reduction of deviance of the predictor compared
-to the total reduction of the deviance by the full model. To be noted,
-the sum of all relative contributions would equal 100\% only if all
-predictors are perfectly independent. In practice, the sum is never equal
-to 100\% due to some correlation between predictors.
+An alternative, known as \emph{partial Eta-squared}
+(η\if{html}{\out{<sub>}}p\if{html}{\out{</sub>}}\if{html}{\out{<sup>}}2\if{html}{\out{</sup>}}), could be expressed as
+\code{Dpred / (Dr + Dpred)}, where \code{Dr} represents the residual deviance of the
+full model. This \strong{partial contribution} is the proportion of partial
+variance/deviance uniquely explained by the associated effect.
+That is, the variance/deviance uniquely explained by the effect expressed
+as the proportion of variance/deviance not explained by the other effects.
+Here the variance/deviance explained by the other effects in the model is
+completely partialed out.
 
-An alternative approach consists of using \code{test.statistic = "F"} to generate
-estimates based on Pearson residuals where deviance is somehow interpreted as
-sums of squares. The F test is usually not recommended for GLM models.
+Finally, it is possible to express a \strong{relative contribution} as the
+proportion of the variance/deviance explained by the model, that could be
+be expressed as \code{Dt - Dr}. Therefore, relative contribution is equal to
+\code{Dpred / (Dt - Dr)} and represents the relative reduction of deviance of the
+predictor compared to the total reduction of the deviance by the full model.
+
+It is crucial to understand the different types of Anova.
+
+In a type-I Anova,
+as performed by \code{\link[stats:anova]{stats::anova()}}, the different predictors are included
+sequentially and in-order into the model. Such analysis is therefore
+order-dependant. The effect of a predictor is computed once taken into
+account the previous predictors (but not the other one introduced later).
+The first factor is tested without adjustment. The second factor is tested
+after removing the effect of the first. The third is tested after removing
+the effect of the first and the second.
+
+Type II-Anova (default of \code{\link[car:Anova]{car::Anova()}}) tests each main effect adjusted
+for all other effects of the same order or lower, but not for interactions
+involving that factor. Each main effect is tested as if it were the last
+main effect entered. Type II are order-independent for main effects and are
+generally preferred when there is no interaction. They have higher power
+than Type III for testing main effects because they do not adjust for the
+interaction term.
+
+Type III-Anova (also done with \code{\link[car:Anova]{car::Anova()}}) tests each effect adjusted
+for all other effects in the model, including higher-order interactions.
+Each effect is tested as if it were the last one entered into a model
+containing all other effects. Type III are order-independent.
+They require a specific contrast coding (typically sum-to-zero or Helmert)
+to be interpretable.
+
+\code{\link[car:Anova]{car::Anova()}} calculates type-II or type-III Anova tables
+indicating for each predictor the variance or deviance explained
+by adding this predictor in the model compared to a model without this
+predictor (but keeping all other predictors in the model).
+
+\code{contributions()} also includes two alternatives: \code{"drop1"} and \code{"add1"}.
+
+\code{type = "drop1"} uses \code{\link[stats:drop1]{stats::drop1()}} which is equivalent, in the absence,
+of interaction terms to a type-II Anova. For some models (such as
+\code{\link[survey:svyglm]{survey::svyglm()}} models), it provides better estimates than \code{\link[car:Anova]{car::Anova()}}.
+
+\code{type = "add1"} uses \code{\link[stats:add1]{stats::add1()}} to calculate the reduction of deviance
+associated with each predictor in an univariable model (a model with just
+this predictor compared to the null model). In this scenario, partial and
+relative contribution are not defined. It provides an estimate of the
+contribution of a variable in the absence of all other predictors.
+
+Regarding η\if{html}{\out{<sup>}}2\if{html}{\out{</sup>}} indicators, more details are provided in a
+\href{https://easystats.github.io/effectsize/articles/anovaES.html}{dedicated vignette}
+of the \code{effectsize} package. This vignette also presents variations of these
+indicators. Some explanations are also available in the
+\href{https://gamlj.github.io/details_glm_effectsize.html}{documentation of the \code{GAMLj}}
+package for \strong{Jamovi}.
+
+To be noted, \code{GAMLj} highlights an potential issue regarding the computation
+of total variance in \code{effectsize::eta_squared(partial = FALSE)}. The
+\code{effectsize} package sum the values displayed in the Anova object instead
+of performing a null model. Here, we rely on \code{total_deviance()} and therefore
+estimates for η\if{html}{\out{<sup>}}2\if{html}{\out{</sup>}} are not equal to those performed by
+\code{effectsize::eta_squared(partial = FALSE)}. To be noted,
+\code{effectsize::eta_squared(partial = TRUE)} (partial η\if{html}{\out{<sup>}}2\if{html}{\out{</sup>}}), is
+not impacted by this difference in approaches.
+
+In a type-II or type-III Anova, the sum of relative contributions would
+equal 100\% only if all predictors are perfectly independent. In practice,
+the sum is never equal to 100\% due to some correlation between predictors.
+
+For \code{\link[survey:svyglm]{survey::svyglm()}} object, only type II and III are supported. The
+\code{type = "drop1"} is recommended, in the absence of interactions, for
+such models.
+
+\code{contributions()} and \code{tbl_contributions()} have been tested so far with
+\code{\link[stats:lm]{stats::lm()}}, \code{\link[stats:glm]{stats::glm()}}, \code{\link[MASS:glm.nb]{MASS::glm.nb()}}, \code{\link[survey:svyglm]{survey::svyglm()}} and
+\code{\link[survival:coxph]{survival::coxph()}} models.
+
+In the field of linear models, several authors have been working on
+decomposing the coefficient of determination (R\if{html}{\out{<sup>}}2\if{html}{\out{</sup>}}) into individual
+contributions of predictors in regression models, accounting for correlations
+between predictors. It addresses a key challenge in relative importance
+analysis: how to allocate shared variance when predictors are collinear.
+It includes Shapley value-based approaches, Genizi method, Proportional
+Marginal Variance Decomposition (PMVD), relative weight
+analysis (RWA) or dominance analysis.
 }
 \examples{
 # Linear model
-m <- lm(Sepal.Length ~ Sepal.Width + Species + Petal.Length, data = iris)
+i <- iris |>
+  labelled::set_variable_labels(
+    Sepal.Width = "Sepal's width",
+    Petal.Length = "Petal's length"
+  )
+m <- lm(Sepal.Length ~ Sepal.Width + Species + Petal.Length, data = i)
 m |> contributions()
 m |> tbl_contributions()
+
+\donttest{
+m |> tbl_contributions(type = 1)
 
 # GLM
 m2 <- glm(Survived == "Yes" ~ ., data = titanic, family = binomial)
 m2 |> contributions()
 m2 |> tbl_contributions()
 m2 |> tbl_contributions(show = "Relative", notes = FALSE)
+
+Survey-weighted GLM
+m3 <- survey::svyglm(
+  Survived == "Yes" ~ Class + Sex + Age,
+  design = srvyr::as_survey(titanic),
+  family = quasibinomial
+)
+m3 |> tbl_contributions(type = "drop1")
+}
 }
 \keyword{models}
