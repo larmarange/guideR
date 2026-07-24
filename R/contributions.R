@@ -326,11 +326,11 @@ tbl_contributions <- function(
       )
   } else {
     label_contributions <-
-    list(
-      Total = gt::html("Total contribution<br />(<em>semi-partial pseudo-R<sup>2</sup></em>)"), # nolint
-      Partial = gt::html("Partial contribution<br />(<em>partial pseudo-R<sup>2</sup></em>)"), #nolint
-      Relative = "Relative contribution"
-    )
+      list(
+        Total = gt::html("Total contribution<br />(<em>semi-partial pseudo-R<sup>2</sup></em>)"), # nolint
+        Partial = gt::html("Partial contribution<br />(<em>partial pseudo-R<sup>2</sup></em>)"), #nolint
+        Relative = "Relative contribution"
+      )
   }
 
   res <-
@@ -566,16 +566,14 @@ tbl_dominance <- function(
 #' [dominanceanalysis::dominanceAnalysis()].
 #' @export
 #' @inheritParams dominanceanalysis::da.glm.fit
-da.svyglm.fit <- function (original.model, newdata = NULL, ...) {
-  mc = match.call()
+da.svyglm.fit <- function(original.model, newdata = NULL, ...) {
   function(x) {
     if (x == "names") {
       return(c("r2.m", "r2.adj"))
     }
     if (!is.null(newdata)) {
       g1 <- update(original.model, x, design = newdata)
-    }
-    else {
+    } else {
       g1 <- update(original.model, x)
     }
     r2.m <- 1 - (g1$deviance / g1$null.deviance)
