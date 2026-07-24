@@ -17,3 +17,4 @@ da.svyglm.fit(original.model, newdata = NULL, ...)
 Provides support of \code{\link[survey:svyglm]{survey::svyglm()}} for
 \code{\link[dominanceanalysis:dominanceAnalysis]{dominanceanalysis::dominanceAnalysis()}}.
 }
+\keyword{models}
