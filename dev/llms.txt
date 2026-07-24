@@ -107,8 +107,11 @@ Documentation of development version:
 - [`contributions()`](https://larmarange.github.io/guideR/dev/reference/contributions.md)
   [`tbl_contributions()`](https://larmarange.github.io/guideR/dev/reference/contributions.md)
   [`total_deviance()`](https://larmarange.github.io/guideR/dev/reference/contributions.md)
-  **\[experimental\]** : Estimate the contribution of each variable of a
-  model
+  [`tbl_dominance()`](https://larmarange.github.io/guideR/dev/reference/contributions.md)
+  **\[experimental\]** : Variable contribution and Dominance analysis
+
+- [`da.svyglm.fit()`](https://larmarange.github.io/guideR/dev/reference/da.svyglm.fit.md)
+  : Fit indices for dominance analysis of survey-weighted GLM
 
 - [`grouped_tbl_pivot_wider()`](https://larmarange.github.io/guideR/dev/reference/grouped_tbl_pivot_wider.md)
   [`multinom_add_global_p_pivot_wider()`](https://larmarange.github.io/guideR/dev/reference/grouped_tbl_pivot_wider.md)

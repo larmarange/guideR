@@ -1,15 +1,19 @@
-# Estimate the contribution of each variable of a model
+# Variable contribution and Dominance analysis
 
 **\[experimental\]**  
 Use an analysis of variance or an analysis of deviance to estimate the
-contribution of each variable in reducing variance or deviance. This
-contribution could be explained as a proportion of the total deviance
-(*total contribution*), of the residual deviance (*partial
-contribution*) or of the explained deviance (*relative contribution*),
-see details for more information. `contributions()` computes the
-different contributions. `tbl_contributions()` displays the results as a
-formatted [`gt`](https://gt.rstudio.com/reference/gt.html) table, taking
-into account variable labels.
+contribution of each variable in reducing variance or deviance (sort of
+R² decomposition). This contribution could be explained as a proportion
+of the total deviance (*total contribution*), of the residual deviance
+(*partial contribution*) or of the explained deviance (*relative
+contribution*), see details for more information. `contributions()`
+computes the different contributions. `tbl_contributions()` displays the
+results as a formatted [`gt`](https://gt.rstudio.com/reference/gt.html)
+table, taking into account variable labels. Alternatively,
+`tbl_domimance()` could be used to perform a dominance analysis with
+[`dominanceanalysis::dominanceAnalysis()`](https://rdrr.io/pkg/dominanceanalysis/man/dominanceAnalysis.html)
+and display the results as a formatted
+[`gt`](https://gt.rstudio.com/reference/gt.html) table.
 
 ## Usage
 
@@ -21,10 +25,13 @@ tbl_contributions(
   type = c("II", "III", "I", 1, 2, 3, "drop1", "add1"),
   ...,
   show = c("Total", "Partial", "Relative"),
+  decimals = 1,
   notes = TRUE
 )
 
 total_deviance(mod)
+
+tbl_dominance(mod, indice = NULL, decimals = 1, totals = TRUE, notes = TRUE)
 ```
 
 ## Arguments
@@ -61,9 +68,22 @@ total_deviance(mod)
 
   list of contributions to display
 
+- decimals:
+
+  number of decimals for deviance and contributions
+
 - notes:
 
   should table notes be added?
+
+- indice:
+
+  fit indice name, see
+  [`dominanceanalysis::dominanceAnalysis()`](https://rdrr.io/pkg/dominanceanalysis/man/dominanceAnalysis.html)
+
+- totals:
+
+  add a summary row with totals
 
 ## Details
 
@@ -76,17 +96,17 @@ squares (i.e. the variance not explained by the full model).
 
 For generalized linear models (GLM), model fitting does not rely on
 ordinary least squares (OLS). It is achieved by maximum likelihood.
-Therefore, sum of squares is not available and R-squared cannot be
-computed. An alternative goodness of fit measure used in such case is
-pseudo R². The McFadden pseudo R² (sometimes called likelihood ratio
-index) could be expressed using deviance rather than likelihood. In such
-case, it is equal to `1 - Dr / Dt` where `Dt` represents the full
-deviance (i.e. the deviance of the null model, a model with no
-predictor) and `Dr` the residual deviance (i.e. the deviance of the full
-model). The McFadden pseudo R² corresponds the proportion of deviance
-reduced by the model. Deviance is a generalization of the idea of using
-the sum of squares of residuals in the cases where model-fitting is
-achieved by maximum likelihood.
+Therefore, sum of squares is not available and R² cannot be computed. An
+alternative goodness of fit measure used in such case is pseudo R². The'
+McFadden pseudo R² (sometimes called likelihood ratio index) could be
+expressed using deviance rather than likelihood. In such case, it is
+equal to `1 - Dr / Dt` where `Dt` represents the full deviance (i.e. the
+deviance of the null model, a model with no predictor) and `Dr` the
+residual deviance (i.e. the deviance of the full model). The McFadden
+pseudo R² corresponds the proportion of deviance reduced by the model.
+Deviance is a generalization of the idea of using the sum of squares of
+residuals in the cases where model-fitting is achieved by maximum
+likelihood.
 
 In **R**, the residual deviance (`Dr`) of a GLM could be obtain with
 [`stats::deviance()`](https://rdrr.io/r/stats/deviance.html). For a
@@ -96,37 +116,42 @@ RSS. The function `total_deviance()` could be used to get the total
 deviance (`Dt`), i.e. the deviance of the null model. For a linear
 model, it provides TSS.
 
-*Analysis of variance* (Anova) is common to identify of the different
+*Analysis of variance* (Anova) is common to identify if the different
 predictors have a significant effect on a model. Anova approaches have
 been extended to also covers *analysis of deviance*. In the context of
 Anova-like tests, it is common to report effect sizes indicators
 representing the amount of variance or deviance explained by each
-variable included in the model. These indicators are based on `Dpred` or
-the delta of deviance/variance reduced by the inclusion of a specific
-predictor in the model.
+variable included in the model. Such approach is also known as *R²*
+decomposition. These indicators are based on `Dpred` (the delta of
+deviance) or `SSpred` (the delta of the sum of squares, i.e. the delta
+of variance) reduced by the inclusion of a specific predictor in the
+model.
 
 A first measure, known as *Eta-squared* (η²) in the context of linear
-models, expresses this delta of deviance/variance as a proportion of the
-total deviance (`Dpred / Dt`). This indicator represents the **total
-contribution** of a predictor in the reduction of deviance. In the
-context of a linear model, it represents the proportion of variance
-explained by this predictor.
+models, expresses this delta of sum of squares (variance) as a
+proportion of the total variance (`SSpred / TSS`). In the context of
+GLMs, the delta of deviance could similarly expressed as a proportion of
+the total deviance (`Dpred / Dt`), also known as the *semi-partial
+pseudo-R²*. This indicator represents the **total contribution** of a
+predictor in the reduction of deviance.
 
-An alternative, known as *partial Eta-squared* (η_(p)²), could be
-expressed as `Dpred / (Dr + Dpred)`, where `Dr` represents the residual
-deviance of the full model. This **partial contribution** is the
-proportion of partial variance/deviance uniquely explained by the
-associated effect. That is, the variance/deviance uniquely explained by
-the effect expressed as the proportion of variance/deviance not
-explained by the other effects. Here the variance/deviance explained by
-the other effects in the model is completely partialed out.
+An alternative, known as *partial Eta-squared* (η_(p)²), in the context
+of linear models, could be expressed as `SSpred / (RSS + SSpred)`, the
+variance uniquely explained by the effect expressed as the proportion of
+variance not explained by the other effects. Here the variance explained
+by the other effects in the model is completely partialed out.
+Similarly, for GLMs, *partial pseudo-R²* is expressed as
+`Dpred / (Dr + Dpred)`, where `Dr` represents the residual deviance of
+the full model. This **partial contribution** is the proportion of
+partial variance/deviance uniquely explained by the associated effect.
 
 Finally, it is possible to express a **relative contribution** as the
 proportion of the variance/deviance explained by the model, that could
-be be expressed as `Dt - Dr`. Therefore, relative contribution is equal
-to `Dpred / (Dt - Dr)` and represents the relative reduction of deviance
-of the predictor compared to the total reduction of the deviance by the
-full model.
+be be expressed as `TSS - RSS` or `Dt - Dr`. Therefore, relative
+contribution is equal to `SSpred / (TSS - RSS)` or `Dpred / (Dt - Dr)`
+and represents the relative reduction of variance/deviance of the
+predictor compared to the total reduction of the variance / deviance by
+the full model.
 
 It is crucial to understand the different types of Anova.
 
@@ -138,7 +163,9 @@ computed once taken into account the previous predictors (but not the
 other one introduced later). The first factor is tested without
 adjustment. The second factor is tested after removing the effect of the
 first. The third is tested after removing the effect of the first and
-the second.
+the second. The advantage of such approach is that the sum of relative
+contributions is equal to 100%. However, the contribution of each
+variable changes if the variables are entered in a different order.
 
 Type II-Anova (default of
 [`car::Anova()`](https://rdrr.io/pkg/car/man/Anova.html)) tests each
@@ -183,6 +210,50 @@ this scenario, partial and relative contribution are not defined. It
 provides an estimate of the contribution of a variable in the absence of
 all other predictors.
 
+For [`survey::svyglm()`](https://rdrr.io/pkg/survey/man/svyglm.html)
+object, only type II and III are supported. The `type = "drop1"` is
+recommended, in the absence of interactions, for such models.
+
+In a type-II or type-III Anova, the sum of relative contributions would
+equal 100% only if all predictors are perfectly independent. In
+practice, the sum is never equal to 100% due to some correlation between
+predictors.
+
+Some approaches, such as dominance analysis, have been developed for
+decomposing the coefficient of determination (R²) into individual
+contributions of predictors in regression models, accounting for
+correlations between predictors. They address a key challenge in
+relative importance analysis: how to allocate shared variance when
+predictors are collinear.
+
+Dominance analysis follows a systematic, computationally intensive
+approach based on all-subsets regression. Models of every possible
+combination of predictors are generated, each pair of predictors are
+compared by examining their incremental contributions within matching
+subsets. Finally, the dominance relationship is determined based on
+three levels: complete dominance (variable A always contributes more),
+conditional dominance (higher average contribution), and general
+dominance (weighted average across subset sizes).
+
+The last dimension (the average contribution of each variable) provides
+a metric similar to semi-partial R², and could be expressed as a
+proportion of the global R² (relative contribution). The sum of these
+relative contributions is equal 100%.
+
+`tbl_dominance()` is a quick helper to perform a dominance analysis with
+[`dominanceanalysis::dominanceAnalysis()`](https://rdrr.io/pkg/dominanceanalysis/man/dominanceAnalysis.html)
+and to display the average total contribution variable in a nicely
+formatted [`gt::gt()`](https://gt.rstudio.com/reference/gt.html) table.
+The function also displays the relative contribution (i.e. the
+contribution of each variable expressed as a proportion of the R²).
+
+To be noted, alternative implementations of dominance analysis in **R**
+include
+[`parameters::dominance_analysis()`](https://easystats.github.io/parameters/reference/dominance_analysis.html)
+or `domir::domin()`.
+
+## Note
+
 Regarding η² indicators, more details are provided in a [dedicated
 vignette](https://easystats.github.io/effectsize/articles/anovaES.html)
 of the `effectsize` package. This vignette also presents variations of
@@ -201,67 +272,23 @@ model. Here, we rely on `total_deviance()` and therefore estimates for
 `effectsize::eta_squared(partial = TRUE)` (partial η²), is not impacted
 by this difference in approaches.
 
-In a type-II or type-III Anova, the sum of relative contributions would
-equal 100% only if all predictors are perfectly independent. In
-practice, the sum is never equal to 100% due to some correlation between
-predictors.
-
-For [`survey::svyglm()`](https://rdrr.io/pkg/survey/man/svyglm.html)
-object, only type II and III are supported. The `type = "drop1"` is
-recommended, in the absence of interactions, for such models.
-
-`contributions()` and `tbl_contributions()` have been tested so far with
-[`stats::lm()`](https://rdrr.io/r/stats/lm.html),
-[`stats::glm()`](https://rdrr.io/r/stats/glm.html),
-[`MASS::glm.nb()`](https://rdrr.io/pkg/MASS/man/glm.nb.html),
-[`survey::svyglm()`](https://rdrr.io/pkg/survey/man/svyglm.html) and
-[`survival::coxph()`](https://rdrr.io/pkg/survival/man/coxph.html)
-models.
-
-In the field of linear models, several authors have been working on
-decomposing the coefficient of determination (R²) into individual
-contributions of predictors in regression models, accounting for
-correlations between predictors. It addresses a key challenge in
-relative importance analysis: how to allocate shared variance when
-predictors are collinear. It includes Shapley value-based approaches,
-Genizi method, Proportional Marginal Variance Decomposition (PMVD),
-relative weight analysis (RWA) or dominance analysis.
-
 ## Examples
 
 ``` r
 # Linear model
-i <- iris |>
-  labelled::set_variable_labels(
-    Sepal.Width = "Sepal's width",
-    Petal.Length = "Petal's length"
-  )
-m <- lm(Sepal.Length ~ Sepal.Width + Species + Petal.Length, data = i)
+m <- lm(Sepal.Length ~ Sepal.Width + Species + Petal.Length, data = iris)
 m |> contributions()
-#> Error in eval(mf, parent.frame()): object 'i' not found
-m |> tbl_contributions()
-#> Error in eval(mf, parent.frame()): object 'i' not found
-
-# \donttest{
-m |> tbl_contributions(type = 1)
-#> Error in eval(mf, parent.frame()): object 'i' not found
-
-# GLM
-m2 <- glm(Survived == "Yes" ~ ., data = titanic, family = binomial)
-m2 |> contributions()
-#> Analysis of Deviance Table (Type II tests)
+#> Anova Table (Type II tests)
 #> 
-#> Response: Survived == "Yes"
-#>       LR Chisq    Total  Partial Relative Df Pr(>Chisq)    
-#> Class   119.03 0.042981 0.051107  0.21279  3  < 2.2e-16 ***
-#> Sex     352.91 0.127430 0.137696  0.63088  1  < 2.2e-16 ***
-#> Age      18.85 0.006807 0.008458  0.03370  1  1.413e-05 ***
+#> Response: Sepal.Length
+#>               Sum Sq    Total Partial Relative Df F value    Pr(>F)    
+#> Sepal.Width   2.7161 0.026585 0.16282 0.030794  1  28.201 4.026e-07 ***
+#> Species       2.3632 0.023131 0.14473 0.026793  2  12.268 1.195e-05 ***
+#> Petal.Length 14.0382 0.137402 0.50130 0.159158  1 145.754 < 2.2e-16 ***
 #> ---
 #> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-m2 |> tbl_contributions()
+m |> tbl_contributions()
 
 
   
-
-Predictor
 ```

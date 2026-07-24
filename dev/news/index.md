@@ -9,7 +9,11 @@
   and
   [`tbl_contributions()`](https://larmarange.github.io/guideR/dev/reference/contributions.md)
   to estimate the contribution of each variable of a model
-  ([\#62](https://github.com/larmarange/guideR/issues/62))
+  ([\#62](https://github.com/larmarange/guideR/issues/62))\`
+- new experimental function
+  [`tbl_dominance()`](https://larmarange.github.io/guideR/dev/reference/contributions.md)
+  to perform a dominance analysis
+  ([\#64](https://github.com/larmarange/guideR/issues/64))
 
 ## guideR 0.9.0
 
