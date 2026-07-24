@@ -3,7 +3,9 @@
 **New features**
 
 * new experimental functions `contributions()` and `tbl_contributions()` to 
-  estimate the contribution of each variable of a model (#62)
+  estimate the contribution of each variable of a model (#62)`
+* new experimental function `tbl_dominance()` to perform a dominance
+  analysis (#64)
 
 # guideR 0.9.0
 
