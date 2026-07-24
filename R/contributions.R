@@ -166,14 +166,10 @@
 #' @keywords models
 #' @examples
 #' # Linear model
-#' i <- iris |>
-#'   labelled::set_variable_labels(
-#'     Sepal.Width = "Sepal's width",
-#'     Petal.Length = "Petal's length"
-#'   )
-#' m <- lm(Sepal.Length ~ Sepal.Width + Species + Petal.Length, data = i)
+#' m <- lm(Sepal.Length ~ Sepal.Width + Species + Petal.Length, data = iris)
 #' m |> contributions()
 #' m |> tbl_contributions()
+#' m |> tbl_dominance()
 #'
 #' \donttest{
 #' m |> tbl_contributions(type = 1)
@@ -182,16 +178,39 @@
 #' m2 <- glm(Survived == "Yes" ~ ., data = titanic, family = binomial)
 #' m2 |> contributions()
 #' m2 |> tbl_contributions()
+#' m2 |> tbl_contributions(decimals = 2)
 #' m2 |> tbl_contributions(show = "Relative", notes = FALSE)
+#' m2 |> tbl_dominance()
+#'
+#' # custom column labels
+#' tbl <- m2 |> tbl_contributions()
+#' colnames(tbl$`_data`) # list of columns
+#' tbl |>
+#'   gt::cols_label(
+#'     Predictor = "Variable",
+#'     Total = "Custom label (total)",
+#'     Partial = gt::html("Custom <em>label</em> with <strong>HTML</strong>"),
+#'     Relative = gt::md("Custom _label_ with **markdown**")
+#'   )
+#'
+#' # interaction terms
+#' m3 <- glm(
+#'   Survived == "Yes" ~ Class * Sex + Age,
+#'   data = titanic,
+#'   family = binomial,
+#'   contrasts = list(Class = contr.sum, Sex = contr.sum, Age = contr.sum)
+#' )
+#' m3 |> tbl_contributions(type = "III")
 #'
 #' # Survey-weighted GLM
 #' library(survey)
-#' m3 <- survey::svyglm(
+#' m4 <- svyglm(
 #'   Survived == "Yes" ~ Class + Sex + Age,
 #'   design = srvyr::as_survey(titanic),
 #'   family = quasibinomial
 #' )
-#' m3 |> tbl_contributions(type = "drop1")
+#' m4 |> tbl_contributions(type = "drop1")
+#' m4 |> tbl_dominance()
 #' }
 contributions <- function(
   mod,
@@ -252,6 +271,7 @@ contributions <- function(
 
 #' @rdname contributions
 #' @param show list of contributions to display
+#' @param decimals number of decimals for deviance and contributions
 #' @param notes should table notes be added?
 #' @export
 tbl_contributions <- function(
@@ -259,6 +279,7 @@ tbl_contributions <- function(
   type = c("II", "III", "I", 1, 2, 3, "drop1", "add1"),
   ...,
   show = c("Total", "Partial", "Relative"),
+  decimals = 1,
   notes = TRUE
 ) {
   rlang::check_installed("gt")
@@ -268,8 +289,10 @@ tbl_contributions <- function(
   cc <- mod |> contributions(type = type, ...)
   lv <-
     mod |>
-    broom.helpers::model_list_variables() |>
-    dplyr::select("variable", "var_label")
+    broom.helpers::tidy_and_attach() |>
+    broom.helpers::tidy_add_variable_labels(interaction_sep = " \u00D7 ") |>
+    dplyr::select("variable", "var_label") |>
+    dplyr::distinct()
 
   newnames <- c(
     "Deviance" = "LR Chisq",
@@ -281,13 +304,8 @@ tbl_contributions <- function(
     "p-value" = "Pr(>F)"
   )
   p_names <- c("Pr(>F)", "Pr(>Chisq)", "Pr(>Chi)")
-  contrib_col_names <- list(
-    Total = gt::html("Total contribution (&eta;<sup>2</sup>)"),
-    Partial = gt::html("Partial contribution  (&eta;<sub>p</sub><sup>2</sup>)"), #nolint
-    Relative = "Relative contribution"
-  )
 
-  res <-
+  cc <-
     cc |>
     dplyr::as_tibble(rownames = "variable") |>
     dplyr::left_join(lv, by = "variable") |>
@@ -297,54 +315,101 @@ tbl_contributions <- function(
       dplyr::all_of(show),
       dplyr::any_of(p_names)
     ) |>
-    dplyr::rename(dplyr::any_of(newnames)) |>
-    gt::gt() |>
+    dplyr::rename(dplyr::any_of(newnames))
+
+  if ("Sum of Squares" %in% colnames(cc)) {
+    label_contributions <-
+      list(
+        Total = gt::html("Total contribution (<em>&eta;<sup>2</sup></em>)"),
+        Partial = gt::html("Partial contribution  (<em>&eta;<sub>p</sub><sup>2</sup></em>)"), #nolint
+        Relative = "Relative contribution"
+      )
+  } else {
+    label_contributions <-
+    list(
+      Total = gt::html("Total contribution<br />(<em>semi-partial pseudo-R<sup>2</sup></em>)"), # nolint
+      Partial = gt::html("Partial contribution<br />(<em>partial pseudo-R<sup>2</sup></em>)"), #nolint
+      Relative = "Relative contribution"
+    )
+  }
+
+  res <-
+    cc |>
+    gt::gt(rowname_col = "Predictor") |>
     gt::tab_style(
       style = gt::cell_text(weight = "bold"),
       locations = gt::cells_column_labels()
     ) |>
     gt::fmt_number(
       columns = gt::any_of(c("Deviance", "Sum of Squares")),
-      decimals = 1
+      decimals = decimals
     ) |>
     gt::fmt_percent(
       columns = gt::any_of(
         c("Total", "Partial", "Relative")
       ),
-      decimals = 1
+      decimals = decimals
     ) |>
     gt::fmt(
       columns = gt::any_of("p-value"),
       fns = gtsummary::label_style_pvalue(digits = 1)
     ) |>
-    gt::cols_label(.list = contrib_col_names[show])
+    gt::cols_label(.list = label_contributions[show])
 
   if (notes) {
-    res <-
-      res |>
-      gt::tab_source_note(
-        paste(
-          "Total deviance (null model):",
-          scales::number(attr(cc, "total_deviance"), accuracy = .1)
-        )
-      ) |>
-      gt::tab_source_note(
-        paste(
-          "Residual deviance (full model):",
-          scales::number(attr(cc, "residual_deviance"), accuracy = .1)
-        )
-      ) |>
-      gt::tab_source_note(
-        gt::html(
+    if ("Deviance" %in% colnames(cc)) {
+      res <-
+        res |>
+        gt::tab_source_note(
           paste(
-            "McFadden pseudo R<sup>2</sup>:",
-            scales::percent(
-              1 - (attr(cc, "residual_deviance") / attr(cc, "total_deviance")),
-              accuracy = .1
+            "Total deviance (null model):",
+            scales::number(attr(cc, "total_deviance"), accuracy = .1)
+          )
+        ) |>
+        gt::tab_source_note(
+          paste(
+            "Residual deviance (full model):",
+            scales::number(attr(cc, "residual_deviance"), accuracy = .1)
+          )
+        ) |>
+        gt::tab_source_note(
+          gt::html(
+            paste(
+              "McFadden pseudo R<sup>2</sup>:",
+              scales::percent(
+                1 - (attr(cc, "residual_deviance") / attr(cc, "total_deviance")),
+                accuracy = .1
+              )
             )
           )
         )
-      )
+    } else {
+      res <-
+        res |>
+        gt::tab_source_note(
+          paste(
+            "Total sum of squares (TSS):",
+            scales::number(attr(cc, "total_deviance"), accuracy = .1)
+          )
+        ) |>
+        gt::tab_source_note(
+          paste(
+            "Residual sum of squares (RSS):",
+            scales::number(attr(cc, "residual_deviance"), accuracy = .1)
+          )
+        ) |>
+        gt::tab_source_note(
+          gt::html(
+            paste(
+              "R<sup>2</sup>:",
+              scales::percent(
+                1 - (attr(cc, "residual_deviance") / attr(cc, "total_deviance")),
+                accuracy = .1
+              )
+            )
+          )
+        )
+    }
   }
 
   res
@@ -388,4 +453,135 @@ add1_to_anova <- function(mod, ...) {
   d1$Deviance <- total_deviance - d1$Deviance
 
   d1[rownames(d1) != "<none>", ]
+}
+
+#' @rdname contributions
+#' @param indice fit indice name, see [dominanceanalysis::dominanceAnalysis()]
+#' @param totals add a summary row with totals
+#' @export
+tbl_dominance <- function(
+  mod,
+  indice = NULL,
+  decimals = 1,
+  totals = TRUE,
+  notes = TRUE
+) {
+  rlang::check_installed("gt")
+  rlang::check_installed("broom.helpers")
+  rlang::check_installed("dominanceanalysis")
+
+  da <- mod |> dominanceanalysis::dominanceAnalysis()
+
+  if (is.null(indice))
+    indice <- da$fit.functions[[1]]
+
+  lv <-
+    mod |>
+    broom.helpers::tidy_and_attach() |>
+    broom.helpers::tidy_add_variable_labels(interaction_sep = " \u00D7 ") |>
+    dplyr::select("variable", "var_label") |>
+    dplyr::distinct()
+
+  da <-
+    da |>
+    dominanceanalysis::averageContribution(indice) |>
+    purrr::pluck(1)
+  da <-
+    dplyr::tibble(
+      variable = names(da),
+      Average = da
+    ) |>
+    dplyr::left_join(lv, by = "variable") |>
+    dplyr::relocate("var_label", .after = "variable") |>
+    dplyr::rename(Predictor = "var_label")
+  da$Relative <- da$Average / sum(da$Average)
+
+  res <-
+    da |>
+    gt::gt(rowname_col = "Predictor") |>
+    gt::tab_style(
+      style = gt::cell_text(weight = "bold"),
+      locations = gt::cells_column_labels()
+    ) |>
+    gt::fmt_percent(
+      columns = gt::any_of(
+        c("Average", "Relative")
+      ),
+      decimals = decimals
+    ) |>
+    gt::cols_label(
+      Average = "Average total contribution",
+      Relative = "Relative contribution"
+    ) |>
+    gt::cols_hide(gt::any_of("variable"))
+
+  if (totals) {
+    res <-
+      res |>
+      gt::grand_summary_rows(
+        columns = gt::any_of(c("Average", "Relative")),
+        fns = Total ~ sum(.),
+        fmt = ~ gt::fmt_percent(., decimals = 1)
+      )
+  }
+
+  if (notes) {
+    fit_labels <- c(
+      r2 = "R<sup>2</sup>",
+      r2.m = "McFadden pseudo R<sup>2</sup>",
+      r2.adj = "Adjusted McFadden pseudo R<sup>2</sup>",
+      r2.cs = "Cox and Snell pseudo R<sup>2</sup>",
+      r2.n = "Nagelkerke pseudo R<sup>2</sup>",
+      r2.e = "Estrella pseudo R<sup>2</sup>",
+      n.marg = "Nakagawa marginal R<sup>2</sup>",
+      n.cond = "Nakagawa conditional R<sup>2</sup>",
+      rb.r2.1 = "Amount of Level-1 variance explained by the addition of the predictor", # nolint
+      rb.r2.2 = "Amount of Level-1 variance explained by the addition of the predictor", # nolint
+      sb.r2.1 = "Proportional reduction in error of predicting scores at Level 1", # nolint
+      sb.r2.2 = "Proportional reduction in error of predicting cluster means at Level 2", # nolint
+      r.squared.xy = "R<sup>2</sup><sub>XY</sub>",
+      p.squared.xy = "P<sup>2</sup><sub>XY</sub>",
+      r2.pseudo = "pseudo R<sup>2</sup>"
+    )
+
+    res <-
+      res |>
+      gt::tab_source_note(
+        gt::html(
+          paste0(
+            fit_labels[indice],
+            ": ",
+            scales::percent(sum(da$Average), accuracy = 10 ^ (- decimals))
+          )
+        )
+      )
+  }
+
+  res
+}
+
+#' Fit indices for dominance analysis of survey-weighted GLM
+#'
+#' Provides support of [survey::svyglm()] for
+#' [dominanceanalysis::dominanceAnalysis()].
+#' @export
+#' @inheritParams dominanceanalysis::da.glm.fit
+da.svyglm.fit <- function (original.model, newdata = NULL, ...) {
+  mc = match.call()
+  function(x) {
+    if (x == "names") {
+      return(c("r2.m", "r2.adj"))
+    }
+    if (!is.null(newdata)) {
+      g1 <- update(original.model, x, design = newdata)
+    }
+    else {
+      g1 <- update(original.model, x)
+    }
+    r2.m <- 1 - (g1$deviance / g1$null.deviance)
+    list(
+      r2.m = r2.m,
+      r2.adj = 1 - ((1 - r2.m) * (g1$df.null / g1$df.residual))
+    )
+  }
 }

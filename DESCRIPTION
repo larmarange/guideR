@@ -47,6 +47,7 @@ Suggests:
     broom.helpers,
     car,
     cardx,
+    dominanceanalysis,
     DT,
     FactoMineR,
     ggupset,

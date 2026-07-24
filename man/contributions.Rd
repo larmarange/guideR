@@ -4,6 +4,7 @@
 \alias{contributions}
 \alias{tbl_contributions}
 \alias{total_deviance}
+\alias{tbl_dominance}
 \title{Estimate the contribution of each variable of a model}
 \usage{
 contributions(mod, type = c("II", "III", "I", 1, 2, 3, "drop1", "add1"), ...)
@@ -13,10 +14,13 @@ tbl_contributions(
   type = c("II", "III", "I", 1, 2, 3, "drop1", "add1"),
   ...,
   show = c("Total", "Partial", "Relative"),
+  decimals = 1,
   notes = TRUE
 )
 
 total_deviance(mod)
+
+tbl_dominance(mod, indice = NULL, decimals = 1, totals = TRUE, notes = TRUE)
 }
 \arguments{
 \item{mod}{a statistical model}
@@ -36,7 +40,13 @@ contribution are not defined.}
 
 \item{show}{list of contributions to display}
 
+\item{decimals}{number of decimals for deviance and contributions}
+
 \item{notes}{should table notes be added?}
+
+\item{indice}{fit indice name, see \code{\link[dominanceanalysis:dominanceAnalysis]{dominanceanalysis::dominanceAnalysis()}}}
+
+\item{totals}{add a summary row with totals}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\if{html}{\out{<br />}}
@@ -190,14 +200,10 @@ analysis (RWA) or dominance analysis.
 }
 \examples{
 # Linear model
-i <- iris |>
-  labelled::set_variable_labels(
-    Sepal.Width = "Sepal's width",
-    Petal.Length = "Petal's length"
-  )
-m <- lm(Sepal.Length ~ Sepal.Width + Species + Petal.Length, data = i)
+m <- lm(Sepal.Length ~ Sepal.Width + Species + Petal.Length, data = iris)
 m |> contributions()
 m |> tbl_contributions()
+m |> tbl_dominance()
 
 \donttest{
 m |> tbl_contributions(type = 1)
@@ -206,16 +212,39 @@ m |> tbl_contributions(type = 1)
 m2 <- glm(Survived == "Yes" ~ ., data = titanic, family = binomial)
 m2 |> contributions()
 m2 |> tbl_contributions()
+m2 |> tbl_contributions(decimals = 2)
 m2 |> tbl_contributions(show = "Relative", notes = FALSE)
+m2 |> tbl_dominance()
+
+# custom column labels
+tbl <- m2 |> tbl_contributions()
+colnames(tbl$`_data`) # list of columns
+tbl |>
+  gt::cols_label(
+    Predictor = "Variable",
+    Total = "Custom label (total)",
+    Partial = gt::html("Custom <em>label</em> with <strong>HTML</strong>"),
+    Relative = gt::md("Custom _label_ with **markdown**")
+  )
+
+# interaction terms
+m3 <- glm(
+  Survived == "Yes" ~ Class * Sex + Age,
+  data = titanic,
+  family = binomial,
+  contrasts = list(Class = contr.sum, Sex = contr.sum, Age = contr.sum)
+)
+m3 |> tbl_contributions(type = "III")
 
 # Survey-weighted GLM
 library(survey)
-m3 <- survey::svyglm(
+m4 <- svyglm(
   Survived == "Yes" ~ Class + Sex + Age,
   design = srvyr::as_survey(titanic),
   family = quasibinomial
 )
-m3 |> tbl_contributions(type = "drop1")
+m4 |> tbl_contributions(type = "drop1")
+m4 |> tbl_dominance()
 }
 }
 \keyword{models}
