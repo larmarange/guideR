@@ -4,16 +4,12 @@ BIOC
 CMD
 Codecov
 Colour
-Genizi
 Helmert
 Jamovi
 Labeller
 Lifecycle
 ORCID
-PMVD
 RStudio
-RWA
-Shapley
 TSS
 Tol's
 addin
@@ -27,6 +23,7 @@ dependant
 données
 d’enquêtes
 grey
+indice
 labelled
 l’analyse
 partialed
