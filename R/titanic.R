@@ -7,4 +7,13 @@
 #' @importFrom dplyr as_tibble
 #' @keywords datasets
 #' @export
-titanic <- datasets::Titanic |> dplyr::as_tibble() |> tidyr::uncount(n)
+titanic <-
+  datasets::Titanic |>
+  dplyr::as_tibble() |>
+  tidyr::uncount(n) |>
+  labelled::set_variable_labels(
+    Class = "Passenger's class",
+    Sex = "Sex of passenger",
+    Age = "Adult or Child",
+    Survived = "Has survived?"
+  )
