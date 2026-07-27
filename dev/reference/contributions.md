@@ -3,7 +3,7 @@
 **\[experimental\]**  
 Use an analysis of variance or an analysis of deviance to estimate the
 contribution of each variable in reducing variance or deviance (sort of
-R² decomposition). This contribution could be explained as a proportion
+R2 decomposition). This contribution could be explained as a proportion
 of the total deviance (*total contribution*), of the residual deviance
 (*partial contribution*) or of the explained deviance (*relative
 contribution*), see details for more information. `contributions()`
@@ -87,7 +87,7 @@ tbl_dominance(mod, indice = NULL, decimals = 1, totals = TRUE, notes = TRUE)
 
 ## Details
 
-In linear regression, the squared multiple correlation, R² is used to
+In linear regression, the squared multiple correlation, R2 is used to
 assess goodness of fit as it represents the proportion of variance in
 the criterion that is explained by the predictors. It could be expressed
 as `1 - RSS / TSS` where `TSS` represents the total sum of squares (the
@@ -96,14 +96,14 @@ squares (i.e. the variance not explained by the full model).
 
 For generalized linear models (GLM), model fitting does not rely on
 ordinary least squares (OLS). It is achieved by maximum likelihood.
-Therefore, sum of squares is not available and R² cannot be computed. An
-alternative goodness of fit measure used in such case is pseudo R². The'
-McFadden pseudo R² (sometimes called likelihood ratio index) could be
+Therefore, sum of squares is not available and R2 cannot be computed. An
+alternative goodness of fit measure used in such case is pseudo R2. The'
+McFadden pseudo R2 (sometimes called likelihood ratio index) could be
 expressed using deviance rather than likelihood. In such case, it is
 equal to `1 - Dr / Dt` where `Dt` represents the full deviance (i.e. the
 deviance of the null model, a model with no predictor) and `Dr` the
 residual deviance (i.e. the deviance of the full model). The McFadden
-pseudo R² corresponds the proportion of deviance reduced by the model.
+pseudo R2 corresponds the proportion of deviance reduced by the model.
 Deviance is a generalization of the idea of using the sum of squares of
 residuals in the cases where model-fitting is achieved by maximum
 likelihood.
@@ -121,29 +121,29 @@ predictors have a significant effect on a model. Anova approaches have
 been extended to also covers *analysis of deviance*. In the context of
 Anova-like tests, it is common to report effect sizes indicators
 representing the amount of variance or deviance explained by each
-variable included in the model. Such approach is also known as *R²*
+variable included in the model. Such approach is also known as *R2*
 decomposition. These indicators are based on `Dpred` (the delta of
 deviance) or `SSpred` (the delta of the sum of squares, i.e. the delta
 of variance) reduced by the inclusion of a specific predictor in the
 model.
 
-A first measure, known as *Eta-squared* (η²) in the context of linear
-models, expresses this delta of sum of squares (variance) as a
-proportion of the total variance (`SSpred / TSS`). In the context of
-GLMs, the delta of deviance could similarly expressed as a proportion of
-the total deviance (`Dpred / Dt`), also known as the *semi-partial
-pseudo-R²*. This indicator represents the **total contribution** of a
-predictor in the reduction of deviance.
+A first measure, known as *Eta-squared* in the context of linear models,
+expresses this delta of sum of squares (variance) as a proportion of the
+total variance (`SSpred / TSS`). In the context of GLMs, the delta of
+deviance could similarly expressed as a proportion of the total deviance
+(`Dpred / Dt`), also known as the *semi-partial pseudo-R2*. This
+indicator represents the **total contribution** of a predictor in the
+reduction of deviance.
 
-An alternative, known as *partial Eta-squared* (η_(p)²), in the context
-of linear models, could be expressed as `SSpred / (RSS + SSpred)`, the
-variance uniquely explained by the effect expressed as the proportion of
-variance not explained by the other effects. Here the variance explained
-by the other effects in the model is completely partialed out.
-Similarly, for GLMs, *partial pseudo-R²* is expressed as
-`Dpred / (Dr + Dpred)`, where `Dr` represents the residual deviance of
-the full model. This **partial contribution** is the proportion of
-partial variance/deviance uniquely explained by the associated effect.
+An alternative, known as *partial Eta-squared*, in the context of linear
+models, could be expressed as `SSpred / (RSS + SSpred)`, the variance
+uniquely explained by the effect expressed as the proportion of variance
+not explained by the other effects. Here the variance explained by the
+other effects in the model is completely partialed out. Similarly, for
+GLMs, *partial pseudo-R2* is expressed as `Dpred / (Dr + Dpred)`, where
+`Dr` represents the residual deviance of the full model. This **partial
+contribution** is the proportion of partial variance/deviance uniquely
+explained by the associated effect.
 
 Finally, it is possible to express a **relative contribution** as the
 proportion of the variance/deviance explained by the model, that could
@@ -220,7 +220,7 @@ practice, the sum is never equal to 100% due to some correlation between
 predictors.
 
 Some approaches, such as dominance analysis, have been developed for
-decomposing the coefficient of determination (R²) into individual
+decomposing the coefficient of determination (R2) into individual
 contributions of predictors in regression models, accounting for
 correlations between predictors. They address a key challenge in
 relative importance analysis: how to allocate shared variance when
@@ -236,8 +236,8 @@ conditional dominance (higher average contribution), and general
 dominance (weighted average across subset sizes).
 
 The last dimension (the average contribution of each variable) provides
-a metric similar to semi-partial R², and could be expressed as a
-proportion of the global R² (relative contribution). The sum of these
+a metric similar to semi-partial R2, and could be expressed as a
+proportion of the global R2 (relative contribution). The sum of these
 relative contributions is equal 100%.
 
 `tbl_dominance()` is a quick helper to perform a dominance analysis with
@@ -245,7 +245,7 @@ relative contributions is equal 100%.
 and to display the average total contribution variable in a nicely
 formatted [`gt::gt()`](https://gt.rstudio.com/reference/gt.html) table.
 The function also displays the relative contribution (i.e. the
-contribution of each variable expressed as a proportion of the R²).
+contribution of each variable expressed as a proportion of the R2).
 
 To be noted, alternative implementations of dominance analysis in **R**
 include
@@ -254,7 +254,8 @@ or `domir::domin()`.
 
 ## Note
 
-Regarding η² indicators, more details are provided in a [dedicated
+Regarding eta-squared indicators, more details are provided in a
+[dedicated
 vignette](https://easystats.github.io/effectsize/articles/anovaES.html)
 of the `effectsize` package. This vignette also presents variations of
 these indicators. Some explanations are also available in the
@@ -267,10 +268,10 @@ computation of total variance in
 `effectsize::eta_squared(partial = FALSE)`. The `effectsize` package sum
 the values displayed in the Anova object instead of performing a null
 model. Here, we rely on `total_deviance()` and therefore estimates for
-η² are not equal to those performed by
+eta-squared are not equal to those performed by
 `effectsize::eta_squared(partial = FALSE)`. To be noted,
-`effectsize::eta_squared(partial = TRUE)` (partial η²), is not impacted
-by this difference in approaches.
+`effectsize::eta_squared(partial = TRUE)` (partial eta-squared), is not
+impacted by this difference in approaches.
 
 ## Examples
 
