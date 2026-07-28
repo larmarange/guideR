@@ -1,6 +1,6 @@
-# Transform a data frame from long format to a sequence obect
+# Transform a data frame from long format to a sequence object
 
-Transform a data frame from long format to a sequence obect
+Transform a data frame from long format to a sequence object
 
 ## Usage
 
@@ -96,7 +96,7 @@ An object of class `stslist`.
 # \donttest{
 library(TraMineR)
 #> 
-#> TraMineR stable version 2.2-13 (Built: 2025-12-15)
+#> TraMineR stable version 2.2-13 (Built: 2026-04-24)
 #> Website: http://traminer.unige.ch
 #> Please type 'citation("TraMineR")' for citation information.
 

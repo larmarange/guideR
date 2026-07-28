@@ -9,11 +9,6 @@ This `titanic` dataset is equivalent to
 titanic
 ```
 
-## Format
-
-An object of class `tbl_df` (inherits from `tbl`, `data.frame`) with
-2201 rows and 4 columns.
-
 ## See also
 
 [datasets::Titanic](https://rdrr.io/r/datasets/Titanic.html)

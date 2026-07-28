@@ -9,7 +9,7 @@
 - [`long_to_periods()`](https://larmarange.github.io/guideR/reference/long_to_periods.md)
   : Transform a data frame from long format to period format
 - [`long_to_seq()`](https://larmarange.github.io/guideR/reference/long_to_seq.md)
-  : Transform a data frame from long format to a sequence obect
+  : Transform a data frame from long format to a sequence object
 - [`periods_to_long()`](https://larmarange.github.io/guideR/reference/periods_to_long.md)
   : Transform a data frame from period format to long format
 - [`unrowwise()`](https://larmarange.github.io/guideR/reference/unrowwise.md)
@@ -69,6 +69,15 @@
 
   Add potential relevant interactions using
   [`step()`](https://rdrr.io/r/stats/step.html)
+
+- [`contributions()`](https://larmarange.github.io/guideR/reference/contributions.md)
+  [`tbl_contributions()`](https://larmarange.github.io/guideR/reference/contributions.md)
+  [`total_deviance()`](https://larmarange.github.io/guideR/reference/contributions.md)
+  [`tbl_dominance()`](https://larmarange.github.io/guideR/reference/contributions.md)
+  **\[experimental\]** : Variable contribution and Dominance analysis
+
+- [`da.svyglm.fit()`](https://larmarange.github.io/guideR/reference/da.svyglm.fit.md)
+  : Fit indices for dominance analysis of survey-weighted GLM
 
 - [`grouped_tbl_pivot_wider()`](https://larmarange.github.io/guideR/reference/grouped_tbl_pivot_wider.md)
   [`multinom_add_global_p_pivot_wider()`](https://larmarange.github.io/guideR/reference/grouped_tbl_pivot_wider.md)

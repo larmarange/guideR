@@ -59,45 +59,45 @@ d |> combine_answers(q1a:q1d, into = "combined")
 #>    q1a   q1b   q1c   q1d   combined 
 #>    <chr> <chr> <chr> <chr> <list>   
 #>  1 y     NA    y     n     <lgl [1]>
-#>  2 n     y     y     n     <chr [2]>
-#>  3 y     y     y     n     <chr [3]>
-#>  4 y     n     y     n     <chr [2]>
-#>  5 y     n     n     n     <chr [1]>
+#>  2 y     NA    y     n     <lgl [1]>
+#>  3 n     n     y     n     <chr [1]>
+#>  4 y     NA    n     n     <lgl [1]>
+#>  5 y     NA    y     n     <lgl [1]>
 #>  6 n     y     y     n     <chr [2]>
-#>  7 n     NA    y     n     <lgl [1]>
-#>  8 y     NA    y     n     <lgl [1]>
-#>  9 y     n     y     n     <chr [2]>
-#> 10 y     NA    n     n     <lgl [1]>
+#>  7 y     y     y     n     <chr [3]>
+#>  8 y     n     y     n     <chr [2]>
+#>  9 y     n     n     n     <chr [1]>
+#> 10 n     y     y     n     <chr [2]>
 #> # ℹ 190 more rows
 d |> combine_answers(q1a:q1d, into = "combined", sep = ", ", value = "y")
 #> # A tibble: 200 × 5
 #>    q1a   q1b   q1c   q1d   combined     
 #>    <chr> <chr> <chr> <chr> <chr>        
 #>  1 y     NA    y     n     NA           
-#>  2 n     y     y     n     q1b, q1c     
-#>  3 y     y     y     n     q1a, q1b, q1c
-#>  4 y     n     y     n     q1a, q1c     
-#>  5 y     n     n     n     q1a          
+#>  2 y     NA    y     n     NA           
+#>  3 n     n     y     n     q1c          
+#>  4 y     NA    n     n     NA           
+#>  5 y     NA    y     n     NA           
 #>  6 n     y     y     n     q1b, q1c     
-#>  7 n     NA    y     n     NA           
-#>  8 y     NA    y     n     NA           
-#>  9 y     n     y     n     q1a, q1c     
-#> 10 y     NA    n     n     NA           
+#>  7 y     y     y     n     q1a, q1b, q1c
+#>  8 y     n     y     n     q1a, q1c     
+#>  9 y     n     n     n     q1a          
+#> 10 n     y     y     n     q1b, q1c     
 #> # ℹ 190 more rows
 d |> combine_answers(q1a:q1d, into = "combined", sep = " | ", value = "n")
 #> # A tibble: 200 × 5
 #>    q1a   q1b   q1c   q1d   combined       
 #>    <chr> <chr> <chr> <chr> <chr>          
 #>  1 y     NA    y     n     NA             
-#>  2 n     y     y     n     q1a | q1d      
-#>  3 y     y     y     n     q1d            
-#>  4 y     n     y     n     q1b | q1d      
-#>  5 y     n     n     n     q1b | q1c | q1d
+#>  2 y     NA    y     n     NA             
+#>  3 n     n     y     n     q1a | q1b | q1d
+#>  4 y     NA    n     n     NA             
+#>  5 y     NA    y     n     NA             
 #>  6 n     y     y     n     q1a | q1d      
-#>  7 n     NA    y     n     NA             
-#>  8 y     NA    y     n     NA             
-#>  9 y     n     y     n     q1b | q1d      
-#> 10 y     NA    n     n     NA             
+#>  7 y     y     y     n     q1d            
+#>  8 y     n     y     n     q1b | q1d      
+#>  9 y     n     n     n     q1b | q1c | q1d
+#> 10 n     y     y     n     q1a | q1d      
 #> # ℹ 190 more rows
 
 # works with survey objects
