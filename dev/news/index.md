@@ -2,6 +2,10 @@
 
 ## guideR (development version)
 
+## guideR 0.10.0
+
+CRAN release: 2026-07-27
+
 **New features**
 
 - new experimental functions
