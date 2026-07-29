@@ -34,6 +34,8 @@ tbl_strata_info(
 tbl_strata_predictions(
   x,
   n_strata = 5L,
+  scale = c("response", "link"),
+  which = c("null", "adjusted"),
   column_labels = list(rank = "Rank", n = "n", predicted = "Predicted", ci = "95\% CI"),
   group_labels = list("highest", "lowest"),
   digits = 1L
@@ -71,6 +73,14 @@ model family) about the analysis?}
 \item{n_strata}{number of strata to show at each end (top and bottom),
 use \code{Inf} or \code{NULL} to show all strata}
 
+\item{scale}{Scale for the predicted stratum values: \code{"response"} (default)
+or \code{"link"}. For a cumulative (ordinal) model the response scale is the
+expected category score.}
+
+\item{which}{For a two-model analysis, which model's predictions to rank the
+strata by: \code{"null"} (default) or \code{"adjusted"}. Ignored for a
+crossed-dimensions analysis or a single model.}
+
 \item{group_labels}{labels for group names}
 
 \item{digits}{number of decimals for predictions}
@@ -98,8 +108,11 @@ strata having a certain sample size.
 
 \code{tbl_strata_predictions()} is intended to replicate Table, showing the strata
 with the highest and the lowest predicted value. If a \code{maihda_analysis}
-object is passed to \code{tbl_strata_predictions()}, the adjusted model is
-taken into account for computing the predicted values.
+object is passed to \code{tbl_strata_predictions()}, the null model is
+taken into account by default for computing the predicted values, following
+the behaviour of \code{\link[MAIHDA:maihda_table]{MAIHDA::maihda_table()}}. It should be noted that in Evans
+et al. 2024, the authors used the adjusted model, which could be done with
+the argument \code{which = "adjusted"}.
 
 To be noted, themes from the \link[gtsummary:theme_gtsummary]{gtsummary} package
 are taken into account for formatting the different values.
@@ -132,6 +145,7 @@ m <- MAIHDA::maihda(
 m |> tbl_strata_info()
 m |> tbl_maihda(exponentiate = TRUE)
 m |> tbl_strata_predictions(n_strata = NULL)
+m |> tbl_strata_predictions(which = "adjusted", n_strata = 3)
 
 # Partially adjusted models
 

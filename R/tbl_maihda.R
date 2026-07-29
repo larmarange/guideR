@@ -21,8 +21,11 @@
 #'
 #' `tbl_strata_predictions()` is intended to replicate Table, showing the strata
 #' with the highest and the lowest predicted value. If a `maihda_analysis`
-#' object is passed to `tbl_strata_predictions()`, the adjusted model is
-#' taken into account for computing the predicted values.
+#' object is passed to `tbl_strata_predictions()`, the null model is
+#' taken into account by default for computing the predicted values, following
+#' the behaviour of [MAIHDA::maihda_table()]. It should be noted that in Evans
+#' et al. 2024, the authors used the adjusted model, which could be done with
+#' the argument `which = "adjusted"`.
 #'
 #' To be noted, themes from the [gtsummary][gtsummary::theme_gtsummary] package
 #' are taken into account for formatting the different values.
@@ -67,6 +70,7 @@
 #' m |> tbl_strata_info()
 #' m |> tbl_maihda(exponentiate = TRUE)
 #' m |> tbl_strata_predictions(n_strata = NULL)
+#' m |> tbl_strata_predictions(which = "adjusted", n_strata = 3)
 #'
 #' # Partially adjusted models
 #'
@@ -315,12 +319,15 @@ tbl_strata_info <- function(
 #' @rdname tbl_maihda
 #' @param n_strata number of strata to show at each end (top and bottom),
 #' use `Inf` or `NULL` to show all strata
+#' @inheritParams MAIHDA::maihda_table scale which
 #' @param group_labels labels for group names
 #' @param digits number of decimals for predictions
 #' @export
 tbl_strata_predictions <- function(
   x,
   n_strata = 5L,
+  scale = c("response", "link"),
+  which = c("null", "adjusted"),
   column_labels = list(
     rank = "Rank",
     n = "n",
@@ -333,15 +340,11 @@ tbl_strata_predictions <- function(
   rlang::check_installed("gtsummary")
   rlang::check_installed("gt")
   rlang::check_installed("MAIHDA")
-  if (inherits(x, "maihda_analysis")) {
-    if (!is.null(x$model_adjusted)) {
-      x <- x$model_adjusted
-    } else {
-      x <- x$model
-    }
-  }
 
-  if (!inherits(x, "maihda_model"))
+  scale <- match.arg(scale)
+  which <- match.arg(which)
+
+  if (!inherits(x, "maihda_model") && !inherits(x, "maihda_analysis"))
     cli::cli_abort("{.arg x} should be of class {.class maihda_model} or {.class maihda_analysis}.") # no lint
 
   if (is.null(n_strata)) n_strata <- Inf
@@ -349,8 +352,10 @@ tbl_strata_predictions <- function(
 
   res <-
     x |>
-    MAIHDA::maihda_table() |>
+    MAIHDA::maihda_table(scale = scale, which = which) |>
     purrr::pluck("strata")
+
+  if (inherits(x, "maihda_analysis")) x <- x$model
 
   if (n_strata < (nrow(res) / 2)) {
     res <-
@@ -381,7 +386,7 @@ tbl_strata_predictions <- function(
       "predicted", "predicted_lower", "predicted_upper"
     )))
 
-  if (x$family$family == "binomial") {
+  if (x$family$family == "binomial" && scale == "response") {
     f <- gtsummary::label_style_percent(digits = digits, suffix = "%")
   } else {
     f <- gtsummary::label_style_number(digits = digits)
