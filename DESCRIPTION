@@ -57,6 +57,7 @@ Suggests:
     htmltools,
     htmlwidgets,
     khroma,
+    MAIHDA,
     MASS,
     nnet,
     parameters,

@@ -75,3 +75,21 @@ indent_labels <- function(x, indent = 4L) {
       indent = indent
     )
 }
+
+#' @rdname gtsummary_utilities
+#' @param header String of the header to place above the glance statistics
+#' @export
+add_glance_header <- function(x, header = "Summary statistics") {
+  rlang::check_installed("gtsummary")
+  v <-
+    x$table_body |>
+    dplyr::filter(.data$row_type == "glance_statistic") |>
+    dplyr::pull("variable") |>
+    unique()
+  x |>
+    gtsummary::add_variable_group_header(
+      header = header,
+      variables = dplyr::any_of(v),
+      indent = 0L
+    )
+}
