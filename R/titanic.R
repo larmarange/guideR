@@ -11,6 +11,7 @@ titanic <-
   datasets::Titanic |>
   dplyr::as_tibble() |>
   tidyr::uncount(n) |>
+  dplyr::mutate(dplyr::across(dplyr::where(is.character), factor)) |>
   labelled::set_variable_labels(
     Class = "Passenger's class",
     Sex = "Sex of passenger",

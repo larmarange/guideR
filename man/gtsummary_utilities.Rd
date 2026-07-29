@@ -6,6 +6,7 @@
 \alias{italicize_variable_group_headers}
 \alias{indent_levels}
 \alias{indent_labels}
+\alias{add_glance_header}
 \title{Utilities for \code{gtsummary}}
 \usage{
 bold_variable_group_headers(x)
@@ -15,11 +16,15 @@ italicize_variable_group_headers(x)
 indent_levels(x, indent = 8L)
 
 indent_labels(x, indent = 4L)
+
+add_glance_header(x, header = "Summary statistics")
 }
 \arguments{
 \item{x}{A \code{gtsummary} object.}
 
 \item{indent}{An integer indicating how many space to indent text.}
+
+\item{header}{String of the header to place above the glance statistics}
 }
 \description{
 Utilities for tables generated with \link[gtsummary:gtsummary]{gtsummary}.
