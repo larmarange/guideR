@@ -114,7 +114,8 @@ tbl_maihda <- function(
     vpc = "Variance Partition Coefficient (VPC)",
     pcv = "Proportional Change in Variance (PCV)",
     auc = "Area Under Receiver Operating Characteristic Curve (AUC)",
-    mor = "Median Odds Ratio (MOR)"
+    mor = "Median Odds Ratio (MOR)",
+    csvpc = "Context share (VPC)"
   ),
   statistics_include = -dplyr::any_of("bssd"),
   notes = TRUE,
@@ -122,7 +123,8 @@ tbl_maihda <- function(
     n_strata = "Strata:",
     nobs = "Observations:",
     engine = "Engine:",
-    family = "Family:"
+    family = "Family:",
+    context = "Variable(s) in context:"
   )
 ) {
   rlang::check_installed("gtsummary")
@@ -242,7 +244,8 @@ add_maihda_notes <- function(
     n_strata = "Strata:",
     nobs = "Observations:",
     engine = "Engine:",
-    family = "Family:"
+    family = "Family:",
+    context = "Variable(s) in context:"
   )
 ) {
   rlang::check_installed("broom")
@@ -251,8 +254,15 @@ add_maihda_notes <- function(
     label$n_strata, " ", g$n_strata, ", ",
     label$nobs, " ", g$nobs, ", ",
     label$engine, " ", g$engine, ", ",
-    label$family, " ", g$family, "."
+    label$family, " ", g$family
   )
+
+  if (!is.null(x$context_vars))
+    note <- paste0(
+      note, ", ",
+      label$context, " ", paste(x$context_vars, collapse = ", ")
+    )
+
   tbl |>
     gtsummary::modify_source_note(note)
 }
@@ -448,6 +458,7 @@ glance_maihda_model <- function(x) {
         .data$statistic == "Between-stratum variance" ~ "bsv",
         .data$statistic == "Between-stratum SD" ~ "bssd",
         .data$statistic == "VPC/ICC" ~ "vpc",
+        .data$statistic == "Context share (VPC)" ~ "csvpc",
         TRUE ~ tolower(.data$statistic)
       )
     ) |>

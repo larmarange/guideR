@@ -16,11 +16,11 @@ tbl_maihda(
     "Between-stratum standard deviation", vpc = "Variance Partition Coefficient (VPC)",
     pcv = "Proportional Change in Variance (PCV)", auc =
     "Area Under Receiver Operating Characteristic Curve (AUC)", mor =
-    "Median Odds Ratio (MOR)"),
+    "Median Odds Ratio (MOR)", csvpc = "Context share (VPC)"),
   statistics_include = -dplyr::any_of("bssd"),
   notes = TRUE,
   notes_labels = list(n_strata = "Strata:", nobs = "Observations:", engine = "Engine:",
-    family = "Family:")
+    family = "Family:", context = "Variable(s) in context:")
 )
 
 tbl_strata_info(
