@@ -43,7 +43,7 @@
 #' @param notes_labels name list of labels for the notes
 #' @export
 #' @keywords models
-#' @examplesIf rlang::is_installed(c("gtsummary", "gt", "MAIHDA"))
+#' @examplesIf rlang::is_installed(c("gtsummary", "gt", "MAIHDA", "broom.mixed"))
 #' \donttest{
 #' theme_gtsummary_bold_labels()
 #'
@@ -128,6 +128,7 @@ tbl_maihda <- function(
   rlang::check_installed("gtsummary")
   rlang::check_installed("gt")
   rlang::check_installed("MAIHDA")
+  rlang::check_installed("broom.mixed")
 
   if (inherits(x, "maihda_model")) {
     res <- x |>

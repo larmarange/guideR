@@ -2,6 +2,7 @@ test_that("tbl function for MAIHDA analysis does not produce an error", {
   skip_if_not_installed("gt")
   skip_if_not_installed("gtsummary")
   skip_if_not_installed("MAIHDA")
+  skip_if_not_installed("broom.mixed")
 
   # gaussian model
 
