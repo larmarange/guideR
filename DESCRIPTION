@@ -45,6 +45,7 @@ Roxygen: list(markdown = TRUE)
 Suggests: 
     broom,
     broom.helpers,
+    broom.mixed,
     car,
     cardx,
     dominanceanalysis,
