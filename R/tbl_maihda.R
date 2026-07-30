@@ -404,6 +404,11 @@ tbl_strata_predictions <- function(
     ) |>
     dplyr::select(-dplyr::any_of(c("predicted_lower", "predicted_upper")))
 
+  strata_labels <-
+    x$original_data |>
+    dplyr::select(dplyr::any_of(x$strata_vars)) |>
+    labelled::get_variable_labels(null_action = "fill")
+
   tbl <-
     res |>
     gt::gt() |>
@@ -416,6 +421,7 @@ tbl_strata_predictions <- function(
       locations = gt::cells_row_groups()
     ) |>
     gt::cols_label(.list = column_labels) |>
+    gt::cols_label(.list = strata_labels) |>
     gt::cols_align("center", "ci")
 
   tbl
