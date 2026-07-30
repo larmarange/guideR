@@ -201,7 +201,7 @@
 #' m |> tbl_contributions(type = 1)
 #'
 #' # GLM
-#' m2 <- glm(Survived == "Yes" ~ ., data = titanic, family = binomial)
+#' m2 <- glm(Survived ~ ., data = titanic, family = binomial)
 #' m2 |> contributions()
 #' m2 |> tbl_contributions()
 #' m2 |> tbl_contributions(decimals = 2)
@@ -221,7 +221,7 @@
 #'
 #' # interaction terms
 #' m3 <- glm(
-#'   Survived == "Yes" ~ Class * Sex + Age,
+#'   Survived ~ Class * Sex + Age,
 #'   data = titanic,
 #'   family = binomial,
 #'   contrasts = list(Class = contr.sum, Sex = contr.sum, Age = contr.sum)
@@ -231,7 +231,7 @@
 #' # Survey-weighted GLM
 #' library(survey)
 #' m4 <- svyglm(
-#'   Survived == "Yes" ~ Class + Sex + Age,
+#'   Survived ~ Class + Sex + Age,
 #'   design = srvyr::as_survey(titanic),
 #'   family = quasibinomial
 #' )

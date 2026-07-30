@@ -118,7 +118,7 @@ To be noted, themes from the \link[gtsummary:theme_gtsummary]{gtsummary} package
 are taken into account for formatting the different values.
 }
 \examples{
-\dontshow{if (rlang::is_installed(c("gtsummary", "gt", "MAIHDA"))) withAutoprint(\{ # examplesIf}
+\dontshow{if (rlang::is_installed(c("gtsummary", "gt", "MAIHDA", "broom.mixed"))) withAutoprint(\{ # examplesIf}
 \donttest{
 theme_gtsummary_bold_labels()
 

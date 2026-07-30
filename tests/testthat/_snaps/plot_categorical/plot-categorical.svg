@@ -71,6 +71,7 @@
 <rect x='292.46' y='523.12' width='97.30' height='27.30' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #4477AA;' />
 <rect x='292.46' y='413.91' width='97.30' height='109.21' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #EE6677;' />
 <rect x='292.46' y='54.41' width='97.30' height='359.50' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #228833;' />
+<rect x='292.46' y='54.41' width='97.30' height='0.00' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #CCBB44;' />
 <text x='395.17' y='49.45' text-anchor='end' style='font-size: 9.96px; font-family: sans;' textLength='36.28px' lengthAdjust='spacingAndGlyphs'>p&lt;0.001</text>
 <text x='233.00' y='516.04' text-anchor='middle' style='font-size: 9.96px; fill: #FFFFFF; font-family: sans;' textLength='19.93px' lengthAdjust='spacingAndGlyphs'>15%</text>
 <text x='233.00' y='447.28' text-anchor='middle' style='font-size: 9.96px; font-family: sans;' textLength='19.93px' lengthAdjust='spacingAndGlyphs'>12%</text>
@@ -79,6 +80,7 @@
 <text x='341.11' y='540.20' text-anchor='middle' style='font-size: 9.96px; fill: #FFFFFF; font-family: sans;' textLength='14.39px' lengthAdjust='spacingAndGlyphs'>6%</text>
 <text x='341.11' y='471.94' text-anchor='middle' style='font-size: 9.96px; font-family: sans;' textLength='19.93px' lengthAdjust='spacingAndGlyphs'>22%</text>
 <text x='341.11' y='237.59' text-anchor='middle' style='font-size: 9.96px; fill: #FFFFFF; font-family: sans;' textLength='19.93px' lengthAdjust='spacingAndGlyphs'>72%</text>
+<text x='341.11' y='57.84' text-anchor='middle' style='font-size: 9.96px; font-family: sans;' textLength='14.39px' lengthAdjust='spacingAndGlyphs'>0%</text>
 <rect x='168.13' y='39.43' width='237.85' height='521.01' style='stroke-width: 1.07; stroke: #B3B3B3;' />
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
@@ -138,7 +140,7 @@
 </defs>
 <g clip-path='url(#cpMTY4LjEzfDQwNS45OHwyMi43OHwzOS40Mw==)'>
 <rect x='168.13' y='22.78' width='237.85' height='16.65' style='stroke-width: 1.07; stroke: none; fill: #7F7F7F;' />
-<text x='287.06' y='34.14' text-anchor='middle' style='font-size: 8.80px; fill: #FFFFFF; font-family: sans;' textLength='15.66px' lengthAdjust='spacingAndGlyphs'>Age</text>
+<text x='287.06' y='34.14' text-anchor='middle' style='font-size: 8.80px; fill: #FFFFFF; font-family: sans;' textLength='52.83px' lengthAdjust='spacingAndGlyphs'>Adult or Child</text>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 </g>
@@ -149,7 +151,7 @@
 </defs>
 <g clip-path='url(#cpNDExLjQ2fDY0OS4zMHwyMi43OHwzOS40Mw==)'>
 <rect x='411.46' y='22.78' width='237.85' height='16.65' style='stroke-width: 1.07; stroke: none; fill: #7F7F7F;' />
-<text x='530.38' y='34.14' text-anchor='middle' style='font-size: 8.80px; fill: #FFFFFF; font-family: sans;' textLength='15.17px' lengthAdjust='spacingAndGlyphs'>Sex</text>
+<text x='530.38' y='34.14' text-anchor='middle' style='font-size: 8.80px; fill: #FFFFFF; font-family: sans;' textLength='68.50px' lengthAdjust='spacingAndGlyphs'>Sex of passenger</text>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <text x='97.79' y='568.69' text-anchor='middle' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='27.88px' lengthAdjust='spacingAndGlyphs'>Overall</text>
