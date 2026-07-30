@@ -44,7 +44,7 @@ tbl_strata_predictions(
 glance_maihda_model(x)
 }
 \arguments{
-\item{x}{a MAIHA object}
+\item{x}{a MAIHDA object}
 
 \item{...}{additional parameters passed to \code{\link[gtsummary:tbl_regression]{gtsummary::tbl_regression()}}}
 
@@ -110,7 +110,7 @@ strata having a certain sample size.
 with the highest and the lowest predicted value. If a \code{maihda_analysis}
 object is passed to \code{tbl_strata_predictions()}, the null model is
 taken into account by default for computing the predicted values, following
-the behaviour of \code{\link[MAIHDA:maihda_table]{MAIHDA::maihda_table()}}. It should be noted that in Evans
+the behavior of \code{\link[MAIHDA:maihda_table]{MAIHDA::maihda_table()}}. It should be noted that in Evans
 et al. 2024, the authors used the adjusted model, which could be done with
 the argument \code{which = "adjusted"}.
 
