@@ -23,13 +23,13 @@
 #' with the highest and the lowest predicted value. If a `maihda_analysis`
 #' object is passed to `tbl_strata_predictions()`, the null model is
 #' taken into account by default for computing the predicted values, following
-#' the behaviour of [MAIHDA::maihda_table()]. It should be noted that in Evans
+#' the behavior of [MAIHDA::maihda_table()]. It should be noted that in Evans
 #' et al. 2024, the authors used the adjusted model, which could be done with
 #' the argument `which = "adjusted"`.
 #'
 #' To be noted, themes from the [gtsummary][gtsummary::theme_gtsummary] package
 #' are taken into account for formatting the different values.
-#' @param x a MAIHA object
+#' @param x a MAIHDA object
 #' @param ... additional parameters passed to [gtsummary::tbl_regression()]
 #' @param twomodels_labels for a two-model MAIHDA analysis, labels for the two
 #' models
