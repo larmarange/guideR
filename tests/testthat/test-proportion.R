@@ -32,7 +32,7 @@ test_that("proportion() works with data frames", {
 
   expect_equal(
     dna |> proportion(Sex, .by = Survived) |> nrow(),
-    5
+    6
   )
   expect_equal(
     dna |> proportion(Sex, .by = Survived, .drop_na_by = TRUE) |> nrow(),

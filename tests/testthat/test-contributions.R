@@ -3,7 +3,7 @@ test_that("contributions() does not produce an error", {
 
   m <- lm(Sepal.Length ~ Sepal.Width + Species + Petal.Length, data = iris)
   m2 <- glm(
-    Survived == "Yes" ~ Class + Sex + Age,
+    Survived ~ Class + Sex + Age,
     data = titanic,
     family = binomial
   )
@@ -39,7 +39,7 @@ test_that("contributions() does not produce an error", {
   skip_if_not_installed("survey")
   suppressWarnings(library(survey))
   m3 <- survey::svyglm(
-    Survived == "Yes" ~ Class + Sex + Age,
+    Survived ~ Class + Sex + Age,
     design = srvyr::as_survey(titanic),
     family = quasibinomial
   )
@@ -57,7 +57,7 @@ test_that("tbl_dominance() does not produce an error", {
 
   m <- lm(Sepal.Length ~ Sepal.Width + Species + Petal.Length, data = iris)
   m2 <- glm(
-    Survived == "Yes" ~ Class + Sex + Age,
+    Survived ~ Class + Sex + Age,
     data = titanic,
     family = binomial
   )
@@ -72,7 +72,7 @@ test_that("tbl_dominance() does not produce an error", {
   skip_if_not_installed("survey")
   suppressWarnings(library(survey))
   m3 <- svyglm(
-    Survived == "Yes" ~ Class + Sex + Age,
+    Survived ~ Class + Sex + Age,
     design = srvyr::as_survey(titanic),
     family = quasibinomial
   )
