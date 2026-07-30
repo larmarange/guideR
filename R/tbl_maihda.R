@@ -192,7 +192,7 @@ tbl_maihda_model <- function(
   stats <- glance_maihda_model(x)
   tbl <-
     x$model |>
-    gtsummary::tbl_regression(intercept = TRUE, ...) |>
+    gtsummary::tbl_regression(intercept = TRUE, group_by = NULL, ...) |>
     gtsummary::add_glance_table(
       glance_fun = \(y) stats,
       label = statistics_labels,
