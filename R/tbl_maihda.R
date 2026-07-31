@@ -38,8 +38,8 @@
 #' @param x a MAIHDA object (`maihda_analysis` or `maihda_model`); for
 #' `tbl_maihda()` it could also be a list of `maihda_model` objects; for
 #' `tbl_partially_adjusted_maihda()`, only a `maihda_analysis` computed with
-#' `MAIHDA::maihda(decomposition = "two-model")` is allowed
-#'
+#' `MAIHDA::maihda(decomposition = "two-model")` is allowed; for
+#' `tbl_strata_info()`, the result of [MAIHDA::make_strata()] is also accepted
 #' @param ... additional parameters passed to [gtsummary::tbl_regression()]
 #' @param twomodels_labels for a two-model MAIHDA analysis, labels for the two
 #' models
@@ -381,10 +381,11 @@ tbl_strata_info <- function(
   rlang::check_installed("MAIHDA")
   if (inherits(x, "maihda_analysis"))
     x <- x$model
-  if (!inherits(x, "maihda_model"))
-    cli::cli_abort("{.arg x} should be of class {.class maihda_model} or {.class maihda_analysis}.") # no lint
+  if (!is.list(x) && !"strata_info" %in% names(x))
+    cli::cli_abort("{.arg x} should be of class {.class maihda_model} or {.class maihda_analysis} or the result of {.fn MAIHDA::make_strata}.") # no lint
 
   info <- x$strata_info
+
   breaks <- breaks |> sort(decreasing = TRUE)
   res <- dplyr::tibble()
   for (i in breaks) {
