@@ -58,7 +58,7 @@ Suggests:
     htmltools,
     htmlwidgets,
     khroma,
-    MAIHDA,
+    MAIHDA (>= 0.2.1),
     MASS,
     nnet,
     parameters,
