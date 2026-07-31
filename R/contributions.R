@@ -525,7 +525,7 @@ tbl_contributions <- function(
         )) |>
         gt::tab_source_note(gt::html(
           paste(
-            "Somme des carr&eacute;s résiduelle (RSS)&nbsp;:",
+            "Somme des carr&eacute;s r&eacute;siduelle (RSS)&nbsp;:",
             scales::number(
               attr(cc, "residual_deviance"),
               accuracy = .1,
@@ -703,8 +703,8 @@ tbl_dominance <- function(
         r2.e = "Pseudo R<sup>2</sup> de Estrella",
         n.marg = "R<sup>2</sup> marginal de Nakagawa",
         n.cond = "R<sup>2</sup> conditionnel de Nakagawa",
-        rb.r2.1 = "Quantit&eacute; de variance de niveau 1 expliqu&eacute;e par l'addition du prédicteur", # nolint
-        rb.r2.2 = "Quantit&eacute; de variance de niveau 2 expliqu&eacute;e par l'addition du prédicteur", # nolint
+        rb.r2.1 = "Quantit&eacute; de variance de niveau 1 expliqu&eacute;e par l'addition du pr&eacute;dicteur", # nolint
+        rb.r2.2 = "Quantit&eacute; de variance de niveau 2 expliqu&eacute;e par l'addition du pr&eacute;dicteur", # nolint
         sb.r2.1 = "R&eacute;duction proportionnelle de l'erreur dans la pr&eacute;diction des scores de niveau 1", # nolint
         sb.r2.2 = "R&eacute;duction proportionnelle de l'erreur dans la pr&eacute;diction des moyennes par cluster de niveau 2", # nolint
         r.squared.xy = "R<sup>2</sup><sub>XY</sub>",
