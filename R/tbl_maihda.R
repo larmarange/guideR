@@ -16,6 +16,9 @@
 #' last case, PCV should be manually added to the models to be displayed (see
 #' examples).
 #'
+#' `tbl_partially_adjusted_maihda()` is an helper allowing to compute and
+#' display all partially adjusted models (see examples).
+#'
 #' `tbl_strata_info()` is intended to replicate Table 2, showing the number of
 #' strata having a certain sample size.
 #'
@@ -27,9 +30,16 @@
 #' et al. 2024, the authors used the adjusted model, which could be done with
 #' the argument `which = "adjusted"`.
 #'
+#' `plot_maihda_predictions_by()` allows to visually compare predicted values
+#' by strata according to one or several specific variable defining the strata.
+#'
 #' To be noted, themes from the [gtsummary][gtsummary::theme_gtsummary] package
 #' are taken into account for formatting the different values.
-#' @param x a MAIHDA object
+#' @param x a MAIHDA object (`maihda_analysis` or `maihda_model`); for
+#' `tbl_maihda()` it could also be a list of `maihda_model` objects; for
+#' `tbl_partially_adjusted_maihda()`, only a `maihda_analysis` computed with
+#' `MAIHDA::maihda(decomposition = "two-model")` is allowed
+#'
 #' @param ... additional parameters passed to [gtsummary::tbl_regression()]
 #' @param twomodels_labels for a two-model MAIHDA analysis, labels for the two
 #' models
@@ -58,6 +68,7 @@
 #' a |> tbl_strata_info(breaks = c(50, 100, 150))
 #' a |> tbl_maihda()
 #' a |> tbl_strata_predictions()
+#' a |> plot_maihda_predictions_by(Race)
 #'
 #' # a binomial example
 #'
@@ -71,6 +82,8 @@
 #' m |> tbl_maihda(exponentiate = TRUE)
 #' m |> tbl_strata_predictions(n_strata = NULL)
 #' m |> tbl_strata_predictions(which = "adjusted", n_strata = 3)
+#' m |> plot_maihda_predictions_by(Sex)
+#' m |> plot_maihda_predictions_by(c(Sex, Age))
 #'
 #' # Partially adjusted models
 #'
@@ -102,6 +115,9 @@
 #'
 #' list(Null = m0, Age = m1, Sex = m2, Class = m3) |>
 #'   tbl_maihda(exponentiate = TRUE)
+#'
+#' # in one call
+#' m |> tbl_partially_adjusted_maihda(exponentiate = TRUE)
 #' }
 tbl_maihda <- function(
   x,
@@ -268,6 +284,84 @@ add_maihda_notes <- function(
 }
 
 #' @rdname tbl_maihda
+#' @param return_data return a data frame instead of a table
+#' @export
+tbl_partially_adjusted_maihda <- function(
+  x,
+  ...,
+  twomodels_labels = c("Null model", "Fully adjusted model"),
+  statistics_header = "Summary statistics",
+  statistics_labels = list(
+    bsv = "Between-stratum variance",
+    bssd = "Between-stratum standard deviation",
+    vpc = "Variance Partition Coefficient (VPC)",
+    pcv = "Proportional Change in Variance (PCV)",
+    auc = "Area Under Receiver Operating Characteristic Curve (AUC)",
+    mor = "Median Odds Ratio (MOR)",
+    csvpc = "Context share (VPC)"
+  ),
+  statistics_include = -dplyr::any_of("bssd"),
+  notes = TRUE,
+  notes_labels = list(
+    n_strata = "Strata:",
+    nobs = "Observations:",
+    engine = "Engine:",
+    family = "Family:",
+    context = "Variable(s) in context:"
+  ),
+  return_data = FALSE
+) {
+  if (!inherits(x, "maihda_analysis"))
+    cli::cli_abort("{.arg x} should be a {.class maihda_analysis} object.")
+
+  if (x$mode != "two-model")
+    cli::cli_abort("{.arg x} should be computed with `decomposition = \"two-model\"`") # no lint
+
+  l <-
+    x$model$strata_vars |>
+    purrr::map(\(v) fit_partially_adjusted_maihda(x, v))
+  names(l) <-
+    x$model_adjusted$original_data |>
+    dplyr::select(dplyr::any_of(x$model_adjusted$strata_vars)) |>
+    labelled::get_variable_labels(null_action = "fill", unlist = TRUE)
+
+  l0 <- list(x$model)
+  names(l0) <- twomodels_labels[1]
+  x$model_adjusted$pcv <- x$pcv
+  lf <- list(x$model_adjusted)
+  names(lf) <- twomodels_labels[2]
+  l <- l0 |> append(l) |> append(lf)
+
+  if (return_data) return(l)
+
+  l |>
+    tbl_maihda(
+      ...,
+      statistics_header = statistics_header,
+      statistics_labels = statistics_labels,
+      statistics_include = {{ statistics_include }},
+      notes = notes,
+      notes_labels = notes_labels
+    )
+}
+
+fit_partially_adjusted_maihda <- function(m, variable) {
+  m0 <- m$model
+  ma <- m$model_adjusted
+  pa <-
+    MAIHDA::fit_maihda(
+      formula = stats::update(m0$formula, as.formula(paste("~ . +", variable))),
+      data = ma$data,
+      engine = m0$engine,
+      family = m0$family,
+      context = m0$context_vars,
+      sampling_weights = m0$sampling_weights
+    )
+  pa$pcv <- MAIHDA::calculate_pcv(m0, pa)
+  pa
+}
+
+#' @rdname tbl_maihda
 #' @param breaks breaks for sample size per stratum
 #' @param column_labels named list of column labels
 #' @param total_label string of the total label in the notes
@@ -346,7 +440,8 @@ tbl_strata_predictions <- function(
     ci = "95% CI"
   ),
   group_labels = list("highest", "lowest"),
-  digits = 1L
+  digits = 1L,
+  return_data = FALSE
 ) {
   rlang::check_installed("gtsummary")
   rlang::check_installed("gt")
@@ -397,6 +492,17 @@ tbl_strata_predictions <- function(
       "predicted", "predicted_lower", "predicted_upper"
     )))
 
+  strata_labels <-
+    x$original_data |>
+    dplyr::select(dplyr::any_of(x$strata_vars)) |>
+    labelled::get_variable_labels(null_action = "fill")
+
+  res <-
+    res |>
+    labelled::set_variable_labels(.labels = strata_labels)
+
+  if (return_data) return(res)
+
   if (x$family$family == "binomial" && scale == "response") {
     f <- gtsummary::label_style_percent(digits = digits, suffix = "%")
   } else {
@@ -414,11 +520,6 @@ tbl_strata_predictions <- function(
       ci = paste0(.data$predicted_lower, sep, .data$predicted_upper)
     ) |>
     dplyr::select(-dplyr::any_of(c("predicted_lower", "predicted_upper")))
-
-  strata_labels <-
-    x$original_data |>
-    dplyr::select(dplyr::any_of(x$strata_vars)) |>
-    labelled::get_variable_labels(null_action = "fill")
 
   tbl <-
     res |>
@@ -438,6 +539,109 @@ tbl_strata_predictions <- function(
   tbl
 }
 
+#' @rdname tbl_maihda
+#' @param by <[`tidy-select`][dplyr::dplyr_tidy_select]>\cr
+#' list of variables to compare by
+#' @param sort should the plot be sorted?
+#' @export
+plot_maihda_predictions_by <- function(
+  x,
+  by,
+  scale = c("response", "link"),
+  which = c("null", "adjusted"),
+  sort = TRUE
+) {
+  rlang::check_installed("ggstats")
+  scale <- match.arg(scale)
+
+  d <-
+    x |>
+    tbl_strata_predictions(
+      which = which,
+      scale = scale,
+      n_strata = Inf,
+      return_data = TRUE
+    )
+
+  if (inherits(x, "maihda_analysis")) x <- x$model
+
+  strata_vars <- x$strata_vars
+  by_vars <- d |> dplyr::select({{ by }}) |> colnames()
+  y_vars <- setdiff(strata_vars, by_vars)
+
+  by_strata <- MAIHDA::make_strata(d, by_vars)
+  y_strata <- MAIHDA::make_strata(d, y_vars)
+
+  d$.by.. <- by_strata$data$stratum |>
+    factor(labels = by_strata$strata_info$label)
+  d$.y.. <- y_strata$data$stratum |>
+    factor(labels = y_strata$strata_info$label)
+  d <- d |> dplyr::arrange(dplyr::pick(dplyr::all_of(by_vars)))
+  d$.by.. <-
+    d$.by.. |>
+    forcats::fct_inorder() |>
+    forcats::fct_rev()
+
+  if (sort) {
+    d$.y.. <-
+      d$.y.. |>
+      forcats::fct_reorder(d$predicted, .fun = mean)
+  } else {
+    d <- d |> dplyr::arrange(dplyr::pick(dplyr::all_of(y_vars)))
+    d$.y.. <-
+      d$.y.. |>
+      forcats::fct_inorder() |>
+      forcats::fct_rev()
+  }
+
+  p <-
+    ggplot2::ggplot(d) +
+    ggplot2::aes(
+      y = .data$.y..,
+      color = .data$.by..,
+      x = .data$predicted,
+      xmin = .data$predicted_lower,
+      xmax = .data$predicted_upper
+    ) +
+    ggstats::geom_stripped_rows(
+      mapping = ggplot2::aes(colour = NULL),
+      odd = "#11111111",
+      show.legend = FALSE
+    ) +
+    ggplot2::geom_errorbar(
+      position = ggplot2::position_dodge(width = .75),
+      width = .2,
+      show.legend = FALSE
+    ) +
+    ggplot2::geom_point(
+      position = ggplot2::position_dodge(width = .75)
+    ) +
+    ggplot2::theme_light() +
+    ggplot2::theme(
+      legend.position = "bottom",
+      legend.box = "vertical",
+      panel.grid.minor = ggplot2::element_blank(),
+      panel.grid.major.y = ggplot2::element_blank(),
+      panel.grid.major.x = ggplot2::element_line(linetype = "dashed"),
+      axis.title.x = ggplot2::element_text(face = "bold"),
+      axis.ticks.y = ggplot2::element_blank()
+    ) +
+    ggplot2::labs(x = NULL, y = NULL, color = NULL) +
+    scale_color_safe() +
+    ggplot2::scale_y_discrete(expand = 0) +
+    ggplot2::guides(
+      colour = ggplot2::guide_legend(reverse = TRUE)
+    )
+
+  if (x$family$family == "binomial" && scale == "response") {
+    p <-
+      p +
+      ggplot2::expand_limits(x = 0) +
+      ggplot2::scale_x_continuous(labels = scales::percent)
+  }
+
+  p
+}
 
 #' @rdname tbl_maihda
 #' @export

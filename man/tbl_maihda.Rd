@@ -2,8 +2,10 @@
 % Please edit documentation in R/tbl_maihda.R
 \name{tbl_maihda}
 \alias{tbl_maihda}
+\alias{tbl_partially_adjusted_maihda}
 \alias{tbl_strata_info}
 \alias{tbl_strata_predictions}
+\alias{plot_maihda_predictions_by}
 \alias{glance_maihda_model}
 \title{Table summary of for MAIHDA analysis}
 \usage{
@@ -23,6 +25,23 @@ tbl_maihda(
     family = "Family:", context = "Variable(s) in context:")
 )
 
+tbl_partially_adjusted_maihda(
+  x,
+  ...,
+  twomodels_labels = c("Null model", "Fully adjusted model"),
+  statistics_header = "Summary statistics",
+  statistics_labels = list(bsv = "Between-stratum variance", bssd =
+    "Between-stratum standard deviation", vpc = "Variance Partition Coefficient (VPC)",
+    pcv = "Proportional Change in Variance (PCV)", auc =
+    "Area Under Receiver Operating Characteristic Curve (AUC)", mor =
+    "Median Odds Ratio (MOR)", csvpc = "Context share (VPC)"),
+  statistics_include = -dplyr::any_of("bssd"),
+  notes = TRUE,
+  notes_labels = list(n_strata = "Strata:", nobs = "Observations:", engine = "Engine:",
+    family = "Family:", context = "Variable(s) in context:"),
+  return_data = FALSE
+)
+
 tbl_strata_info(
   x,
   breaks = c(10, 20, 30, 50, 100),
@@ -38,13 +57,25 @@ tbl_strata_predictions(
   which = c("null", "adjusted"),
   column_labels = list(rank = "Rank", n = "n", predicted = "Predicted", ci = "95\% CI"),
   group_labels = list("highest", "lowest"),
-  digits = 1L
+  digits = 1L,
+  return_data = FALSE
+)
+
+plot_maihda_predictions_by(
+  x,
+  by,
+  scale = c("response", "link"),
+  which = c("null", "adjusted"),
+  sort = TRUE
 )
 
 glance_maihda_model(x)
 }
 \arguments{
-\item{x}{a MAIHDA object}
+\item{x}{a MAIHDA object (\code{maihda_analysis} or \code{maihda_model}); for
+\code{tbl_maihda()} it could also be a list of \code{maihda_model} objects; for
+\code{tbl_partially_adjusted_maihda()}, only a \code{maihda_analysis} computed with
+\code{MAIHDA::maihda(decomposition = "two-model")} is allowed}
 
 \item{...}{additional parameters passed to \code{\link[gtsummary:tbl_regression]{gtsummary::tbl_regression()}}}
 
@@ -63,6 +94,8 @@ tibble returned by \code{glance_maihda_model()}}
 model family) about the analysis?}
 
 \item{notes_labels}{name list of labels for the notes}
+
+\item{return_data}{return a data frame instead of a table}
 
 \item{breaks}{breaks for sample size per stratum}
 
@@ -84,6 +117,11 @@ crossed-dimensions analysis or a single model.}
 \item{group_labels}{labels for group names}
 
 \item{digits}{number of decimals for predictions}
+
+\item{by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>\cr
+list of variables to compare by}
+
+\item{sort}{should the plot be sorted?}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\if{html}{\out{<br />}}
@@ -103,6 +141,9 @@ in variance). It accepts a \code{maihda_analysis} object created with
 last case, PCV should be manually added to the models to be displayed (see
 examples).
 
+\code{tbl_partially_adjusted_maihda()} is an helper allowing to compute and
+display all partially adjusted models (see examples).
+
 \code{tbl_strata_info()} is intended to replicate Table 2, showing the number of
 strata having a certain sample size.
 
@@ -113,6 +154,9 @@ taken into account by default for computing the predicted values, following
 the behavior of \code{\link[MAIHDA:maihda_table]{MAIHDA::maihda_table()}}. It should be noted that in Evans
 et al. 2024, the authors used the adjusted model, which could be done with
 the argument \code{which = "adjusted"}.
+
+\code{plot_maihda_predictions_by()} allows to visually compare predicted values
+by strata according to one or several specific variable defining the strata.
 
 To be noted, themes from the \link[gtsummary:theme_gtsummary]{gtsummary} package
 are taken into account for formatting the different values.
@@ -133,6 +177,7 @@ a <- MAIHDA::maihda(
 a |> tbl_strata_info(breaks = c(50, 100, 150))
 a |> tbl_maihda()
 a |> tbl_strata_predictions()
+a |> plot_maihda_predictions_by(Race)
 
 # a binomial example
 
@@ -146,6 +191,8 @@ m |> tbl_strata_info()
 m |> tbl_maihda(exponentiate = TRUE)
 m |> tbl_strata_predictions(n_strata = NULL)
 m |> tbl_strata_predictions(which = "adjusted", n_strata = 3)
+m |> plot_maihda_predictions_by(Sex)
+m |> plot_maihda_predictions_by(c(Sex, Age))
 
 # Partially adjusted models
 
@@ -177,6 +224,9 @@ m3$pcv <- MAIHDA::calculate_pcv(m0, m3)
 
 list(Null = m0, Age = m1, Sex = m2, Class = m3) |>
   tbl_maihda(exponentiate = TRUE)
+
+# in one call
+m |> tbl_partially_adjusted_maihda(exponentiate = TRUE)
 }
 \dontshow{\}) # examplesIf}
 }
