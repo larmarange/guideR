@@ -22,6 +22,11 @@ test_that("tbl function for MAIHDA analysis does not produce an error", {
     a |> tbl_strata_predictions()
   )
 
+  vdiffr::expect_doppelganger(
+    "plot_maihda_predictions_by()",
+    a |> plot_maihda_predictions_by(Race)
+  )
+
   # a binomial example
 
   titanic$Survived <- as.integer(titanic$Survived == "Yes")
@@ -41,7 +46,16 @@ test_that("tbl function for MAIHDA analysis does not produce an error", {
     m |> tbl_strata_predictions(n_strata = NULL)
   )
 
+  vdiffr::expect_doppelganger(
+    "plot_maihda_predictions_by() binomial",
+    m |> plot_maihda_predictions_by(c(Sex, Age))
+  )
+
   # Partially adjusted models
+
+  expect_no_error(
+    m |> tbl_partially_adjusted_maihda(exponentiate = TRUE)
+  )
 
   m0 <- MAIHDA::fit_maihda(
     Survived ~ 1 + (1 | Age:Sex:Class),
