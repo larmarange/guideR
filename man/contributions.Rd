@@ -15,12 +15,20 @@ tbl_contributions(
   ...,
   show = c("Total", "Partial", "Relative"),
   decimals = 1,
-  notes = TRUE
+  notes = TRUE,
+  lang = c("en", "fr")
 )
 
 total_deviance(mod)
 
-tbl_dominance(mod, indice = NULL, decimals = 1, totals = TRUE, notes = TRUE)
+tbl_dominance(
+  mod,
+  indice = NULL,
+  decimals = 1,
+  totals = TRUE,
+  notes = TRUE,
+  lang = c("en", "fr")
+)
 }
 \arguments{
 \item{mod}{a statistical model}
@@ -43,6 +51,8 @@ contribution are not defined.}
 \item{decimals}{number of decimals for deviance and contributions}
 
 \item{notes}{should table notes be added?}
+
+\item{lang}{lang used for column labels and notes}
 
 \item{indice}{fit indice name, see \code{\link[dominanceanalysis:dominanceAnalysis]{dominanceanalysis::dominanceAnalysis()}}}
 

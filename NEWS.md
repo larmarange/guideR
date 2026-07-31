@@ -6,6 +6,7 @@
   `tbl_strata_info()`, `tbl_strata_predictions()()` and 
   `plot_maihda_predictions_by()` to display  and plot the results of a MAIHDA
   analysis (#66)
+* new `lang` argument for `tbl_contributions()` and `tbl_dominance()`
 * new utility `add_glance_header()` to add a group header before glance
   statistics added to a `gtsummary::tbl_regression()` table with 
   `gtsummary::add_glance_table()`
