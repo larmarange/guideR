@@ -673,13 +673,22 @@ tbl_dominance <- function(
       )
   }
 
-  if (totals) {
+  if (totals && lang == "en") {
     res <-
       res |>
       gt::grand_summary_rows(
         columns = gt::any_of(c("Average", "Relative")),
         fns = Total ~ sum(.),
-        fmt = ~ gt::fmt_percent(., decimals = 1, dec_mark = decimal.mark)
+        fmt = ~ gt::fmt_percent(., decimals = 1)
+      )
+  }
+  if (totals && lang == "fr") {
+    res <-
+      res |>
+      gt::grand_summary_rows(
+        columns = gt::any_of(c("Average", "Relative")),
+        fns = Total ~ sum(.),
+        fmt = ~ gt::fmt_percent(., decimals = 1, dec_mark = ",")
       )
   }
 

@@ -15,10 +15,16 @@ test_that("contributions() does not produce an error", {
     m |> tbl_contributions()
   )
   expect_no_error(
+    m |> tbl_contributions(lang = "fr")
+  )
+  expect_no_error(
     m2 |> contributions()
   )
   expect_no_error(
     m2 |> tbl_contributions()
+  )
+  expect_no_error(
+    m2 |> tbl_contributions(lang = "fr")
   )
   expect_no_error(
     m2 |> contributions(test.statistic = "F")
@@ -67,6 +73,12 @@ test_that("tbl_dominance() does not produce an error", {
   )
   expect_no_error(
     m2 |> tbl_dominance()
+  )
+  expect_no_error(
+    m |> tbl_dominance(lang = "fr")
+  )
+  expect_no_error(
+    m2 |> tbl_dominance(lang = "fr")
   )
 
   skip_if_not_installed("survey")
