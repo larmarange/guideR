@@ -23,7 +23,6 @@ test_that("tbl function for MAIHDA analysis does not produce an error", {
   )
 
   expect_no_error(
-    "plot_maihda_predictions_by()",
     a |> plot_maihda_predictions_by(Race)
   )
 
@@ -47,7 +46,6 @@ test_that("tbl function for MAIHDA analysis does not produce an error", {
   )
 
   expect_no_error(
-    "plot_maihda_predictions_by() binomial",
     m |> plot_maihda_predictions_by(c(Sex, Age))
   )
 
