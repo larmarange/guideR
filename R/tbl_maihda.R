@@ -218,7 +218,7 @@ tbl_maihda_model <- function(
       include = {{ statistics_include }},
       fmt_fun = list(
         everything() ~ gtsummary::label_style_sigfig(digits = 3),
-        dplyr::any_of(c("vpc", "pcv")) ~
+        dplyr::any_of(c("vpc", "pcv", "csvpc")) ~
           gtsummary::label_style_percent(digits = 1, suffix = "%")
       )
     )
