@@ -75,7 +75,8 @@ glance_maihda_model(x)
 \item{x}{a MAIHDA object (\code{maihda_analysis} or \code{maihda_model}); for
 \code{tbl_maihda()} it could also be a list of \code{maihda_model} objects; for
 \code{tbl_partially_adjusted_maihda()}, only a \code{maihda_analysis} computed with
-\code{MAIHDA::maihda(decomposition = "two-model")} is allowed}
+\code{MAIHDA::maihda(decomposition = "two-model")} is allowed; for
+\code{tbl_strata_info()}, the result of \code{\link[MAIHDA:make_strata]{MAIHDA::make_strata()}} is also accepted}
 
 \item{...}{additional parameters passed to \code{\link[gtsummary:tbl_regression]{gtsummary::tbl_regression()}}}
 
