@@ -12,6 +12,7 @@
 tbl_maihda(
   x,
   ...,
+  global_p = FALSE,
   twomodels_labels = c("Null model", "Adjusted model"),
   statistics_header = "Summary statistics",
   statistics_labels = list(bsv = "Between-stratum variance", bssd =
@@ -28,6 +29,7 @@ tbl_maihda(
 tbl_partially_adjusted_maihda(
   x,
   ...,
+  global_p = FALSE,
   twomodels_labels = c("Null model", "Fully adjusted model"),
   statistics_header = "Summary statistics",
   statistics_labels = list(bsv = "Between-stratum variance", bssd =
@@ -79,6 +81,9 @@ glance_maihda_model(x)
 \code{tbl_strata_info()}, the result of \code{\link[MAIHDA:make_strata]{MAIHDA::make_strata()}} is also accepted}
 
 \item{...}{additional parameters passed to \code{\link[gtsummary:tbl_regression]{gtsummary::tbl_regression()}}}
+
+\item{global_p}{display global p-value instead of terms p-value (see
+\code{\link[gtsummary:add_global_p]{gtsummary::add_global_p()}})}
 
 \item{twomodels_labels}{for a two-model MAIHDA analysis, labels for the two
 models}
@@ -224,7 +229,7 @@ m2$pcv <- MAIHDA::calculate_pcv(m0, m2)
 m3$pcv <- MAIHDA::calculate_pcv(m0, m3)
 
 list(Null = m0, Age = m1, Sex = m2, Class = m3) |>
-  tbl_maihda(exponentiate = TRUE)
+  tbl_maihda(exponentiate = TRUE, global_p = TRUE)
 
 # in one call
 m |> tbl_partially_adjusted_maihda(exponentiate = TRUE)
