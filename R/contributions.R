@@ -299,6 +299,7 @@ contributions <- function(
 #' @param show list of contributions to display
 #' @param decimals number of decimals for deviance and contributions
 #' @param notes should table notes be added?
+#' @param lang lang used for column labels and notes
 #' @export
 tbl_contributions <- function(
   mod,
@@ -306,11 +307,14 @@ tbl_contributions <- function(
   ...,
   show = c("Total", "Partial", "Relative"),
   decimals = 1,
-  notes = TRUE
+  notes = TRUE,
+  lang = c("en", "fr")
 ) {
   rlang::check_installed("gt")
   rlang::check_installed("broom.helpers")
   rlang::check_installed("gtsummary")
+
+  lang <- match.arg(lang)
 
   cc <- mod |> contributions(type = type, ...)
   lv <-
@@ -344,19 +348,43 @@ tbl_contributions <- function(
     dplyr::rename(dplyr::any_of(newnames))
 
   if ("Sum of Squares" %in% colnames(cc)) {
-    label_contributions <-
-      list(
-        Total = gt::html("Total contribution (<em>&eta;<sup>2</sup></em>)"),
-        Partial = gt::html("Partial contribution  (<em>&eta;<sub>p</sub><sup>2</sup></em>)"), #nolint
-        Relative = "Relative contribution"
-      )
+    if (lang == "fr") {
+      label_contributions <-
+        list(
+          Total = gt::html("Contribution totale (<em>&eta;<sup>2</sup></em>)"),
+          Partial = gt::html("Contribution partielle (<em>&eta;<sub>p</sub><sup>2</sup></em>)"), #nolint
+          Relative = "Contribution relative"
+        )
+    } else {
+      label_contributions <-
+        list(
+          Total = gt::html("Total contribution (<em>&eta;<sup>2</sup></em>)"),
+          Partial = gt::html("Partial contribution  (<em>&eta;<sub>p</sub><sup>2</sup></em>)"), #nolint
+          Relative = "Relative contribution"
+        )
+    }
   } else {
-    label_contributions <-
-      list(
-        Total = gt::html("Total contribution<br />(<em>semi-partial pseudo-R<sup>2</sup></em>)"), # nolint
-        Partial = gt::html("Partial contribution<br />(<em>partial pseudo-R<sup>2</sup></em>)"), #nolint
-        Relative = "Relative contribution"
-      )
+    if (lang == "fr") {
+      label_contributions <-
+        list(
+          Total = gt::html("Contribution totale<br />(<em>pseudo-R<sup>2</sup> semi-partiel</em>)"), # nolint
+          Partial = gt::html("Contribution partielle<br />(<em>pseudo-R<sup>2</sup> partiel</em>)"), #nolint
+          Relative = "Contribution relative"
+        )
+    } else {
+      label_contributions <-
+        list(
+          Total = gt::html("Total contribution<br />(<em>semi-partial pseudo-R<sup>2</sup></em>)"), # nolint
+          Partial = gt::html("Partial contribution<br />(<em>partial pseudo-R<sup>2</sup></em>)"), #nolint
+          Relative = "Relative contribution"
+        )
+    }
+  }
+
+  if (lang == "fr") {
+    decimal.mark <- ","
+  } else {
+    decimal.mark <- "."
   }
 
   res <-
@@ -368,21 +396,37 @@ tbl_contributions <- function(
     ) |>
     gt::fmt_number(
       columns = gt::any_of(c("Deviance", "Sum of Squares")),
-      decimals = decimals
+      decimals = decimals,
+      dec_mark = decimal.mark
     ) |>
     gt::fmt_percent(
       columns = gt::any_of(
         c("Total", "Partial", "Relative")
       ),
-      decimals = decimals
+      decimals = decimals,
+      dec_mark = decimal.mark
     ) |>
     gt::fmt(
       columns = gt::any_of("p-value"),
-      fns = gtsummary::label_style_pvalue(digits = 1)
+      fns = gtsummary::label_style_pvalue(
+        digits = 1,
+        decimal.mark = decimal.mark
+      )
     ) |>
     gt::cols_label(.list = label_contributions[show])
 
-  if (notes) {
+  if (lang == "fr") {
+    res <- res |> gt::cols_label("p-value" = "p-valeur")
+    if ("Deviance" %in% colnames(cc))
+      res <- res |> gt::cols_label(Deviance = gt::html("D&eacute;viance"))
+    if ("Sum of Squares" %in% colnames(cc))
+      res <- res |>
+        gt::cols_label(
+          "Sum of Squares" = gt::html("Somme des carr&eacute;s")
+        )
+  }
+
+  if (notes && lang == "en") {
     if ("Deviance" %in% colnames(cc)) {
       res <-
         res |>
@@ -438,6 +482,73 @@ tbl_contributions <- function(
     }
   }
 
+  if (notes && lang == "fr") {
+    if ("Deviance" %in% colnames(cc)) {
+      res <-
+        res |>
+        gt::tab_source_note(gt::html(
+          paste(
+            "D&eacute;viance totale (mod&egrave;le nul)&nbsp;:",
+            scales::number(attr(cc, "total_deviance"), accuracy = .1, decimal.mark = ",")
+          )
+        )) |>
+        gt::tab_source_note(gt::html(
+          paste(
+            "D&eacute;viance r&eacute;siduelle (mod&egrave;le complet)&nbsp;:",
+            scales::number(attr(cc, "residual_deviance"), accuracy = .1, decimal.mark = ",")
+          )
+        )) |>
+        gt::tab_source_note(
+          gt::html(
+            paste(
+              "Pseudo R<sup>2</sup> de McFadden&nbsp;:",
+              scales::percent(
+                1 - (attr(cc, "residual_deviance") / attr(cc, "total_deviance")),
+                accuracy = .1,
+                decimal.mark = ","
+              )
+            )
+          )
+        )
+    } else {
+      res <-
+        res |>
+        gt::tab_source_note(gt::html(
+          paste(
+            "Somme des carr&eacute;s totale (TSS)&nbsp;:",
+            scales::number(
+              attr(cc, "total_deviance"),
+              accuracy = .1,
+              decimal.mark = ","
+            )
+          )
+        )) |>
+        gt::tab_source_note(gt::html(
+          paste(
+            "Somme des carr&eacute;s résiduelle (RSS)&nbsp;:",
+            scales::number(
+              attr(cc, "residual_deviance"),
+              accuracy = .1,
+              decimal.mark = ","
+            )
+          )
+        )) |>
+        gt::tab_source_note(
+          gt::html(
+            paste(
+              "R<sup>2</sup>&nbsp;:",
+              scales::percent(
+                1 - (attr(cc, "residual_deviance") / attr(cc, "total_deviance")),
+                accuracy = .1,
+                decimal.mark = ","
+              )
+            )
+          )
+        )
+    }
+  }
+
+
   res
 }
 
@@ -490,11 +601,13 @@ tbl_dominance <- function(
   indice = NULL,
   decimals = 1,
   totals = TRUE,
-  notes = TRUE
+  notes = TRUE,
+  lang = c("en", "fr")
 ) {
   rlang::check_installed("gt")
   rlang::check_installed("broom.helpers")
   rlang::check_installed("dominanceanalysis")
+  lang <- match.arg(lang)
 
   da <- mod |> dominanceanalysis::dominanceAnalysis()
 
@@ -522,6 +635,12 @@ tbl_dominance <- function(
     dplyr::rename(Predictor = "var_label")
   da$Relative <- da$Average / sum(da$Average)
 
+  if (lang == "fr") {
+    decimal.mark <- ","
+  } else {
+    decimal.mark <- "."
+  }
+
   res <-
     da |>
     gt::gt(rowname_col = "Predictor") |>
@@ -533,13 +652,26 @@ tbl_dominance <- function(
       columns = gt::any_of(
         c("Average", "Relative")
       ),
-      decimals = decimals
-    ) |>
-    gt::cols_label(
-      Average = "Average total contribution",
-      Relative = "Relative contribution"
+      decimals = decimals,
+      dec_mark = decimal.mark
     ) |>
     gt::cols_hide(gt::any_of("variable"))
+
+  if (lang == "fr") {
+    res <-
+      res |>
+      gt::cols_label(
+        Average = "Contribution totale moyenne",
+        Relative = "Contribution relative"
+      )
+  } else {
+    res <-
+      res |>
+      gt::cols_label(
+        Average = "Average total contribution",
+        Relative = "Relative contribution"
+      )
+  }
 
   if (totals) {
     res <-
@@ -547,28 +679,48 @@ tbl_dominance <- function(
       gt::grand_summary_rows(
         columns = gt::any_of(c("Average", "Relative")),
         fns = Total ~ sum(.),
-        fmt = ~ gt::fmt_percent(., decimals = 1)
+        fmt = ~ gt::fmt_percent(., decimals = 1, dec_mark = decimal.mark)
       )
   }
 
   if (notes) {
-    fit_labels <- c(
-      r2 = "R<sup>2</sup>",
-      r2.m = "McFadden pseudo R<sup>2</sup>",
-      r2.adj = "Adjusted McFadden pseudo R<sup>2</sup>",
-      r2.cs = "Cox and Snell pseudo R<sup>2</sup>",
-      r2.n = "Nagelkerke pseudo R<sup>2</sup>",
-      r2.e = "Estrella pseudo R<sup>2</sup>",
-      n.marg = "Nakagawa marginal R<sup>2</sup>",
-      n.cond = "Nakagawa conditional R<sup>2</sup>",
-      rb.r2.1 = "Amount of Level-1 variance explained by the addition of the predictor", # nolint
-      rb.r2.2 = "Amount of Level-1 variance explained by the addition of the predictor", # nolint
-      sb.r2.1 = "Proportional reduction in error of predicting scores at Level 1", # nolint
-      sb.r2.2 = "Proportional reduction in error of predicting cluster means at Level 2", # nolint
-      r.squared.xy = "R<sup>2</sup><sub>XY</sub>",
-      p.squared.xy = "P<sup>2</sup><sub>XY</sub>",
-      r2.pseudo = "pseudo R<sup>2</sup>"
-    )
+    if (lang == "fr") {
+      fit_labels <- c(
+        r2 = "R<sup>2</sup>",
+        r2.m = "Pseudo R<sup>2</sup> de McFadden",
+        r2.adj = "Pseudo R<sup>2</sup> de McFadden ajust&eacute;",
+        r2.cs = "Pseudo R<sup>2</sup> de Cox et Snell",
+        r2.n = "Pseudo R<sup>2</sup> de Nagelkerke",
+        r2.e = "Pseudo R<sup>2</sup> de Estrella",
+        n.marg = "R<sup>2</sup> marginal de Nakagawa",
+        n.cond = "R<sup>2</sup> conditionnel de Nakagawa",
+        rb.r2.1 = "Quantit&eacute; de variance de niveau 1 expliqu&eacute;e par l'addition du prédicteur", # nolint
+        rb.r2.2 = "Quantit&eacute; de variance de niveau 2 expliqu&eacute;e par l'addition du prédicteur", # nolint
+        sb.r2.1 = "R&eacute;duction proportionnelle de l'erreur dans la pr&eacute;diction des scores de niveau 1", # nolint
+        sb.r2.2 = "R&eacute;duction proportionnelle de l'erreur dans la pr&eacute;diction des moyennes par cluster de niveau 2", # nolint
+        r.squared.xy = "R<sup>2</sup><sub>XY</sub>",
+        p.squared.xy = "P<sup>2</sup><sub>XY</sub>",
+        r2.pseudo = "Pseudo R<sup>2</sup>"
+      )
+    } else {
+      fit_labels <- c(
+        r2 = "R<sup>2</sup>",
+        r2.m = "McFadden Pseudo R<sup>2</sup>",
+        r2.adj = "Adjusted McFadden pseudo R<sup>2</sup>",
+        r2.cs = "Cox and Snell pseudo R<sup>2</sup>",
+        r2.n = "Nagelkerke pseudo R<sup>2</sup>",
+        r2.e = "Estrella pseudo R<sup>2</sup>",
+        n.marg = "Nakagawa marginal R<sup>2</sup>",
+        n.cond = "Nakagawa conditional R<sup>2</sup>",
+        rb.r2.1 = "Amount of Level-1 variance explained by the addition of the predictor", # nolint
+        rb.r2.2 = "Amount of Level-2 variance explained by the addition of the predictor", # nolint
+        sb.r2.1 = "Proportional reduction in error of predicting scores at Level 1", # nolint
+        sb.r2.2 = "Proportional reduction in error of predicting cluster means at Level 2", # nolint
+        r.squared.xy = "R<sup>2</sup><sub>XY</sub>",
+        p.squared.xy = "P<sup>2</sup><sub>XY</sub>",
+        r2.pseudo = "Pseudo R<sup>2</sup>"
+      )
+    }
 
     res <-
       res |>
@@ -576,8 +728,12 @@ tbl_dominance <- function(
         gt::html(
           paste0(
             fit_labels[indice],
-            ": ",
-            scales::percent(sum(da$Average), accuracy = 10 ^ (- decimals))
+            ifelse(lang == "fr", "&nbsp;: ", ": "),
+            scales::percent(
+              sum(da$Average),
+              accuracy = 10 ^ (- decimals),
+              decimal.mark = decimal.mark
+            )
           )
         )
       )
