@@ -350,7 +350,10 @@ fit_partially_adjusted_maihda <- function(m, variable) {
   ma <- m$model_adjusted
   pa <-
     MAIHDA::fit_maihda(
-      formula = stats::update(m0$formula, as.formula(paste("~ . +", variable))),
+      formula = stats::update(
+        m0$formula,
+        stats::as.formula(paste("~ . +", variable))
+      ),
       data = ma$data,
       engine = m0$engine,
       family = m0$family,
