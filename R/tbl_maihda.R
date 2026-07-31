@@ -315,7 +315,7 @@ tbl_partially_adjusted_maihda <- function(
     cli::cli_abort("{.arg x} should be a {.class maihda_analysis} object.")
 
   if (x$mode != "two-model")
-    cli::cli_abort("{.arg x} should be computed with `decomposition = \"two-model\"`") # no lint
+    cli::cli_abort("{.arg x} should be computed with `decomposition = \"two-model\"`") # nolint
 
   l <-
     x$model$strata_vars |>
@@ -382,7 +382,7 @@ tbl_strata_info <- function(
   if (inherits(x, "maihda_analysis"))
     x <- x$model
   if (!is.list(x) && !"strata_info" %in% names(x))
-    cli::cli_abort("{.arg x} should be of class {.class maihda_model} or {.class maihda_analysis} or the result of {.fn MAIHDA::make_strata}.") # no lint
+    cli::cli_abort("{.arg x} should be of class {.class maihda_model} or {.class maihda_analysis} or the result of {.fn MAIHDA::make_strata}.") # nolint
 
   info <- x$strata_info
 
@@ -452,7 +452,7 @@ tbl_strata_predictions <- function(
   which <- match.arg(which)
 
   if (!inherits(x, "maihda_model") && !inherits(x, "maihda_analysis"))
-    cli::cli_abort("{.arg x} should be of class {.class maihda_model} or {.class maihda_analysis}.") # no lint
+    cli::cli_abort("{.arg x} should be of class {.class maihda_model} or {.class maihda_analysis}.") # nolint
 
   if (is.null(n_strata)) n_strata <- Inf
   n_strata |> rlang::check_number_whole(min = 1, allow_infinite = TRUE)
