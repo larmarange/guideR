@@ -41,6 +41,8 @@
 #' `MAIHDA::maihda(decomposition = "two-model")` is allowed; for
 #' `tbl_strata_info()`, the result of [MAIHDA::make_strata()] is also accepted
 #' @param ... additional parameters passed to [gtsummary::tbl_regression()]
+#' @param global_p display global p-value instead of terms p-value (see
+#' [gtsummary::add_global_p()])
 #' @param twomodels_labels for a two-model MAIHDA analysis, labels for the two
 #' models
 #' @param statistics_header string header of the summary statistics
@@ -114,7 +116,7 @@
 #' m3$pcv <- MAIHDA::calculate_pcv(m0, m3)
 #'
 #' list(Null = m0, Age = m1, Sex = m2, Class = m3) |>
-#'   tbl_maihda(exponentiate = TRUE)
+#'   tbl_maihda(exponentiate = TRUE, global_p = TRUE)
 #'
 #' # in one call
 #' m |> tbl_partially_adjusted_maihda(exponentiate = TRUE)
@@ -122,6 +124,7 @@
 tbl_maihda <- function(
   x,
   ...,
+  global_p = FALSE,
   twomodels_labels = c("Null model", "Adjusted model"),
   statistics_header = "Summary statistics",
   statistics_labels = list(
@@ -152,6 +155,7 @@ tbl_maihda <- function(
     res <- x |>
       tbl_maihda_model(
         ...,
+        global_p = global_p,
         statistics_labels = statistics_labels,
         statistics_include = {{ statistics_include }}
       ) |>
@@ -176,6 +180,7 @@ tbl_maihda <- function(
         tbl_maihda_model(
           x,
           ...,
+          global_p = global_p,
           statistics_labels = statistics_labels,
           statistics_include = {{ statistics_include }}
         )
@@ -201,6 +206,7 @@ tbl_maihda <- function(
 tbl_maihda_model <- function(
   x,
   ...,
+  global_p = FALSE,
   statistics_labels = NULL,
   statistics_include = dplyr::everything()
 ) {
@@ -211,7 +217,14 @@ tbl_maihda_model <- function(
   stats <- glance_maihda_model(x)
   tbl <-
     x$model |>
-    gtsummary::tbl_regression(intercept = TRUE, group_by = NULL, ...) |>
+    gtsummary::tbl_regression(intercept = TRUE, group_by = NULL, ...)
+
+  if (global_p && nrow(tbl$table_body) > 1) { # avoid if no fixed effects
+    tbl <- tbl |> gtsummary::add_global_p()
+  }
+
+  tbl <-
+    tbl |>
     gtsummary::add_glance_table(
       glance_fun = \(y) stats,
       label = statistics_labels,
@@ -289,6 +302,7 @@ add_maihda_notes <- function(
 tbl_partially_adjusted_maihda <- function(
   x,
   ...,
+  global_p = FALSE,
   twomodels_labels = c("Null model", "Fully adjusted model"),
   statistics_header = "Summary statistics",
   statistics_labels = list(
@@ -337,6 +351,7 @@ tbl_partially_adjusted_maihda <- function(
   l |>
     tbl_maihda(
       ...,
+      global_p = global_p,
       statistics_header = statistics_header,
       statistics_labels = statistics_labels,
       statistics_include = {{ statistics_include }},
