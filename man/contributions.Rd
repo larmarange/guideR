@@ -52,7 +52,7 @@ contribution are not defined.}
 
 \item{notes}{should table notes be added?}
 
-\item{lang}{lang used for column labels and notes}
+\item{lang}{language used for column labels and notes}
 
 \item{indice}{fit indice name, see \code{\link[dominanceanalysis:dominanceAnalysis]{dominanceanalysis::dominanceAnalysis()}}}
 

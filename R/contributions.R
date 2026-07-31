@@ -299,7 +299,7 @@ contributions <- function(
 #' @param show list of contributions to display
 #' @param decimals number of decimals for deviance and contributions
 #' @param notes should table notes be added?
-#' @param lang lang used for column labels and notes
+#' @param lang language used for column labels and notes
 #' @export
 tbl_contributions <- function(
   mod,
