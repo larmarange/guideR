@@ -1,4 +1,4 @@
-# guideR (development version)
+# guideR 0.11.0
 
 **New features**
 
