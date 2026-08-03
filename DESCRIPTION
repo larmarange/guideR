@@ -21,6 +21,7 @@ BugReports: https://github.com/larmarange/guideR/issues
 Depends:
     R (>= 4.2)
 Imports:
+    broom.helpers,
     cli,
     dplyr (>= 1.1.0),
     forcats,
@@ -44,7 +45,6 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 Suggests: 
     broom,
-    broom.helpers,
     broom.mixed,
     car,
     cardx,

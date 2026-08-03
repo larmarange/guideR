@@ -83,7 +83,7 @@ glance_maihda_model(x)
 \item{...}{additional parameters passed to \code{\link[gtsummary:tbl_regression]{gtsummary::tbl_regression()}}}
 
 \item{global_p}{display global p-value instead of terms p-value (see
-\code{\link[gtsummary:add_global_p]{gtsummary::add_global_p()}})}
+\code{\link[gtsummary:add_global_p]{gtsummary::add_global_p()}}), not available if \code{engine = "wemix"}.}
 
 \item{twomodels_labels}{for a two-model MAIHDA analysis, labels for the two
 models}
@@ -233,6 +233,22 @@ list(Null = m0, Age = m1, Sex = m2, Class = m3) |>
 
 # in one call
 m |> tbl_partially_adjusted_maihda(exponentiate = TRUE)
+
+# sample-weighted data
+if (rlang::is_installed("WeMix")) {
+
+d <- titanic
+d$weight <- 1
+wm <- MAIHDA::maihda(
+  Survived ~ Age + Sex + Class + (1 | Age:Sex:Class),
+  data = d,
+  family = binomial,
+  sampling_weights = "weight",
+  engine = "wemix"
+)
+wm |> tbl_maihda(exponentiate = TRUE)
+}
+
 }
 \dontshow{\}) # examplesIf}
 }
