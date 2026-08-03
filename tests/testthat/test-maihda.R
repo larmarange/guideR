@@ -91,4 +91,19 @@ test_that("tbl function for MAIHDA analysis does not produce an error", {
     list(Null = m0, Age = m1, Sex = m2, Class = m3) |>
       tbl_maihda(exponentiate = TRUE)
   )
+
+  # weighted MAIHDA
+  skip_if_not_installed("WeMix")
+  d <- titanic
+  d$weight <- 1
+  wm <- MAIHDA::maihda(
+    Survived ~ Age + Sex + Class + (1 | Age:Sex:Class),
+    data = d,
+    family = binomial,
+    sampling_weights = "weight",
+    engine = "wemix"
+  )
+  expect_no_error(
+    wm |> tbl_maihda(exponentiate = TRUE)
+  )
 })
