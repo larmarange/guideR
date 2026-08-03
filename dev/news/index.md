@@ -2,6 +2,27 @@
 
 ## guideR (development version)
 
+**New features**
+
+- new experimental functions
+  [`tbl_maihda()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md),
+  [`tbl_partially_adjusted_maihda()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md),
+  [`tbl_strata_info()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md),
+  `tbl_strata_predictions()()` and
+  [`plot_maihda_predictions_by()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md)
+  to display and plot the results of a MAIHDA analysis
+  ([\#66](https://github.com/larmarange/guideR/issues/66))
+- new `lang` argument for
+  [`tbl_contributions()`](https://larmarange.github.io/guideR/dev/reference/contributions.md)
+  and
+  [`tbl_dominance()`](https://larmarange.github.io/guideR/dev/reference/contributions.md)
+- new utility
+  [`add_glance_header()`](https://larmarange.github.io/guideR/dev/reference/gtsummary_utilities.md)
+  to add a group header before glance statistics added to a
+  [`gtsummary::tbl_regression()`](https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html)
+  table with
+  [`gtsummary::add_glance_table()`](https://www.danieldsjoberg.com/gtsummary/reference/add_glance.html)
+
 ## guideR 0.10.0
 
 CRAN release: 2026-07-27

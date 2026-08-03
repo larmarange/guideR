@@ -95,6 +95,14 @@
   Apply [`step()`](https://rdrr.io/r/stats/step.html), taking into
   account missing values
 
+- [`tbl_maihda()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md)
+  [`tbl_partially_adjusted_maihda()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md)
+  [`tbl_strata_info()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md)
+  [`tbl_strata_predictions()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md)
+  [`plot_maihda_predictions_by()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md)
+  [`glance_maihda_model()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md)
+  **\[experimental\]** : Table summary of for MAIHDA analysis
+
 ## Classification tree
 
 - [`plot_inertia_from_tree()`](https://larmarange.github.io/guideR/dev/reference/plot_inertia_from_tree.md)
@@ -126,6 +134,7 @@
   [`italicize_variable_group_headers()`](https://larmarange.github.io/guideR/dev/reference/gtsummary_utilities.md)
   [`indent_levels()`](https://larmarange.github.io/guideR/dev/reference/gtsummary_utilities.md)
   [`indent_labels()`](https://larmarange.github.io/guideR/dev/reference/gtsummary_utilities.md)
+  [`add_glance_header()`](https://larmarange.github.io/guideR/dev/reference/gtsummary_utilities.md)
   :
 
   Utilities for `gtsummary`

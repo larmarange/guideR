@@ -128,7 +128,7 @@ A tibble with one row per group.
 titanic$Class |> proportion()
 #> # A tibble: 4 × 4
 #>   value     n     N  prop
-#>   <chr> <int> <int> <dbl>
+#>   <fct> <int> <int> <dbl>
 #> 1 1st     325  2201  14.8
 #> 2 2nd     285  2201  12.9
 #> 3 3rd     706  2201  32.1
@@ -138,7 +138,7 @@ titanic$Class |> proportion()
 titanic |> proportion(Class)
 #> # A tibble: 4 × 4
 #>   Class     n     N  prop
-#>   <chr> <int> <int> <dbl>
+#>   <fct> <int> <int> <dbl>
 #> 1 1st     325  2201  14.8
 #> 2 2nd     285  2201  12.9
 #> 3 3rd     706  2201  32.1
@@ -146,7 +146,7 @@ titanic |> proportion(Class)
 titanic |> proportion(Class, .sort = TRUE)
 #> # A tibble: 4 × 4
 #>   Class     n     N  prop
-#>   <chr> <int> <int> <dbl>
+#>   <fct> <int> <int> <dbl>
 #> 1 Crew    885  2201  40.2
 #> 2 3rd     706  2201  32.1
 #> 3 1st     325  2201  14.8
@@ -154,7 +154,7 @@ titanic |> proportion(Class, .sort = TRUE)
 titanic |> proportion(Class, .conf.int = TRUE)
 #> # A tibble: 4 × 6
 #>   Class     n     N  prop prop_low prop_high
-#>   <chr> <int> <int> <dbl>    <dbl>     <dbl>
+#>   <fct> <int> <int> <dbl>    <dbl>     <dbl>
 #> 1 1st     325  2201  14.8     13.3      16.3
 #> 2 2nd     285  2201  12.9     11.6      14.4
 #> 3 3rd     706  2201  32.1     30.1      34.1
@@ -162,7 +162,7 @@ titanic |> proportion(Class, .conf.int = TRUE)
 titanic |> proportion(Class, .conf.int = TRUE, .scale = 1)
 #> # A tibble: 4 × 6
 #>   Class     n     N  prop prop_low prop_high
-#>   <chr> <int> <int> <dbl>    <dbl>     <dbl>
+#>   <fct> <int> <int> <dbl>    <dbl>     <dbl>
 #> 1 1st     325  2201 0.148    0.133     0.163
 #> 2 2nd     285  2201 0.129    0.116     0.144
 #> 3 3rd     706  2201 0.321    0.301     0.341
@@ -172,7 +172,7 @@ titanic |> proportion(Class, .conf.int = TRUE, .scale = 1)
 titanic |> proportion(Class, Survived) # proportions of the total
 #> # A tibble: 8 × 5
 #>   Class Survived     n     N  prop
-#>   <chr> <chr>    <int> <int> <dbl>
+#>   <fct> <fct>    <int> <int> <dbl>
 #> 1 1st   No         122  2201  5.54
 #> 2 1st   Yes        203  2201  9.22
 #> 3 2nd   No         167  2201  7.59
@@ -185,7 +185,7 @@ titanic |> proportion(Survived, .by = Class) # row proportions
 #> # A tibble: 8 × 5
 #> # Groups:   Class [4]
 #>   Class Survived     n     N  prop
-#>   <chr> <chr>    <int> <int> <dbl>
+#>   <fct> <fct>    <int> <int> <dbl>
 #> 1 1st   No         122   325  37.5
 #> 2 1st   Yes        203   325  62.5
 #> 3 2nd   No         167   285  58.6
@@ -200,7 +200,7 @@ titanic |> # equivalent syntax
 #> # A tibble: 8 × 5
 #> # Groups:   Class [4]
 #>   Class Survived     n     N  prop
-#>   <chr> <chr>    <int> <int> <dbl>
+#>   <fct> <fct>    <int> <int> <dbl>
 #> 1 1st   No         122   325  37.5
 #> 2 1st   Yes        203   325  62.5
 #> 3 2nd   No         167   285  58.6
@@ -214,7 +214,7 @@ titanic |> # equivalent syntax
 titanic |> proportion(Class, Sex, Survived)
 #> # A tibble: 16 × 6
 #>    Class Sex    Survived     n     N   prop
-#>    <chr> <chr>  <chr>    <int> <int>  <dbl>
+#>    <fct> <fct>  <fct>    <int> <int>  <dbl>
 #>  1 1st   Female No           4  2201  0.182
 #>  2 1st   Female Yes        141  2201  6.41 
 #>  3 1st   Male   No         118  2201  5.36 
@@ -235,7 +235,7 @@ titanic |> proportion(Sex, Survived, .by = Class)
 #> # A tibble: 16 × 6
 #> # Groups:   Class [4]
 #>    Class Sex    Survived     n     N   prop
-#>    <chr> <chr>  <chr>    <int> <int>  <dbl>
+#>    <fct> <fct>  <fct>    <int> <int>  <dbl>
 #>  1 1st   Female No           4   325  1.23 
 #>  2 1st   Female Yes        141   325 43.4  
 #>  3 1st   Male   No         118   325 36.3  
@@ -256,7 +256,7 @@ titanic |> proportion(Survived, .by = c(Class, Sex))
 #> # A tibble: 16 × 6
 #> # Groups:   Class, Sex [8]
 #>    Class Sex    Survived     n     N  prop
-#>    <chr> <chr>  <chr>    <int> <int> <dbl>
+#>    <fct> <fct>  <fct>    <int> <int> <dbl>
 #>  1 1st   Female No           4   145  2.76
 #>  2 1st   Female Yes        141   145 97.2 
 #>  3 1st   Male   No         118   180 65.6 
@@ -280,14 +280,14 @@ dna$Survived[c(1:20, 500:530)] <- NA
 dna |> proportion(Survived)
 #> # A tibble: 3 × 4
 #>   Survived     n     N  prop
-#>   <chr>    <int> <int> <dbl>
+#>   <fct>    <int> <int> <dbl>
 #> 1 No        1439  2201 65.4 
 #> 2 Yes        711  2201 32.3 
 #> 3 NA          51  2201  2.32
 dna |> proportion(Survived, .na.rm = TRUE)
 #> # A tibble: 2 × 4
 #>   Survived     n     N  prop
-#>   <chr>    <int> <int> <dbl>
+#>   <fct>    <int> <int> <dbl>
 #> 1 No        1439  2150  66.9
 #> 2 Yes        711  2150  33.1
 
@@ -300,7 +300,7 @@ ds <- srvyr::as_survey(titanic)
 ds |> proportion(Class)
 #> # A tibble: 4 × 4
 #>   Class     n     N  prop
-#>   <chr> <dbl> <dbl> <dbl>
+#>   <fct> <dbl> <dbl> <dbl>
 #> 1 1st     325  2201  14.8
 #> 2 2nd     285  2201  12.9
 #> 3 3rd     706  2201  32.1
@@ -308,7 +308,7 @@ ds |> proportion(Class)
 ds |> proportion(Class, .sort = TRUE)
 #> # A tibble: 4 × 4
 #>   Class     n     N  prop
-#>   <chr> <dbl> <dbl> <dbl>
+#>   <fct> <dbl> <dbl> <dbl>
 #> 1 Crew    885  2201  40.2
 #> 2 3rd     706  2201  32.1
 #> 3 1st     325  2201  14.8
@@ -316,7 +316,7 @@ ds |> proportion(Class, .sort = TRUE)
 ds |> proportion(Class, .conf.int = TRUE)
 #> # A tibble: 4 × 6
 #>   Class     n     N  prop prop_low prop_high
-#>   <chr> <dbl> <dbl> <dbl>    <dbl>     <dbl>
+#>   <fct> <dbl> <dbl> <dbl>    <dbl>     <dbl>
 #> 1 1st     325  2201  14.8     13.3      16.3
 #> 2 2nd     285  2201  12.9     11.6      14.4
 #> 3 3rd     706  2201  32.1     30.2      34.1
@@ -324,7 +324,7 @@ ds |> proportion(Class, .conf.int = TRUE)
 ds |> proportion(Class, .conf.int = TRUE, .scale = 1)
 #> # A tibble: 4 × 6
 #>   Class     n     N  prop prop_low prop_high
-#>   <chr> <dbl> <dbl> <dbl>    <dbl>     <dbl>
+#>   <fct> <dbl> <dbl> <dbl>    <dbl>     <dbl>
 #> 1 1st     325  2201 0.148    0.133     0.163
 #> 2 2nd     285  2201 0.129    0.116     0.144
 #> 3 3rd     706  2201 0.321    0.302     0.341
@@ -334,7 +334,7 @@ ds |> proportion(Class, .conf.int = TRUE, .scale = 1)
 ds |> proportion(Class, Survived) # proportions of the total
 #> # A tibble: 8 × 5
 #>   Class Survived     n     N  prop
-#>   <chr> <chr>    <dbl> <dbl> <dbl>
+#>   <fct> <fct>    <dbl> <dbl> <dbl>
 #> 1 1st   No         122  2201  5.54
 #> 2 1st   Yes        203  2201  9.22
 #> 3 2nd   No         167  2201  7.59
@@ -347,7 +347,7 @@ ds |> proportion(Survived, .by = Class) # row proportions
 #> # A tibble: 8 × 5
 #> # Groups:   Class [4]
 #>   Class Survived     n     N  prop
-#>   <chr> <chr>    <dbl> <dbl> <dbl>
+#>   <fct> <fct>    <dbl> <dbl> <dbl>
 #> 1 1st   No         122   325  37.5
 #> 2 1st   Yes        203   325  62.5
 #> 3 2nd   No         167   285  58.6
@@ -360,7 +360,7 @@ ds |> dplyr::group_by(Class) |> proportion(Survived)
 #> # A tibble: 8 × 5
 #> # Groups:   Class [4]
 #>   Class Survived     n     N  prop
-#>   <chr> <chr>    <dbl> <dbl> <dbl>
+#>   <fct> <fct>    <dbl> <dbl> <dbl>
 #> 1 1st   No         122   325  37.5
 #> 2 1st   Yes        203   325  62.5
 #> 3 2nd   No         167   285  58.6
@@ -374,7 +374,7 @@ ds |> dplyr::group_by(Class) |> proportion(Survived)
 ds |> proportion(Class, Sex, Survived)
 #> # A tibble: 16 × 6
 #>    Class Sex    Survived     n     N   prop
-#>    <chr> <chr>  <chr>    <dbl> <dbl>  <dbl>
+#>    <fct> <fct>  <fct>    <dbl> <dbl>  <dbl>
 #>  1 1st   Female No           4  2201  0.182
 #>  2 1st   Female Yes        141  2201  6.41 
 #>  3 1st   Male   No         118  2201  5.36 
@@ -395,7 +395,7 @@ ds |> proportion(Sex, Survived, .by = Class)
 #> # A tibble: 16 × 6
 #> # Groups:   Class [4]
 #>    Class Sex    Survived     n     N   prop
-#>    <chr> <chr>  <chr>    <dbl> <dbl>  <dbl>
+#>    <fct> <fct>  <fct>    <dbl> <dbl>  <dbl>
 #>  1 1st   Female No           4   325  1.23 
 #>  2 1st   Female Yes        141   325 43.4  
 #>  3 1st   Male   No         118   325 36.3  
@@ -416,7 +416,7 @@ ds |> proportion(Survived, .by = c(Class, Sex))
 #> # A tibble: 16 × 6
 #> # Groups:   Class, Sex [8]
 #>    Class Sex    Survived     n     N  prop
-#>    <chr> <chr>  <chr>    <dbl> <dbl> <dbl>
+#>    <fct> <fct>  <fct>    <dbl> <dbl> <dbl>
 #>  1 1st   Female No           4   145  2.76
 #>  2 1st   Female Yes        141   145 97.2 
 #>  3 1st   Male   No         118   180 65.6 
@@ -439,14 +439,14 @@ dsna <- srvyr::as_survey(dna)
 dsna |> proportion(Survived)
 #> # A tibble: 3 × 4
 #>   Survived     n     N  prop
-#>   <chr>    <dbl> <dbl> <dbl>
+#>   <fct>    <dbl> <dbl> <dbl>
 #> 1 No        1439  2201 65.4 
 #> 2 Yes        711  2201 32.3 
 #> 3 NA          51  2201  2.32
 dsna |> proportion(Survived, .na.rm = TRUE)
 #> # A tibble: 2 × 4
 #>   Survived     n     N  prop
-#>   <chr>    <dbl> <dbl> <dbl>
+#>   <fct>    <dbl> <dbl> <dbl>
 #> 1 No        1439  2150  66.9
 #> 2 Yes        711  2150  33.1
 # }
