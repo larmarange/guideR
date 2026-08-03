@@ -42,7 +42,7 @@
 #' `tbl_strata_info()`, the result of [MAIHDA::make_strata()] is also accepted
 #' @param ... additional parameters passed to [gtsummary::tbl_regression()]
 #' @param global_p display global p-value instead of terms p-value (see
-#' [gtsummary::add_global_p()])
+#' [gtsummary::add_global_p()]), not available if `engine = "wemix"`.
 #' @param twomodels_labels for a two-model MAIHDA analysis, labels for the two
 #' models
 #' @param statistics_header string header of the summary statistics
@@ -120,6 +120,22 @@
 #'
 #' # in one call
 #' m |> tbl_partially_adjusted_maihda(exponentiate = TRUE)
+#'
+#' # sample-weighted data
+#' if (rlang::is_installed("WeMix")) {
+#'
+#' d <- titanic
+#' d$weight <- 1
+#' wm <- MAIHDA::maihda(
+#'   Survived ~ Age + Sex + Class + (1 | Age:Sex:Class),
+#'   data = d,
+#'   family = binomial,
+#'   sampling_weights = "weight",
+#'   engine = "wemix"
+#' )
+#' wm |> tbl_maihda(exponentiate = TRUE)
+#' }
+#'
 #' }
 tbl_maihda <- function(
   x,
@@ -215,12 +231,23 @@ tbl_maihda_model <- function(
       "All elements of {.arg x} should be of class {.class maihda_model}."
     )
   stats <- glance_maihda_model(x)
-  tbl <-
-    x$model |>
-    gtsummary::tbl_regression(intercept = TRUE, group_by = NULL, ...)
 
-  if (global_p && nrow(tbl$table_body) > 1) { # avoid if no fixed effects
-    tbl <- tbl |> gtsummary::add_global_p()
+  if (x$engine == "wemix") {
+    tbl <-
+      x |>
+      gtsummary::tbl_regression(
+        intercept = TRUE,
+        tidy_fun = tidy_maihda_model,
+        ...
+      )
+  } else {
+    tbl <-
+      x$model |>
+      gtsummary::tbl_regression(intercept = TRUE, group_by = NULL, ...)
+
+    if (global_p && nrow(tbl$table_body) > 1) { # avoid if no fixed effects
+      tbl <- tbl |> gtsummary::add_global_p()
+    }
   }
 
   tbl <-
@@ -692,4 +719,65 @@ glance_maihda_model <- function(x) {
     res$pcv <- x$pcv$pcv
 
   res
+}
+
+tidy_maihda_model <- function(x, exponentiate = FALSE, ...) {
+  rlang::check_installed("broom")
+  rlang::check_installed("MAIHDA")
+
+  res <-
+    x |>
+    broom::tidy(x, ..., component = "fixed")
+
+  if (exponentiate) {
+    res$estimate <- res$estimate |> exp()
+    res$conf.low <- res$conf.low |> exp()
+    res$conf.high <- res$conf.high |> exp()
+  }
+
+  res
+}
+
+#' @export
+#' @importFrom broom.helpers model_get_model_frame
+model_get_model_frame.maihda_model <- function(model) {
+  stats::model.frame(model$formula, data = model$original_data)
+}
+
+#' @export
+#' @importFrom broom.helpers model_get_model_matrix
+model_get_model_matrix.maihda_model <- function(model, ...) {
+  stats::model.matrix(model$formula, data = model$original_data, ...)
+}
+
+#' @export
+#' @importFrom broom.helpers model_get_terms
+model_get_terms.maihda_model <- function(model) {
+  stats::terms.formula(model$formula, data = model$original_data)
+}
+
+#' @export
+#' @importFrom broom.helpers model_get_coefficients_type
+model_get_coefficients_type.maihda_model <- function(model) {
+  if (!is.null(model$family)) {
+    if (model$family$family == "binomial" && model$family$link == "logit") {
+      return("logistic")
+    }
+    if (model$family$family == "binomial" && model$family$link == "log") {
+      return("relative_risk")
+    }
+    if (model$family$family == "binomial" && model$family$link == "cloglog") {
+      return("prop_hazard")
+    }
+    if (model$family$family == "poisson" && model$family$link == "log") {
+      return("poisson")
+    }
+    if (model$family$family == "quasibinomial" && model$family$link == "logit") {
+      return("logistic")
+    }
+    if (model$family$family == "quasipoisson" && model$family$link == "log") {
+      return("poisson")
+    }
+  }
+  "generic"
 }
