@@ -19,6 +19,9 @@ test_that("tbl function for MAIHDA analysis does not produce an error", {
     a |> tbl_maihda()
   )
   expect_no_error(
+    a$model_adjusted |> tbl_maihda()
+  )
+  expect_no_error(
     a |> tbl_maihda(global_p = TRUE)
   )
   expect_no_error(
@@ -49,6 +52,9 @@ test_that("tbl function for MAIHDA analysis does not produce an error", {
   )
   expect_no_error(
     m |> tbl_strata_predictions(n_strata = NULL)
+  )
+  expect_no_error(
+    m |> tbl_strata_predictions(n_strata = 3)
   )
 
   expect_no_error(
