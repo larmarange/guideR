@@ -2,8 +2,8 @@
 #'
 #' `r lifecycle::badge("experimental")`<br />
 #' Helpers to generate formatted tables of a MAIHDA analysis as proposed by
-#' Evans et al. (*SSM - Population Health* 2024, doi:
-#' [10.1016/j.ssmph.2024.101664](https://doi.org/10.1016/j.ssmph.2024.101664)).
+#' Evans et al. (*SSM - Population Health* 2024,
+#' \doi{10.1016/j.ssmph.2024.101664}).
 #' It relies on the [MAIHDA][MAIHDA::MAIHDA-package] package. This package
 #' being under active development, the proposed functions here are experimental.
 #'

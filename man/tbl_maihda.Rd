@@ -132,8 +132,8 @@ list of variables to compare by}
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\if{html}{\out{<br />}}
 Helpers to generate formatted tables of a MAIHDA analysis as proposed by
-Evans et al. (\emph{SSM - Population Health} 2024, doi:
-\href{https://doi.org/10.1016/j.ssmph.2024.101664}{10.1016/j.ssmph.2024.101664}).
+Evans et al. (\emph{SSM - Population Health} 2024,
+\doi{10.1016/j.ssmph.2024.101664}).
 It relies on the \link[MAIHDA:MAIHDA-package]{MAIHDA} package. This package
 being under active development, the proposed functions here are experimental.
 }
