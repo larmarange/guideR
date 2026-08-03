@@ -32,6 +32,7 @@
 #'
 #' `plot_maihda_predictions()` allows to visually compare predicted values
 #' by strata according to one or several specific variable defining the strata.
+#' `plot_maihda_predictions_by()` is equivalent to `plot_maihda_predictions()`.
 #'
 #' To be noted, themes from the [gtsummary][gtsummary::theme_gtsummary] package
 #' are taken into account for formatting the different values.
@@ -701,6 +702,7 @@ plot_maihda_predictions <- function(
 }
 
 #' @export
+#' @rdname tbl_maihda
 plot_maihda_predictions_by <- plot_maihda_predictions
 
 #' @rdname tbl_maihda

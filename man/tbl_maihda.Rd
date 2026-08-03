@@ -6,6 +6,7 @@
 \alias{tbl_strata_info}
 \alias{tbl_strata_predictions}
 \alias{plot_maihda_predictions}
+\alias{plot_maihda_predictions_by}
 \alias{glance_maihda_model}
 \title{Table summary of for MAIHDA analysis}
 \usage{
@@ -64,6 +65,14 @@ tbl_strata_predictions(
 )
 
 plot_maihda_predictions(
+  x,
+  by = NULL,
+  scale = c("response", "link"),
+  which = c("null", "adjusted"),
+  sort = TRUE
+)
+
+plot_maihda_predictions_by(
   x,
   by = NULL,
   scale = c("response", "link"),
@@ -163,6 +172,7 @@ the argument \code{which = "adjusted"}.
 
 \code{plot_maihda_predictions()} allows to visually compare predicted values
 by strata according to one or several specific variable defining the strata.
+\code{plot_maihda_predictions_by()} is equivalent to \code{plot_maihda_predictions()}.
 
 To be noted, themes from the \link[gtsummary:theme_gtsummary]{gtsummary} package
 are taken into account for formatting the different values.
