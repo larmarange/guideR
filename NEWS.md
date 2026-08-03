@@ -1,5 +1,8 @@
 # guideR (development version)
 
+* `plot_maihda_predictions_by()` has been renamed `plot_maihda_predictions()`
+  and now accept `by = NULL`
+
 # guideR 0.11.0
 
 **New features**

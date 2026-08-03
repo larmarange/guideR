@@ -30,7 +30,7 @@
 #' et al. 2024, the authors used the adjusted model, which could be done with
 #' the argument `which = "adjusted"`.
 #'
-#' `plot_maihda_predictions_by()` allows to visually compare predicted values
+#' `plot_maihda_predictions()` allows to visually compare predicted values
 #' by strata according to one or several specific variable defining the strata.
 #'
 #' To be noted, themes from the [gtsummary][gtsummary::theme_gtsummary] package
@@ -70,7 +70,8 @@
 #' a |> tbl_strata_info(breaks = c(50, 100, 150))
 #' a |> tbl_maihda()
 #' a |> tbl_strata_predictions()
-#' a |> plot_maihda_predictions_by(Race)
+#' a |> plot_maihda_predictions()
+#' a |> plot_maihda_predictions(by = Race)
 #'
 #' # a binomial example
 #'
@@ -84,8 +85,9 @@
 #' m |> tbl_maihda(exponentiate = TRUE)
 #' m |> tbl_strata_predictions(n_strata = NULL)
 #' m |> tbl_strata_predictions(which = "adjusted", n_strata = 3)
-#' m |> plot_maihda_predictions_by(Sex)
-#' m |> plot_maihda_predictions_by(c(Sex, Age))
+#' m |> plot_maihda_predictions()
+#' m |> plot_maihda_predictions(by = Sex)
+#' m |> plot_maihda_predictions(by = c(Sex, Age))
 #'
 #' # Partially adjusted models
 #'
@@ -590,9 +592,9 @@ tbl_strata_predictions <- function(
 #' list of variables to compare by
 #' @param sort should the plot be sorted?
 #' @export
-plot_maihda_predictions_by <- function(
+plot_maihda_predictions <- function(
   x,
-  by,
+  by = NULL,
   scale = c("response", "link"),
   which = c("null", "adjusted"),
   sort = TRUE
@@ -615,13 +617,21 @@ plot_maihda_predictions_by <- function(
   by_vars <- d |> dplyr::select({{ by }}) |> colnames()
   y_vars <- setdiff(strata_vars, by_vars)
 
-  by_strata <- MAIHDA::make_strata(d, by_vars)
-  y_strata <- MAIHDA::make_strata(d, y_vars)
+  if (length(by_vars) > 0) {
+    by_strata <- MAIHDA::make_strata(d, by_vars)
+    d$.by.. <- by_strata$data$stratum |>
+      factor(labels = by_strata$strata_info$label)
+    show_colour_legend <- TRUE
+  } else {
+    d$.by.. <- 1
+    d$.by.. <- factor(d$.by..)
+    show_colour_legend <- FALSE
+  }
 
-  d$.by.. <- by_strata$data$stratum |>
-    factor(labels = by_strata$strata_info$label)
+  y_strata <- MAIHDA::make_strata(d, y_vars)
   d$.y.. <- y_strata$data$stratum |>
     factor(labels = y_strata$strata_info$label)
+
   d <- d |> dplyr::arrange(dplyr::pick(dplyr::all_of(by_vars)))
   d$.by.. <-
     d$.by.. |>
@@ -660,7 +670,8 @@ plot_maihda_predictions_by <- function(
       show.legend = FALSE
     ) +
     ggplot2::geom_point(
-      position = ggplot2::position_dodge(width = .75)
+      position = ggplot2::position_dodge(width = .75),
+      show.legend = show_colour_legend
     ) +
     ggplot2::theme_light() +
     ggplot2::theme(
@@ -688,6 +699,9 @@ plot_maihda_predictions_by <- function(
 
   p
 }
+
+#' @export
+plot_maihda_predictions_by <- plot_maihda_predictions
 
 #' @rdname tbl_maihda
 #' @export

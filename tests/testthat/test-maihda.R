@@ -29,7 +29,10 @@ test_that("tbl function for MAIHDA analysis does not produce an error", {
   )
 
   expect_no_error(
-    a |> plot_maihda_predictions_by(Race)
+    a |> plot_maihda_predictions()
+  )
+  expect_no_error(
+    a |> plot_maihda_predictions(Race)
   )
 
   # a binomial example
@@ -58,7 +61,10 @@ test_that("tbl function for MAIHDA analysis does not produce an error", {
   )
 
   expect_no_error(
-    m |> plot_maihda_predictions_by(c(Sex, Age))
+    m |> plot_maihda_predictions()
+  )
+  expect_no_error(
+    m |> plot_maihda_predictions(by = c(Sex, Age))
   )
 
   # Partially adjusted models
