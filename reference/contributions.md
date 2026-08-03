@@ -26,12 +26,20 @@ tbl_contributions(
   ...,
   show = c("Total", "Partial", "Relative"),
   decimals = 1,
-  notes = TRUE
+  notes = TRUE,
+  lang = c("en", "fr")
 )
 
 total_deviance(mod)
 
-tbl_dominance(mod, indice = NULL, decimals = 1, totals = TRUE, notes = TRUE)
+tbl_dominance(
+  mod,
+  indice = NULL,
+  decimals = 1,
+  totals = TRUE,
+  notes = TRUE,
+  lang = c("en", "fr")
+)
 ```
 
 ## Arguments
@@ -75,6 +83,10 @@ tbl_dominance(mod, indice = NULL, decimals = 1, totals = TRUE, notes = TRUE)
 - notes:
 
   should table notes be added?
+
+- lang:
+
+  language used for column labels and notes
 
 - indice:
 

@@ -13,6 +13,8 @@ italicize_variable_group_headers(x)
 indent_levels(x, indent = 8L)
 
 indent_labels(x, indent = 4L)
+
+add_glance_header(x, header = "Summary statistics")
 ```
 
 ## Arguments
@@ -24,6 +26,10 @@ indent_labels(x, indent = 4L)
 - indent:
 
   An integer indicating how many space to indent text.
+
+- header:
+
+  String of the header to place above the glance statistics
 
 ## See also
 
