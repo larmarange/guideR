@@ -16,11 +16,17 @@
 #' for survey objects.
 #' @param show_labels Display mean labels?
 #' @inheritParams plot_proportions
+#' @param stratified_by <[`tidy-select`][dplyr::dplyr_tidy_select]>\cr
+#' Variable to stratify by (only one outcome variable is accepted if a
+#' stratification is requested).
 #' @export
 #' @keywords hplot
 #' @examples
 #' iris |>
 #'   plot_means(Petal.Length, by = Species)
+#'
+#' iris |>
+#'   plot_means(Petal.Length, by = Petal.Width, stratified_by = Species)
 #'
 #' iris |>
 #'   plot_means(
@@ -69,6 +75,7 @@ plot_means <- function(
   data,
   outcome,
   by = NULL,
+  stratified_by = NULL,
   drop_na_by = FALSE,
   convert_continuous = TRUE,
   geom = "point",
@@ -113,12 +120,26 @@ plot_means <- function(
     dplyr::select({{ outcome }}) |>
     colnames()
 
+  # stratification
+  stratified_by_variable <-
+    data |>
+    dplyr::select({{ stratified_by }}) |>
+    colnames()
+
+  if (length(stratified_by_variable) > 0) {
+    data <-
+      data |>
+      .compute_stratification(stratified_by_variable, outcome_variables)
+    outcome_variables <- attr(data, "stratification_vars")
+  }
+
   # mean computation
   fn_one_outcome <- function(outcome_var) {
     by_variables |>
       purrr::map(
         ~ data |>
-          dplyr::mutate(level = .data[[.x]]) |>
+          dplyr::filter(!is.na(.data[[outcome_var]])) |>
+          dplyr::mutate(level = .data[[.x]] |> forcats::fct_drop()) |>
           mean_sd(
             .data[[outcome_var]],
             .by = dplyr::all_of("level"),
@@ -207,6 +228,12 @@ plot_means <- function(
       purrr::map(p_one_outcome) |>
       dplyr::bind_rows()
   }
+
+  # outcome label
+  vl <- data |> .get_vl(outcome_variables)
+  levels(d$outcome) <- vl[levels(d$outcome)]
+  if (!is.null(pvalues))
+    pvalues$outcome <- vl[pvalues$outcome]
 
   if (return_data) {
     if (!is.null(pvalues))
