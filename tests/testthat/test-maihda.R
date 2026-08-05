@@ -37,6 +37,12 @@ test_that("tbl function for MAIHDA analysis does not produce an error", {
 
   # a binomial example
 
+  expect_no_error(
+    titanic |>
+      MAIHDA::make_strata(c("Age", "Class")) |>
+      tbl_strata_info()
+  )
+
   titanic$Survived <- as.integer(titanic$Survived == "Yes")
   m <- MAIHDA::maihda(
     Survived ~ Age + Sex + Class + (1 | Age:Sex:Class),
