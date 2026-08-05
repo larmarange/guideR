@@ -4,6 +4,7 @@
 
 * `plot_strata_predictions()` to plot the predictions of a MAIHDA model 
   by strata
+* new `stratified_by` argument for `plot_categorical()`
 
 **Renamed function**
 
