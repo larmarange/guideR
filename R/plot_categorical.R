@@ -293,9 +293,9 @@ plot_categorical <- function(
   if (!is.factor(data[[stratified_by_variable]]))
     data[[stratified_by_variable]] <- factor(data[[stratified_by_variable]])
   l <- levels(data[[stratified_by_variable]])
-  v <- paste0("stratum_", seq_len(length(l)))
+  v <- paste0("stratum_", seq_along(l))
 
-  for (i in seq_len(length(l))) {
+  for (i in seq_along(l)) {
     data[[v[i]]] <- data[[outcome_variables]]
     data[[v[i]]][data[[stratified_by_variable]] != l[i]] <- NA
     data[[v[i]]][is.na(data[[stratified_by_variable]])] <- NA

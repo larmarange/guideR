@@ -803,11 +803,11 @@ plot_strata_predictions <- function(
 #' @export
 #' @rdname tbl_maihda
 plot_maihda_predictions_by <- function(
-    x,
-    by = NULL,
-    scale = c("response", "link"),
-    which = c("null", "adjusted"),
-    sort = TRUE
+  x,
+  by = NULL,
+  scale = c("response", "link"),
+  which = c("null", "adjusted"),
+  sort = TRUE
 ) {
   lifecycle::deprecate_warn(
     "0.12.0",
