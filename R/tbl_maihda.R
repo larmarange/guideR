@@ -30,9 +30,8 @@
 #' et al. 2024, the authors used the adjusted model, which could be done with
 #' the argument `which = "adjusted"`.
 #'
-#' `plot_maihda_predictions()` allows to visually compare predicted values
+#' `plot_strata_predictions()` allows to visually compare predicted values
 #' by strata according to one or several specific variable defining the strata.
-#' `plot_maihda_predictions_by()` is equivalent to `plot_maihda_predictions()`.
 #'
 #' To be noted, themes from the [gtsummary][gtsummary::theme_gtsummary] package
 #' are taken into account for formatting the different values.
@@ -91,6 +90,7 @@
 #' m |> tbl_strata_predictions(n_strata = NULL)
 #' m |> tbl_strata_predictions(which = "adjusted", n_strata = 3)
 #' m |> plot_strata_predictions()
+#' m |> plot_strata_predictions(geom = "bar")
 #' m |> plot_strata_predictions(n_strata = 3L)
 #' m |> plot_strata_predictions(by = Sex)
 #' m |> plot_strata_predictions(by = c(Sex, Age))
@@ -594,6 +594,7 @@ tbl_strata_predictions <- function(
 }
 
 #' @rdname tbl_maihda
+#' @param geom geometry to use for plotting proportions ("point" by default).
 #' @param by <[`tidy-select`][dplyr::dplyr_tidy_select]>\cr
 #' list of variables to compare by
 #' @param sort should the plot be sorted?
@@ -601,6 +602,7 @@ tbl_strata_predictions <- function(
 plot_strata_predictions <- function(
   x,
   by = NULL,
+  geom = c("point", "bar"),
   n_strata = Inf,
   scale = c("response", "link"),
   which = c("null", "adjusted"),
@@ -608,6 +610,7 @@ plot_strata_predictions <- function(
 ) {
   rlang::check_installed("ggstats")
   scale <- match.arg(scale)
+  geom <- match.arg(geom)
 
   d <-
     x |>
@@ -629,11 +632,11 @@ plot_strata_predictions <- function(
     by_strata <- MAIHDA::make_strata(d, by_vars)
     d$.by.. <- by_strata$data$stratum |>
       factor(labels = by_strata$strata_info$label)
-    show_colour_legend <- TRUE
+    show_color_legend <- TRUE
   } else {
     d$.by.. <- 1
     d$.by.. <- factor(d$.by..)
-    show_colour_legend <- FALSE
+    show_color_legend <- FALSE
   }
 
   y_strata <- MAIHDA::make_strata(d, y_vars)
@@ -658,29 +661,65 @@ plot_strata_predictions <- function(
       forcats::fct_rev()
   }
 
+  if (geom == "point") {
+    p <-
+      ggplot2::ggplot(d) +
+      ggplot2::aes(
+        y = .data$.y..,
+        color = .data$.by..,
+        x = .data$predicted,
+        xmin = .data$predicted_lower,
+        xmax = .data$predicted_upper
+      ) +
+      ggstats::geom_stripped_rows(
+        mapping = ggplot2::aes(colour = NULL),
+        odd = "#11111111",
+        show.legend = FALSE
+      ) +
+      ggplot2::geom_errorbar(
+        position = ggplot2::position_dodge(width = .75),
+        width = .2,
+        show.legend = FALSE
+      ) +
+      ggplot2::geom_point(
+        position = ggplot2::position_dodge(width = .75),
+        show.legend = show_color_legend
+      ) +
+      scale_color_safe() +
+      ggplot2::guides(color = ggplot2::guide_legend(reverse = TRUE))
+  }
+
+  if (geom == "bar") {
+    p <-
+      ggplot2::ggplot(d) +
+      ggplot2::aes(
+        y = .data$.y..,
+        fill = .data$.by..,
+        x = .data$predicted,
+        xmin = .data$predicted_lower,
+        xmax = .data$predicted_upper
+      ) +
+      ggstats::geom_stripped_rows(
+        mapping = ggplot2::aes(colour = NULL),
+        odd = "#11111111",
+        show.legend = FALSE
+      ) +
+      ggplot2::geom_bar(
+        position = ggplot2::position_dodge(width = .75),
+        show.legend = show_color_legend,
+        stat = "identity",
+        width = .75
+      ) +
+      ggplot2::geom_errorbar(
+        position = ggplot2::position_dodge(width = .75),
+        width = .2,
+        show.legend = FALSE
+      ) +
+      scale_fill_safe() +
+      ggplot2::guides(fill = ggplot2::guide_legend(reverse = TRUE))
+  }
   p <-
-    ggplot2::ggplot(d) +
-    ggplot2::aes(
-      y = .data$.y..,
-      color = .data$.by..,
-      x = .data$predicted,
-      xmin = .data$predicted_lower,
-      xmax = .data$predicted_upper
-    ) +
-    ggstats::geom_stripped_rows(
-      mapping = ggplot2::aes(colour = NULL),
-      odd = "#11111111",
-      show.legend = FALSE
-    ) +
-    ggplot2::geom_errorbar(
-      position = ggplot2::position_dodge(width = .75),
-      width = .2,
-      show.legend = FALSE
-    ) +
-    ggplot2::geom_point(
-      position = ggplot2::position_dodge(width = .75),
-      show.legend = show_colour_legend
-    ) +
+    p +
     ggplot2::theme_light() +
     ggplot2::theme(
       legend.position = "bottom",
@@ -691,12 +730,8 @@ plot_strata_predictions <- function(
       axis.title.x = ggplot2::element_text(face = "bold"),
       axis.ticks.y = ggplot2::element_blank()
     ) +
-    ggplot2::labs(x = NULL, y = NULL, color = NULL) +
-    scale_color_safe() +
-    ggplot2::scale_y_discrete(expand = 0) +
-    ggplot2::guides(
-      colour = ggplot2::guide_legend(reverse = TRUE)
-    )
+    ggplot2::labs(x = NULL, y = NULL, color = NULL, fill = NULL) +
+    ggplot2::scale_y_discrete(expand = ggplot2::expansion(0, 0.5))
 
   if (x$family$family == "binomial" && scale == "response") {
     p <-

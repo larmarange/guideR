@@ -67,6 +67,7 @@ tbl_strata_predictions(
 plot_strata_predictions(
   x,
   by = NULL,
+  geom = c("point", "bar"),
   n_strata = Inf,
   scale = c("response", "link"),
   which = c("null", "adjusted"),
@@ -137,6 +138,8 @@ crossed-dimensions analysis or a single model.}
 \item{by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>\cr
 list of variables to compare by}
 
+\item{geom}{geometry to use for plotting proportions ("point" by default).}
+
 \item{sort}{should the plot be sorted?}
 }
 \description{
@@ -171,9 +174,8 @@ the behavior of \code{\link[MAIHDA:maihda_table]{MAIHDA::maihda_table()}}. It sh
 et al. 2024, the authors used the adjusted model, which could be done with
 the argument \code{which = "adjusted"}.
 
-\code{plot_maihda_predictions()} allows to visually compare predicted values
+\code{plot_strata_predictions()} allows to visually compare predicted values
 by strata according to one or several specific variable defining the strata.
-\code{plot_maihda_predictions_by()} is equivalent to \code{plot_maihda_predictions()}.
 
 To be noted, themes from the \link[gtsummary:theme_gtsummary]{gtsummary} package
 are taken into account for formatting the different values.
@@ -214,6 +216,7 @@ m |> tbl_maihda(exponentiate = TRUE)
 m |> tbl_strata_predictions(n_strata = NULL)
 m |> tbl_strata_predictions(which = "adjusted", n_strata = 3)
 m |> plot_strata_predictions()
+m |> plot_strata_predictions(geom = "bar")
 m |> plot_strata_predictions(n_strata = 3L)
 m |> plot_strata_predictions(by = Sex)
 m |> plot_strata_predictions(by = c(Sex, Age))
