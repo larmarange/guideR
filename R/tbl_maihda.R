@@ -71,8 +71,8 @@
 #' a |> tbl_strata_info(breaks = c(50, 100, 150))
 #' a |> tbl_maihda()
 #' a |> tbl_strata_predictions()
-#' a |> plot_maihda_predictions()
-#' a |> plot_maihda_predictions(by = Race)
+#' a |> plot_strata_predictions()
+#' a |> plot_strata_predictions(by = Race)
 #'
 #' # a binomial example
 #'
@@ -90,9 +90,10 @@
 #' m |> tbl_maihda(exponentiate = TRUE)
 #' m |> tbl_strata_predictions(n_strata = NULL)
 #' m |> tbl_strata_predictions(which = "adjusted", n_strata = 3)
-#' m |> plot_maihda_predictions()
-#' m |> plot_maihda_predictions(by = Sex)
-#' m |> plot_maihda_predictions(by = c(Sex, Age))
+#' m |> plot_strata_predictions()
+#' m |> plot_strata_predictions(n_strata = 3L)
+#' m |> plot_strata_predictions(by = Sex)
+#' m |> plot_strata_predictions(by = c(Sex, Age))
 #'
 #' # Partially adjusted models
 #'
@@ -483,7 +484,7 @@ tbl_strata_info <- function(
 #' @export
 tbl_strata_predictions <- function(
   x,
-  n_strata = 5L,
+  n_strata = Inf,
   scale = c("response", "link"),
   which = c("null", "adjusted"),
   column_labels = list(
@@ -597,9 +598,10 @@ tbl_strata_predictions <- function(
 #' list of variables to compare by
 #' @param sort should the plot be sorted?
 #' @export
-plot_maihda_predictions <- function(
+plot_strata_predictions <- function(
   x,
   by = NULL,
+  n_strata = Inf,
   scale = c("response", "link"),
   which = c("null", "adjusted"),
   sort = TRUE
@@ -612,9 +614,10 @@ plot_maihda_predictions <- function(
     tbl_strata_predictions(
       which = which,
       scale = scale,
-      n_strata = Inf,
+      n_strata = n_strata,
       return_data = TRUE
-    )
+    ) |>
+    dplyr::ungroup()
 
   if (inherits(x, "maihda_analysis")) x <- x$model
 
@@ -707,7 +710,27 @@ plot_maihda_predictions <- function(
 
 #' @export
 #' @rdname tbl_maihda
-plot_maihda_predictions_by <- plot_maihda_predictions
+plot_maihda_predictions_by <- function(
+    x,
+    by = NULL,
+    scale = c("response", "link"),
+    which = c("null", "adjusted"),
+    sort = TRUE
+) {
+  lifecycle::deprecate_warn(
+    "0.12.0",
+    "plot_maihda_predictions_by()",
+    "plot_maihda_predictions()"
+  )
+  plot_strata_predictions(
+    x = x,
+    by = {{ by }},
+    n_strata = Inf,
+    scale = scale,
+    which = which,
+    sort = sort
+  )
+}
 
 #' @rdname tbl_maihda
 #' @export

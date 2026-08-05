@@ -1,7 +1,17 @@
 # guideR (development version)
 
-* `plot_maihda_predictions_by()` has been renamed `plot_maihda_predictions()`
-  and now accept `by = NULL`
+**New features**
+
+* `plot_strata_predictions()` to plot the predictions of a MAIHDA model 
+  by strata
+
+**Renamed function**
+
+* `plot_maihda_predictions_by()` has been renamed `plot_strata_predictions()`
+
+**Minor changes**
+
+* Default `n_strata` value for `tbl_strata_predictions()` is now `Inf`
 
 # guideR 0.11.0
 

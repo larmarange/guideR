@@ -5,7 +5,7 @@
 \alias{tbl_partially_adjusted_maihda}
 \alias{tbl_strata_info}
 \alias{tbl_strata_predictions}
-\alias{plot_maihda_predictions}
+\alias{plot_strata_predictions}
 \alias{plot_maihda_predictions_by}
 \alias{glance_maihda_model}
 \title{Table summary of for MAIHDA analysis}
@@ -55,7 +55,7 @@ tbl_strata_info(
 
 tbl_strata_predictions(
   x,
-  n_strata = 5L,
+  n_strata = Inf,
   scale = c("response", "link"),
   which = c("null", "adjusted"),
   column_labels = list(rank = "Rank", n = "n", predicted = "Predicted", ci = "95\% CI"),
@@ -64,9 +64,10 @@ tbl_strata_predictions(
   return_data = FALSE
 )
 
-plot_maihda_predictions(
+plot_strata_predictions(
   x,
   by = NULL,
+  n_strata = Inf,
   scale = c("response", "link"),
   which = c("null", "adjusted"),
   sort = TRUE
@@ -193,8 +194,8 @@ a <- MAIHDA::maihda(
 a |> tbl_strata_info(breaks = c(50, 100, 150))
 a |> tbl_maihda()
 a |> tbl_strata_predictions()
-a |> plot_maihda_predictions()
-a |> plot_maihda_predictions(by = Race)
+a |> plot_strata_predictions()
+a |> plot_strata_predictions(by = Race)
 
 # a binomial example
 
@@ -212,9 +213,10 @@ m |> tbl_strata_info()
 m |> tbl_maihda(exponentiate = TRUE)
 m |> tbl_strata_predictions(n_strata = NULL)
 m |> tbl_strata_predictions(which = "adjusted", n_strata = 3)
-m |> plot_maihda_predictions()
-m |> plot_maihda_predictions(by = Sex)
-m |> plot_maihda_predictions(by = c(Sex, Age))
+m |> plot_strata_predictions()
+m |> plot_strata_predictions(n_strata = 3L)
+m |> plot_strata_predictions(by = Sex)
+m |> plot_strata_predictions(by = c(Sex, Age))
 
 # Partially adjusted models
 
