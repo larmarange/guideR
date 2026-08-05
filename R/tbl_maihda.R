@@ -94,6 +94,8 @@
 #' m |> plot_strata_predictions(n_strata = 3L)
 #' m |> plot_strata_predictions(by = Sex)
 #' m |> plot_strata_predictions(by = c(Sex, Age))
+#' m |> plot_strata_predictions(highlight_n_below = 20)
+#' m |> plot_strata_predictions(by = Age, highlight_n_below = 20)
 #'
 #' # Partially adjusted models
 #'
@@ -598,6 +600,8 @@ tbl_strata_predictions <- function(
 #' @param by <[`tidy-select`][dplyr::dplyr_tidy_select]>\cr
 #' list of variables to compare by
 #' @param sort should the plot be sorted?
+#' @param highlight_n_below highlight strata with a number of observations
+#' below this number (`NULL` for not highlight, incompatible with `geom = "bar`)
 #' @export
 plot_strata_predictions <- function(
   x,
@@ -606,11 +610,21 @@ plot_strata_predictions <- function(
   n_strata = Inf,
   scale = c("response", "link"),
   which = c("null", "adjusted"),
-  sort = TRUE
+  sort = TRUE,
+  highlight_n_below = NULL
 ) {
   rlang::check_installed("ggstats")
   scale <- match.arg(scale)
   geom <- match.arg(geom)
+  highlight_n_below |>
+    rlang::check_number_whole(
+      allow_null = TRUE,
+      allow_infinite = FALSE,
+      min = 2
+    )
+
+  if (!is.null(highlight_n_below) && geom != "point")
+    cli::cli_abort("{.arg geom} should be equal to \"point\" when {.arg highlight_n_below} is provided.") # nolint
 
   d <-
     x |>
@@ -661,7 +675,7 @@ plot_strata_predictions <- function(
       forcats::fct_rev()
   }
 
-  if (geom == "point") {
+  if (geom == "point" && is.null(highlight_n_below)) {
     p <-
       ggplot2::ggplot(d) +
       ggplot2::aes(
@@ -687,6 +701,49 @@ plot_strata_predictions <- function(
       ) +
       scale_color_safe() +
       ggplot2::guides(color = ggplot2::guide_legend(reverse = TRUE))
+  }
+
+  if (geom == "point" && !is.null(highlight_n_below)) {
+    d$.highlight <-
+      (d$n >= highlight_n_below) |>
+      factor(
+        levels = c(FALSE, TRUE),
+        labels = paste0(c("n < ", "n \u2265 "), highlight_n_below)
+      )
+
+    p <-
+      ggplot2::ggplot(d) +
+      ggplot2::aes(
+        y = .data$.y..,
+        color = .data$.by..,
+        shape = .data$.highlight,
+        x = .data$predicted,
+        xmin = .data$predicted_lower,
+        xmax = .data$predicted_upper
+      ) +
+      ggstats::geom_stripped_rows(
+        mapping = ggplot2::aes(colour = NULL),
+        odd = "#11111111",
+        show.legend = FALSE
+      ) +
+      ggplot2::geom_errorbar(
+        position = ggplot2::position_dodge(width = .75),
+        width = .2,
+        show.legend = FALSE
+      ) +
+      ggplot2::geom_point(
+        position = ggplot2::position_dodge(width = .75),
+        stroke = 2,
+        show.legend = TRUE,
+        fill = "white"
+      ) +
+      ggplot2::scale_shape_manual(values = c(21, 16))
+
+    if (show_color_legend) {
+      p <- p + scale_color_safe()
+    } else {
+      p <- p + scale_color_safe(guide = "none")
+    }
   }
 
   if (geom == "bar") {
@@ -730,7 +787,7 @@ plot_strata_predictions <- function(
       axis.title.x = ggplot2::element_text(face = "bold"),
       axis.ticks.y = ggplot2::element_blank()
     ) +
-    ggplot2::labs(x = NULL, y = NULL, color = NULL, fill = NULL) +
+    ggplot2::labs(x = NULL, y = NULL, color = NULL, fill = NULL, shape = NULL) +
     ggplot2::scale_y_discrete(expand = ggplot2::expansion(0, 0.5))
 
   if (x$family$family == "binomial" && scale == "response") {
