@@ -71,7 +71,8 @@ plot_strata_predictions(
   n_strata = Inf,
   scale = c("response", "link"),
   which = c("null", "adjusted"),
-  sort = TRUE
+  sort = TRUE,
+  highlight_n_below = NULL
 )
 
 plot_maihda_predictions_by(
@@ -141,6 +142,9 @@ list of variables to compare by}
 \item{geom}{geometry to use for plotting proportions ("point" by default).}
 
 \item{sort}{should the plot be sorted?}
+
+\item{highlight_n_below}{highlight strata with a number of observations
+below this number (\code{NULL} for not highlight, incompatible with \verb{geom = "bar})}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\if{html}{\out{<br />}}
@@ -220,6 +224,8 @@ m |> plot_strata_predictions(geom = "bar")
 m |> plot_strata_predictions(n_strata = 3L)
 m |> plot_strata_predictions(by = Sex)
 m |> plot_strata_predictions(by = c(Sex, Age))
+m |> plot_strata_predictions(highlight_n_below = 20)
+m |> plot_strata_predictions(by = Age, highlight_n_below = 20)
 
 # Partially adjusted models
 
