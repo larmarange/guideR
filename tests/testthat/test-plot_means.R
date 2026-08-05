@@ -9,6 +9,13 @@ test_that("plot_means() works", {
   expect_no_error(
     p <-
       iris |>
+      plot_means(Petal.Length, by = Petal.Width, stratified_by = Species)
+  )
+  expect_doppelganger("plot_means() stratified_by", p)
+
+  expect_no_error(
+    p <-
+      iris |>
       plot_means(
         dplyr::starts_with("Petal"),
         by = Species,

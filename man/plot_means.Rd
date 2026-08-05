@@ -8,6 +8,7 @@ plot_means(
   data,
   outcome,
   by = NULL,
+  stratified_by = NULL,
   drop_na_by = FALSE,
   convert_continuous = TRUE,
   geom = "point",
@@ -46,6 +47,10 @@ List of continuous variables to be plotted.}
 \item{by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>\cr
 List of variables to group by (comparison is done separately for each
 variable).}
+
+\item{stratified_by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>\cr
+Variable to stratify by (only one outcome variable is accepted if a
+stratification is requested).}
 
 \item{drop_na_by}{Remove \code{NA} values in \code{by} variables?}
 
@@ -112,6 +117,9 @@ By default, return a point plot, but other geometries could be used
 \examples{
 iris |>
   plot_means(Petal.Length, by = Species)
+
+iris |>
+  plot_means(Petal.Length, by = Petal.Width, stratified_by = Species)
 
 iris |>
   plot_means(
