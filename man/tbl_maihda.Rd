@@ -198,6 +198,10 @@ a |> plot_maihda_predictions(by = Race)
 
 # a binomial example
 
+titanic |>
+  MAIHDA::make_strata(c("Age", "Class")) |>
+  tbl_strata_info()
+
 m <- MAIHDA::maihda(
   Survived ~ Age + Sex + Class + (1 | Age:Sex:Class),
   data = titanic,
