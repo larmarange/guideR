@@ -68,7 +68,6 @@
 <rect x='234.03' y='126.24' width='85.43' height='86.61' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #332288;' />
 <rect x='234.03' y='46.84' width='85.43' height='79.39' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #DDCC77;' />
 <text x='324.20' y='44.39' text-anchor='end' style='font-size: 9.96px; font-family: sans;' textLength='36.28px' lengthAdjust='spacingAndGlyphs'>p=0.919</text>
-<text x='324.20' y='44.39' text-anchor='end' style='font-size: 9.96px; font-family: sans;' textLength='36.28px' lengthAdjust='spacingAndGlyphs'>p=0.870</text>
 <text x='181.82' y='251.85' text-anchor='middle' style='font-size: 9.96px; font-family: sans;' textLength='19.93px' lengthAdjust='spacingAndGlyphs'>36%</text>
 <text x='181.82' y='167.96' text-anchor='middle' style='font-size: 9.96px; fill: #FFFFFF; font-family: sans;' textLength='19.93px' lengthAdjust='spacingAndGlyphs'>33%</text>
 <text x='181.82' y='89.08' text-anchor='middle' style='font-size: 9.96px; font-family: sans;' textLength='19.93px' lengthAdjust='spacingAndGlyphs'>32%</text>
@@ -93,7 +92,6 @@
 <rect x='234.03' y='425.57' width='85.43' height='69.77' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #88CCEE;' />
 <rect x='234.03' y='375.05' width='85.43' height='50.52' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #882255;' />
 <rect x='234.03' y='310.09' width='85.43' height='64.96' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #44AA99;' />
-<text x='324.20' y='307.64' text-anchor='end' style='font-size: 9.96px; font-family: sans;' textLength='36.28px' lengthAdjust='spacingAndGlyphs'>p=0.919</text>
 <text x='324.20' y='307.64' text-anchor='end' style='font-size: 9.96px; font-family: sans;' textLength='36.28px' lengthAdjust='spacingAndGlyphs'>p=0.870</text>
 <text x='181.82' y='523.86' text-anchor='middle' style='font-size: 9.96px; fill: #FFFFFF; font-family: sans;' textLength='19.93px' lengthAdjust='spacingAndGlyphs'>29%</text>
 <text x='181.82' y='457.50' text-anchor='middle' style='font-size: 9.96px; font-family: sans;' textLength='19.93px' lengthAdjust='spacingAndGlyphs'>26%</text>
@@ -123,7 +121,6 @@
 <rect x='543.26' y='81.90' width='85.43' height='175.28' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #332288;' />
 <rect x='543.26' y='46.84' width='85.43' height='35.06' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #DDCC77;' />
 <text x='633.43' y='44.39' text-anchor='end' style='font-size: 9.96px; font-family: sans;' textLength='36.28px' lengthAdjust='spacingAndGlyphs'>p=0.448</text>
-<text x='633.43' y='44.39' text-anchor='end' style='font-size: 9.96px; font-family: sans;' textLength='36.28px' lengthAdjust='spacingAndGlyphs'>p=0.688</text>
 <text x='396.13' y='252.91' text-anchor='middle' style='font-size: 9.96px; font-family: sans;' textLength='19.93px' lengthAdjust='spacingAndGlyphs'>35%</text>
 <text x='396.13' y='169.25' text-anchor='middle' style='font-size: 9.96px; fill: #FFFFFF; font-family: sans;' textLength='19.93px' lengthAdjust='spacingAndGlyphs'>33%</text>
 <text x='396.13' y='89.31' text-anchor='middle' style='font-size: 9.96px; font-family: sans;' textLength='19.93px' lengthAdjust='spacingAndGlyphs'>32%</text>
@@ -155,7 +152,6 @@
 <rect x='543.26' y='450.32' width='85.43' height='70.11' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #88CCEE;' />
 <rect x='543.26' y='345.15' width='85.43' height='105.17' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #882255;' />
 <rect x='543.26' y='310.09' width='85.43' height='35.06' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #44AA99;' />
-<text x='633.43' y='307.64' text-anchor='end' style='font-size: 9.96px; font-family: sans;' textLength='36.28px' lengthAdjust='spacingAndGlyphs'>p=0.448</text>
 <text x='633.43' y='307.64' text-anchor='end' style='font-size: 9.96px; font-family: sans;' textLength='36.28px' lengthAdjust='spacingAndGlyphs'>p=0.688</text>
 <text x='396.13' y='527.31' text-anchor='middle' style='font-size: 9.96px; fill: #FFFFFF; font-family: sans;' textLength='19.93px' lengthAdjust='spacingAndGlyphs'>26%</text>
 <text x='396.13' y='459.45' text-anchor='middle' style='font-size: 9.96px; font-family: sans;' textLength='19.93px' lengthAdjust='spacingAndGlyphs'>30%</text>

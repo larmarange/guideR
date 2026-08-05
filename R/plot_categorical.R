@@ -149,9 +149,6 @@ plot_categorical <- function(
     dplyr::bind_rows()
   d$outcome <- forcats::fct_inorder(d$outcome)
 
-  vl <- labelled::var_label(data, null_action = "fill", unlist = TRUE)
-  d$outcome_label <- vl[as.character(d$outcome)]
-
   if (flip) d$num_level <- d$num_level |> forcats::fct_rev()
 
   # variable labels
@@ -165,7 +162,6 @@ plot_categorical <- function(
 
   # proportion labels
   d$prop_label <- labels_labeller(d$prop)
-
 
   # computing p-values
   pvalues <- NULL
@@ -219,6 +215,12 @@ plot_categorical <- function(
       dplyr::bind_rows()
   }
 
+  # outcome label
+  vl <- data |> .get_vl(outcome_variables)
+  levels(d$outcome) <- vl[levels(d$outcome)]
+  if (!is.null(pvalues))
+    pvalues$outcome <- vl[pvalues$outcome]
+
   if (return_data) {
     if (!is.null(pvalues))
       d <-
@@ -229,7 +231,7 @@ plot_categorical <- function(
 
   # facets per outcome
   if (length(outcome_variables) > 1) {
-    cols_facet <- ggplot2::vars(.data$outcome_label)
+    cols_facet <- ggplot2::vars(.data$outcome)
   } else {
     cols_facet <- NULL
   }
@@ -291,7 +293,7 @@ plot_categorical <- function(
   if (!is.factor(data[[stratified_by_variable]]))
     data[[stratified_by_variable]] <- factor(data[[stratified_by_variable]])
   l <- levels(data[[stratified_by_variable]])
-  v <- paste0(".", seq_len(length(l)), "..")
+  v <- paste0("stratum_", seq_len(length(l)))
 
   for (i in seq_len(length(l))) {
     data[[v[i]]] <- data[[outcome_variables]]
