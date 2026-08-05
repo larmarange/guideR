@@ -139,7 +139,7 @@ plot_means <- function(
       purrr::map(
         ~ data |>
           dplyr::filter(!is.na(.data[[outcome_var]])) |>
-          dplyr::mutate(level = .data[[.x]] |> forcats::fct_drop()) |>
+          dplyr::mutate(level = forcats::fct_drop(.data[[.x]])) |>
           mean_sd(
             .data[[outcome_var]],
             .by = dplyr::all_of("level"),
