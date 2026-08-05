@@ -34,6 +34,12 @@ test_that("tbl function for MAIHDA analysis does not produce an error", {
   expect_no_error(
     a |> plot_strata_predictions(Race)
   )
+  expect_no_error(
+    a |> plot_strata_predictions(geom = "bar")
+  )
+  expect_no_error(
+    a |> plot_strata_predictions(geom = "bar")
+  )
 
   # a binomial example
 
