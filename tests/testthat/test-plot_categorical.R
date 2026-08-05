@@ -1,4 +1,6 @@
 test_that("plot_categorical() works", {
+  set.seed(2026)
+
   expect_no_error(
     p <-
       titanic |>
@@ -20,6 +22,17 @@ test_that("plot_categorical() works", {
       )
   )
   expect_doppelganger("plot_categorical() flip", p)
+
+  expect_no_error(
+    p <-
+      titanic |>
+      plot_categorical(
+        Age,
+        by = Class,
+        stratified_by = Sex
+      )
+  )
+  expect_doppelganger("plot_categorical() stratified_by", p)
 
   skip_on_cran()
   skip_if_not_installed("gtsummary")

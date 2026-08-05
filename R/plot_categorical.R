@@ -10,6 +10,9 @@
 #' @param ... Additional arguments passed to [ggplot2::geom_bar()].
 #' @param pvalues_y Y position of p-values.
 #' @inheritParams plot_proportions
+#' @param stratified_by <[`tidy-select`][dplyr::dplyr_tidy_select]>\cr
+#' Variable to stratify by (only one outcome variable is accepted if a
+#' stratification is requested).
 #' @export
 #' @keywords hplot
 #' @examples
@@ -35,6 +38,12 @@
 #'     flip = TRUE,
 #'     minimal = TRUE
 #'   )
+#' titanic |>
+#'   plot_categorical(
+#'     Age,
+#'     by = Class,
+#'     stratified_by = Sex
+#'   )
 #' }
 #' @examplesIf rlang::is_installed("gtsummary")
 #' \donttest{
@@ -50,6 +59,7 @@ plot_categorical <- function(
   outcome,
   na.rm = TRUE,
   by = NULL,
+  stratified_by = NULL,
   drop_na_by = FALSE,
   convert_continuous = TRUE,
   ...,
@@ -86,6 +96,23 @@ plot_categorical <- function(
     dplyr::select({{ outcome }}) |>
     colnames()
 
+  # stratification
+  stratified_by_variable <-
+    data |>
+    dplyr::select({{ stratified_by }}) |>
+    colnames()
+
+  if (length(stratified_by_variable) > 0) {
+    data <-
+      data |>
+      .compute_stratification(stratified_by_variable, outcome_variables)
+    outcome_variables <- attr(data, "stratification_vars")
+    if (!na.rm) {
+      cli::cli_warn("{.arg na.rm} forced to `TRUE` when a stratification is requested.") # nolint
+      na.rm <- TRUE
+    }
+  }
+
   # proportion computation
   fn_one_outcome <- function(outcome_var) {
     by_variables |>
@@ -104,7 +131,7 @@ plot_categorical <- function(
             by = .x,
             outcome = outcome_var,
             outcome_level = .data[[outcome_var]],
-            num_level = paste(as.integer(.data$level), .data$level, sep = "_"),
+            num_level = paste(as.integer(.data$level), .data$level, sep = "_")
           )
       ) |>
       dplyr::bind_rows() |>
@@ -121,6 +148,9 @@ plot_categorical <- function(
     purrr::map(fn_one_outcome) |>
     dplyr::bind_rows()
   d$outcome <- forcats::fct_inorder(d$outcome)
+
+  vl <- labelled::var_label(data, null_action = "fill", unlist = TRUE)
+  d$outcome_label <- vl[as.character(d$outcome)]
 
   if (flip) d$num_level <- d$num_level |> forcats::fct_rev()
 
@@ -199,7 +229,7 @@ plot_categorical <- function(
 
   # facets per outcome
   if (length(outcome_variables) > 1) {
-    cols_facet <- ggplot2::vars(.data$outcome)
+    cols_facet <- ggplot2::vars(.data$outcome_label)
   } else {
     cols_facet <- NULL
   }
@@ -244,4 +274,31 @@ plot_categorical <- function(
     p <- p + ggplot2::theme(legend.position = "bottom")
 
   p
+}
+
+.compute_stratification <- function(
+  data,
+  stratified_by_variable,
+  outcome_variables
+) {
+  if (length(stratified_by_variable) == 0) return(data)
+
+  if (length(stratified_by_variable) > 1)
+    cli::cli_abort("Only one variable can be selected by {.arg stratified_by}.")
+  if (length(outcome_variables) != 1)
+    cli::cli_abort("When a stratification is requested, only one {.arg outcome} allowed.") # nolint
+
+  if (!is.factor(data[[stratified_by_variable]]))
+    data[[stratified_by_variable]] <- factor(data[[stratified_by_variable]])
+  l <- levels(data[[stratified_by_variable]])
+  v <- paste0(".", seq_len(length(l)), "..")
+
+  for (i in seq_len(length(l))) {
+    data[[v[i]]] <- data[[outcome_variables]]
+    data[[v[i]]][data[[stratified_by_variable]] != l[i]] <- NA
+    data[[v[i]]][is.na(data[[stratified_by_variable]])] <- NA
+    labelled::var_label(data[[v[i]]]) <- l[i]
+  }
+  attr(data, "stratification_vars") <- v
+  data
 }

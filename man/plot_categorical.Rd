@@ -9,6 +9,7 @@ plot_categorical(
   outcome,
   na.rm = TRUE,
   by = NULL,
+  stratified_by = NULL,
   drop_na_by = FALSE,
   convert_continuous = TRUE,
   ...,
@@ -41,6 +42,10 @@ List of categorical variables to be plotted.}
 \item{by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>\cr
 List of variables to group by (comparison is done separately for each
 variable).}
+
+\item{stratified_by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>\cr
+Variable to stratify by (only one outcome variable is accepted if a
+stratification is requested).}
 
 \item{drop_na_by}{Remove \code{NA} values in \code{by} variables?}
 
@@ -109,6 +114,12 @@ titanic |>
     by = c(Age, Sex),
     flip = TRUE,
     minimal = TRUE
+  )
+titanic |>
+  plot_categorical(
+    Age,
+    by = Class,
+    stratified_by = Sex
   )
 }
 \dontshow{if (rlang::is_installed("gtsummary")) withAutoprint(\{ # examplesIf}
