@@ -8,6 +8,7 @@ plot_continuous(
   data,
   outcome,
   by = NULL,
+  stratified_by = NULL,
   drop_na_by = FALSE,
   convert_continuous = TRUE,
   ...,
@@ -33,6 +34,10 @@ List of continuous variables to be plotted.}
 \item{by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>\cr
 List of variables to group by (comparison is done separately for each
 variable).}
+
+\item{stratified_by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>\cr
+Variable to stratify by (only one outcome variable is accepted if a
+stratification is requested).}
 
 \item{drop_na_by}{Remove \code{NA} values in \code{by} variables?}
 
@@ -81,6 +86,13 @@ iris |>
     outlier.color = "red"
   )
 
+iris |>
+  plot_continuous(
+    Petal.Length,
+    by = Petal.Width,
+    stratified_by = Species
+  )
+
 \donttest{
 
 mtcars |>
@@ -89,6 +101,13 @@ mtcars |>
     by = c(cyl, gear),
     flip = TRUE,
     mapping = ggplot2::aes(fill = by)
+  )
+
+mtcars |>
+  plot_continuous(
+    mpg,
+    by = cyl,
+    stratified_by = gear
   )
 
 # works with continuous by variables

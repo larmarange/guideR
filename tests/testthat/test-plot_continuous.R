@@ -34,6 +34,28 @@ test_that("plot_continuous()() works", {
 
   expect_no_error(
     p <-
+      iris |>
+      plot_continuous(
+        Petal.Length,
+        by = Petal.Width,
+        stratified_by = Species
+      )
+  )
+  expect_doppelganger("plot_continuous() stratified_by", p)
+
+  expect_no_error(
+    p <-
+      mtcars |>
+      plot_continuous(
+        mpg,
+        by = cyl,
+        stratified_by = gear
+      )
+  )
+  expect_doppelganger("plot_continuous() stratified_by second test", p)
+
+  expect_no_error(
+    p <-
       mtcars |>
       plot_continuous(
         mpg,

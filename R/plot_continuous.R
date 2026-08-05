@@ -13,6 +13,9 @@
 #' computed with [stats::kruskal.test()] for data frames, and with
 #' [survey::svyranktest()] for survey objects.
 #' @inheritParams plot_proportions
+#' @param stratified_by <[`tidy-select`][dplyr::dplyr_tidy_select]>\cr
+#' Variable to stratify by (only one outcome variable is accepted if a
+#' stratification is requested).
 #' @export
 #' @keywords hplot
 #' @examples
@@ -28,6 +31,13 @@
 #'     outlier.color = "red"
 #'   )
 #'
+#' iris |>
+#'   plot_continuous(
+#'     Petal.Length,
+#'     by = Petal.Width,
+#'     stratified_by = Species
+#'   )
+#'
 #' \donttest{
 #'
 #' mtcars |>
@@ -36,6 +46,13 @@
 #'     by = c(cyl, gear),
 #'     flip = TRUE,
 #'     mapping = ggplot2::aes(fill = by)
+#'   )
+#'
+#' mtcars |>
+#'   plot_continuous(
+#'     mpg,
+#'     by = cyl,
+#'     stratified_by = gear
 #'   )
 #'
 #' # works with continuous by variables
@@ -60,6 +77,7 @@ plot_continuous <- function(
   data,
   outcome,
   by = NULL,
+  stratified_by = NULL,
   drop_na_by = FALSE,
   convert_continuous = TRUE,
   ...,
@@ -91,12 +109,26 @@ plot_continuous <- function(
     dplyr::select({{ outcome }}) |>
     colnames()
 
+  # stratification
+  stratified_by_variable <-
+    data |>
+    dplyr::select({{ stratified_by }}) |>
+    colnames()
+
+  if (length(stratified_by_variable) > 0) {
+    data <-
+      data |>
+      .compute_stratification(stratified_by_variable, outcome_variables)
+    outcome_variables <- attr(data, "stratification_vars")
+  }
+
   # mean computation
   fn_one_outcome <- function(outcome_var) {
     by_variables |>
       purrr::map(
         ~ data |>
-          dplyr::mutate(level = .data[[.x]]) |>
+          dplyr::filter(!is.na(.data[[outcome_var]])) |>
+          dplyr::mutate(level = .data[[.x]] |> forcats::fct_drop()) |>
           median_iqr(
             .data[[outcome_var]],
             .by = dplyr::all_of("level"),
@@ -126,7 +158,7 @@ plot_continuous <- function(
 
   if (flip) d$num_level <- d$num_level |> forcats::fct_rev()
 
-  # variable labels
+  # by variable labels
   vl <- data |> .get_vl(by_variables)
   d$by_label <- vl[d$by] |> forcats::fct_inorder()
   d <-
@@ -172,6 +204,12 @@ plot_continuous <- function(
       purrr::map(p_one_outcome) |>
       dplyr::bind_rows()
   }
+
+  # outcome label
+  vl <- data |> .get_vl(outcome_variables)
+  levels(d$outcome) <- vl[levels(d$outcome)]
+  if (!is.null(pvalues))
+    pvalues$outcome <- vl[pvalues$outcome]
 
   if (return_data) {
     if (!is.null(pvalues))
