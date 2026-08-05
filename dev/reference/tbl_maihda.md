@@ -57,7 +57,7 @@ tbl_strata_info(
 
 tbl_strata_predictions(
   x,
-  n_strata = 5L,
+  n_strata = Inf,
   scale = c("response", "link"),
   which = c("null", "adjusted"),
   column_labels = list(rank = "Rank", n = "n", predicted = "Predicted", ci = "95% CI"),
@@ -66,9 +66,20 @@ tbl_strata_predictions(
   return_data = FALSE
 )
 
+plot_strata_predictions(
+  x,
+  by = NULL,
+  geom = c("point", "bar"),
+  n_strata = Inf,
+  scale = c("response", "link"),
+  which = c("null", "adjusted"),
+  sort = TRUE,
+  highlight_n_below = NULL
+)
+
 plot_maihda_predictions_by(
   x,
-  by,
+  by = NULL,
   scale = c("response", "link"),
   which = c("null", "adjusted"),
   sort = TRUE
@@ -173,9 +184,18 @@ glance_maihda_model(x)
   \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>  
   list of variables to compare by
 
+- geom:
+
+  geometry to use for plotting proportions ("point" by default).
+
 - sort:
 
   should the plot be sorted?
+
+- highlight_n_below:
+
+  highlight strata with a number of observations below this number
+  (`NULL` for not highlight, incompatible with `geom = "bar`)
 
 ## Details
 
@@ -206,9 +226,9 @@ It should be noted that in Evans et al. 2024, the authors used the
 adjusted model, which could be done with the argument
 `which = "adjusted"`.
 
-`plot_maihda_predictions_by()` allows to visually compare predicted
-values by strata according to one or several specific variable defining
-the strata.
+`plot_strata_predictions()` allows to visually compare predicted values
+by strata according to one or several specific variable defining the
+strata.
 
 To be noted, themes from the
 [gtsummary](https://www.danieldsjoberg.com/gtsummary/reference/theme_gtsummary.html)

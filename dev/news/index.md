@@ -2,7 +2,31 @@
 
 ## guideR (development version)
 
+**New features**
+
+- [`plot_strata_predictions()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md)
+  to plot the predictions of a MAIHDA model by strata
+- new `stratified_by` argument for
+  [`plot_categorical()`](https://larmarange.github.io/guideR/dev/reference/plot_categorical.md),
+  [`plot_continuous()`](https://larmarange.github.io/guideR/dev/reference/plot_continuous.md)
+  and
+  [`plot_means()`](https://larmarange.github.io/guideR/dev/reference/plot_means.md)
+
+**Renamed function**
+
+- [`plot_maihda_predictions_by()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md)
+  has been renamed
+  [`plot_strata_predictions()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md)
+
+**Minor changes**
+
+- Default `n_strata` value for
+  [`tbl_strata_predictions()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md)
+  is now `Inf`
+
 ## guideR 0.11.0
+
+CRAN release: 2026-08-03
 
 **New features**
 

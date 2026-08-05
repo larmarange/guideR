@@ -12,6 +12,7 @@ plot_continuous(
   data,
   outcome,
   by = NULL,
+  stratified_by = NULL,
   drop_na_by = FALSE,
   convert_continuous = TRUE,
   ...,
@@ -45,6 +46,12 @@ plot_continuous(
   \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>  
   List of variables to group by (comparison is done separately for each
   variable).
+
+- stratified_by:
+
+  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>  
+  Variable to stratify by (only one outcome variable is accepted if a
+  stratification is requested).
 
 - drop_na_by:
 
@@ -122,6 +129,14 @@ iris |>
   )
 
 
+iris |>
+  plot_continuous(
+    Petal.Length,
+    by = Petal.Width,
+    stratified_by = Species
+  )
+
+
 # \donttest{
 
 mtcars |>
@@ -130,6 +145,14 @@ mtcars |>
     by = c(cyl, gear),
     flip = TRUE,
     mapping = ggplot2::aes(fill = by)
+  )
+
+
+mtcars |>
+  plot_continuous(
+    mpg,
+    by = cyl,
+    stratified_by = gear
   )
 
 

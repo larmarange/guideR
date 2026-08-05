@@ -13,6 +13,7 @@ plot_means(
   data,
   outcome,
   by = NULL,
+  stratified_by = NULL,
   drop_na_by = FALSE,
   convert_continuous = TRUE,
   geom = "point",
@@ -59,6 +60,12 @@ plot_means(
   \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>  
   List of variables to group by (comparison is done separately for each
   variable).
+
+- stratified_by:
+
+  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>  
+  Variable to stratify by (only one outcome variable is accepted if a
+  stratification is requested).
 
 - drop_na_by:
 
@@ -177,6 +184,10 @@ plot_means(
 ``` r
 iris |>
   plot_means(Petal.Length, by = Species)
+
+
+iris |>
+  plot_means(Petal.Length, by = Petal.Width, stratified_by = Species)
 
 
 iris |>
