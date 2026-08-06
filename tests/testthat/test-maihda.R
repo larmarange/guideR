@@ -60,6 +60,9 @@ test_that("tbl function for MAIHDA analysis does not produce an error", {
     m |> tbl_strata_info()
   )
   expect_no_error(
+    m |> tbl_strata_info(type = "exclusive")
+  )
+  expect_no_error(
     m |> tbl_maihda(exponentiate = TRUE)
   )
   expect_no_error(

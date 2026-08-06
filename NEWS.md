@@ -6,6 +6,7 @@
   by strata
 * new `stratified_by` argument for `plot_categorical()`, `plot_continuous()`
   and `plot_means()`
+* new `type` argument for `tbl_strata_info()`
 
 **Renamed function**
 

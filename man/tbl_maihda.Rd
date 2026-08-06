@@ -48,6 +48,7 @@ tbl_partially_adjusted_maihda(
 tbl_strata_info(
   x,
   breaks = c(10, 20, 30, 50, 100),
+  type = c("nested", "exclusive"),
   column_labels = list(size = "Sample size per stratum", n = "Number of strata", prop =
     "Proportion of strata"),
   total_label = "Total number of strata:"
@@ -116,6 +117,8 @@ model family) about the analysis?}
 \item{return_data}{return a data frame instead of a table}
 
 \item{breaks}{breaks for sample size per stratum}
+
+\item{type}{type of table (nested or exclusive size categories)}
 
 \item{column_labels}{named list of column labels}
 
@@ -216,6 +219,7 @@ m <- MAIHDA::maihda(
 )
 
 m |> tbl_strata_info()
+m |> tbl_strata_info(type = "exclusive")
 m |> tbl_maihda(exponentiate = TRUE)
 m |> tbl_strata_predictions(n_strata = NULL)
 m |> tbl_strata_predictions(which = "adjusted", n_strata = 3)

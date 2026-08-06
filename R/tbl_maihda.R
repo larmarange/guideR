@@ -86,6 +86,7 @@
 #' )
 #'
 #' m |> tbl_strata_info()
+#' m |> tbl_strata_info(type = "exclusive")
 #' m |> tbl_maihda(exponentiate = TRUE)
 #' m |> tbl_strata_predictions(n_strata = NULL)
 #' m |> tbl_strata_predictions(which = "adjusted", n_strata = 3)
@@ -418,12 +419,14 @@ fit_partially_adjusted_maihda <- function(m, variable) {
 
 #' @rdname tbl_maihda
 #' @param breaks breaks for sample size per stratum
+#' @param type type of table (nested or exclusive size categories)
 #' @param column_labels named list of column labels
 #' @param total_label string of the total label in the notes
 #' @export
 tbl_strata_info <- function(
   x,
   breaks = c(10, 20, 30, 50, 100),
+  type = c("nested", "exclusive"),
   column_labels = list(
     size = "Sample size per stratum",
     n = "Number of strata",
@@ -439,29 +442,47 @@ tbl_strata_info <- function(
   if (!is.list(x) && !"strata_info" %in% names(x))
     cli::cli_abort("{.arg x} should be of class {.class maihda_model} or {.class maihda_analysis} or the result of {.fn MAIHDA::make_strata}.") # nolint
 
+  type <- match.arg(type)
+
   info <- x$strata_info
 
   breaks <- breaks |> sort(decreasing = TRUE)
-  res <- dplyr::tibble()
-  for (i in breaks) {
+
+  if (type == "nested") {
+    res <- dplyr::tibble()
+    for (i in breaks) {
+      res <-
+        res |>
+        dplyr::bind_rows(
+          dplyr::tibble(
+            size = paste("\u2265", i),
+            n = sum(info$n >= i)
+          )
+        )
+    }
     res <-
       res |>
       dplyr::bind_rows(
         dplyr::tibble(
-          size = paste("\u2265", i),
-          n = sum(info$n >= i)
+          size = paste("<", min(breaks)),
+          n = sum(info$n < min(breaks))
         )
       )
+    res$prop <- res$n / nrow(info)
   }
-  res <-
-    res |>
-    dplyr::bind_rows(
-      dplyr::tibble(
-        size = paste("<", min(breaks)),
-        n = sum(info$n < min(breaks))
-      )
-    )
-  res$prop <- res$n / nrow(info)
+
+  if (type == "exclusive") {
+    breaks <- breaks |> sort()
+    l <- paste(dplyr::lag(breaks), breaks, sep = "-")
+    l[1] <- paste0("< ", breaks[1])
+    l <- c(l, paste0("\u2265 ", dplyr::last(breaks)))
+    info$size <-
+      info$n |>
+      cut(breaks = c(0, breaks, Inf), right = FALSE, labels = l)
+    res <- info |> dplyr::count(size)
+    res$prop <- res$n / nrow(info)
+  }
+
 
   res |>
     gt::gt() |>
