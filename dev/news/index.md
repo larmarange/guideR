@@ -11,6 +11,8 @@
   [`plot_continuous()`](https://larmarange.github.io/guideR/dev/reference/plot_continuous.md)
   and
   [`plot_means()`](https://larmarange.github.io/guideR/dev/reference/plot_means.md)
+- new `type` argument for
+  [`tbl_strata_info()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md)
 
 **Renamed function**
 

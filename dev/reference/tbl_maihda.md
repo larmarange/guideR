@@ -50,6 +50,7 @@ tbl_partially_adjusted_maihda(
 tbl_strata_info(
   x,
   breaks = c(10, 20, 30, 50, 100),
+  type = c("nested", "exclusive"),
   column_labels = list(size = "Sample size per stratum", n = "Number of strata", prop =
     "Proportion of strata"),
   total_label = "Total number of strata:"
@@ -145,6 +146,10 @@ glance_maihda_model(x)
 - breaks:
 
   breaks for sample size per stratum
+
+- type:
+
+  type of table (nested or exclusive size categories)
 
 - column_labels:
 
