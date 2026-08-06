@@ -479,7 +479,7 @@ tbl_strata_info <- function(
     info$size <-
       info$n |>
       cut(breaks = c(0, breaks, Inf), right = FALSE, labels = l)
-    res <- info |> dplyr::count(size)
+    res <- info |> dplyr::count(dplyr::pick("size"))
     res$prop <- res$n / nrow(info)
   }
 
