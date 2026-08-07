@@ -288,6 +288,16 @@ tbl_maihda_model <- function(
       x$pcv$ci_upper * 100
   }
 
+  # adding CI for VPC
+  if (all(c("vpc_lower", "vpc_upper") %in% tbl$table_body$variable)) {
+    tbl$table_body[tbl$table_body$variable == "vpc", "conf.low"] <-
+      tbl$table_body[tbl$table_body$variable == "vpc_lower", "estimate"] * 100
+    tbl$table_body[tbl$table_body$variable == "vpc", "conf.high"] <-
+      tbl$table_body[tbl$table_body$variable == "vpc_upper", "estimate"] * 100
+    tbl$table_body <- tbl$table_body |>
+      dplyr::filter(!.data$variable %in% c("vpc_lower", "vpc_upper"))
+  }
+
   tbl
 }
 
@@ -875,6 +885,19 @@ glance_maihda_model <- function(x) {
         TRUE ~ tolower(.data$statistic)
       )
     )
+
+  if(!is.na(mt[mt$statistic == "vpc", "estimate_lower"])) {
+    mt <- dplyr::bind_rows(
+      mt,
+      dplyr::tibble(
+        statistic = c("vpc_lower", "vpc_upper"),
+        estimate = c(
+          mt[mt$statistic == "vpc", "estimate_lower"],
+          mt[mt$statistic == "vpc", "estimate_upper"]
+        )
+      )
+    )
+  }
 
   res <-
     mt |>
