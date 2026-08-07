@@ -97,6 +97,13 @@
 #' m |> plot_strata_predictions(by = c(Sex, Age))
 #' m |> plot_strata_predictions(highlight_n_below = 20)
 #' m |> plot_strata_predictions(by = Age, highlight_n_below = 20)
+#' m |>
+#'   plot_strata_predictions(by = Sex) +
+#'   ggplot2::facet_grid(
+#'     rows = ggplot2::vars(Age),
+#'     scales = "free_y",
+#'     space = "free_y"
+#'   )
 #'
 #' # Partially adjusted models
 #'
@@ -854,7 +861,7 @@ glance_maihda_model <- function(x) {
   if (inherits(x, "maihda_analysis"))
     x <- x$model
 
-  res <-
+  mt <-
     x |>
     MAIHDA::maihda_table() |>
     purrr::pluck("models") |>
@@ -867,7 +874,10 @@ glance_maihda_model <- function(x) {
         .data$statistic == "Context share (VPC)" ~ "csvpc",
         TRUE ~ tolower(.data$statistic)
       )
-    ) |>
+    )
+
+  res <-
+    mt |>
     dplyr::select("statistic", "estimate") |>
     tidyr::pivot_wider(names_from = "statistic", values_from = "estimate")
 
