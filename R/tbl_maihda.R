@@ -726,11 +726,11 @@ tbl_strata_predictions <- function(
 #' @rdname tbl_maiha
 #' @export
 get_strata_predictions <- function(
-    x,
-    n_strata = Inf,
-    scale = c("response", "link"),
-    which = c("null", "adjusted"),
-    group_labels = list("highest", "lowest")
+  x,
+  n_strata = Inf,
+  scale = c("response", "link"),
+  which = c("null", "adjusted"),
+  group_labels = list("highest", "lowest")
 ) {
   rlang::check_installed("MAIHDA")
 
@@ -1053,7 +1053,7 @@ glance_maihda_model <- function(
       )
     )
 
-  if(!is.na(mt[mt$statistic == "vpc", "estimate_lower"])) {
+  if (!is.na(mt[mt$statistic == "vpc", "estimate_lower"])) {
     mt <- dplyr::bind_rows(
       mt,
       dplyr::tibble(
