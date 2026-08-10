@@ -22,7 +22,7 @@
 
 **Renamed function**
 
-- [`plot_maihda_predictions_by()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md)
+- [`plot_maihda_predictions_by()`](https://larmarange.github.io/guideR/dev/reference/deprecated.md)
   has been renamed
   [`plot_strata_predictions()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md)
 
@@ -43,7 +43,7 @@ CRAN release: 2026-08-03
   [`tbl_partially_adjusted_maihda()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md),
   [`tbl_strata_info()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md),
   `tbl_strata_predictions()()` and
-  [`plot_maihda_predictions_by()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md)
+  [`plot_maihda_predictions_by()`](https://larmarange.github.io/guideR/dev/reference/deprecated.md)
   to display and plot the results of a MAIHDA analysis
   ([\#66](https://github.com/larmarange/guideR/issues/66))
 - new `lang` argument for

@@ -106,15 +106,11 @@ plot_strata_predictions(
   scale = c("response", "link"),
   which = c("null", "adjusted"),
   sort = TRUE,
-  highlight_n_below = NULL
-)
-
-plot_maihda_predictions_by(
-  x,
-  by = NULL,
-  scale = c("response", "link"),
-  which = c("null", "adjusted"),
-  sort = TRUE
+  highlight_n_below = NULL,
+  show_mean_line = FALSE,
+  mean_line_color = "#AA4499",
+  mean_line_type = "dashed",
+  mean_line_width = 0.5
 )
 
 glance_maihda_model(x, bootstrap_vpc = FALSE, conf.level = 0.95, n_boot = 1000)
@@ -259,6 +255,22 @@ glance_maihda_model(x, bootstrap_vpc = FALSE, conf.level = 0.95, n_boot = 1000)
 
   highlight strata with a number of observations below this number
   (`NULL` for not highlight, incompatible with `geom = "bar`)
+
+- show_mean_line:
+
+  add a vertical line displaying the mean prediction?
+
+- mean_line_color:
+
+  color of the mean line
+
+- mean_line_type:
+
+  type of the mean line
+
+- mean_line_width:
+
+  width of the mean line
 
 ## Details
 
