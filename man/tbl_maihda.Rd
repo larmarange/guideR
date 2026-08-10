@@ -12,25 +12,38 @@
 \usage{
 tbl_maihda(
   x,
+  conf.level = 0.95,
   ...,
   global_p = FALSE,
+  bootstrap_vpc = FALSE,
+  bootstrap_pcv = FALSE,
+  n_boot = 1000,
   twomodels_labels = c("Null model", "Adjusted model"),
   statistics_header = "Summary statistics",
   statistics_labels = list(bsv = "Between-stratum variance", bssd =
-    "Between-stratum standard deviation", vpc = "Variance Partition Coefficient (VPC)",
-    pcv = "Proportional Change in Variance (PCV)", auc =
+    "Between-stratum standard deviation", vpc =
+    "Variance Partition Coefficient (VPC / adjusted ICC)", pcv =
+    "Proportional Change in Variance (PCV)", auc =
     "Area Under Receiver Operating Characteristic Curve (AUC)", mor =
-    "Median Odds Ratio (MOR)", csvpc = "Context share (VPC)"),
+    "Median Odds Ratio (MOR)", csvpc = "Context share (VPC)", r2cond =
+    "Conditional Nakagawa's R2 (fixed + random effects)", r2marg =
+    "Marginal Nakagawa's R2 (fixed effects only)", uicc =
+    "Unadjusted ICC (intraclass correlation coefficient)"),
   statistics_include = -dplyr::any_of("bssd"),
   notes = TRUE,
   notes_labels = list(n_strata = "Strata:", nobs = "Observations:", engine = "Engine:",
-    family = "Family:", context = "Variable(s) in context:")
+    family = "Family:", context = "Variable(s) in context:"),
+  return_data = FALSE
 )
 
 tbl_partially_adjusted_maihda(
   x,
+  conf.level = 0.95,
   ...,
   global_p = FALSE,
+  bootstrap_vpc = FALSE,
+  bootstrap_pcv = FALSE,
+  n_boot = 1000,
   twomodels_labels = c("Null model", "Fully adjusted model"),
   statistics_header = "Summary statistics",
   statistics_labels = list(bsv = "Between-stratum variance", bssd =
@@ -61,8 +74,7 @@ tbl_strata_predictions(
   which = c("null", "adjusted"),
   column_labels = list(rank = "Rank", n = "n", predicted = "Predicted", ci = "95\% CI"),
   group_labels = list("highest", "lowest"),
-  digits = 1L,
-  return_data = FALSE
+  digits = 1L
 )
 
 plot_strata_predictions(
@@ -84,7 +96,7 @@ plot_maihda_predictions_by(
   sort = TRUE
 )
 
-glance_maihda_model(x)
+glance_maihda_model(x, bootstrap_vpc = FALSE, conf.level = 0.95, n_boot = 1000)
 }
 \arguments{
 \item{x}{a MAIHDA object (\code{maihda_analysis} or \code{maihda_model}); for
@@ -93,10 +105,27 @@ glance_maihda_model(x)
 \code{MAIHDA::maihda(decomposition = "two-model")} is allowed; for
 \code{tbl_strata_info()}, the result of \code{\link[MAIHDA:make_strata]{MAIHDA::make_strata()}} is also accepted}
 
+\item{conf.level}{confidence level for confidence/credible intervals}
+
 \item{...}{additional parameters passed to \code{\link[gtsummary:tbl_regression]{gtsummary::tbl_regression()}}}
 
 \item{global_p}{display global p-value instead of terms p-value (see
 \code{\link[gtsummary:add_global_p]{gtsummary::add_global_p()}}), not available if \code{engine = "wemix"}.}
+
+\item{bootstrap_vpc}{logical indicating whether to compute paramteric
+bootstrap confidence intervals for VPC/ICC; supported only for
+\code{engine = "lme4"}; when using \code{engine = "brms"}, posterior credible intervals
+are always returned; could be very time-consuming; cf.
+\code{\link[MAIHDA:summary.maihda_model]{MAIHDA::summary.maihda_model()}} for more details.}
+
+\item{bootstrap_pcv}{logical indicating whether to compute bootstrap
+confidence intervals for the PCV; implemented only for \code{engine = "lme4"} and
+if \code{x} is an \code{maihda_analysis} object, otherwise PCV should be manually
+computed and added to models before calling \code{tbl_maihda()} (see examples);
+cf. \code{\link[MAIHDA:calculate_pcv]{MAIHDA::calculate_pcv()}} for more details.}
+
+\item{n_boot}{number of bootstrap samples when bootstrap is used to estimate
+confidence intervals}
 
 \item{twomodels_labels}{for a two-model MAIHDA analysis, labels for the two
 models}

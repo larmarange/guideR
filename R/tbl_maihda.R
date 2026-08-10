@@ -40,9 +40,22 @@
 #' `tbl_partially_adjusted_maihda()`, only a `maihda_analysis` computed with
 #' `MAIHDA::maihda(decomposition = "two-model")` is allowed; for
 #' `tbl_strata_info()`, the result of [MAIHDA::make_strata()] is also accepted
+#' @param conf.level confidence level for confidence/credible intervals
 #' @param ... additional parameters passed to [gtsummary::tbl_regression()]
 #' @param global_p display global p-value instead of terms p-value (see
 #' [gtsummary::add_global_p()]), not available if `engine = "wemix"`.
+#' @param bootstrap_vpc logical indicating whether to compute paramteric
+#' bootstrap confidence intervals for VPC/ICC; supported only for
+#' `engine = "lme4"`; when using `engine = "brms"`, posterior credible intervals
+#' are always returned; could be very time-consuming; cf.
+#' [MAIHDA::summary.maihda_model()] for more details.
+#' @param bootstrap_pcv logical indicating whether to compute bootstrap
+#' confidence intervals for the PCV; implemented only for `engine = "lme4"` and
+#' if `x` is an `maihda_analysis` object, otherwise PCV should be manually
+#' computed and added to models before calling `tbl_maihda()` (see examples);
+#' cf. [MAIHDA::calculate_pcv()] for more details.
+#' @param n_boot number of bootstrap samples when bootstrap is used to estimate
+#' confidence intervals
 #' @param twomodels_labels for a two-model MAIHDA analysis, labels for the two
 #' models
 #' @param statistics_header string header of the summary statistics
@@ -157,18 +170,25 @@
 #' }
 tbl_maihda <- function(
   x,
+  conf.level = 0.95,
   ...,
   global_p = FALSE,
+  bootstrap_vpc = FALSE,
+  bootstrap_pcv = FALSE,
+  n_boot = 1000,
   twomodels_labels = c("Null model", "Adjusted model"),
   statistics_header = "Summary statistics",
   statistics_labels = list(
     bsv = "Between-stratum variance",
     bssd = "Between-stratum standard deviation",
-    vpc = "Variance Partition Coefficient (VPC)",
+    vpc = "Variance Partition Coefficient (VPC / adjusted ICC)",
     pcv = "Proportional Change in Variance (PCV)",
     auc = "Area Under Receiver Operating Characteristic Curve (AUC)",
     mor = "Median Odds Ratio (MOR)",
-    csvpc = "Context share (VPC)"
+    csvpc = "Context share (VPC)",
+    r2cond = "Conditional Nakagawa's R2 (fixed + random effects)",
+    r2marg = "Marginal Nakagawa's R2 (fixed effects only)",
+    uicc = "Unadjusted ICC (intraclass correlation coefficient)"
   ),
   statistics_include = -dplyr::any_of("bssd"),
   notes = TRUE,
@@ -178,7 +198,8 @@ tbl_maihda <- function(
     engine = "Engine:",
     family = "Family:",
     context = "Variable(s) in context:"
-  )
+  ),
+  return_data = FALSE
 ) {
   rlang::check_installed("gtsummary")
   rlang::check_installed("gt")
@@ -186,10 +207,27 @@ tbl_maihda <- function(
   rlang::check_installed("broom.mixed")
 
   if (inherits(x, "maihda_model")) {
-    res <- x |>
+    if (bootstrap_pcv) {
+      cli::cli_abort("{.arg bootstrap_pcv = TRUE} cannot be applied when {.arg x} is of class {.class maihda_model}.") # nolint
+    }
+
+    x$glance_table <-
+      x |>
+      glance_maihda_model(
+        conf.level = conf.level,
+        bootstrap_vpc = bootstrap_vpc,
+        n_boot = n_boot
+      )
+    if (return_data) return(x)
+
+    res <-
+      x |>
       tbl_maihda_model(
+        conf.level = conf.level,
         ...,
         global_p = global_p,
+        bootstrap_vpc = bootstrap_vpc,
+        n_boot = n_boot,
         statistics_labels = statistics_labels,
         statistics_include = {{ statistics_include }}
       ) |>
@@ -201,11 +239,39 @@ tbl_maihda <- function(
 
   if (inherits(x, "maihda_analysis") && x$mode == "two-model") {
     model1 <- x$model
+    model1$glance_table <-
+      model1 |>
+      glance_maihda_model(
+        conf.level = conf.level,
+        bootstrap_vpc = bootstrap_vpc,
+        n_boot = n_boot
+      )
+
     model2 <- x$model_adjusted
+    model2$glance_table <-
+      model2 |>
+      glance_maihda_model(
+        conf.level = conf.level,
+        bootstrap_vpc = bootstrap_vpc,
+        n_boot = n_boot
+      )
     model2$pcv <- x$pcv
+
+    if (bootstrap_pcv) {
+      model2$pcv <- MAIHDA::calculate_pcv(
+        model1,
+        model2,
+        bootstrap = bootstrap_pcv,
+        n_boot = n_boot,
+        conf_level = conf.level
+      )
+    }
+
     x <- list(model1, model2)
     names(x) <- twomodels_labels
   }
+
+  if (return_data) return(x)
 
   res <-
     x |>
@@ -213,8 +279,11 @@ tbl_maihda <- function(
       \(x) {
         tbl_maihda_model(
           x,
+          conf.level = conf.level,
           ...,
           global_p = global_p,
+          bootstrap_vpc = bootstrap_vpc,
+          n_boot = n_boot,
           statistics_labels = statistics_labels,
           statistics_include = {{ statistics_include }}
         )
@@ -239,8 +308,11 @@ tbl_maihda <- function(
 
 tbl_maihda_model <- function(
   x,
+  conf.level = 0.95,
   ...,
   global_p = FALSE,
+  bootstrap_vpc = FALSE,
+  n_boot = 1000,
   statistics_labels = NULL,
   statistics_include = dplyr::everything()
 ) {
@@ -248,12 +320,25 @@ tbl_maihda_model <- function(
     cli::cli_abort(
       "All elements of {.arg x} should be of class {.class maihda_model}."
     )
-  stats <- glance_maihda_model(x)
+
+  # glance table could be pre-calculated
+  if (is.null(x$glance_table)) {
+    stats <-
+      x |>
+      glance_maihda_model(
+        conf.level = conf.level,
+        bootstrap_vpc = bootstrap_vpc,
+        n_boot = n_boot
+      )
+  } else {
+    stats <- x$glance_table
+  }
 
   if (x$engine == "wemix") {
     tbl <-
       x |>
       gtsummary::tbl_regression(
+        conf.level = conf.level,
         intercept = TRUE,
         tidy_fun = tidy_maihda_model,
         ...
@@ -261,7 +346,12 @@ tbl_maihda_model <- function(
   } else {
     tbl <-
       x$model |>
-      gtsummary::tbl_regression(intercept = TRUE, group_by = NULL, ...)
+      gtsummary::tbl_regression(
+        conf.level = conf.level,
+        intercept = TRUE,
+        group_by = NULL,
+        ...
+      )
 
     if (global_p && nrow(tbl$table_body) > 1) { # avoid if no fixed effects
       tbl <- tbl |> gtsummary::add_global_p()
@@ -276,7 +366,7 @@ tbl_maihda_model <- function(
       include = {{ statistics_include }},
       fmt_fun = list(
         everything() ~ gtsummary::label_style_sigfig(digits = 3),
-        dplyr::any_of(c("vpc", "pcv", "csvpc")) ~
+        dplyr::any_of(c("vpc", "pcv", "csvpc", "r2cond", "r2marg", "uicc")) ~
           gtsummary::label_style_percent(digits = 1, suffix = "%")
       )
     )
@@ -356,8 +446,12 @@ add_maihda_notes <- function(
 #' @export
 tbl_partially_adjusted_maihda <- function(
   x,
+  conf.level = 0.95,
   ...,
   global_p = FALSE,
+  bootstrap_vpc = FALSE,
+  bootstrap_pcv = FALSE,
+  n_boot = 1000,
   twomodels_labels = c("Null model", "Fully adjusted model"),
   statistics_header = "Summary statistics",
   statistics_labels = list(
@@ -388,7 +482,18 @@ tbl_partially_adjusted_maihda <- function(
 
   l <-
     x$model$strata_vars |>
-    purrr::map(\(v) fit_partially_adjusted_maihda(x, v))
+    purrr::map(
+      \(v) {
+        fit_partially_adjusted_maihda(
+          x,
+          v,
+          bootstrap_vpc = bootstrap_vpc,
+          bootstrap_pcv = bootstrap_pcv,
+          conf.level = conf.level,
+          n_boot = n_boot
+        )
+      }
+    )
   names(l) <-
     x$model_adjusted$original_data |>
     dplyr::select(dplyr::any_of(x$model_adjusted$strata_vars)) |>
@@ -396,26 +501,45 @@ tbl_partially_adjusted_maihda <- function(
 
   l0 <- list(x$model)
   names(l0) <- twomodels_labels[1]
+
   x$model_adjusted$pcv <- x$pcv
+  if (bootstrap_pcv) {
+    x$model_adjusted$pcv <- MAIHDA::calculate_pcv(
+      x$model,
+      x$model_adjusted,
+      bootstrap = bootstrap_pcv,
+      n_boot = n_boot,
+      conf_level = conf.level
+    )
+  }
   lf <- list(x$model_adjusted)
   names(lf) <- twomodels_labels[2]
+
   l <- l0 |> append(l) |> append(lf)
-
-  if (return_data) return(l)
-
   l |>
     tbl_maihda(
+      conf.level = conf.level,
       ...,
       global_p = global_p,
+      bootstrap_vpc = bootstrap_vpc,
+      n_boot = n_boot,
       statistics_header = statistics_header,
       statistics_labels = statistics_labels,
       statistics_include = {{ statistics_include }},
       notes = notes,
-      notes_labels = notes_labels
+      notes_labels = notes_labels,
+      return_data = return_data
     )
 }
 
-fit_partially_adjusted_maihda <- function(m, variable) {
+fit_partially_adjusted_maihda <- function(
+  m,
+  variable,
+  bootstrap_vpc = FALSE,
+  bootstrap_pcv = FALSE,
+  conf.level = 0.95,
+  n_boot = 1000
+) {
   m0 <- m$model
   ma <- m$model_adjusted
   pa <-
@@ -430,7 +554,20 @@ fit_partially_adjusted_maihda <- function(m, variable) {
       context = m0$context_vars,
       sampling_weights = m0$sampling_weights
     )
-  pa$pcv <- MAIHDA::calculate_pcv(m0, pa)
+  pa$glance_table <-
+    pa |>
+    glance_maihda_model(
+      bootstrap_vpc = bootstrap_vpc,
+      conf.level = conf.level,
+      n_boot = n_boot
+    )
+  pa$pcv <- MAIHDA::calculate_pcv(
+    m0,
+    pa,
+    bootstrap = bootstrap_pcv,
+    n_boot = n_boot,
+    conf_level = conf.level
+  )
   pa
 }
 
@@ -500,7 +637,6 @@ tbl_strata_info <- function(
     res$prop <- res$n / nrow(info)
   }
 
-
   res |>
     gt::gt() |>
     gt::cols_align("center", "n") |>
@@ -534,68 +670,23 @@ tbl_strata_predictions <- function(
     ci = "95% CI"
   ),
   group_labels = list("highest", "lowest"),
-  digits = 1L,
-  return_data = FALSE
+  digits = 1L
 ) {
   rlang::check_installed("gtsummary")
   rlang::check_installed("gt")
   rlang::check_installed("MAIHDA")
-
   scale <- match.arg(scale)
-  which <- match.arg(which)
-
-  if (!inherits(x, "maihda_model") && !inherits(x, "maihda_analysis"))
-    cli::cli_abort("{.arg x} should be of class {.class maihda_model} or {.class maihda_analysis}.") # nolint
-
-  if (is.null(n_strata)) n_strata <- Inf
-  n_strata |> rlang::check_number_whole(min = 1, allow_infinite = TRUE)
 
   res <-
     x |>
-    MAIHDA::maihda_table(scale = scale, which = which) |>
-    purrr::pluck("strata")
+    get_strata_predictions(
+      n_strata = n_strata,
+      scale = scale,
+      which = which,
+      group_labels = group_labels
+    )
 
   if (inherits(x, "maihda_analysis")) x <- x$model
-
-  if (n_strata < (nrow(res) / 2)) {
-    res <-
-      dplyr::bind_rows(
-        res |>
-          utils::head(n_strata) |>
-          dplyr::mutate(group = paste(n_strata, group_labels[[1]])),
-        res |>
-          utils::tail(n_strata) |>
-          dplyr::mutate(group = paste(n_strata, group_labels[[2]]))
-      ) |>
-      dplyr::group_by(.data$group)
-  } else {
-    n_strata <- Inf
-  }
-
-  res <-
-    res |>
-    dplyr::mutate(stratum = as.character(.data$stratum)) |>
-    dplyr::left_join(
-      x$strata_info |>
-        dplyr::mutate(stratum = as.character(.data$stratum)) |>
-        dplyr::select(dplyr::any_of(c("stratum", x$strata_vars))),
-      by = "stratum"
-    ) |>
-    dplyr::select(dplyr::any_of(c(
-      "group", "rank", x$strata_vars, "n",
-      "predicted", "predicted_lower", "predicted_upper"
-    )))
-
-  strata_labels <-
-    x$original_data |>
-    dplyr::select(dplyr::any_of(x$strata_vars)) |>
-    labelled::get_variable_labels(null_action = "fill")
-
-  res <-
-    res |>
-    labelled::set_variable_labels(.labels = strata_labels)
-
-  if (return_data) return(res)
 
   if (x$family$family == "binomial" && scale == "response") {
     f <- gtsummary::label_style_percent(digits = digits, suffix = "%")
@@ -627,10 +718,79 @@ tbl_strata_predictions <- function(
       locations = gt::cells_row_groups()
     ) |>
     gt::cols_label(.list = column_labels) |>
-    gt::cols_label(.list = strata_labels) |>
     gt::cols_align("center", "ci")
 
   tbl
+}
+
+#' @rdname tbl_maiha
+#' @export
+get_strata_predictions <- function(
+    x,
+    n_strata = Inf,
+    scale = c("response", "link"),
+    which = c("null", "adjusted"),
+    group_labels = list("highest", "lowest")
+) {
+  rlang::check_installed("MAIHDA")
+
+  scale <- match.arg(scale)
+  which <- match.arg(which)
+
+  if (!inherits(x, "maihda_model") && !inherits(x, "maihda_analysis"))
+    cli::cli_abort("{.arg x} should be of class {.class maihda_model} or {.class maihda_analysis}.") # nolint
+
+  if (is.null(n_strata)) n_strata <- Inf
+  n_strata |> rlang::check_number_whole(min = 1, allow_infinite = TRUE)
+
+  res <-
+    x |>
+    MAIHDA::maihda_table(scale = scale, which = which) |>
+    purrr::pluck("strata")
+
+  if (inherits(x, "maihda_analysis")) x <- x$model
+
+  if (n_strata < (nrow(res) / 2)) {
+    res <-
+      res |>
+      dplyr::mutate(
+        group = dplyr::case_when(
+          .data$rank %in% utils::head(.data$rank, n_strata) ~
+            paste(n_strata, group_labels[[1]]),
+          .data$rank %in% utils::tail(.data$rank, n_strata) ~
+            paste(n_strata, group_labels[[2]]),
+        )
+      ) |>
+      dplyr::filter(!is.na(.data$group)) |>
+      dplyr::group_by(.data$group)
+  } else {
+    n_strata <- Inf
+  }
+
+  res <-
+    res |>
+    dplyr::mutate(stratum = as.character(.data$stratum)) |>
+    dplyr::left_join(
+      x$strata_info |>
+        dplyr::mutate(stratum = as.character(.data$stratum)) |>
+        dplyr::select(dplyr::any_of(c("stratum", x$strata_vars))),
+      by = "stratum"
+    ) |>
+    dplyr::select(dplyr::any_of(c(
+      "group", "rank", x$strata_vars, "n",
+      "predicted", "predicted_lower", "predicted_upper"
+    )))
+
+  strata_labels <-
+    x$original_data |>
+    dplyr::select(dplyr::any_of(x$strata_vars)) |>
+    labelled::get_variable_labels(null_action = "fill")
+
+  res <-
+    res |>
+    labelled::set_variable_labels(.labels = strata_labels)
+
+  res
 }
 
 #' @rdname tbl_maihda
@@ -666,11 +826,10 @@ plot_strata_predictions <- function(
 
   d <-
     x |>
-    tbl_strata_predictions(
+    get_strata_predictions(
       which = which,
       scale = scale,
-      n_strata = n_strata,
-      return_data = TRUE
+      n_strata = n_strata
     ) |>
     dplyr::ungroup()
 
@@ -864,7 +1023,12 @@ plot_maihda_predictions_by <- function(
 
 #' @rdname tbl_maihda
 #' @export
-glance_maihda_model <- function(x) {
+glance_maihda_model <- function(
+  x,
+  bootstrap_vpc = FALSE,
+  conf.level = 0.95,
+  n_boot = 1000
+) {
   rlang::check_installed("broom")
   rlang::check_installed("MAIHDA")
 
@@ -873,7 +1037,10 @@ glance_maihda_model <- function(x) {
 
   mt <-
     x |>
-    MAIHDA::maihda_table() |>
+    MAIHDA::maihda_table(
+      bootstrap = bootstrap_vpc,
+      conf_level = conf.level
+    ) |>
     purrr::pluck("models") |>
     dplyr::filter(.data$statistic != "Intercept") |>
     dplyr::mutate(
@@ -906,6 +1073,15 @@ glance_maihda_model <- function(x) {
 
   if (!is.null(x$pcv) && inherits(x$pcv, "pcv_result"))
     res$pcv <- x$pcv$pcv
+
+  # adding Nakagawa's R2 and unadjusted ICC
+  if (x$engine %in% c("lme4", "brms") && rlang::is_installed("performance")) {
+    r2 <- x$model |> performance::r2_nakagawa()
+    res$r2cond <- r2$R2_conditional
+    res$r2marg <- r2$R2_marginal
+    icc <- x$model |> performance::icc()
+    res$uicc <- icc$ICC_unadjusted
+  }
 
   res
 }

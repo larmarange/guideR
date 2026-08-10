@@ -131,7 +131,7 @@ test_that("tbl function for MAIHDA analysis does not produce an error", {
   # weighted MAIHDA
   skip_if_not_installed("WeMix")
   d <- titanic
-  d$weight <- 1
+  d$weight <- stats::runif(nrow(d), min = .75, max = 1.25)
   wm <- MAIHDA::maihda(
     Survived ~ Age + Sex + Class + (1 | Age:Sex:Class),
     data = d,
