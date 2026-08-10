@@ -6,6 +6,12 @@
 
 - [`plot_strata_predictions()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md)
   to plot the predictions of a MAIHDA model by strata
+- new `bootstrap_vpc` and `bootstrap_pcv` arguments in
+  [`tbl_maihda()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md)
+  and
+  [`tbl_partially_adjusted_maihda()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md)
+- [`calculate_partially_adjusted_maihda()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md)
+  to pre-compute partially adjusted MAIHDA
 - new `stratified_by` argument for
   [`plot_categorical()`](https://larmarange.github.io/guideR/dev/reference/plot_categorical.md),
   [`plot_continuous()`](https://larmarange.github.io/guideR/dev/reference/plot_continuous.md)

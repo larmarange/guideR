@@ -105,6 +105,17 @@ being under active development, the proposed functions here are experimental.</p
 <span>  return_data <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
+<span><span class="fu">calculate_partially_adjusted_maihda</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  conf.level <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  global_p <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  bootstrap_vpc <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  bootstrap_pcv <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  n_boot <span class="op">=</span> <span class="fl">1000</span>,</span>
+<span>  twomodels_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Null model"</span>, <span class="st">"Fully adjusted model"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu">tbl_strata_info</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">20</span>, <span class="fl">30</span>, <span class="fl">50</span>, <span class="fl">100</span><span class="op">)</span>,</span>
@@ -180,7 +191,7 @@ being under active development, the proposed functions here are experimental.</p
 
 
 <dt id="arg-bootstrap-vpc">bootstrap_vpc<a class="anchor" aria-label="anchor" href="#arg-bootstrap-vpc"></a></dt>
-<dd><p>logical indicating whether to compute paramteric
+<dd><p>logical indicating whether to compute parametric
 bootstrap confidence intervals for VPC/ICC; supported only for
 <code>engine = "lme4"</code>; when using <code>engine = "brms"</code>, posterior credible intervals
 are always returned; could be very time-consuming; cf.
@@ -300,18 +311,25 @@ in variance). It accepts a <code>maihda_analysis</code> object created with
 <code><a href="https://hdbt.github.io/MAIHDA/reference/maihda.html" class="external-link">MAIHDA::maihda()</a></code>, a single <code>maihda_model</code> created with
 <code><a href="https://hdbt.github.io/MAIHDA/reference/fit_maihda.html" class="external-link">MAIHDA::fit_maihda()</a></code> or a list of several <code>maihfda_model</code> objects. For this
 last case, PCV should be manually added to the models to be displayed (see
-examples).</p>
+examples). When bootstrapped confidence intervals are requested, the
+computation time could be very long. In such case, you can call
+<code>tbl_maihda()</code> with <code>return_data = TRUE</code>, save the result and pass it to
+<code>tbl_maihda()</code> to display the table.</p>
 <p><code>tbl_partially_adjusted_maihda()</code> is an helper allowing to compute and
-display all partially adjusted models (see examples).</p>
+display all partially adjusted models (see examples). When bootstrapped
+confidence intervals are requested, the computation could be very long. In
+such case, it could be relevant to use
+<code>calculate_partially_adjusted_maihda()</code> to save the result of the computation
+and then to pass it directly to <code>tbl_maihda()</code>.</p>
 <p><code>tbl_strata_info()</code> is intended to replicate Table 2, showing the number of
 strata having a certain sample size.</p>
-<p><code>tbl_strata_predictions()</code> is intended to replicate Table, showing the strata
-with the highest and the lowest predicted value. If a <code>maihda_analysis</code>
-object is passed to <code>tbl_strata_predictions()</code>, the null model is
-taken into account by default for computing the predicted values, following
-the behavior of <code><a href="https://hdbt.github.io/MAIHDA/reference/maihda_table.html" class="external-link">MAIHDA::maihda_table()</a></code>. It should be noted that in Evans
-et al. 2024, the authors used the adjusted model, which could be done with
-the argument <code>which = "adjusted"</code>.</p>
+<p><code>tbl_strata_predictions()</code> is intended to replicate Table 4, showing the
+strata with the highest and the lowest predicted value. If a
+<code>maihda_analysis</code> object is passed to <code>tbl_strata_predictions()</code>, the null
+model is taken into account by default for computing the predicted values,
+following the behavior of <code><a href="https://hdbt.github.io/MAIHDA/reference/maihda_table.html" class="external-link">MAIHDA::maihda_table()</a></code>. It should be noted that
+in Evans et al. 2024, the authors used the adjusted model, which could be
+done with the argument <code>which = "adjusted"</code>.</p>
 <p><code>plot_strata_predictions()</code> allows to visually compare predicted values
 by strata according to one or several specific variable defining the strata.</p>
 <p>To be noted, themes from the <a href="https://www.danieldsjoberg.com/gtsummary/reference/theme_gtsummary.html" class="external-link">gtsummary</a> package
