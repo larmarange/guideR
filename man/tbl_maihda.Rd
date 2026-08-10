@@ -3,6 +3,7 @@
 \name{tbl_maihda}
 \alias{tbl_maihda}
 \alias{tbl_partially_adjusted_maihda}
+\alias{calculate_partially_adjusted_maihda}
 \alias{tbl_strata_info}
 \alias{tbl_strata_predictions}
 \alias{get_strata_predictions}
@@ -57,6 +58,17 @@ tbl_partially_adjusted_maihda(
   notes_labels = list(n_strata = "Strata:", nobs = "Observations:", engine = "Engine:",
     family = "Family:", context = "Variable(s) in context:"),
   return_data = FALSE
+)
+
+calculate_partially_adjusted_maihda(
+  x,
+  conf.level = 0.95,
+  ...,
+  global_p = FALSE,
+  bootstrap_vpc = FALSE,
+  bootstrap_pcv = FALSE,
+  n_boot = 1000,
+  twomodels_labels = c("Null model", "Fully adjusted model")
 )
 
 tbl_strata_info(
@@ -121,7 +133,7 @@ glance_maihda_model(x, bootstrap_vpc = FALSE, conf.level = 0.95, n_boot = 1000)
 \item{global_p}{display global p-value instead of terms p-value (see
 \code{\link[gtsummary:add_global_p]{gtsummary::add_global_p()}}), not available if \code{engine = "wemix"}.}
 
-\item{bootstrap_vpc}{logical indicating whether to compute paramteric
+\item{bootstrap_vpc}{logical indicating whether to compute parametric
 bootstrap confidence intervals for VPC/ICC; supported only for
 \code{engine = "lme4"}; when using \code{engine = "brms"}, posterior credible intervals
 are always returned; could be very time-consuming; cf.
@@ -203,21 +215,28 @@ in variance). It accepts a \code{maihda_analysis} object created with
 \code{\link[MAIHDA:maihda]{MAIHDA::maihda()}}, a single \code{maihda_model} created with
 \code{\link[MAIHDA:fit_maihda]{MAIHDA::fit_maihda()}} or a list of several \code{maihfda_model} objects. For this
 last case, PCV should be manually added to the models to be displayed (see
-examples).
+examples). When bootstrapped confidence intervals are requested, the
+computation time could be very long. In such case, you can call
+\code{tbl_maihda()} with \code{return_data = TRUE}, save the result and pass it to
+\code{tbl_maihda()} to display the table.
 
 \code{tbl_partially_adjusted_maihda()} is an helper allowing to compute and
-display all partially adjusted models (see examples).
+display all partially adjusted models (see examples). When bootstrapped
+confidence intervals are requested, the computation could be very long. In
+such case, it could be relevant to use
+\code{calculate_partially_adjusted_maihda()} to save the result of the computation
+and then to pass it directly to \code{tbl_maihda()}.
 
 \code{tbl_strata_info()} is intended to replicate Table 2, showing the number of
 strata having a certain sample size.
 
-\code{tbl_strata_predictions()} is intended to replicate Table, showing the strata
-with the highest and the lowest predicted value. If a \code{maihda_analysis}
-object is passed to \code{tbl_strata_predictions()}, the null model is
-taken into account by default for computing the predicted values, following
-the behavior of \code{\link[MAIHDA:maihda_table]{MAIHDA::maihda_table()}}. It should be noted that in Evans
-et al. 2024, the authors used the adjusted model, which could be done with
-the argument \code{which = "adjusted"}.
+\code{tbl_strata_predictions()} is intended to replicate Table 4, showing the
+strata with the highest and the lowest predicted value. If a
+\code{maihda_analysis} object is passed to \code{tbl_strata_predictions()}, the null
+model is taken into account by default for computing the predicted values,
+following the behavior of \code{\link[MAIHDA:maihda_table]{MAIHDA::maihda_table()}}. It should be noted that
+in Evans et al. 2024, the authors used the adjusted model, which could be
+done with the argument \code{which = "adjusted"}.
 
 \code{plot_strata_predictions()} allows to visually compare predicted values
 by strata according to one or several specific variable defining the strata.

@@ -14,21 +14,28 @@
 #' [MAIHDA::maihda()], a single `maihda_model` created with
 #' [MAIHDA::fit_maihda()] or a list of several `maihfda_model` objects. For this
 #' last case, PCV should be manually added to the models to be displayed (see
-#' examples).
+#' examples). When bootstrapped confidence intervals are requested, the
+#' computation time could be very long. In such case, you can call
+#' `tbl_maihda()` with `return_data = TRUE`, save the result and pass it to
+#' `tbl_maihda()` to display the table.
 #'
 #' `tbl_partially_adjusted_maihda()` is an helper allowing to compute and
-#' display all partially adjusted models (see examples).
+#' display all partially adjusted models (see examples). When bootstrapped
+#' confidence intervals are requested, the computation could be very long. In
+#' such case, it could be relevant to use
+#' `calculate_partially_adjusted_maihda()` to save the result of the computation
+#' and then to pass it directly to `tbl_maihda()`.
 #'
 #' `tbl_strata_info()` is intended to replicate Table 2, showing the number of
 #' strata having a certain sample size.
 #'
-#' `tbl_strata_predictions()` is intended to replicate Table, showing the strata
-#' with the highest and the lowest predicted value. If a `maihda_analysis`
-#' object is passed to `tbl_strata_predictions()`, the null model is
-#' taken into account by default for computing the predicted values, following
-#' the behavior of [MAIHDA::maihda_table()]. It should be noted that in Evans
-#' et al. 2024, the authors used the adjusted model, which could be done with
-#' the argument `which = "adjusted"`.
+#' `tbl_strata_predictions()` is intended to replicate Table 4, showing the
+#' strata with the highest and the lowest predicted value. If a
+#' `maihda_analysis` object is passed to `tbl_strata_predictions()`, the null
+#' model is taken into account by default for computing the predicted values,
+#' following the behavior of [MAIHDA::maihda_table()]. It should be noted that
+#' in Evans et al. 2024, the authors used the adjusted model, which could be
+#' done with the argument `which = "adjusted"`.
 #'
 #' `plot_strata_predictions()` allows to visually compare predicted values
 #' by strata according to one or several specific variable defining the strata.
@@ -44,7 +51,7 @@
 #' @param ... additional parameters passed to [gtsummary::tbl_regression()]
 #' @param global_p display global p-value instead of terms p-value (see
 #' [gtsummary::add_global_p()]), not available if `engine = "wemix"`.
-#' @param bootstrap_vpc logical indicating whether to compute paramteric
+#' @param bootstrap_vpc logical indicating whether to compute parametric
 #' bootstrap confidence intervals for VPC/ICC; supported only for
 #' `engine = "lme4"`; when using `engine = "brms"`, posterior credible intervals
 #' are always returned; could be very time-consuming; cf.
@@ -570,6 +577,32 @@ fit_partially_adjusted_maihda <- function(
   )
   pa
 }
+
+#' @rdname tbl_maihda
+#' @export
+calculate_partially_adjusted_maihda <- function(
+  x,
+  conf.level = 0.95,
+  ...,
+  global_p = FALSE,
+  bootstrap_vpc = FALSE,
+  bootstrap_pcv = FALSE,
+  n_boot = 1000,
+  twomodels_labels = c("Null model", "Fully adjusted model")
+) {
+  tbl_partially_adjusted_maihda(
+    x = x,
+    conf.level = conf.level,
+    ...,
+    global_p = global_p,
+    bootstrap_vpc = bootstrap_vpc,
+    bootstrap_pcv = bootstrap_pcv,
+    n_boot = n_boot,
+    twomodels_labels = twomodels_labels,
+    return_data = TRUE
+  )
+}
+
 
 #' @rdname tbl_maihda
 #' @param breaks breaks for sample size per stratum

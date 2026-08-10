@@ -4,6 +4,10 @@
 
 * `plot_strata_predictions()` to plot the predictions of a MAIHDA model 
   by strata
+* new `bootstrap_vpc` and `bootstrap_pcv` arguments in `tbl_maihda()` and
+  `tbl_partially_adjusted_maihda()`
+* `calculate_partially_adjusted_maihda()` to pre-compute partially adjusted 
+  MAIHDA
 * new `stratified_by` argument for `plot_categorical()`, `plot_continuous()`
   and `plot_means()`
 * new `type` argument for `tbl_strata_info()`
