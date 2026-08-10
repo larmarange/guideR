@@ -5,6 +5,7 @@
 \alias{tbl_partially_adjusted_maihda}
 \alias{tbl_strata_info}
 \alias{tbl_strata_predictions}
+\alias{get_strata_predictions}
 \alias{plot_strata_predictions}
 \alias{plot_maihda_predictions_by}
 \alias{glance_maihda_model}
@@ -75,6 +76,14 @@ tbl_strata_predictions(
   column_labels = list(rank = "Rank", n = "n", predicted = "Predicted", ci = "95\% CI"),
   group_labels = list("highest", "lowest"),
   digits = 1L
+)
+
+get_strata_predictions(
+  x,
+  n_strata = Inf,
+  scale = c("response", "link"),
+  which = c("null", "adjusted"),
+  group_labels = list("highest", "lowest")
 )
 
 plot_strata_predictions(

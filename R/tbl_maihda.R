@@ -723,7 +723,7 @@ tbl_strata_predictions <- function(
   tbl
 }
 
-#' @rdname tbl_maiha
+#' @rdname tbl_maihda
 #' @export
 get_strata_predictions <- function(
   x,
