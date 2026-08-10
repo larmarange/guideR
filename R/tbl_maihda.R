@@ -163,7 +163,7 @@
 #' if (rlang::is_installed("WeMix")) {
 #'
 #' d <- titanic
-#' d$weight <- 1
+#' d$weight <- runif(nrow(d), min = .75, max = 1.25)
 #' wm <- MAIHDA::maihda(
 #'   Survived ~ Age + Sex + Class + (1 | Age:Sex:Class),
 #'   data = d,
@@ -833,6 +833,10 @@ get_strata_predictions <- function(
 #' @param sort should the plot be sorted?
 #' @param highlight_n_below highlight strata with a number of observations
 #' below this number (`NULL` for not highlight, incompatible with `geom = "bar`)
+#' @param show_mean_line add a vertical line displaying the mean prediction?
+#' @param mean_line_color color of the mean line
+#' @param mean_line_type type of the mean line
+#' @param mean_line_width width of the mean line
 #' @export
 plot_strata_predictions <- function(
   x,
@@ -842,7 +846,11 @@ plot_strata_predictions <- function(
   scale = c("response", "link"),
   which = c("null", "adjusted"),
   sort = TRUE,
-  highlight_n_below = NULL
+  highlight_n_below = NULL,
+  show_mean_line = FALSE,
+  mean_line_color = "#AA4499",
+  mean_line_type = "dashed",
+  mean_line_width = .5
 ) {
   rlang::check_installed("ggstats")
   scale <- match.arg(scale)
@@ -1027,31 +1035,24 @@ plot_strata_predictions <- function(
       ggplot2::scale_x_continuous(labels = scales::percent)
   }
 
-  p
-}
+  if (show_mean_line) {
+    v <- stats::predict(x$model, type = type)
+    if (is.null(x$sampling_weights)) {
+      ml <- mean(v, na.rm = TRUE)
+    } else {
+      ml <- stats::weighted.mean(v, x$data[[x$sampling_weights]], na.rm = TRUE)
+    }
+    p <-
+      p +
+      ggplot2::geom_vline(
+        xintercept = ml,
+        color = mean_line_color,
+        linetype = mean_line_type,
+        linewidth = mean_line_width
+      )
+  }
 
-#' @export
-#' @rdname tbl_maihda
-plot_maihda_predictions_by <- function(
-  x,
-  by = NULL,
-  scale = c("response", "link"),
-  which = c("null", "adjusted"),
-  sort = TRUE
-) {
-  lifecycle::deprecate_warn(
-    "0.12.0",
-    "plot_maihda_predictions_by()",
-    "plot_maihda_predictions()"
-  )
-  plot_strata_predictions(
-    x = x,
-    by = {{ by }},
-    n_strata = Inf,
-    scale = scale,
-    which = which,
-    sort = sort
-  )
+  p
 }
 
 #' @rdname tbl_maihda

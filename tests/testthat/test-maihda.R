@@ -90,6 +90,9 @@ test_that("tbl function for MAIHDA analysis does not produce an error", {
   expect_no_error(
     m |> plot_strata_predictions(by = Age, highlight_n_below = 20)
   )
+  expect_no_error(
+    m |> plot_strata_predictions(show_mean_line = TRUE)
+  )
 
   # Partially adjusted models
 
@@ -141,5 +144,8 @@ test_that("tbl function for MAIHDA analysis does not produce an error", {
   )
   expect_no_error(
     wm |> tbl_maihda(exponentiate = TRUE)
+  )
+  expect_no_error(
+    wm |> plot_strata_predictions(show_mean_line = TRUE)
   )
 })

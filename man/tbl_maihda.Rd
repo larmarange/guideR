@@ -8,7 +8,6 @@
 \alias{tbl_strata_predictions}
 \alias{get_strata_predictions}
 \alias{plot_strata_predictions}
-\alias{plot_maihda_predictions_by}
 \alias{glance_maihda_model}
 \title{Table summary of for MAIHDA analysis}
 \usage{
@@ -106,15 +105,11 @@ plot_strata_predictions(
   scale = c("response", "link"),
   which = c("null", "adjusted"),
   sort = TRUE,
-  highlight_n_below = NULL
-)
-
-plot_maihda_predictions_by(
-  x,
-  by = NULL,
-  scale = c("response", "link"),
-  which = c("null", "adjusted"),
-  sort = TRUE
+  highlight_n_below = NULL,
+  show_mean_line = FALSE,
+  mean_line_color = "#AA4499",
+  mean_line_type = "dashed",
+  mean_line_width = 0.5
 )
 
 glance_maihda_model(x, bootstrap_vpc = FALSE, conf.level = 0.95, n_boot = 1000)
@@ -198,6 +193,14 @@ list of variables to compare by}
 
 \item{highlight_n_below}{highlight strata with a number of observations
 below this number (\code{NULL} for not highlight, incompatible with \verb{geom = "bar})}
+
+\item{show_mean_line}{add a vertical line displaying the mean prediction?}
+
+\item{mean_line_color}{color of the mean line}
+
+\item{mean_line_type}{type of the mean line}
+
+\item{mean_line_width}{width of the mean line}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\if{html}{\out{<br />}}
@@ -333,7 +336,7 @@ m |> tbl_partially_adjusted_maihda(exponentiate = TRUE)
 if (rlang::is_installed("WeMix")) {
 
 d <- titanic
-d$weight <- 1
+d$weight <- runif(nrow(d), min = .75, max = 1.25)
 wm <- MAIHDA::maihda(
   Survived ~ Age + Sex + Class + (1 | Age:Sex:Class),
   data = d,
