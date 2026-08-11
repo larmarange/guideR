@@ -80,36 +80,40 @@ d <- titanic |>
 mod <- glm(as.factor(Survived) ~ ., data = d, family = binomial())
 # step(mod) should produce an error
 mod2 <- step_with_na(mod, full_data = d)
-#> Start:  AIC=1473.08
-#> as.factor(Survived) ~ Class + Sex + Age + Group
+#> Start:  AIC=712.54
+#> as.factor(Survived) ~ Class + Sex + Age + n + Group
 #> 
-#>         Df Deviance    AIC
-#> - Group  1   1459.4 1471.4
-#> <none>       1459.1 1473.1
-#> - Age    1   1462.2 1474.2
-#> - Class  3   1527.8 1535.8
-#> - Sex    1   1704.4 1716.4
+#>         Df Deviance     AIC
+#> - Group  1   697.72  711.72
+#> <none>       696.54  712.54
+#> - Age    1   735.85  749.85
+#> - Sex    1   765.88  779.88
+#> - Class  3  1069.25 1079.25
+#> - n      1  1459.08 1473.08
 #> 
-#> Step:  AIC=1471.42
-#> as.factor(Survived) ~ Class + Sex + Age
+#> Step:  AIC=711.72
+#> as.factor(Survived) ~ Class + Sex + Age + n
 #> 
-#>         Df Deviance    AIC
-#> <none>       1459.4 1471.4
-#> - Age    1   1462.6 1472.6
-#> - Class  3   1528.3 1534.3
-#> - Sex    1   1704.8 1714.8
+#>         Df Deviance     AIC
+#> <none>       697.72  711.72
+#> - Age    1   736.66  748.66
+#> - Sex    1   767.24  779.24
+#> - Class  3  1069.62 1077.62
+#> - n      1  1459.42 1471.42
 mod2
 #> 
-#> Call:  glm(formula = as.factor(Survived) ~ Class + Sex + Age, family = binomial(), 
+#> Call:  glm(formula = as.factor(Survived) ~ Class + Sex + Age + n, family = binomial(), 
 #>     data = d)
 #> 
 #> Coefficients:
 #> (Intercept)     Class2nd     Class3rd    ClassCrew      SexMale     AgeChild  
-#>      2.0438      -1.0181      -1.7778      -0.8577      -2.4201       1.0615  
+#>     4.78600     -1.08991     -1.55871      6.48346     -1.52340     -1.81226  
+#>           n  
+#>    -0.02924  
 #> 
-#> Degrees of Freedom: 2200 Total (i.e. Null);  2195 Residual
+#> Degrees of Freedom: 2200 Total (i.e. Null);  2194 Residual
 #> Null Deviance:       2769 
-#> Residual Deviance: 2210  AIC: 2222
+#> Residual Deviance: 1043  AIC: 1057
 
 # \donttest{
 ## WITH SURVEY ---------------------------------------
