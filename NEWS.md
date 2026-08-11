@@ -12,9 +12,10 @@
   and `plot_means()`
 * new `type` argument for `tbl_strata_info()`
 
-**Renamed function**
+**Deprecated function**
 
-* `plot_maihda_predictions_by()` has been renamed `plot_strata_predictions()`
+* `plot_maihda_predictions_by()` is now soft deprecated, use
+  `plot_strata_predictions()` instead
 
 **Minor changes**
 
