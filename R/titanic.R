@@ -10,7 +10,7 @@
 titanic <-
   datasets::Titanic |>
   dplyr::as_tibble() |>
-  tidyr::uncount(.data$n) |>
+  tidyr::uncount(n) |>
   dplyr::mutate(dplyr::across(dplyr::where(is.character), factor)) |>
   labelled::set_variable_labels(
     Class = "Passenger's class",
