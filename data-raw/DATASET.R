@@ -11,4 +11,8 @@ bootstrapped_maihda <-
     bootstrap_vpc = TRUE
   )
 
-usethis::use_data(bootstrapped_maihda, overwrite = TRUE)
+usethis::use_data(
+  bootstrapped_maihda,
+  overwrite = TRUE,
+  internal = TRUE
+)
