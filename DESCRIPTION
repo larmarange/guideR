@@ -38,6 +38,7 @@ Imports:
     srvyr,
     stats,
     stringr,
+    tibble,
     tidyr,
     tidyselect,
     utils
@@ -72,4 +73,4 @@ Suggests:
     WeMix
 Config/testthat/edition: 3
 Language: en-US
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.0

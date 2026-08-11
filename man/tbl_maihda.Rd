@@ -27,14 +27,23 @@ tbl_maihda(
     "Variance Partition Coefficient (VPC / adjusted ICC)", pcv =
     "Proportional Change in Variance (PCV)", auc =
     "Area Under Receiver Operating Characteristic Curve (AUC)", mor =
-    "Median Odds Ratio (MOR)", csvpc = "Context share (VPC)", r2cond =
-    "Conditional Nakagawa's R2 (fixed + random effects)", r2marg =
+    "Median Odds Ratio (MOR)", cs =
+    "Context share (between-context component of unexplained variance)", as =
+    "Additive share of between-strata variance", is =
+    "Interaction share of between-strata variance", r2cond =
+    "Conditional Nakagawa's R2 (fixed + random effects)", 
+     r2marg =
     "Marginal Nakagawa's R2 (fixed effects only)", uicc =
-    "Unadjusted ICC (intraclass correlation coefficient)"),
+    "Unadjusted ICC (intraclass correlation coefficient)", avar =
+    "Additive (sum of dimension main effects) variance", ivar =
+    "Intersectional interaction variance", tvar = "Total between-strata variance", decomp
+    = "Additive vs. Intersectional Decomposition (crossed-dimensions)", pdav =
+    "Per-dimension additive variance"),
   statistics_include = -dplyr::any_of("bssd"),
   notes = TRUE,
   notes_labels = list(n_strata = "Strata:", nobs = "Observations:", engine = "Engine:",
     family = "Family:", context = "Variable(s) in context:"),
+  hide_coefficients = FALSE,
   return_data = FALSE
 )
 
@@ -53,11 +62,12 @@ tbl_partially_adjusted_maihda(
     "Between-stratum standard deviation", vpc = "Variance Partition Coefficient (VPC)",
     pcv = "Proportional Change in Variance (PCV)", auc =
     "Area Under Receiver Operating Characteristic Curve (AUC)", mor =
-    "Median Odds Ratio (MOR)", csvpc = "Context share (VPC)"),
+    "Median Odds Ratio (MOR)", cs = "Context share (VPC)"),
   statistics_include = -dplyr::any_of("bssd"),
   notes = TRUE,
   notes_labels = list(n_strata = "Strata:", nobs = "Observations:", engine = "Engine:",
     family = "Family:", context = "Variable(s) in context:"),
+  hide_coefficients = FALSE,
   return_data = FALSE
 )
 
@@ -162,6 +172,9 @@ tibble returned by \code{glance_maihda_model()}}
 model family) about the analysis?}
 
 \item{notes_labels}{name list of labels for the notes}
+
+\item{hide_coefficients}{should model coefficients be hidden? (display only
+summary statistics)}
 
 \item{return_data}{return a data frame instead of a table}
 
@@ -336,6 +349,16 @@ list(Null = m0, Age = m1, Sex = m2, Class = m3) |>
 
 # in one call
 m |> tbl_partially_adjusted_maihda(exponentiate = TRUE)
+
+# crossed-dimension MAIHDA
+cdm <- MAIHDA::maihda(
+  Survived ~ 1 + (1 | Age:Sex:Class),
+  data = titanic,
+  family = binomial,
+  decomposition = "crossed-dimensions"
+)
+cdm |> tbl_maihda(exponentiate = TRUE)
+cdm |> tbl_maihda(hide_coefficients = TRUE)
 
 # sample-weighted data
 if (rlang::is_installed("WeMix")) {

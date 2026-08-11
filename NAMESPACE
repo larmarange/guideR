@@ -84,12 +84,16 @@ export(total_deviance)
 export(unrowwise)
 export(view_detailed_dictionary)
 export(view_dictionary)
-importFrom(broom.helpers,model_get_coefficients_type)
-importFrom(broom.helpers,model_get_model_frame)
-importFrom(broom.helpers,model_get_model_matrix)
-importFrom(broom.helpers,model_get_terms)
+importFrom(broom.helpers,
+  model_get_coefficients_type,
+  model_get_model_frame,
+  model_get_model_matrix,
+  model_get_terms
+)
 importFrom(dplyr,as_tibble)
 importFrom(lifecycle,deprecated)
-importFrom(rlang,.data)
-importFrom(rlang,.env)
+importFrom(rlang,
+  .data,
+  .env
+)
 importFrom(tidyr,uncount)

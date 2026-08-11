@@ -74,6 +74,9 @@
 #' @param notes display some notes (number of strata, of observations, engine,
 #' model family) about the analysis?
 #' @param notes_labels name list of labels for the notes
+#' @param hide_coefficients should model coefficients be hidden? (display only
+#' summary statistics)
+#' @param return_data return a data frame instead of a table
 #' @export
 #' @keywords models
 #' @examplesIf rlang::is_installed(c("gtsummary", "gt", "MAIHDA", "broom.mixed"))
@@ -161,6 +164,16 @@
 #' # in one call
 #' m |> tbl_partially_adjusted_maihda(exponentiate = TRUE)
 #'
+#' # crossed-dimension MAIHDA
+#' cdm <- MAIHDA::maihda(
+#'   Survived ~ 1 + (1 | Age:Sex:Class),
+#'   data = titanic,
+#'   family = binomial,
+#'   decomposition = "crossed-dimensions"
+#' )
+#' cdm |> tbl_maihda(exponentiate = TRUE)
+#' cdm |> tbl_maihda(hide_coefficients = TRUE)
+#'
 #' # sample-weighted data
 #' if (rlang::is_installed("WeMix")) {
 #'
@@ -195,10 +208,17 @@ tbl_maihda <- function(
     pcv = "Proportional Change in Variance (PCV)",
     auc = "Area Under Receiver Operating Characteristic Curve (AUC)",
     mor = "Median Odds Ratio (MOR)",
-    csvpc = "Context share (VPC)",
+    cs = "Context share (between-context component of unexplained variance)",
+    as = "Additive share of between-strata variance",
+    is = "Interaction share of between-strata variance",
     r2cond = "Conditional Nakagawa's R2 (fixed + random effects)",
     r2marg = "Marginal Nakagawa's R2 (fixed effects only)",
-    uicc = "Unadjusted ICC (intraclass correlation coefficient)"
+    uicc = "Unadjusted ICC (intraclass correlation coefficient)",
+    avar = "Additive (sum of dimension main effects) variance",
+    ivar = "Intersectional interaction variance",
+    tvar = "Total between-strata variance",
+    decomp = "Additive vs. Intersectional Decomposition (crossed-dimensions)",
+    pdav = "Per-dimension additive variance"
   ),
   statistics_include = -dplyr::any_of("bssd"),
   notes = TRUE,
@@ -209,12 +229,18 @@ tbl_maihda <- function(
     family = "Family:",
     context = "Variable(s) in context:"
   ),
+  hide_coefficients = FALSE,
   return_data = FALSE
 ) {
   rlang::check_installed("gtsummary")
   rlang::check_installed("gt")
   rlang::check_installed("MAIHDA")
   rlang::check_installed("broom.mixed")
+
+  if (inherits(x, "maihda_analysis") && x$mode == "crossed-dimensions") {
+    x$model$decomposition <- x$decomposition
+    x <- x$model
+  }
 
   if (inherits(x, "maihda_model")) {
     if (bootstrap_pcv) {
@@ -239,13 +265,16 @@ tbl_maihda <- function(
         global_p = global_p,
         bootstrap_vpc = bootstrap_vpc,
         n_boot = n_boot,
+        statistics_header = statistics_header,
         statistics_labels = statistics_labels,
-        statistics_include = {{ statistics_include }}
+        statistics_include = {{ statistics_include }},
+        hide_coefficients = hide_coefficients
       ) |>
       pcv_after_vpc() |>
-      add_glance_header(header = statistics_header) |>
       bold_variable_group_headers()
     if (notes) res <- res |> add_maihda_notes(x, notes_labels)
+    if (!hide_coefficients)
+      res <- res |> add_glance_header(header = statistics_header)
     return(res)
   }
 
@@ -297,8 +326,10 @@ tbl_maihda <- function(
           global_p = global_p,
           bootstrap_vpc = bootstrap_vpc,
           n_boot = n_boot,
+          statistics_header = statistics_header,
           statistics_labels = statistics_labels,
-          statistics_include = {{ statistics_include }}
+          statistics_include = {{ statistics_include }},
+          hide_coefficients = hide_coefficients
         )
       }
     ) |>
@@ -310,8 +341,10 @@ tbl_maihda <- function(
       \(x) dplyr::arrange(x, .data$row_type == "glance_statistic")
     ) |>
     pcv_after_vpc() |>
-    add_glance_header(header = statistics_header) |>
     bold_variable_group_headers()
+
+  if (!hide_coefficients)
+    res <- res |> add_glance_header(header = statistics_header)
 
   if (notes)
     res <- res |> add_maihda_notes(x[[1]], notes_labels)
@@ -326,8 +359,10 @@ tbl_maihda_model <- function(
   global_p = FALSE,
   bootstrap_vpc = FALSE,
   n_boot = 1000,
+  statistics_header = "Summary statistics",
   statistics_labels = NULL,
-  statistics_include = dplyr::everything()
+  statistics_include = dplyr::everything(),
+  hide_coefficients = FALSE
 ) {
   if (!inherits(x, "maihda_model"))
     cli::cli_abort(
@@ -347,13 +382,22 @@ tbl_maihda_model <- function(
     stats <- x$glance_table
   }
 
+  # Adding labels for per-dimension additive variance
+  pd_vars <- stats |> dplyr::select(dplyr::starts_with("pdav_")) |> colnames()
+  if (length(pd_vars) > 0) {
+    vl <- x$original_data |>
+      labelled::get_variable_labels(null_action = "fill", unlist = TRUE)
+    pdav_labels <- vl[pd_vars |> stringr::str_sub(6)] |> as.list()
+    names(pdav_labels) <- tmp$pdav
+    statistics_labels <- statistics_labels |> append(pdav_labels)
+  }
+
   # adding PCV
   if (!is.null(x$pcv) && inherits(x$pcv, "pcv_result")) {
     stats$pcv <- x$pcv$pcv
   } else {
     stats$pcv <- NA_real_
   }
-
 
   if (x$engine == "wemix") {
     tbl <-
@@ -387,7 +431,7 @@ tbl_maihda_model <- function(
       include = {{ statistics_include }},
       fmt_fun = list(
         everything() ~ gtsummary::label_style_sigfig(digits = 3),
-        dplyr::any_of(c("vpc", "pcv", "csvpc", "r2cond", "r2marg", "uicc")) ~
+        dplyr::any_of(c("vpc", "pcv", "cs", "as", "is", "r2cond", "r2marg", "uicc")) ~ # nolint
           gtsummary::label_style_percent(digits = 1, suffix = "%")
       )
     )
@@ -410,7 +454,27 @@ tbl_maihda_model <- function(
       dplyr::filter(!.data$variable %in% c("vpc_lower", "vpc_upper"))
   }
 
-  tbl
+  if (hide_coefficients) {
+    tbl$table_body <-
+      tbl$table_body |>
+      dplyr::filter(.data$row_type == "glance_statistic")
+    tbl <- tbl |>
+      gtsummary::modify_column_hide("p.value") |>
+      gtsummary::remove_abbreviation() |>
+      gtsummary::modify_header(estimate = paste0("**", statistics_header, "**"))
+    if (all(is.na(tbl$table_body$conf.low)))
+      tbl <- tbl |> gtsummary::modify_column_hide("conf.low")
+  }
+
+  tbl |>
+    gtsummary::add_variable_group_header(
+      statistics_labels$decomp,
+      dplyr::any_of(c("avar", "ivar", "tvar"))
+    ) |>
+    gtsummary::add_variable_group_header(
+      statistics_labels$pdav,
+      dplyr::starts_with("pdav_")
+    )
 }
 
 pcv_after_vpc <- function(tbl) {
@@ -464,7 +528,6 @@ add_maihda_notes <- function(
 }
 
 #' @rdname tbl_maihda
-#' @param return_data return a data frame instead of a table
 #' @export
 tbl_partially_adjusted_maihda <- function(
   x,
@@ -484,7 +547,7 @@ tbl_partially_adjusted_maihda <- function(
     pcv = "Proportional Change in Variance (PCV)",
     auc = "Area Under Receiver Operating Characteristic Curve (AUC)",
     mor = "Median Odds Ratio (MOR)",
-    csvpc = "Context share (VPC)"
+    cs = "Context share (VPC)"
   ),
   statistics_include = -dplyr::any_of("bssd"),
   notes = TRUE,
@@ -495,6 +558,7 @@ tbl_partially_adjusted_maihda <- function(
     family = "Family:",
     context = "Variable(s) in context:"
   ),
+  hide_coefficients = FALSE,
   return_data = FALSE
 ) {
   if (!inherits(x, "maihda_analysis"))
@@ -552,6 +616,7 @@ tbl_partially_adjusted_maihda <- function(
       statistics_include = {{ statistics_include }},
       notes = notes,
       notes_labels = notes_labels,
+      hide_coefficients = hide_coefficients,
       return_data = return_data
     )
 }
@@ -1099,7 +1164,9 @@ glance_maihda_model <- function(
         .data$statistic == "Between-stratum variance" ~ "bsv",
         .data$statistic == "Between-stratum SD" ~ "bssd",
         .data$statistic == "VPC/ICC" ~ "vpc",
-        .data$statistic == "Context share (VPC)" ~ "csvpc",
+        .data$statistic == "Context share (VPC)" ~ "cs",
+        .data$statistic == "Additive share" ~ "as",
+        .data$statistic == "Interaction share" ~ "is",
         TRUE ~ tolower(.data$statistic)
       )
     )
@@ -1129,6 +1196,16 @@ glance_maihda_model <- function(
     res$r2marg <- r2$R2_marginal
     icc <- x$model |> performance::icc()
     res$uicc <- icc$ICC_unadjusted
+  }
+
+  if (!is.null(x$decomposition)) {
+    res$avar <- x$decomposition$additive_var
+    res$ivar <- x$decomposition$interaction_var
+    res$tvar <- x$decomposition$between_var
+    pd <- x$decomposition$per_dim
+    names(pd) <- paste0("pdav_", names(pd))
+    pd <- pd |> tibble::as_tibble_row()
+    res <- res |> dplyr::bind_cols(pd)
   }
 
   res

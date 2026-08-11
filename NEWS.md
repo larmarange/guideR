@@ -2,9 +2,12 @@
 
 **New features**
 
+* `tbl_maihda()` now support crossed-dimensions decomposition MAIHDA
 * `plot_strata_predictions()` to plot the predictions of a MAIHDA model 
   by strata
 * new `bootstrap_vpc` and `bootstrap_pcv` arguments in `tbl_maihda()` and
+  `tbl_partially_adjusted_maihda()`
+* new `hide_coefficients` argument in `tbl_maihda()` and 
   `tbl_partially_adjusted_maihda()`
 * `calculate_partially_adjusted_maihda()` to compute partially adjusted 
   MAIHDA
