@@ -12,7 +12,7 @@ plot_maihda_predictions_by <- function(
   lifecycle::deprecate_warn(
     "0.12.0",
     "plot_maihda_predictions_by()",
-    "plot_maihda_predictions()"
+    "plot_strata_predictions()"
   )
   plot_strata_predictions(
     x = x,
