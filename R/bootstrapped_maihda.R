@@ -16,6 +16,8 @@
 #' #     bootstrap_vpc = TRUE
 #' #   )
 #'
+#' \donttest{
 #' bootstrapped_maihda |>
 #'   tbl_maihda(exponentiate = TRUE)
+#' }
 "bootstrapped_maihda"

@@ -27,7 +27,9 @@ A list as returned by \code{\link[=calculate_partially_adjusted_maihda]{calculat
 #     bootstrap_vpc = TRUE
 #   )
 
+\donttest{
 bootstrapped_maihda |>
   tbl_maihda(exponentiate = TRUE)
+}
 }
 \keyword{datasets}
