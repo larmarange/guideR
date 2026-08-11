@@ -14,6 +14,7 @@ bootstrapped_maihda
 A list as returned by \code{\link[=calculate_partially_adjusted_maihda]{calculate_partially_adjusted_maihda()}}
 }
 \examples{
+\dontshow{if (rlang::is_installed("MAIHDA")) withAutoprint(\{ # examplesIf}
 # m <- MAIHDA::maihda(
 #   Survived ~ Age + Sex + Class + (1 | Age:Sex:Class),
 #   data = titanic,
@@ -27,9 +28,8 @@ A list as returned by \code{\link[=calculate_partially_adjusted_maihda]{calculat
 #     bootstrap_vpc = TRUE
 #   )
 
-\donttest{
 bootstrapped_maihda |>
   tbl_maihda(exponentiate = TRUE)
-}
+\dontshow{\}) # examplesIf}
 }
 \keyword{datasets}
