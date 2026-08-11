@@ -155,6 +155,8 @@
 
 ## Datasets
 
+- [`bootstrapped_maihda`](https://larmarange.github.io/guideR/dev/reference/bootstrapped_maihda.md)
+  : An example of bootstrapped MAIHDA analysis
 - [`titanic`](https://larmarange.github.io/guideR/dev/reference/titanic.md)
   : Titanic data set in long format
 

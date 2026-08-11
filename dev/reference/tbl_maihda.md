@@ -15,6 +15,7 @@ functions here are experimental.
 tbl_maihda(
   x,
   conf.level = 0.95,
+  exponentiate = FALSE,
   ...,
   global_p = FALSE,
   bootstrap_vpc = FALSE,
@@ -41,6 +42,7 @@ tbl_maihda(
 tbl_partially_adjusted_maihda(
   x,
   conf.level = 0.95,
+  exponentiate = FALSE,
   ...,
   global_p = FALSE,
   bootstrap_vpc = FALSE,
@@ -131,6 +133,10 @@ glance_maihda_model(x, bootstrap_vpc = FALSE, conf.level = 0.95, n_boot = 1000)
 - conf.level:
 
   confidence level for confidence/credible intervals
+
+- exponentiate:
+
+  should model coefficients be exponentiated?
 
 - ...:
 

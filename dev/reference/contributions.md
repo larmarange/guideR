@@ -291,6 +291,9 @@ impacted by this difference in approaches.
 # Linear model
 m <- lm(Sepal.Length ~ Sepal.Width + Species + Petal.Length, data = iris)
 m |> contributions()
+#> Registered S3 method overwritten by 'car':
+#>   method           from
+#>   na.action.merMod lme4
 #> Anova Table (Type II tests)
 #> 
 #> Response: Sepal.Length
