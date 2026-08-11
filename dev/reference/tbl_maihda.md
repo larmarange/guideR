@@ -60,10 +60,18 @@ tbl_partially_adjusted_maihda(
   twomodels_labels = c("Null model", "Fully adjusted model"),
   statistics_header = "Summary statistics",
   statistics_labels = list(bsv = "Between-stratum variance", bssd =
-    "Between-stratum standard deviation", vpc = "Variance Partition Coefficient (VPC)",
-    pcv = "Proportional Change in Variance (PCV)", auc =
+    "Between-stratum standard deviation", vpc =
+    "Variance Partition Coefficient (VPC / adjusted ICC)", pcv =
+    "Proportional Change in Variance (PCV)", auc =
     "Area Under Receiver Operating Characteristic Curve (AUC)", mor =
-    "Median Odds Ratio (MOR)", cs = "Context share (VPC)"),
+    "Median Odds Ratio (MOR)", cs =
+    "Context share (between-context component of unexplained variance)", as =
+    "Additive share of between-strata variance", is =
+    "Interaction share of between-strata variance", r2cond =
+    "Conditional Nakagawa's R2 (fixed + random effects)", 
+     r2marg =
+    "Marginal Nakagawa's R2 (fixed effects only)", uicc =
+    "Unadjusted ICC (intraclass correlation coefficient)"),
   statistics_include = -dplyr::any_of("bssd"),
   notes = TRUE,
   notes_labels = list(n_strata = "Strata:", nobs = "Observations:", engine = "Engine:",
