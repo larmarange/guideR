@@ -29,7 +29,6 @@ An object of class `list` of length 5.
 #     bootstrap_vpc = TRUE
 #   )
 
-# \donttest{
 bootstrapped_maihda |>
   tbl_maihda(exponentiate = TRUE)
 
