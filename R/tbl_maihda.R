@@ -388,7 +388,7 @@ tbl_maihda_model <- function(
     vl <- x$original_data |>
       labelled::get_variable_labels(null_action = "fill", unlist = TRUE)
     pdav_labels <- vl[pd_vars |> stringr::str_sub(6)] |> as.list()
-    names(pdav_labels) <- tmp$pdav
+    names(pdav_labels) <- pd_vars
     statistics_labels <- statistics_labels |> append(pdav_labels)
   }
 
@@ -465,6 +465,11 @@ tbl_maihda_model <- function(
     if (all(is.na(tbl$table_body$conf.low)))
       tbl <- tbl |> gtsummary::modify_column_hide("conf.low")
   }
+
+  if (is.null(statistics_labels$decomp))
+    statistics_labels$decomp <- "Additive vs. Intersectional Decomposition"
+  if (is.null(statistics_labels$pdav))
+    statistics_labels$pdav <- "Per-dimension additive variance"
 
   tbl |>
     gtsummary::add_variable_group_header(
@@ -543,11 +548,16 @@ tbl_partially_adjusted_maihda <- function(
   statistics_labels = list(
     bsv = "Between-stratum variance",
     bssd = "Between-stratum standard deviation",
-    vpc = "Variance Partition Coefficient (VPC)",
+    vpc = "Variance Partition Coefficient (VPC / adjusted ICC)",
     pcv = "Proportional Change in Variance (PCV)",
     auc = "Area Under Receiver Operating Characteristic Curve (AUC)",
     mor = "Median Odds Ratio (MOR)",
-    cs = "Context share (VPC)"
+    cs = "Context share (between-context component of unexplained variance)",
+    as = "Additive share of between-strata variance",
+    is = "Interaction share of between-strata variance",
+    r2cond = "Conditional Nakagawa's R2 (fixed + random effects)",
+    r2marg = "Marginal Nakagawa's R2 (fixed effects only)",
+    uicc = "Unadjusted ICC (intraclass correlation coefficient)"
   ),
   statistics_include = -dplyr::any_of("bssd"),
   notes = TRUE,
