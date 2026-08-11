@@ -48,6 +48,7 @@
 #' `MAIHDA::maihda(decomposition = "two-model")` is allowed; for
 #' `tbl_strata_info()`, the result of [MAIHDA::make_strata()] is also accepted
 #' @param conf.level confidence level for confidence/credible intervals
+#' @param exponentiate should model coefficients be exponentiated?
 #' @param ... additional parameters passed to [gtsummary::tbl_regression()]
 #' @param global_p display global p-value instead of terms p-value (see
 #' [gtsummary::add_global_p()]), not available if `engine = "wemix"`.
@@ -178,6 +179,7 @@
 tbl_maihda <- function(
   x,
   conf.level = 0.95,
+  exponentiate = FALSE,
   ...,
   global_p = FALSE,
   bootstrap_vpc = FALSE,
@@ -231,6 +233,7 @@ tbl_maihda <- function(
       x |>
       tbl_maihda_model(
         conf.level = conf.level,
+        exponentiate = exponentiate,
         ...,
         global_p = global_p,
         bootstrap_vpc = bootstrap_vpc,
@@ -238,6 +241,7 @@ tbl_maihda <- function(
         statistics_labels = statistics_labels,
         statistics_include = {{ statistics_include }}
       ) |>
+      pcv_after_vpc() |>
       add_glance_header(header = statistics_header) |>
       bold_variable_group_headers()
     if (notes) res <- res |> add_maihda_notes(x, notes_labels)
@@ -287,6 +291,7 @@ tbl_maihda <- function(
         tbl_maihda_model(
           x,
           conf.level = conf.level,
+          exponentiate = exponentiate,
           ...,
           global_p = global_p,
           bootstrap_vpc = bootstrap_vpc,
@@ -341,6 +346,10 @@ tbl_maihda_model <- function(
     stats <- x$glance_table
   }
 
+  # adding pcv
+  if (!is.null(x$pcv) && inherits(x$pcv, "pcv_result"))
+    stats$pcv <- x$pcv$pcv
+
   if (x$engine == "wemix") {
     tbl <-
       x |>
@@ -377,6 +386,7 @@ tbl_maihda_model <- function(
           gtsummary::label_style_percent(digits = 1, suffix = "%")
       )
     )
+
   # adding CI for PCV
   if (!is.null(x$pcv) && x$pcv$bootstrap) {
     tbl$table_body[tbl$table_body$variable == "pcv", "conf.low"] <-
@@ -454,6 +464,7 @@ add_maihda_notes <- function(
 tbl_partially_adjusted_maihda <- function(
   x,
   conf.level = 0.95,
+  exponentiate = FALSE,
   ...,
   global_p = FALSE,
   bootstrap_vpc = FALSE,
@@ -526,6 +537,7 @@ tbl_partially_adjusted_maihda <- function(
   l |>
     tbl_maihda(
       conf.level = conf.level,
+      exponentiate = exponentiate,
       ...,
       global_p = global_p,
       bootstrap_vpc = bootstrap_vpc,
@@ -1036,7 +1048,7 @@ plot_strata_predictions <- function(
   }
 
   if (show_mean_line) {
-    v <- stats::predict(x$model, type = type)
+    v <- stats::predict(x$model, type = scale)
     if (is.null(x$sampling_weights)) {
       ml <- mean(v, na.rm = TRUE)
     } else {
@@ -1104,9 +1116,6 @@ glance_maihda_model <- function(
     mt |>
     dplyr::select("statistic", "estimate") |>
     tidyr::pivot_wider(names_from = "statistic", values_from = "estimate")
-
-  if (!is.null(x$pcv) && inherits(x$pcv, "pcv_result"))
-    res$pcv <- x$pcv$pcv
 
   # adding Nakagawa's R2 and unadjusted ICC
   if (x$engine %in% c("lme4", "brms") && rlang::is_installed("performance")) {

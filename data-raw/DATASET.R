@@ -6,6 +6,9 @@ m <- MAIHDA::maihda(
 
 bootstrapped_maihda <-
   m |>
-  calculate_partially_adjusted_maihda(bootstrap_pcv = TRUE, bootstrap_vpc = TRUE)
+  calculate_partially_adjusted_maihda(
+    bootstrap_pcv = TRUE,
+    bootstrap_vpc = TRUE
+  )
 
 usethis::use_data(bootstrapped_maihda, overwrite = TRUE)

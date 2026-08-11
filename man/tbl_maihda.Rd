@@ -14,6 +14,7 @@
 tbl_maihda(
   x,
   conf.level = 0.95,
+  exponentiate = FALSE,
   ...,
   global_p = FALSE,
   bootstrap_vpc = FALSE,
@@ -40,6 +41,7 @@ tbl_maihda(
 tbl_partially_adjusted_maihda(
   x,
   conf.level = 0.95,
+  exponentiate = FALSE,
   ...,
   global_p = FALSE,
   bootstrap_vpc = FALSE,
@@ -122,6 +124,8 @@ glance_maihda_model(x, bootstrap_vpc = FALSE, conf.level = 0.95, n_boot = 1000)
 \code{tbl_strata_info()}, the result of \code{\link[MAIHDA:make_strata]{MAIHDA::make_strata()}} is also accepted}
 
 \item{conf.level}{confidence level for confidence/credible intervals}
+
+\item{exponentiate}{should model coefficients be exponentiated?}
 
 \item{...}{additional parameters passed to \code{\link[gtsummary:tbl_regression]{gtsummary::tbl_regression()}}}
 
