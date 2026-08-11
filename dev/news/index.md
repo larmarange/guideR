@@ -4,9 +4,15 @@
 
 **New features**
 
+- [`tbl_maihda()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md)
+  now support crossed-dimensions decomposition MAIHDA
 - [`plot_strata_predictions()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md)
   to plot the predictions of a MAIHDA model by strata
 - new `bootstrap_vpc` and `bootstrap_pcv` arguments in
+  [`tbl_maihda()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md)
+  and
+  [`tbl_partially_adjusted_maihda()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md)
+- new `hide_coefficients` argument in
   [`tbl_maihda()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md)
   and
   [`tbl_partially_adjusted_maihda()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md)
