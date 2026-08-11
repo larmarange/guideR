@@ -109,40 +109,36 @@ may try to pass <code>full_data</code> to the function.</p>
 <span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">Survived</span><span class="op">)</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">d</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># step(mod) should produce an error</span></span></span>
 <span class="r-in"><span><span class="va">mod2</span> <span class="op">&lt;-</span> <span class="fu">step_with_na</span><span class="op">(</span><span class="va">mod</span>, full_data <span class="op">=</span> <span class="va">d</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Start:  AIC=712.54</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(Survived) ~ Class + Sex + Age + n + Group</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Start:  AIC=1473.08</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(Survived) ~ Class + Sex + Age + Group</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         Df Deviance     AIC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Group  1   697.72  711.72</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;none&gt;       696.54  712.54</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Age    1   735.85  749.85</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Sex    1   765.88  779.88</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Class  3  1069.25 1079.25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - n      1  1459.08 1473.08</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         Df Deviance    AIC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Group  1   1459.4 1471.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;none&gt;       1459.1 1473.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Age    1   1462.2 1474.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Class  3   1527.8 1535.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Sex    1   1704.4 1716.4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Step:  AIC=711.72</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(Survived) ~ Class + Sex + Age + n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Step:  AIC=1471.42</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(Survived) ~ Class + Sex + Age</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         Df Deviance     AIC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;none&gt;       697.72  711.72</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Age    1   736.66  748.66</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Sex    1   767.24  779.24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Class  3  1069.62 1077.62</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - n      1  1459.42 1471.42</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         Df Deviance    AIC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;none&gt;       1459.4 1471.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Age    1   1462.6 1472.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Class  3   1528.3 1534.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Sex    1   1704.8 1714.8</span>
 <span class="r-in"><span><span class="va">mod2</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Call:  glm(formula = as.factor(Survived) ~ Class + Sex + Age + n, family = binomial(), </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:  glm(formula = as.factor(Survived) ~ Class + Sex + Age, family = binomial(), </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     data = d)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)     Class2nd     Class3rd    ClassCrew      SexMale     AgeChild  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     4.78600     -1.08991     -1.55871      6.48346     -1.52340     -1.81226  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           n  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    -0.02924  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      2.0438      -1.0181      -1.7778      -0.8577      -2.4201       1.0615  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Degrees of Freedom: 2200 Total (i.e. Null);  2194 Residual</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Degrees of Freedom: 2200 Total (i.e. Null);  2195 Residual</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Null Deviance:	    2769 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual Deviance: 1043 	AIC: 1057</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual Deviance: 2210 	AIC: 2222</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co">## WITH SURVEY ---------------------------------------</span></span></span>

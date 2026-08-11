@@ -278,11 +278,7 @@ titanic |>
     show_overall_line = TRUE,
     show_pvalues = FALSE
  )
-#> Error in dplyr::mutate(data, dplyr::across(dplyr::all_of(by_variables),     function(x) {        .convert_continuous(x, convert_continuous)    })): ℹ In argument: `dplyr::across(...)`.
-#> Caused by error in `across()`:
-#> ! Can't compute column `n`.
-#> Caused by error in `cut.default()`:
-#> ! 'breaks' are not unique
+
 
 # defining several proportions
 

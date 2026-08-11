@@ -25,67 +25,67 @@ A tibble.
 
 ``` r
 titanic |> dplyr::rowwise()
-#> # A tibble: 2,201 × 5
+#> # A tibble: 2,201 × 4
 #> # Rowwise: 
-#>    Class Sex   Age   Survived     n
-#>    <fct> <fct> <fct> <fct>    <dbl>
-#>  1 3rd   Male  Child No          35
-#>  2 3rd   Male  Child No          35
-#>  3 3rd   Male  Child No          35
-#>  4 3rd   Male  Child No          35
-#>  5 3rd   Male  Child No          35
-#>  6 3rd   Male  Child No          35
-#>  7 3rd   Male  Child No          35
-#>  8 3rd   Male  Child No          35
-#>  9 3rd   Male  Child No          35
-#> 10 3rd   Male  Child No          35
+#>    Class Sex   Age   Survived
+#>    <fct> <fct> <fct> <fct>   
+#>  1 3rd   Male  Child No      
+#>  2 3rd   Male  Child No      
+#>  3 3rd   Male  Child No      
+#>  4 3rd   Male  Child No      
+#>  5 3rd   Male  Child No      
+#>  6 3rd   Male  Child No      
+#>  7 3rd   Male  Child No      
+#>  8 3rd   Male  Child No      
+#>  9 3rd   Male  Child No      
+#> 10 3rd   Male  Child No      
 #> # ℹ 2,191 more rows
 titanic |> dplyr::rowwise() |> unrowwise()
-#> # A tibble: 2,201 × 5
-#>    Class Sex   Age   Survived     n
-#>    <fct> <fct> <fct> <fct>    <dbl>
-#>  1 3rd   Male  Child No          35
-#>  2 3rd   Male  Child No          35
-#>  3 3rd   Male  Child No          35
-#>  4 3rd   Male  Child No          35
-#>  5 3rd   Male  Child No          35
-#>  6 3rd   Male  Child No          35
-#>  7 3rd   Male  Child No          35
-#>  8 3rd   Male  Child No          35
-#>  9 3rd   Male  Child No          35
-#> 10 3rd   Male  Child No          35
+#> # A tibble: 2,201 × 4
+#>    Class Sex   Age   Survived
+#>    <fct> <fct> <fct> <fct>   
+#>  1 3rd   Male  Child No      
+#>  2 3rd   Male  Child No      
+#>  3 3rd   Male  Child No      
+#>  4 3rd   Male  Child No      
+#>  5 3rd   Male  Child No      
+#>  6 3rd   Male  Child No      
+#>  7 3rd   Male  Child No      
+#>  8 3rd   Male  Child No      
+#>  9 3rd   Male  Child No      
+#> 10 3rd   Male  Child No      
 #> # ℹ 2,191 more rows
 
 titanic |> dplyr::group_by(Sex, Class) |> dplyr::rowwise()
-#> # A tibble: 2,201 × 5
+#> # A tibble: 2,201 × 4
 #> # Rowwise:  Sex, Class
-#>    Class Sex   Age   Survived     n
-#>    <fct> <fct> <fct> <fct>    <dbl>
-#>  1 3rd   Male  Child No          35
-#>  2 3rd   Male  Child No          35
-#>  3 3rd   Male  Child No          35
-#>  4 3rd   Male  Child No          35
-#>  5 3rd   Male  Child No          35
-#>  6 3rd   Male  Child No          35
-#>  7 3rd   Male  Child No          35
-#>  8 3rd   Male  Child No          35
-#>  9 3rd   Male  Child No          35
-#> 10 3rd   Male  Child No          35
+#>    Class Sex   Age   Survived
+#>    <fct> <fct> <fct> <fct>   
+#>  1 3rd   Male  Child No      
+#>  2 3rd   Male  Child No      
+#>  3 3rd   Male  Child No      
+#>  4 3rd   Male  Child No      
+#>  5 3rd   Male  Child No      
+#>  6 3rd   Male  Child No      
+#>  7 3rd   Male  Child No      
+#>  8 3rd   Male  Child No      
+#>  9 3rd   Male  Child No      
+#> 10 3rd   Male  Child No      
 #> # ℹ 2,191 more rows
 titanic |> dplyr::group_by(Sex, Class) |> dplyr::rowwise() |> unrowwise()
-#> # A tibble: 2,201 × 5
+#> # A tibble: 2,201 × 4
 #> # Groups:   Sex, Class [8]
-#>    Class Sex   Age   Survived     n
-#>    <fct> <fct> <fct> <fct>    <dbl>
-#>  1 3rd   Male  Child No          35
-#>  2 3rd   Male  Child No          35
-#>  3 3rd   Male  Child No          35
-#>  4 3rd   Male  Child No          35
-#>  5 3rd   Male  Child No          35
-#>  6 3rd   Male  Child No          35
-#>  7 3rd   Male  Child No          35
-#>  8 3rd   Male  Child No          35
-#>  9 3rd   Male  Child No          35
-#> 10 3rd   Male  Child No          35
+#>    Class Sex   Age   Survived
+#>    <fct> <fct> <fct> <fct>   
+#>  1 3rd   Male  Child No      
+#>  2 3rd   Male  Child No      
+#>  3 3rd   Male  Child No      
+#>  4 3rd   Male  Child No      
+#>  5 3rd   Male  Child No      
+#>  6 3rd   Male  Child No      
+#>  7 3rd   Male  Child No      
+#>  8 3rd   Male  Child No      
+#>  9 3rd   Male  Child No      
+#> 10 3rd   Male  Child No      
 #> # ℹ 2,191 more rows
 ```

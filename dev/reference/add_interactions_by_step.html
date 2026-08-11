@@ -81,119 +81,47 @@ component of <code>scope</code>.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">Survived</span><span class="op">)</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">titanic</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">mod</span> <span class="op">|&gt;</span> <span class="fu">add_interactions_by_step</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Start:  AIC=1057.36</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(Survived) ~ Class + Sex + Age + n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Start:  AIC=2222.06</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(Survived) ~ Class + Sex + Age</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: algorithm did not converge</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: fitted probabilities numerically 0 or 1 occurred</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: fitted probabilities numerically 0 or 1 occurred</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Df Deviance     AIC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Class:Sex  3    656.0   676.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Age:n      1    918.9   934.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Class:n    3    985.9  1005.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Class:Age  2   1011.1  1029.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Sex:Age    1   1035.7  1051.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;none&gt;           1043.4  1057.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Sex:n      1  11173.5 11189.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Step:  AIC=676.04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(Survived) ~ Class + Sex + Age + n + Class:Sex</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: fitted probabilities numerically 0 or 1 occurred</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Df Deviance     AIC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Age:n      1   519.87  541.87</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Class:Age  2   625.89  649.89</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Sex:n      1   628.29  650.29</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Sex:Age    1   649.10  671.10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Class:n    3   645.19  671.19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;none&gt;           656.04  676.04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Class:Sex  3  1043.36 1057.36</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: fitted probabilities numerically 0 or 1 occurred</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Step:  AIC=541.87</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(Survived) ~ Class + Sex + Age + n + Class:Sex + Age:n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: fitted probabilities numerically 0 or 1 occurred</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: fitted probabilities numerically 0 or 1 occurred</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: fitted probabilities numerically 0 or 1 occurred</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: fitted probabilities numerically 0 or 1 occurred</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: fitted probabilities numerically 0 or 1 occurred</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: fitted probabilities numerically 0 or 1 occurred</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             Df Deviance    AIC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Class:n    3   313.61 341.61</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Sex:n      1   321.56 345.56</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;none&gt;           519.87 541.87</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Sex:Age    1   519.87 543.87</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Class:Age  2   519.87 545.87</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Age:n      1   656.04 676.04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Class:Sex  3   918.87 934.87</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: fitted probabilities numerically 0 or 1 occurred</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Class:Sex  3   2143.4 2161.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Class:Age  2   2174.4 2190.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Sex:Age    1   2192.0 2206.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;none&gt;           2210.1 2222.1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Step:  AIC=341.61</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(Survived) ~ Class + Sex + Age + n + Class:Sex + Age:n + </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Class:n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Step:  AIC=2161.39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(Survived) ~ Class + Sex + Age + Class:Sex</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: algorithm did not converge</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: fitted probabilities numerically 0 or 1 occurred</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: fitted probabilities numerically 0 or 1 occurred</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: fitted probabilities numerically 0 or 1 occurred</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: fitted probabilities numerically 0 or 1 occurred</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: fitted probabilities numerically 0 or 1 occurred</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: algorithm did not converge</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: fitted probabilities numerically 0 or 1 occurred</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             Df Deviance    AIC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Sex:n      1     0.00  30.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;none&gt;           313.61 341.61</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Sex:Age    1   313.61 343.61</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Class:Age  2   313.61 345.61</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Class:Sex  3   412.88 434.88</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Class:n    3   519.87 541.87</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Age:n      1   645.19 671.19</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: algorithm did not converge</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: fitted probabilities numerically 0 or 1 occurred</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Class:Age  2   2099.2 2121.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Sex:Age    1   2134.8 2154.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;none&gt;           2143.4 2161.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Class:Sex  3   2210.1 2222.1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Step:  AIC=30</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(Survived) ~ Class + Sex + Age + n + Class:Sex + Age:n + </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Class:n + Sex:n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Step:  AIC=2121.18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(Survived) ~ Class + Sex + Age + Class:Sex + Class:Age</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: algorithm did not converge</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: fitted probabilities numerically 0 or 1 occurred</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: fitted probabilities numerically 0 or 1 occurred</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: fitted probabilities numerically 0 or 1 occurred</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: fitted probabilities numerically 0 or 1 occurred</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: algorithm did not converge</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: fitted probabilities numerically 0 or 1 occurred</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: fitted probabilities numerically 0 or 1 occurred</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: algorithm did not converge</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: fitted probabilities numerically 0 or 1 occurred</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: algorithm did not converge</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: fitted probabilities numerically 0 or 1 occurred</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Df Deviance     AIC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;none&gt;                0.0    30.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Sex:Age      1      0.0    32.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Class:Sex:n  3      0.0    36.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Sex:n        1    313.6   341.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Class:n      3    321.6   345.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Age:n        1    597.2   625.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + Class:Age    2   6704.1  6738.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Class:Sex    3  16003.4 16027.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Df Deviance    AIC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;none&gt;           2099.2 2121.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + Sex:Age    1   2097.5 2121.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Class:Age  2   2143.4 2161.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Class:Sex  3   2174.4 2190.4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Call:  glm(formula = as.factor(Survived) ~ Class + Sex + Age + n + Class:Sex + </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Age:n + Class:n + Sex:n, family = binomial(), data = titanic)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:  glm(formula = as.factor(Survived) ~ Class + Sex + Age + Class:Sex + </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Class:Age, family = binomial(), data = titanic)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       (Intercept)           Class2nd           Class3rd          ClassCrew  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         -181.2250           140.1750           454.0838           156.7432  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           SexMale           AgeChild                  n   Class2nd:SexMale  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          253.6527          1245.4309             1.4833           -74.8003  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Class3rd:SexMale  ClassCrew:SexMale         AgeChild:n         Class2nd:n  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         1620.2928          -183.5547           -92.0696            -0.2506  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        Class3rd:n        ClassCrew:n          SexMale:n  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           -4.7910             0.7243            -2.3143  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        (Intercept)            Class2nd            Class3rd           ClassCrew  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            3.55535            -1.73827            -3.77275            -1.65823  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            SexMale            AgeChild    Class2nd:SexMale    Class3rd:SexMale  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           -4.28298            16.85008             0.06801             2.89768  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  ClassCrew:SexMale   Class2nd:AgeChild   Class3rd:AgeChild  ClassCrew:AgeChild  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            1.13608             0.77411           -16.51217                  NA  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Degrees of Freedom: 2200 Total (i.e. Null);  2186 Residual</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Degrees of Freedom: 2200 Total (i.e. Null);  2190 Residual</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Null Deviance:	    2769 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual Deviance: 3.9e-07 	AIC: 30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual Deviance: 2099 	AIC: 2121</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
