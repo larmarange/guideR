@@ -11,6 +11,7 @@ tests/testthat/Rplots.pdf
 .lintr
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
+^data-raw$
 ^revdep$
 ^LICENSE\.md$
 ^doc$
