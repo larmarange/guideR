@@ -20,11 +20,12 @@
 - new `type` argument for
   [`tbl_strata_info()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md)
 
-**Renamed function**
+**Deprecated function**
 
 - [`plot_maihda_predictions_by()`](https://larmarange.github.io/guideR/dev/reference/deprecated.md)
-  has been renamed
+  is now soft deprecated, use
   [`plot_strata_predictions()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md)
+  instead
 
 **Minor changes**
 
