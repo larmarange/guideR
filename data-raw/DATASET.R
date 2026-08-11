@@ -11,8 +11,8 @@ bootstrapped_maihda <-
     bootstrap_vpc = TRUE
   )
 
-usethis::use_data(
+save(
   bootstrapped_maihda,
-  overwrite = TRUE,
-  internal = TRUE
+  file = "inst/extdata/bootstrapped_maihda.RData",
+  compress = "bzip2"
 )

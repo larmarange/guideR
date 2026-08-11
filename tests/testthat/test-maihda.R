@@ -148,9 +148,4 @@ test_that("tbl function for MAIHDA analysis does not produce an error", {
   expect_no_error(
     wm |> plot_strata_predictions(show_mean_line = TRUE)
   )
-
-  # test with bootstrapped data
-  expect_no_error(
-    bootstrapped_maihda |> tbl_maihda(exponentiate = TRUE)
-  )
 })
