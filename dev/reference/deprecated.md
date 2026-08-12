@@ -36,9 +36,10 @@ plot_maihda_predictions_by(
 
 - scale:
 
-  Scale for the predicted stratum values: `"response"` (default) or
-  `"link"`. For a cumulative (ordinal) model the response scale is the
-  expected category score.
+  scale for the predicted stratum values: "response" (default), "link",
+  or "random_effect" (random effect only on the link scale); for a
+  cumulative (ordinal) model the response scale is the expected category
+  score.
 
 - which:
 

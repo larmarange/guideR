@@ -103,7 +103,7 @@ tbl_strata_info(
 tbl_strata_predictions(
   x,
   n_strata = Inf,
-  scale = c("response", "link"),
+  scale = c("response", "link", "random_effect"),
   which = c("null", "adjusted"),
   column_labels = list(rank = "Rank", n = "n", predicted = "Predicted", ci = "95% CI"),
   group_labels = list("highest", "lowest"),
@@ -113,7 +113,7 @@ tbl_strata_predictions(
 get_strata_predictions(
   x,
   n_strata = Inf,
-  scale = c("response", "link"),
+  scale = c("response", "link", "random_effect"),
   which = c("null", "adjusted"),
   group_labels = list("highest", "lowest")
 )
@@ -123,7 +123,7 @@ plot_strata_predictions(
   by = NULL,
   geom = c("point", "bar"),
   n_strata = Inf,
-  scale = c("response", "link"),
+  scale = c("response", "link", "random_effect"),
   which = c("null", "adjusted"),
   sort = TRUE,
   highlight_n_below = NULL,
@@ -248,9 +248,10 @@ glance_maihda_model(x, bootstrap_vpc = FALSE, conf.level = 0.95, n_boot = 1000)
 
 - scale:
 
-  Scale for the predicted stratum values: `"response"` (default) or
-  `"link"`. For a cumulative (ordinal) model the response scale is the
-  expected category score.
+  scale for the predicted stratum values: "response" (default), "link",
+  or "random_effect" (random effect only on the link scale); for a
+  cumulative (ordinal) model the response scale is the expected category
+  score.
 
 - which:
 
