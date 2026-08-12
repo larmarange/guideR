@@ -112,7 +112,11 @@
 #' m |> tbl_strata_info()
 #' m |> tbl_strata_info(type = "exclusive")
 #' m |> tbl_maihda(exponentiate = TRUE)
-#' m |> tbl_maihda(statistics_include = c(vpc, pcv), notes = FALSE)
+#' m |>
+#'   tbl_maihda(
+#'     statistics_include = dplyr::any_of(c("vpc", "pcv")),
+#'     notes = FALSE
+#'   )
 #' m |> tbl_strata_predictions(n_strata = NULL)
 #' m |> tbl_strata_predictions(which = "adjusted", n_strata = 3)
 #' m |> plot_strata_predictions()
@@ -1240,7 +1244,7 @@ glance_maihda_model <- function(
 
   if (
     all(c("as", "is") %in% mt$statistic) &&
-    !is.na(mt[mt$statistic == "as", "estimate_lower"])
+      !is.na(mt[mt$statistic == "as", "estimate_lower"])
   ) {
     mt <- dplyr::bind_rows(
       mt,
