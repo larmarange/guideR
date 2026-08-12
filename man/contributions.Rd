@@ -241,10 +241,10 @@ not impacted by this difference in approaches.
 # Linear model
 m <- lm(Sepal.Length ~ Sepal.Width + Species + Petal.Length, data = iris)
 m |> contributions()
-m |> tbl_contributions()
-m |> tbl_dominance()
 
 \donttest{
+m |> tbl_contributions()
+m |> tbl_dominance()
 m |> tbl_contributions(type = 1)
 
 # GLM
