@@ -784,14 +784,17 @@ tbl_strata_info <- function(
 #' @rdname tbl_maihda
 #' @param n_strata number of strata to show at each end (top and bottom),
 #' use `Inf` or `NULL` to show all strata
-#' @inheritParams MAIHDA::maihda_table scale which
+#' @param scale scale for the predicted stratum values: "response" (default),
+#' "link", or "random_effect" (random effect only on the link scale); for a
+#' cumulative (ordinal) model the response scale is the expected category score.
+#' @inheritParams MAIHDA::maihda_table which
 #' @param group_labels labels for group names
 #' @param digits number of decimals for predictions
 #' @export
 tbl_strata_predictions <- function(
   x,
   n_strata = Inf,
-  scale = c("response", "link"),
+  scale = c("response", "link", "random_effect"),
   which = c("null", "adjusted"),
   column_labels = list(
     rank = "Rank",
@@ -858,7 +861,7 @@ tbl_strata_predictions <- function(
 get_strata_predictions <- function(
   x,
   n_strata = Inf,
-  scale = c("response", "link"),
+  scale = c("response", "link", "random_effect"),
   which = c("null", "adjusted"),
   group_labels = list("highest", "lowest")
 ) {
@@ -873,10 +876,21 @@ get_strata_predictions <- function(
   if (is.null(n_strata)) n_strata <- Inf
   n_strata |> rlang::check_number_whole(min = 1, allow_infinite = TRUE)
 
-  res <-
-    x |>
-    MAIHDA::maihda_table(scale = scale, which = which) |>
-    purrr::pluck("strata")
+  if (scale == "random_effect") {
+    res <-
+      x |>
+      MAIHDA::maihda_table(which = which) |>
+      purrr::pluck("strata")
+    res$predicted <- res$random_effect
+    res$predicted_lower <- res$re_lower
+    res$predicted_upper <- res$re_upper
+    res <- res |> dplyr::arrange(dplyr::desc("predicted"))
+  } else {
+    res <-
+      x |>
+      MAIHDA::maihda_table(scale = scale, which = which) |>
+      purrr::pluck("strata")
+  }
 
   if (inherits(x, "maihda_analysis")) x <- x$model
 
@@ -940,7 +954,7 @@ plot_strata_predictions <- function(
   by = NULL,
   geom = c("point", "bar"),
   n_strata = Inf,
-  scale = c("response", "link"),
+  scale = c("response", "link", "random_effect"),
   which = c("null", "adjusted"),
   sort = TRUE,
   highlight_n_below = NULL,
@@ -1133,7 +1147,11 @@ plot_strata_predictions <- function(
   }
 
   if (show_mean_line) {
-    v <- stats::predict(x$model, type = scale)
+    if (scale == "random_effect") {
+      v <- stats::predict(x$model, random.only = TRUE)
+    } else {
+      v <- stats::predict(x$model, type = scale)
+    }
     if (is.null(x$sampling_weights)) {
       ml <- mean(v, na.rm = TRUE)
     } else {

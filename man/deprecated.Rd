@@ -23,9 +23,9 @@ plot_maihda_predictions_by(
 \item{by}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}>\cr
 list of variables to compare by}
 
-\item{scale}{Scale for the predicted stratum values: \code{"response"} (default)
-or \code{"link"}. For a cumulative (ordinal) model the response scale is the
-expected category score.}
+\item{scale}{scale for the predicted stratum values: "response" (default),
+"link", or "random_effect" (random effect only on the link scale); for a
+cumulative (ordinal) model the response scale is the expected category score.}
 
 \item{which}{For a two-model analysis, which model's predictions to rank the
 strata by: \code{"null"} (default) or \code{"adjusted"}. Ignored for a
