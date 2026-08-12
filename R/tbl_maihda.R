@@ -122,6 +122,7 @@
 #' m |> plot_strata_predictions(by = c(Sex, Age))
 #' m |> plot_strata_predictions(highlight_n_below = 20)
 #' m |> plot_strata_predictions(by = Age, highlight_n_below = 20)
+#' m |> plot_strata_predictions(scale = "random_effect", which = "adjusted")
 #' m |>
 #'   plot_strata_predictions(by = Sex) +
 #'   ggplot2::facet_grid(
