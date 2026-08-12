@@ -312,7 +312,7 @@ m |> tbl_strata_predictions(which = "adjusted", n_strata = 3)
 m |> plot_strata_predictions()
 m |> plot_strata_predictions(geom = "bar")
 m |> plot_strata_predictions(n_strata = 3L)
-m |> plot_strata_predictions(by = Sex)
+m |> plot_strata_predictions(by = Sex, show_mean_line = TRUE)
 m |> plot_strata_predictions(by = c(Sex, Age))
 m |> plot_strata_predictions(highlight_n_below = 20)
 m |> plot_strata_predictions(by = Age, highlight_n_below = 20)
@@ -367,6 +367,13 @@ cdm <- MAIHDA::maihda(
 )
 cdm |> tbl_maihda(exponentiate = TRUE)
 cdm |> tbl_maihda(hide_coefficients = TRUE)
+
+cdm2 <- MAIHDA::maihda(
+  BMI ~ Gender + (1 | Education:Race),
+  data = maihda_health_data,
+  decomposition = "crossed-dimensions",
+  context = "Age"
+)
 
 # sample-weighted data
 if (rlang::is_installed("WeMix")) {

@@ -118,7 +118,7 @@
 #' m |> plot_strata_predictions()
 #' m |> plot_strata_predictions(geom = "bar")
 #' m |> plot_strata_predictions(n_strata = 3L)
-#' m |> plot_strata_predictions(by = Sex)
+#' m |> plot_strata_predictions(by = Sex, show_mean_line = TRUE)
 #' m |> plot_strata_predictions(by = c(Sex, Age))
 #' m |> plot_strata_predictions(highlight_n_below = 20)
 #' m |> plot_strata_predictions(by = Age, highlight_n_below = 20)
@@ -173,6 +173,13 @@
 #' )
 #' cdm |> tbl_maihda(exponentiate = TRUE)
 #' cdm |> tbl_maihda(hide_coefficients = TRUE)
+#'
+#' cdm2 <- MAIHDA::maihda(
+#'   BMI ~ Gender + (1 | Education:Race),
+#'   data = maihda_health_data,
+#'   decomposition = "crossed-dimensions",
+#'   context = "Age"
+#' )
 #'
 #' # sample-weighted data
 #' if (rlang::is_installed("WeMix")) {
@@ -395,8 +402,6 @@ tbl_maihda_model <- function(
   # adding PCV
   if (!is.null(x$pcv) && inherits(x$pcv, "pcv_result")) {
     stats$pcv <- x$pcv$pcv
-  } else {
-    stats$pcv <- NA_real_
   }
 
   if (x$engine == "wemix") {
@@ -474,7 +479,7 @@ tbl_maihda_model <- function(
   tbl |>
     gtsummary::add_variable_group_header(
       statistics_labels$decomp,
-      dplyr::any_of(c("avar", "ivar", "tvar"))
+      dplyr::any_of(c("avar", "ivar", "tvar", "as", "is"))
     ) |>
     gtsummary::add_variable_group_header(
       statistics_labels$pdav,
@@ -1209,9 +1214,12 @@ glance_maihda_model <- function(
   }
 
   if (!is.null(x$decomposition)) {
+    res <- res |> dplyr::select(-dplyr::any_of(c("as", "is"))) # readded later
     res$avar <- x$decomposition$additive_var
     res$ivar <- x$decomposition$interaction_var
     res$tvar <- x$decomposition$between_var
+    res$as <- x$decomposition$additive_share
+    res$is <- x$decomposition$interaction_var
     pd <- x$decomposition$per_dim
     names(pd) <- paste0("pdav_", names(pd))
     pd <- pd |> tibble::as_tibble_row()
