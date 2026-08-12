@@ -1226,10 +1226,12 @@ glance_maihda_model <- function(
   # adding Nakagawa's R2 and unadjusted ICC
   if (x$engine %in% c("lme4", "brms") && rlang::is_installed("performance")) {
     r2 <- x$model |> performance::r2_nakagawa()
-    res$r2cond <- r2$R2_conditional
-    res$r2marg <- r2$R2_marginal
+    if (!any(is.na(r2))) {
+      res$r2cond <- r2$R2_conditional
+      res$r2marg <- r2$R2_marginal
+    }
     icc <- x$model |> performance::icc()
-    res$uicc <- icc$ICC_unadjusted
+    if (!any(is.na(icc))) res$uicc <- icc$ICC_unadjusted
   }
 
   if (!is.null(x$decomposition)) {
