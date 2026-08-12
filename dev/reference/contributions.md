@@ -300,6 +300,8 @@ m |> contributions()
 #> Petal.Length 14.0382 0.137402 0.50130 0.159158  1 145.754 < 2.2e-16 ***
 #> ---
 #> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+# \donttest{
 m |> tbl_contributions()
 
 
