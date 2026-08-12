@@ -460,12 +460,32 @@ tbl_maihda_model <- function(
       dplyr::filter(!.data$variable %in% c("vpc_lower", "vpc_upper"))
   }
 
+  # adding CI for additive share
+  if (all(c("as_lower", "as_upper") %in% tbl$table_body$variable)) {
+    tbl$table_body[tbl$table_body$variable == "as", "conf.low"] <-
+      tbl$table_body[tbl$table_body$variable == "as_lower", "estimate"] * 100
+    tbl$table_body[tbl$table_body$variable == "as", "conf.high"] <-
+      tbl$table_body[tbl$table_body$variable == "as_upper", "estimate"] * 100
+    tbl$table_body <- tbl$table_body |>
+      dplyr::filter(!.data$variable %in% c("as_lower", "as_upper"))
+  }
+
+  # adding CI for interaction share
+  if (all(c("is_lower", "is_upper") %in% tbl$table_body$variable)) {
+    tbl$table_body[tbl$table_body$variable == "is", "conf.low"] <-
+      tbl$table_body[tbl$table_body$variable == "is_lower", "estimate"] * 100
+    tbl$table_body[tbl$table_body$variable == "is", "conf.high"] <-
+      tbl$table_body[tbl$table_body$variable == "is_upper", "estimate"] * 100
+    tbl$table_body <- tbl$table_body |>
+      dplyr::filter(!.data$variable %in% c("is_lower", "is_upper"))
+  }
+
   if (hide_coefficients) {
     tbl$table_body <-
       tbl$table_body |>
       dplyr::filter(.data$row_type == "glance_statistic")
     tbl <- tbl |>
-      gtsummary::modify_column_hide("p.value") |>
+      gtsummary::modify_column_hide(dplyr::any_of("p.value")) |>
       gtsummary::remove_abbreviation() |>
       gtsummary::modify_header(estimate = paste0("**", statistics_header, "**"))
     if (all(is.na(tbl$table_body$conf.low)))
@@ -822,7 +842,7 @@ tbl_strata_predictions <- function(
 
   if (inherits(x, "maihda_analysis")) x <- x$model
 
-  if (x$family$family == "binomial" && scale == "response") {
+  if (x$family$family %in% c("binomial", "bernoulli") && scale == "response") {
     f <- gtsummary::label_style_percent(digits = digits, suffix = "%")
   } else {
     f <- gtsummary::label_style_number(digits = digits)
@@ -1140,7 +1160,7 @@ plot_strata_predictions <- function(
     ggplot2::labs(x = NULL, y = NULL, color = NULL, fill = NULL, shape = NULL) +
     ggplot2::scale_y_discrete(expand = ggplot2::expansion(0, 0.5))
 
-  if (x$family$family == "binomial" && scale == "response") {
+  if (x$family$family %in% c("binomial", "bernoulli") && scale == "response") {
     p <-
       p +
       ggplot2::expand_limits(x = 0) +
@@ -1218,6 +1238,24 @@ glance_maihda_model <- function(
     )
   }
 
+  if (
+    all(c("as", "is") %in% mt$statistic) &&
+    !is.na(mt[mt$statistic == "as", "estimate_lower"])
+  ) {
+    mt <- dplyr::bind_rows(
+      mt,
+      dplyr::tibble(
+        statistic = c("as_lower", "as_upper", "is_lower", "is_upper"),
+        estimate = c(
+          mt[mt$statistic == "as", "estimate_lower"],
+          mt[mt$statistic == "as", "estimate_upper"],
+          mt[mt$statistic == "is", "estimate_lower"],
+          mt[mt$statistic == "is", "estimate_upper"]
+        )
+      )
+    )
+  }
+
   res <-
     mt |>
     dplyr::select("statistic", "estimate") |>
@@ -1225,13 +1263,13 @@ glance_maihda_model <- function(
 
   # adding Nakagawa's R2 and unadjusted ICC
   if (x$engine %in% c("lme4", "brms") && rlang::is_installed("performance")) {
+    icc <- x$model |> performance::icc()
+    if (!any(is.na(icc))) res$uicc <- icc$ICC_unadjusted
     r2 <- x$model |> performance::r2_nakagawa()
     if (!any(is.na(r2))) {
       res$r2cond <- r2$R2_conditional
       res$r2marg <- r2$R2_marginal
     }
-    icc <- x$model |> performance::icc()
-    if (!any(is.na(icc))) res$uicc <- icc$ICC_unadjusted
   }
 
   if (!is.null(x$decomposition)) {
@@ -1240,7 +1278,7 @@ glance_maihda_model <- function(
     res$ivar <- x$decomposition$interaction_var
     res$tvar <- x$decomposition$between_var
     res$as <- x$decomposition$additive_share
-    res$is <- x$decomposition$interaction_var
+    res$is <- x$decomposition$interaction_share
     pd <- x$decomposition$per_dim
     names(pd) <- paste0("pdav_", names(pd))
     pd <- pd |> tibble::as_tibble_row()
@@ -1290,6 +1328,9 @@ model_get_terms.maihda_model <- function(model) {
 model_get_coefficients_type.maihda_model <- function(model) {
   if (!is.null(model$family)) {
     if (model$family$family == "binomial" && model$family$link == "logit") {
+      return("logistic")
+    }
+    if (model$family$family == "bernoulli") {
       return("logistic")
     }
     if (model$family$family == "binomial" && model$family$link == "log") {
