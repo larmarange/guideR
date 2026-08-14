@@ -117,7 +117,7 @@
 #'     statistics_include = dplyr::any_of(c("vpc", "pcv")),
 #'     notes = FALSE
 #'   )
-#' m |> tbl_strata_predictions(n_strata = NULL)
+#' m |> tbl_strata_predictions()
 #' m |> tbl_strata_predictions(which = "adjusted", n_strata = 3)
 #' m |> plot_strata_predictions()
 #' m |> plot_strata_predictions(geom = "bar")
