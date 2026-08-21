@@ -97,9 +97,11 @@
 
 - [`tbl_maihda()`](https://larmarange.github.io/guideR/reference/tbl_maihda.md)
   [`tbl_partially_adjusted_maihda()`](https://larmarange.github.io/guideR/reference/tbl_maihda.md)
+  [`calculate_partially_adjusted_maihda()`](https://larmarange.github.io/guideR/reference/tbl_maihda.md)
   [`tbl_strata_info()`](https://larmarange.github.io/guideR/reference/tbl_maihda.md)
   [`tbl_strata_predictions()`](https://larmarange.github.io/guideR/reference/tbl_maihda.md)
-  [`plot_maihda_predictions_by()`](https://larmarange.github.io/guideR/reference/tbl_maihda.md)
+  [`get_strata_predictions()`](https://larmarange.github.io/guideR/reference/tbl_maihda.md)
+  [`plot_strata_predictions()`](https://larmarange.github.io/guideR/reference/tbl_maihda.md)
   [`glance_maihda_model()`](https://larmarange.github.io/guideR/reference/tbl_maihda.md)
   **\[experimental\]** : Table summary of for MAIHDA analysis
 
@@ -155,3 +157,8 @@
 
 - [`titanic`](https://larmarange.github.io/guideR/reference/titanic.md)
   : Titanic data set in long format
+
+## Deprecated
+
+- [`plot_maihda_predictions_by()`](https://larmarange.github.io/guideR/reference/deprecated.md)
+  : Deprecated functions

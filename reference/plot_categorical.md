@@ -13,6 +13,7 @@ plot_categorical(
   outcome,
   na.rm = TRUE,
   by = NULL,
+  stratified_by = NULL,
   drop_na_by = FALSE,
   convert_continuous = TRUE,
   ...,
@@ -55,6 +56,12 @@ plot_categorical(
   \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>  
   List of variables to group by (comparison is done separately for each
   variable).
+
+- stratified_by:
+
+  \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>  
+  Variable to stratify by (only one outcome variable is accepted if a
+  stratification is requested).
 
 - drop_na_by:
 
@@ -163,6 +170,13 @@ titanic |>
     by = c(Age, Sex),
     flip = TRUE,
     minimal = TRUE
+  )
+
+titanic |>
+  plot_categorical(
+    Age,
+    by = Class,
+    stratified_by = Sex
   )
 
 # }

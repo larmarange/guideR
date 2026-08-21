@@ -1,6 +1,49 @@
 # Changelog
 
+## guideR 0.12.0
+
+CRAN release: 2026-08-20
+
+**New features**
+
+- [`tbl_maihda()`](https://larmarange.github.io/guideR/reference/tbl_maihda.md)
+  now support crossed-dimensions decomposition MAIHDA
+- [`plot_strata_predictions()`](https://larmarange.github.io/guideR/reference/tbl_maihda.md)
+  to plot the predictions of a MAIHDA model by strata
+- new `bootstrap_vpc` and `bootstrap_pcv` arguments in
+  [`tbl_maihda()`](https://larmarange.github.io/guideR/reference/tbl_maihda.md)
+  and
+  [`tbl_partially_adjusted_maihda()`](https://larmarange.github.io/guideR/reference/tbl_maihda.md)
+- new `hide_coefficients` argument in
+  [`tbl_maihda()`](https://larmarange.github.io/guideR/reference/tbl_maihda.md)
+  and
+  [`tbl_partially_adjusted_maihda()`](https://larmarange.github.io/guideR/reference/tbl_maihda.md)
+- [`calculate_partially_adjusted_maihda()`](https://larmarange.github.io/guideR/reference/tbl_maihda.md)
+  to compute partially adjusted MAIHDA
+- new `stratified_by` argument for
+  [`plot_categorical()`](https://larmarange.github.io/guideR/reference/plot_categorical.md),
+  [`plot_continuous()`](https://larmarange.github.io/guideR/reference/plot_continuous.md)
+  and
+  [`plot_means()`](https://larmarange.github.io/guideR/reference/plot_means.md)
+- new `type` argument for
+  [`tbl_strata_info()`](https://larmarange.github.io/guideR/reference/tbl_maihda.md)
+
+**Deprecated function**
+
+- [`plot_maihda_predictions_by()`](https://larmarange.github.io/guideR/reference/deprecated.md)
+  is now soft deprecated, use
+  [`plot_strata_predictions()`](https://larmarange.github.io/guideR/reference/tbl_maihda.md)
+  instead
+
+**Minor changes**
+
+- Default `n_strata` value for
+  [`tbl_strata_predictions()`](https://larmarange.github.io/guideR/reference/tbl_maihda.md)
+  is now `Inf`
+
 ## guideR 0.11.0
+
+CRAN release: 2026-08-03
 
 **New features**
 
@@ -9,7 +52,7 @@
   [`tbl_partially_adjusted_maihda()`](https://larmarange.github.io/guideR/reference/tbl_maihda.md),
   [`tbl_strata_info()`](https://larmarange.github.io/guideR/reference/tbl_maihda.md),
   `tbl_strata_predictions()()` and
-  [`plot_maihda_predictions_by()`](https://larmarange.github.io/guideR/reference/tbl_maihda.md)
+  [`plot_maihda_predictions_by()`](https://larmarange.github.io/guideR/reference/deprecated.md)
   to display and plot the results of a MAIHDA analysis
   ([\#66](https://github.com/larmarange/guideR/issues/66))
 - new `lang` argument for
