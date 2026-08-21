@@ -2,6 +2,10 @@
 
 ## guideR (development version)
 
+## guideR 0.12.0
+
+CRAN release: 2026-08-20
+
 **New features**
 
 - [`tbl_maihda()`](https://larmarange.github.io/guideR/dev/reference/tbl_maihda.md)
