@@ -13,6 +13,7 @@ coverage](https://codecov.io/gh/larmarange/guideR/graph/badge.svg)](https://app.
 [![CRAN
 status](https://www.r-pkg.org/badges/version/guideR)](https://CRAN.R-project.org/package=guideR)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14871649.svg)](https://doi.org/10.5281/zenodo.14871649)
+[![](https://cranlogs.r-pkg.org/badges/guideR)](https://cran.r-project.org/package=guideR)
 
 <!-- badges: end -->
 
