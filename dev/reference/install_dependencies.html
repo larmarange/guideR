@@ -52,7 +52,7 @@ available and returns a message indicated packages not installed/updated.</p>
 <span>  dependencies <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ask <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  dev <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  engine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pak"</span>, <span class="st">"utils"</span><span class="op">)</span></span>
+<span>  engine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"utils"</span>, <span class="st">"pak"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -78,10 +78,10 @@ development dependencies. If <code>FALSE</code>, install only required dependenc
 
 
 <dt id="arg-engine">engine<a class="anchor" aria-label="anchor" href="#arg-engine"></a></dt>
-<dd><p>If <code>"pak"</code>, uses <code><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pak::pkg_install()</a></code>. If <code>"utils"</code>, uses
-<code><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">utils::install.packages()</a></code> (on Linux could be useful if using
-<a href="https://cran4linux.github.io/rspm/" class="external-link"><code>rspm</code></a> or
-<a href="https://github.com/cran4linux/cran2copr" class="external-link"><code>CoprManager</code></a>).</p></dd>
+<dd><p>If <code>"utils"</code>, uses #' <code><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">utils::install.packages()</a></code> (on Linux
+could be useful if using #' <a href="https://cran4linux.github.io/rspm/" class="external-link"><code>rspm</code></a> or
+<a href="https://github.com/cran4linux/cran2copr" class="external-link"><code>CoprManager</code></a>). If <code>"pak"</code>, uses
+<code><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pak::pkg_install()</a></code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
