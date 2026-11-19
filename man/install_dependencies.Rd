@@ -24,7 +24,7 @@ new packages never require confirmation.}
 development dependencies. If \code{FALSE}, install only required dependencies.}
 
 \item{engine}{If \code{"utils"}, uses \code{\link[utils:install.packages]{utils::install.packages()}} (on Linux
-could be useful if using #' \href{https://cran4linux.github.io/rspm/}{\code{rspm}} or
+could be useful if using #' \href{https://cran4linux.github.io/bspm/}{\code{bspm}} or
 \href{https://github.com/cran4linux/cran2copr}{\code{CoprManager}}). If \code{"pak"}, uses
 \code{\link[pak:pkg_install]{pak::pkg_install()}}.}
 }

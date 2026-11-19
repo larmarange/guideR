@@ -14,7 +14,7 @@
 #' @param dev If `TRUE`, install required dependencies plus optional and
 #' development dependencies. If `FALSE`, install only required dependencies.
 #' @param engine If `"utils"`, uses [utils::install.packages()] (on Linux
-#' could be useful if using #' [`rspm`](https://cran4linux.github.io/rspm/) or
+#' could be useful if using #' [`bspm`](https://cran4linux.github.io/bspm/) or
 #' [`CoprManager`](https://github.com/cran4linux/cran2copr)). If `"pak"`, uses
 #' [pak::pkg_install()].
 #' @export
