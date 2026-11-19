@@ -44,7 +44,7 @@ install_dependencies(
   If `"utils"`, uses
   [`utils::install.packages()`](https://rdrr.io/r/utils/install.packages.html)
   (on Linux could be useful if using \#'
-  [`rspm`](https://cran4linux.github.io/rspm/) or
+  [`bspm`](https://cran4linux.github.io/bspm/) or
   [`CoprManager`](https://github.com/cran4linux/cran2copr)). If `"pak"`,
   uses
   [`pak::pkg_install()`](https://pak.r-lib.org/reference/pkg_install.html).
