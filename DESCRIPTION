@@ -28,7 +28,6 @@ Imports:
     ggplot2,
     labelled,
     lifecycle,
-    pak,
     patchwork,
     purrr,
     renv,
@@ -62,6 +61,7 @@ Suggests:
     MAIHDA (>= 0.2.1),
     MASS,
     nnet,
+    pak,
     parameters,
     performance,
     spelling,
@@ -73,4 +73,4 @@ Suggests:
     WeMix
 Config/testthat/edition: 3
 Language: en-US
-Config/roxygen2/version: 8.1.0
+Config/roxygen2/version: 8.1.1
