@@ -13,10 +13,10 @@
 #' new packages never require confirmation.
 #' @param dev If `TRUE`, install required dependencies plus optional and
 #' development dependencies. If `FALSE`, install only required dependencies.
-#' @param engine If `"pak"`, uses [pak::pkg_install()]. If `"utils"`, uses
-#' [utils::install.packages()] (on Linux could be useful if using
-#' [`rspm`](https://cran4linux.github.io/rspm/) or
-#' [`CoprManager`](https://github.com/cran4linux/cran2copr)).
+#' @param engine If `"utils"`, uses #' [utils::install.packages()] (on Linux
+#' could be useful if using #' [`rspm`](https://cran4linux.github.io/rspm/) or
+#' [`CoprManager`](https://github.com/cran4linux/cran2copr)). If `"pak"`, uses
+#' [pak::pkg_install()].
 #' @export
 #' @return (Invisibly) A data frame with information about the installed
 #' package(s) or a vector with the list of installed packages.
@@ -29,7 +29,7 @@ install_dependencies <- function(
   dependencies = NULL,
   ask = TRUE,
   dev = FALSE,
-  engine = c("pak", "utils")
+  engine = c("utils", "pak")
 ) {
   if (length(dependencies) == 1 && dependencies == "old") {
     dependencies <- utils::old.packages()[, 1] |> sort()

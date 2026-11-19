@@ -8,7 +8,7 @@ install_dependencies(
   dependencies = NULL,
   ask = TRUE,
   dev = FALSE,
-  engine = c("pak", "utils")
+  engine = c("utils", "pak")
 )
 }
 \arguments{
@@ -23,10 +23,10 @@ new packages never require confirmation.}
 \item{dev}{If \code{TRUE}, install required dependencies plus optional and
 development dependencies. If \code{FALSE}, install only required dependencies.}
 
-\item{engine}{If \code{"pak"}, uses \code{\link[pak:pkg_install]{pak::pkg_install()}}. If \code{"utils"}, uses
-\code{\link[utils:install.packages]{utils::install.packages()}} (on Linux could be useful if using
-\href{https://cran4linux.github.io/rspm/}{\code{rspm}} or
-\href{https://github.com/cran4linux/cran2copr}{\code{CoprManager}}).}
+\item{engine}{If \code{"utils"}, uses #' \code{\link[utils:install.packages]{utils::install.packages()}} (on Linux
+could be useful if using #' \href{https://cran4linux.github.io/rspm/}{\code{rspm}} or
+\href{https://github.com/cran4linux/cran2copr}{\code{CoprManager}}). If \code{"pak"}, uses
+\code{\link[pak:pkg_install]{pak::pkg_install()}}.}
 }
 \value{
 (Invisibly) A data frame with information about the installed
