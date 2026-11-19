@@ -2,7 +2,7 @@
 
 **New features**
 
-* new `engine` and `dev` arguments for `install_dependencies()`
+* new `engine` and `dev` arguments for `install_dependencies()` (#70)
 
 # guideR 0.12.0
 
