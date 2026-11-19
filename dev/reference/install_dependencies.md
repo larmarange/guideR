@@ -41,7 +41,7 @@ install_dependencies(
 
 - engine:
 
-  If `"utils"`, uses \#'
+  If `"utils"`, uses
   [`utils::install.packages()`](https://rdrr.io/r/utils/install.packages.html)
   (on Linux could be useful if using \#'
   [`rspm`](https://cran4linux.github.io/rspm/) or
