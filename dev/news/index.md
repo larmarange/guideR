@@ -2,6 +2,12 @@
 
 ## guideR (development version)
 
+**New features**
+
+- new `engine` and `dev` arguments for
+  [`install_dependencies()`](https://larmarange.github.io/guideR/dev/reference/install_dependencies.md)
+  ([\#70](https://github.com/larmarange/guideR/issues/70))
+
 ## guideR 0.12.0
 
 CRAN release: 2026-08-20

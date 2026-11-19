@@ -96,8 +96,8 @@ An object of class `stslist`.
 # \donttest{
 library(TraMineR)
 #> 
-#> TraMineR stable version 2.2-13 (Built: 2026-04-24)
-#> Website: http://traminer.unige.ch
+#> TraMineR stable version 2.2-14 (Built: 2026-09-16)
+#> Website: https://traminer.unige.ch
 #> Please type 'citation("TraMineR")' for citation information.
 
 # generating a data frame in long format

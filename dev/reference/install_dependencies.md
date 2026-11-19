@@ -11,7 +11,12 @@ packages not installed/updated.
 ## Usage
 
 ``` r
-install_dependencies(dependencies = NULL, ask = TRUE)
+install_dependencies(
+  dependencies = NULL,
+  ask = TRUE,
+  dev = FALSE,
+  engine = c("pak", "utils")
+)
 ```
 
 ## Arguments
@@ -29,10 +34,25 @@ install_dependencies(dependencies = NULL, ask = TRUE)
   a package that is already installed. Installations that only add new
   packages never require confirmation.
 
+- dev:
+
+  If `TRUE`, install required dependencies plus optional and development
+  dependencies. If `FALSE`, install only required dependencies.
+
+- engine:
+
+  If `"pak"`, uses
+  [`pak::pkg_install()`](https://pak.r-lib.org/reference/pkg_install.html).
+  If `"utils"`, uses
+  [`utils::install.packages()`](https://rdrr.io/r/utils/install.packages.html)
+  (on Linux could be useful if using
+  [`rspm`](https://cran4linux.github.io/rspm/) or
+  [`CoprManager`](https://github.com/cran4linux/cran2copr)).
+
 ## Value
 
-(Invisibly) A data frame with information about the installed
-package(s).
+(Invisibly) A data frame with information about the installed package(s)
+or a vector with the list of installed packages.
 
 ## Examples
 
