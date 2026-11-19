@@ -4,7 +4,12 @@
 \alias{install_dependencies}
 \title{Install / Update project dependencies}
 \usage{
-install_dependencies(dependencies = NULL, ask = TRUE)
+install_dependencies(
+  dependencies = NULL,
+  ask = TRUE,
+  dev = FALSE,
+  engine = c("pak", "utils")
+)
 }
 \arguments{
 \item{dependencies}{An optional list of dependencies. If \code{NULL}, will be
@@ -14,10 +19,18 @@ list returned by \code{\link[utils:old.packages]{utils::old.packages()}}.}
 \item{ask}{Whether to ask for confirmation when installing a different
 version of a package that is already installed. Installations that only add
 new packages never require confirmation.}
+
+\item{dev}{If \code{TRUE}, install required dependencies plus optional and
+development dependencies. If \code{FALSE}, install only required dependencies.}
+
+\item{engine}{If \code{"pak"}, uses \code{\link[pak:pkg_install]{pak::pkg_install()}}. If \code{"utils"}, uses
+\code{\link[utils:install.packages]{utils::install.packages()}} (on Linux could be useful if using
+\href{https://cran4linux.github.io/rspm/}{\code{rspm}} or
+\href{https://github.com/cran4linux/cran2copr}{\code{CoprManager}}).}
 }
 \value{
 (Invisibly) A data frame with information about the installed
-package(s).
+package(s) or a vector with the list of installed packages.
 }
 \description{
 This function uses \code{\link[renv:dependencies]{renv::dependencies()}} to identify R package dependencies
